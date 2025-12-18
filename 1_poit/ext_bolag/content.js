@@ -191,7 +191,7 @@
         },
         function () {}
       );
-    }, 3000); // Ökad väntetid till 3 sekunder för att säkerställa att navigationen är klar
+    }, 5000); // Ökad väntetid till 5 sekunder för att låta sidan ladda och undvika bot-detection
   }
 
   if (IS_KUNGORELSE || IS_ENSKILD) {
@@ -220,7 +220,7 @@
         // Om vi redan är på en kungörelse-sida, fånga direkt
         captureKungorelseData();
       }
-    }, 1000); // Vänta 1 sekund för att säkerställa att sidan är laddad
+    }, 4000); // Vänta 4 sekunder för att låta sidan ladda och undvika bot-detection
 
     // Monitor för URL-förändringar (SPA navigation)
     let lastUrl = window.location.href;

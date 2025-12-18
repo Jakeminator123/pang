@@ -1,0 +1,10 @@
+# Requirements för Docker-baserad headless scraper
+# ================================================
+
+# HTTP requests
+requests>=2.28.0
+
+# Playwright för browser automation
+# OBS: Playwright browsers installeras via base image
+# Versionen måste matcha Docker-imagen (v1.57.0-jammy)
+playwright==1.57.0

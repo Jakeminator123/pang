@@ -1,0 +1,51 @@
+# Docker ignore file
+# ==================
+
+# Git
+.git
+.gitignore
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv
+.venv
+env
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Output directories (mounted as volume)
+output/
+chrome_profile/
+
+# Old/archive files
+docker_v/
+*.old
+*.bak
+
+# Documentation
+*.md
+!requirements.txt
+
+# Test files
+test_*.py
+*_test.py
+*.txt
+!config.txt
+!requirements.txt
+
+# Logs
+*.log
+logs/
+

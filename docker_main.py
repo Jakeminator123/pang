@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-main.py - Central orchestrator för hela datapipelinen
+docker_main.py - DOCKER variant av datapipelinen
 
 Användning:
-    python main.py           # Kör med inställningar från config-filer
-    python main.py <nummer>  # Kör med master-nummer (t.ex. python main.py 88)
+    python docker_main.py             # Kör med inställningar från config-filer
+    python docker_main.py <nummer>    # Kör med master-nummer (t.ex. python docker_main.py 10)
+    python docker_main.py 10 --build  # Bygg om Docker-imagen innan körning
+
+SKILLNAD MOT main.py och headless_main.py:
+- Använder DOCKER-baserad scraping (docker_1_poit/) istället för lokal Chrome
+- Ingen lokal Chrome-installation behövs
+- Playwright körs i isolerad Docker-container
+- Kan deployas till molntjänster (Render, Fly.io, etc)
+- Fungerar med schemalagda körningar
 
 Master-nummer styr ALLT:
 - Antal företag att skrapa
@@ -14,13 +22,13 @@ Master-nummer styr ALLT:
 - Antal företag att köra site audit på
 
 Kör i sekvens:
-1. Starta Flask-server (1_poit/server.py)
-2. Kör scraping (scrape_kungorelser.py) - endast om dagens data saknas
+1. Starta Flask-server (1_poit/server.py) - för framtida användning
+2. DOCKER scraping (docker_1_poit/) - containeriserad Playwright
 3. Kör process_raw_data.py (bearbetar rådata)
 4. Kör segmentering pipeline (2_segment_info/ALLA.py)
-5. Kör evaluation och generera hemsidor (3_sajt/) - bedömer företag och genererar hemsidor för 20-30% av värda företag
-6. Kopiera till Dropbox (9_dropbox/) - kopierar datum-mapp till Dropbox + 10_jocke
-7. Bearbeta styrelsedata (10_jocke/) - parsear och strukturerar styrelsedata till jocke.xlsx
+5. Kör evaluation och generera hemsidor (3_sajt/)
+6. Kopiera till Dropbox (9_dropbox/)
+7. Bearbeta styrelsedata (10_jocke/)
 """
 
 import asyncio
@@ -1229,15 +1237,18 @@ def main():
     setup_run_logging()
     log_info(f"Run-logg: {RUN_LOG_FILE}")
 
-    # Parse arguments - hantera både master_number och datumargument
+    # Parse arguments - hantera master_number, datumargument och --build
     raw_args = sys.argv[1:]
 
     master_number = None
     target_date_str = None
+    docker_rebuild = False  # DOCKER: Bygg om image?
 
     # Parse argumenten manuellt för att hantera både nummer och -15 format
     for arg in raw_args:
-        if arg.startswith("-") and arg[1:].isdigit():
+        if arg == "--build" or arg == "-b":
+            docker_rebuild = True
+        elif arg.startswith("-") and arg[1:].isdigit():
             # Först kolla om det är ett kort master-nummer (1-2 siffror, t.ex. -4)
             num_part = arg[1:]
             if len(num_part) <= 2:
@@ -1255,37 +1266,44 @@ def main():
             # Detta är master-nummer
             master_number = int(arg)
         elif arg in ("--help", "-h"):
-            print("""Kör komplett datapipeline
+            print("""Kör DOCKER datapipeline (containeriserad scraping)
 
 Användning:
-  python main.py                    # Kör med inställningar från config-filer
-  python main.py 88                 # Kör med master-nummer 88 (styr allt)
-  python main.py -4                 # Kör med master-nummer 4 (begränsar till 4 företag)
-  python main.py 10                 # Kör med master-nummer 10 (begränsar till 10 företag)
-  python main.py 5 -7               # Kör med master-nummer 5 och datum 7:e dagen i månaden
-  python main.py 5 -1107            # Kör med master-nummer 5 och datum 11:e månaden, dag 7 (nuvarande år)
-  python main.py 5 -20251107       # Kör med master-nummer 5 och komplett datum 2025-11-07
-  python main.py --help             # Visa denna hjälp
+  python docker_main.py                    # Kör med inställningar från config-filer
+  python docker_main.py 10                 # Kör med master-nummer 10
+  python docker_main.py 10 --build         # Bygg om Docker-image innan körning
+  python docker_main.py 5 -1218            # Master 5, datum 18 december
+  python docker_main.py --help             # Visa denna hjälp
 
 Argument:
   master_number                     Master-nummer som styr antal företag genom hela pipelinen
+  --build, -b                       Bygg om Docker-imagen innan körning
   -<nummer>                         Master-nummer (1-2 siffror, t.ex. -4 för 4 företag)
   -<dag>                            Välj specifik dag i månaden (3+ siffror, t.ex. -15 för 15:e dagen)
   -<månaddag>                       Välj månad och dag (4 siffror, t.ex. -1107 för 11:e månaden, dag 7)
   -<YYYYMMDD>                       Välj komplett datum (8 siffror, t.ex. -20251107 för 2025-11-07)
+
+SKILLNAD MOT main.py och headless_main.py:
+  - Använder Docker-container med Playwright (ingen lokal Chrome)
+  - Kan deployas till molntjänster (Render, Fly.io)
+  - Fungerar med schemalagda körningar
+  - Sparar till samma plats (1_poit/info_server/)
 """)
             return 0
 
     # Om inget master-nummer angavs, använd None (använder config)
     if master_number is None and target_date_str is None and len(raw_args) > 0:
-        # Om det finns argument men inget matchade, visa fel
-        log_error(f"Okänt argument: {raw_args[0]}")
-        log_info("Använd: python main.py [master_number] [-dag]")
-        return 1
+        # Filtrera bort --build från kontrollen
+        non_flag_args = [a for a in raw_args if a not in ("--build", "-b")]
+        if non_flag_args:
+            log_error(f"Okänt argument: {non_flag_args[0]}")
+            log_info("Använd: python docker_main.py [master_number] [-dag] [--build]")
+            return 1
 
     log_info("=" * 60)
-    log_info("STARTAR KOMPLETT DATAPIPELINE")
+    log_info("STARTAR DOCKER DATAPIPELINE")
     log_info("=" * 60)
+    log_info(f"Docker rebuild: {'JA' if docker_rebuild else 'NEJ (använd cached image)'}")
     log_info(f"Projektrot: {PROJECT_ROOT}")
     log_info(f"Python: {sys.executable}")
     log_info("Config-filer:")
@@ -1429,9 +1447,9 @@ Argument:
         mark_step_done(target_date_str, status, "server_started")
         print()
 
-        # Steg 2: Kontrollera om scraping-data redan finns
+        # Steg 2: DOCKER SCRAPING
         log_info("=" * 60)
-        log_info("STEG 2: SCRAPING")
+        log_info("STEG 2: DOCKER SCRAPING")
         log_info("=" * 60)
 
         info_server_dir = POIT_DIR / "info_server"
@@ -1446,38 +1464,88 @@ Argument:
             # Om dagens JSON redan finns, hoppa över scraping helt
             if today_json.exists() and today_json.stat().st_size > 0:
                 log_info(f"✓ Dagens scraping-data finns redan: {today_json}")
-                log_info(
-                    "Hoppar över scraping - Chrome-extensionen + servern har redan sparat data"
-                )
+                log_info("Hoppar över scraping - data finns redan")
                 mark_step_done(target_date_str, status, "scraping")
             else:
-                scripts_to_run = [
-                    (AUTOMATION_DIR / "scrape_kungorelser.py", "scraping"),
-                ]
-
-                target_date_check = os.environ.get("TARGET_DATE")
-                log_info(f"[DEBUG] TARGET_DATE innan scraping: {target_date_check}")
-
-                for script_path, step_key in scripts_to_run:
-                    if not script_path.exists():
-                        log_error(f"Skript saknas: {script_path}")
-                        failures.append((script_path.name, "Saknas"))
-                        mark_failed_step(
-                            target_date_str, status, step_key, "skript saknas"
-                        )
+                # DOCKER: Kör scraping i Docker-container
+                log_info("Kör DOCKER scraping (containeriserad Playwright)")
+                
+                # Bestäm antal att scrapa
+                scrape_count = master_number if master_number and master_number > 0 else 20
+                log_info(f"Antal att scrapa: {scrape_count}")
+                log_info(f"Docker rebuild: {'JA' if docker_rebuild else 'NEJ'}")
+                
+                try:
+                    # Docker compose directory
+                    docker_dir = PROJECT_ROOT / "docker_1_poit"
+                    
+                    if not docker_dir.exists():
+                        log_error(f"Docker-mapp saknas: {docker_dir}")
+                        mark_failed_step(target_date_str, status, "scraping", "docker dir missing")
                         return 1
-
-                    exit_code, duration, step_log, tail = run_script(
-                        step_key, script_path, cwd=AUTOMATION_DIR
+                    
+                    # Hitta docker-compose (kan vara i PATH eller på standard-plats)
+                    docker_compose_exe = "docker-compose"
+                    docker_default_path = Path("C:/Program Files/Docker/Docker/resources/bin/docker-compose.exe")
+                    if docker_default_path.exists():
+                        docker_compose_exe = str(docker_default_path)
+                    
+                    # Bygg docker-compose kommando
+                    compose_cmd = [docker_compose_exe]
+                    if docker_rebuild:
+                        compose_cmd.extend(["up", "--build"])
+                    else:
+                        compose_cmd.append("up")
+                    
+                    # Sätt miljövariabler för docker-compose
+                    docker_env = os.environ.copy()
+                    docker_env["TARGET_DATE"] = date_str
+                    docker_env["SCRAPE_COUNT"] = str(scrape_count)
+                    
+                    log_info(f"Kör: {' '.join(compose_cmd)}")
+                    log_info(f"  TARGET_DATE={date_str}")
+                    log_info(f"  SCRAPE_COUNT={scrape_count}")
+                    
+                    # Kör docker-compose
+                    result = subprocess.run(
+                        compose_cmd,
+                        cwd=str(docker_dir),
+                        env=docker_env,
+                        capture_output=False,  # Visa output direkt
+                        text=True
                     )
-                    if exit_code != 0:
-                        failures.append((script_path.name, exit_code, step_log))
-                        summarize_failure(step_key, exit_code, step_log, tail)
-                        mark_failed_step(
-                            target_date_str, status, step_key, f"exit {exit_code}"
-                        )
+                    
+                    if result.returncode != 0:
+                        log_error(f"Docker scraping misslyckades (exit code: {result.returncode})")
+                        mark_failed_step(target_date_str, status, "scraping", f"docker exit {result.returncode}")
                         return 1
-                mark_step_done(target_date_str, status, "scraping")
+                    
+                    # Verifiera att output skapades
+                    if today_json.exists():
+                        log_info(f"✓ Docker scraping klar: {today_json}")
+                        mark_step_done(target_date_str, status, "scraping")
+                    else:
+                        log_warn("Docker kördes men ingen JSON skapades - kontrollera Docker-loggar")
+                        # Fortsätt ändå om det finns data i mappen
+                        if date_folder.exists() and any(date_folder.iterdir()):
+                            log_info("Data finns i mappen, fortsätter...")
+                            mark_step_done(target_date_str, status, "scraping")
+                        else:
+                            mark_failed_step(target_date_str, status, "scraping", "no output")
+                            return 1
+                    
+                except FileNotFoundError:
+                    log_error("docker-compose hittades inte!")
+                    log_error("Installera Docker Desktop eller docker-compose")
+                    mark_failed_step(target_date_str, status, "scraping", "docker not found")
+                    return 1
+                except Exception as e:
+                    log_error(f"Fel vid Docker scraping: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    mark_failed_step(target_date_str, status, "scraping", str(e))
+                    return 1
+                
                 print()
 
         # Verifiera att JSON-fil finns (antingen befintlig eller nyss skapad)
@@ -1495,13 +1563,11 @@ Argument:
                 log_error(
                     f"Ingen kungorelser_*.json fil hittades i {date_folder} eller någon annan mapp"
                 )
-                log_error(
-                    "JSON-filen skapas när extensionen fångar API-anrop från /poit/rest/SokKungorelse"
-                )
+                log_error("Headless scraping borde ha skapat denna fil.")
                 log_error("Kontrollera att:")
-                log_error("  1. Extensionen är laddad i Chrome")
-                log_error("  2. Server körs och svarar på /health")
-                log_error("  3. API-anrop görs när du söker efter kungörelser")
+                log_error("  1. Chrome kunde starta (prova med --visible)")
+                log_error("  2. Inga CAPTCHA blockerade")
+                log_error("  3. API:et svarade korrekt")
                 mark_failed_step(
                     target_date_str, status, "scraping", "JSON-data saknas"
                 )

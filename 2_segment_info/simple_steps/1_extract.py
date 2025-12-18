@@ -227,20 +227,31 @@ def extract_company_info(text: str) -> Dict[str, str]:
 # =============================================================================
 
 GENERIC_EMAIL_DOMAINS = {
-    "gmail.com",
-    "hotmail.com",
-    "outlook.com",
-    "yahoo.com",
-    "live.se",
-    "icloud.com",
-    "me.com",
-    "msn.com",
-    "telia.com",
-    "bredband.net",
+    # Gmail
+    "gmail.com", "googlemail.com",
+    # Microsoft
+    "hotmail.com", "hotmail.se", "hotmail.co.uk",
+    "outlook.com", "outlook.se",
+    "live.com", "live.se",
+    "msn.com", "msn.se",
+    # Yahoo
+    "yahoo.com", "yahoo.se", "ymail.com",
+    # Apple
+    "icloud.com", "me.com", "mac.com",
+    # Swedish ISPs (internet service providers)
+    "telia.com", "telia.se",
+    "tele2.com", "tele2.se",
+    "comhem.se", "comhem.com",
+    "bredband.net", "bredband2.com",
     "spray.se",
     "home.se",
-    "comhem.se",
-    "tele2.se",
+    "bahnhof.se",
+    "ownit.se",
+    # Other generic
+    "aol.com",
+    "protonmail.com", "proton.me",
+    "tutanota.com",
+    "zoho.com",
 }
 
 # Keywords in email domains that indicate accounting firm (bulk registration)
@@ -251,7 +262,17 @@ ACCOUNTING_DOMAIN_KEYWORDS = {
 }
 
 # Keywords in company names to skip
-NAME_EXCLUDE_KEYWORDS = {"förening", "holding", "lagerbolag"}
+NAME_EXCLUDE_KEYWORDS = {
+    "förening", "holding", "lagerbolag", "lagerbolaget", "startplattan",
+    "stiftelse", "bostadsrättsförening", "brf ", "ideell", "kapital"
+}
+
+# Regex patterns for "shelf companies" (lagerbolag)
+LAGERBOLAG_PATTERNS = [
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+\d{5,6}\s+Aktiebolag$", re.IGNORECASE),
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+[A-Z]\s+\d{4,6}\s+AB$", re.IGNORECASE),
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+\d{4,6}\s+AB$", re.IGNORECASE),
+]
 
 
 def should_skip_company(company_name: str, emails: List[str]) -> Tuple[bool, str]:
@@ -265,6 +286,12 @@ def should_skip_company(company_name: str, emails: List[str]) -> Tuple[bool, str
         for kw in NAME_EXCLUDE_KEYWORDS:
             if kw in name_lower:
                 return True, f"name_keyword:{kw}"
+        
+        # Check lagerbolag patterns (e.g., "Startplattan 201499 Aktiebolag", "Lagerbolaget C 28068 AB")
+        stripped = company_name.strip()
+        for pattern in LAGERBOLAG_PATTERNS:
+            if pattern.match(stripped):
+                return True, "lagerbolag_pattern"
 
     # Check email domain for accounting keywords
     if emails:

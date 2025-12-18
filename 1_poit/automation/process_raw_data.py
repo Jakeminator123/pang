@@ -44,7 +44,19 @@ CANDIDATE_CONTENT_NAMES = [
 
 # Base directory pointing to 1_poit root
 BASE_DIR = Path(__file__).parent.parent.resolve()
-NAME_EXCLUDE_KEYWORDS = ("förening", "holding")
+
+# Keywords in company names to exclude
+NAME_EXCLUDE_KEYWORDS = (
+    "förening", "holding", "lagerbolag", "lagerbolaget", "startplattan",
+    "stiftelse", "bostadsrättsförening", "brf ", "ideell", "kapital"
+)
+
+# Regex patterns for "shelf companies" (lagerbolag)
+LAGERBOLAG_PATTERNS = [
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+\d{5,6}\s+Aktiebolag$", re.IGNORECASE),
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+[A-Z]\s+\d{4,6}\s+AB$", re.IGNORECASE),
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+\d{4,6}\s+AB$", re.IGNORECASE),
+]
 
 
 def normalize_company_name(name: Optional[str]) -> Optional[str]:
@@ -56,10 +68,22 @@ def normalize_company_name(name: Optional[str]) -> Optional[str]:
 
 
 def should_skip_company(name: Optional[str]) -> bool:
+    """Check if company should be skipped based on name patterns."""
     if not isinstance(name, str):
         return False
     lowered = name.lower()
-    return any(keyword in lowered for keyword in NAME_EXCLUDE_KEYWORDS)
+    
+    # Check keywords
+    if any(keyword in lowered for keyword in NAME_EXCLUDE_KEYWORDS):
+        return True
+    
+    # Check lagerbolag patterns (e.g., "Startplattan 201499 Aktiebolag", "Lagerbolaget C 28068 AB")
+    stripped = name.strip()
+    for pattern in LAGERBOLAG_PATTERNS:
+        if pattern.match(stripped):
+            return True
+    
+    return False
 
 
 def deduplicate_companies(companies: List[dict]) -> Tuple[List[dict], Dict[str, int]]:

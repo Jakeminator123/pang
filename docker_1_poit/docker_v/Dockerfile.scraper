@@ -1,0 +1,60 @@
+# Dockerfile för scrapern (browser automation)
+# OBS: Denna behöver refaktoreras för att använda Selenium istället för pyautogui
+# För nu är denna för lokal testning
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Installera system-dependencies för Chrome och OpenCV
+RUN apt-get update && apt-get install -y \
+    wget \
+    gnupg \
+    unzip \
+    xvfb \
+    x11vnc \
+    fluxbox \
+    curl \
+    gpg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installera Google Chrome (ny metod utan apt-key)
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installera ChromeDriver (nyare metod med Chrome for Testing)
+# Chrome-versionen från apt har formatet X.Y.Z men ChromeDriver behöver X.Y.Z.0
+RUN CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+') \
+    && CHROME_VERSION_FULL="${CHROME_VERSION}.0" \
+    && MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d. -f1) \
+    && echo "Chrome version: $CHROME_VERSION, looking for ChromeDriver: $CHROME_VERSION_FULL" \
+    && wget -O /tmp/chromedriver-linux64.zip "https://storage.googleapis.com/chrome-for-testing-public/${CHROME_VERSION_FULL}/linux64/chromedriver-linux64.zip" \
+    && unzip /tmp/chromedriver-linux64.zip -d /tmp/ \
+    && mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/ \
+    && chmod +x /usr/local/bin/chromedriver \
+    && rm -rf /tmp/chromedriver-linux64.zip /tmp/chromedriver-linux64
+
+# Installera Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Kopiera projektfiler
+COPY automation/ ./automation/
+COPY ext_bolag/ ./ext_bolag/
+COPY bilder/ ./bilder/
+COPY config.txt .
+
+# Skapa nödvändiga mappar
+RUN mkdir -p chrome_profile debug info_server log
+
+# Sätt display för headless
+ENV DISPLAY=:99
+
+# Kör Selenium-versionen (headless, behöver ingen Xvfb)
+ENV HEADLESS=true
+ENV PYTHONUNBUFFERED=1
+CMD ["python", "-u", "automation/scrape_kungorelser_selenium.py"]
+

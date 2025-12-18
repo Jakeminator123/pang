@@ -53,17 +53,17 @@ BASE_DJUPANALYS_DIR = (
     Path(__file__).parent.parent / "2_segment_info" / "djupanalys"
 )
 
-# Config file
-CONFIG_FILE = Path(__file__).parent / "config.txt"
+# Config file - consolidated config shared with headless_main.py
+CONFIG_FILE = Path(__file__).parent.parent / "2_segment_info" / "config_ny.txt"
 
 
 def load_config() -> dict:
-    """Ladda konfiguration från config.txt."""
+    """Ladda konfiguration från config_ny.txt (konsoliderad config)."""
     config = {
         "evaluate": "n",
         "threshold": "0.5",  # Default: 50% confidence minimum
         "audit_enabled": "n",
-        "audit_threshold": "0.85",
+        "audit_threshold": "0.60",
         "re_input_website_link": "n",
         "re_input_audit": "n",
         "max_sites": "0",    # 0 = ingen gräns
@@ -74,13 +74,28 @@ def load_config() -> dict:
             content = CONFIG_FILE.read_text(encoding="utf-8").strip()
             for line in content.split("\n"):
                 line = line.strip()
-                if not line or line.startswith("#"):
-                    continue  # Skip empty lines and comments
+                if not line or line.startswith("#") or line.startswith("["):
+                    continue  # Skip empty lines, comments, and section headers
                 if "=" in line:
                     key, value = line.split("=", 1)
                     key = key.strip().lower()
                     value = value.strip()
-                    config[key] = value.lower() if key == "evaluate" else value
+                    
+                    # Map config_ny.txt keys to internal keys
+                    key_mapping = {
+                        "site_enabled": "evaluate",
+                        "site_threshold": "threshold",
+                        "site_max_antal": "max_sites",
+                        "audit_enabled": "audit_enabled",
+                        "audit_threshold": "audit_threshold",
+                        "audit_max_antal": "max_audits",
+                    }
+                    
+                    mapped_key = key_mapping.get(key, key)
+                    if mapped_key == "evaluate" or mapped_key == "audit_enabled":
+                        config[mapped_key] = value.lower()
+                    else:
+                        config[mapped_key] = value
         except Exception:
             pass
     return config
@@ -373,7 +388,7 @@ async def generate_with_progress(
                 print(f"  ⚠️  Företaget är INTE bedömt som värdigt för hemsida!")
                 print(f"     Säkerhet: {confidence}%")
                 print(f"     Motivering: {reasoning}")
-                print(f"  ❌ Hoppar över generering (evaluate=y i config.txt)")
+                print(f"  ❌ Hoppar över generering (evaluate=y i 2_segment_info/config_ny.txt)")
                 return None
             else:
                 confidence = int(evaluation.get("confidence", 0) * 100)
@@ -381,7 +396,7 @@ async def generate_with_progress(
         else:
             print(f"  ⚠️  Ingen bedömning hittades för detta företag.")
             print(f"     Kör evaluate_companies.py först för att bedöma företaget.")
-            print(f"     Eller sätt evaluate=n i config.txt för att tillåta alla företag.")
+            print(f"     Eller sätt evaluate=n i 2_segment_info/config_ny.txt för att tillåta alla företag.")
             print(f"  ❌ Hoppar över generering (evaluate=y kräver bedömning)")
             return None
     
@@ -460,11 +475,11 @@ async def main():
     if filter_worthy:
         threshold_pct = int(min_confidence * 100) if min_confidence > 0 else 0
         if threshold_pct > 0:
-            print(f"🔍 Filtrering: Endast 'värdiga' företag visas (evaluate=y, threshold={threshold_pct}% i config.txt)")
+            print(f"🔍 Filtrering: Endast 'värdiga' företag visas (evaluate=y, threshold={threshold_pct}% i 2_segment_info/config_ny.txt)")
         else:
-            print("🔍 Filtrering: Endast 'värdiga' företag visas (evaluate=y i config.txt)")
+            print("🔍 Filtrering: Endast 'värdiga' företag visas (evaluate=y i 2_segment_info/config_ny.txt)")
     else:
-        print("📋 Filtrering: Alla företag visas (evaluate=n i config.txt)")
+        print("📋 Filtrering: Alla företag visas (evaluate=n i 2_segment_info/config_ny.txt)")
     
     base_dir = BASE_DJUPANALYS_DIR
     
@@ -543,7 +558,7 @@ async def main():
         if companies_without_evaluation:
             print(f"   {len(companies_without_evaluation)} företag saknar bedömning.")
         print("   Kör evaluate_companies.py först för att bedöma företag.")
-        print("   Eller sätt evaluate=n i config.txt för att visa alla företag.")
+        print("   Eller sätt evaluate=n i 2_segment_info/config_ny.txt för att visa alla företag.")
         return
     
     # Visa varning om några företag saknar bedömning när filtrering är aktiv

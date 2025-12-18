@@ -3,6 +3,23 @@
 let SERVER_URL = "http://127.0.0.1:51234";
 const NAME_EXCLUDE_KEYWORDS = ["förening", "holding"];
 
+// Unique instance ID to help server identify duplicate sources
+const INSTANCE_ID = Math.random().toString(36).substring(2, 10);
+console.log("[PoIT] Extension instance ID:", INSTANCE_ID);
+
+// Track recently sent items to avoid duplicates within same instance
+const recentlySent = new Set();
+const DEDUP_TIMEOUT_MS = 30000; // 30 seconds
+
+function markAsSent(key) {
+  recentlySent.add(key);
+  setTimeout(() => recentlySent.delete(key), DEDUP_TIMEOUT_MS);
+}
+
+function wasRecentlySent(key) {
+  return recentlySent.has(key);
+}
+
 // Safety check: NEVER send enskild URLs to server
 function urlContainsEnskild(url) {
   return url && url.toLowerCase().includes("/enskild/");
@@ -83,11 +100,34 @@ function sanitizePayload(payload) {
 async function postToLocal(payload) {
   try {
     const cleanPayload = sanitizePayload(payload);
+    
+    // Create dedup key from item count and first item ID
+    const items = cleanPayload?.data || [];
+    const itemCount = Array.isArray(items) ? items.length : 0;
+    const firstId = items[0]?.kungorelseid || items[0]?.kungorelseId || "";
+    const dedupKey = `list-${itemCount}-${firstId}`;
+    
+    if (wasRecentlySent(dedupKey)) {
+      console.log("[PoIT] Skipping duplicate list send:", dedupKey);
+      return;
+    }
+    
+    // Add instance ID
+    const payloadWithInstance = {
+      ...cleanPayload,
+      _instanceId: INSTANCE_ID,
+    };
+    
     const res = await fetch(`${SERVER_URL}/save`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(cleanPayload),
+      body: JSON.stringify(payloadWithInstance),
     });
+    
+    if (res.ok) {
+      markAsSent(dedupKey);
+    }
+    
     // Läs/svälj svar för att tömma streamen
     await res.text().catch(() => "");
   } catch (e) {
@@ -105,12 +145,30 @@ async function postKungorelseToLocal(payload) {
     return;
   }
 
+  // Dedup check: Don't send same kungorelse twice from this instance
+  const dedupKey = payload.kungorelseId || payload.url || "";
+  if (dedupKey && wasRecentlySent(dedupKey)) {
+    console.log("[PoIT] Skipping duplicate send for:", dedupKey);
+    return;
+  }
+
   try {
+    // Add instance ID to help server track sources
+    const payloadWithInstance = {
+      ...payload,
+      _instanceId: INSTANCE_ID,
+    };
+
     const res = await fetch(`${SERVER_URL}/save_kungorelse`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payloadWithInstance),
     });
+    
+    if (res.ok && dedupKey) {
+      markAsSent(dedupKey);
+    }
+    
     await res.text().catch(() => "");
   } catch (e) {
     console.error(`[PoIT] Failed to post to ${SERVER_URL}/save_kungorelse:`, e);

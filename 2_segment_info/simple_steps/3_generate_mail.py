@@ -124,6 +124,7 @@ def guess_recipient_name(email: str, people: List[Dict], company_name: str = "")
             # Check each name part (first name, middle names, surname)
             for name_part in name_parts:
                 name_lower = name_part.lower()
+                matched_name = name_part  # The actual name part that matched
                 
                 # Full match or prefix match (at least 3 chars, or 1 char if it's an initial)
                 if name_lower == prefix_lower:
@@ -151,7 +152,14 @@ def guess_recipient_name(email: str, people: List[Dict], company_name: str = "")
                 
                 if score > best_score:
                     best_score = score
-                    best_match_name = first_name
+                    # Use the matched name part (e.g. "Peter" from "Bengt Peter Maksinen")
+                    # Only use surname if it's the only name part, otherwise use matched first/middle name
+                    if name_part == surname and len(name_parts) > 1:
+                        # Matched surname - use first name instead as it's more personal
+                        best_match_name = first_name
+                    else:
+                        # Use the actual matched name (e.g. "Peter" when email is "peter@...")
+                        best_match_name = matched_name
 
     # If we found a match, return it
     if best_match_name:
@@ -170,8 +178,11 @@ def guess_recipient_name(email: str, people: List[Dict], company_name: str = "")
     return ""
 
 
-def build_email_prompt(data: Dict, recipient_name: str) -> str:
-    """Build prompt for email generation."""
+def build_email_prompt(data: Dict, recipient_name: str, cfg: Dict = None) -> str:
+    """Build prompt for email generation with configurable tone."""
+    if cfg is None:
+        cfg = {}
+    
     company_name = data.get("company_name", "Företaget")
     verksamhet = data.get("verksamhet", "")
     sate = data.get("sate", "")
@@ -199,16 +210,16 @@ def build_email_prompt(data: Dict, recipient_name: str) -> str:
 
     if domain_status in ("verified", "match") and confidence >= 0.5:
         domain_situation = f"VERIFIERAD HEMSIDA: {domain_guess} - Du kan referera till att du besökt denna."
-        offer_focus = "erbjud förbättringar och modernisering av hemsidan"
+        offer_focus = "erbjud förbättringar och modernisering"
     elif domain_status == "parked":
         domain_situation = f"Domänen {domain_guess} är parkerad (ingen aktiv hemsida)"
         offer_focus = "erbjud att bygga hemsida och aktivera domänen"
     elif best_domain and research.get("best_confidence", 0) >= 0.5:
         domain_situation = f"VERIFIERAD HEMSIDA: {best_domain} - Du kan referera till att du besökt denna."
-        offer_focus = "erbjud förbättringar och modernisering av hemsidan"
+        offer_focus = "erbjud förbättringar och modernisering"
     else:
         domain_situation = "INGEN VERIFIERAD HEMSIDA - Företaget verkar sakna hemsida."
-        offer_focus = "erbjud att hjälpa dem etablera sig online med domän och hemsida"
+        offer_focus = "erbjud att hjälpa dem komma igång online"
 
     # Build research context
     research_context = ""
@@ -217,11 +228,54 @@ def build_email_prompt(data: Dict, recipient_name: str) -> str:
 
     # Greeting instruction
     if recipient_name:
-        greeting_instruction = f"Börja med 'Hej {recipient_name},' (endast detta namn, inga fler)"
+        greeting_instruction = f"Börja med 'Hej {recipient_name},' (endast detta namn)"
     else:
         greeting_instruction = "Börja med 'Hej,' (utan namn)"
 
-    prompt = f"""Du är en säljare från SajtStudio.se som ska skriva ett personligt e-postmeddelande till ett nyregistrerat företag för att erbjuda hemsidestjänster.
+    # ========================================================================
+    # TONE CONFIGURATION (1-10 scale)
+    # ========================================================================
+    formality = int(cfg.get("MAIL_FORMALITY", "4"))
+    salesiness = int(cfg.get("MAIL_SALESINESS", "3"))
+    flattery = int(cfg.get("MAIL_FLATTERY", "2"))
+    length_setting = int(cfg.get("MAIL_LENGTH", "5"))
+    
+    # Map length setting to word count
+    word_count = 80 + (length_setting * 15)  # 1=95, 5=155, 10=230
+    
+    # Build tone instructions based on settings
+    tone_instructions = []
+    
+    if formality <= 3:
+        tone_instructions.append("Skriv ledigt och avslappnat, som till en bekant")
+    elif formality <= 6:
+        tone_instructions.append("Skriv professionellt men personligt")
+    else:
+        tone_instructions.append("Skriv formellt och affärsmässigt")
+    
+    if salesiness <= 3:
+        tone_instructions.append("Fokusera på information, inte sälj. Var rak och ärlig")
+    elif salesiness <= 6:
+        tone_instructions.append("Balansera information med ett mjukt erbjudande")
+    else:
+        tone_instructions.append("Var tydlig med erbjudandet och fördelarna")
+    
+    if flattery <= 3:
+        tone_instructions.append("INGEN smicker eller inställsamma fraser. Var rakt på sak")
+    elif flattery <= 6:
+        tone_instructions.append("Minimal smicker, fokusera på fakta")
+    # else: standard (inget extra)
+    
+    tone_text = "\n".join(f"- {t}" for t in tone_instructions)
+
+    prompt = f"""Du skriver för SajtStudio.se - en webbyrå som kombinerar AI med design.
+
+OM SAJTSTUDIO:
+- Vi använder AI för att snabbt ta fram utkast och idéer
+- Vi bygger moderna React-sidor med Next.js och Tailwind
+- Vi kan autogenerera kostnadsfria demo-sidor för att visa vad vi menar
+- Vi tar också gärna an hela projekt där vi finsliper designen för hand
+- Vi är nyfikna tekniknördar som gillar att experimentera
 
 FÖRETAGSINFORMATION:
 - Företagsnamn: {company_name}
@@ -232,28 +286,31 @@ FÖRETAGSINFORMATION:
 DOMÄNSITUATION:
 {domain_situation}{research_context}
 
+TON OCH STIL:
+{tone_text}
+
 UPPGIFT:
-Skriv ett kort (120-150 ord), professionellt och avslappnat e-postmeddelande som:
+Skriv ett mejl på ca {word_count} ord som:
 
 1. {greeting_instruction}
-2. Nämner kort att ni sett deras nyregistrerade företag (INTE "Grattis!" eller "Välkommen till företagsvärlden/näringslivet" - det låter för klyschigt)
-3. Visar att du förstår deras verksamhet kort
-4. {offer_focus.capitalize()}
-5. Avslutas med enkel call-to-action
+2. Nämner kort att vi sett deras nya bolag (UNDVIK: "Grattis!", "Välkommen till näringslivet", "spännande resa")
+3. Visar kort förståelse för deras verksamhet
+4. Nämner att vi kan ta fram en gratis demo-sida för dem att se hur det kan se ut
+5. {offer_focus.capitalize()}
+6. Enkel avslutning
 
-VIKTIGA REGLER:
-- Skriv på svenska, naturligt och avslappnat
-- SKRIV ALDRIG "Ämne:" i brödtexten - ämnesraden hanteras separat
-- Tilltala ENDAST en person (den i hälsningen), använd aldrig flera namn
-- Undvik klyschor: "Välkommen till näringslivet", "spännande resa", "digitala era"
-- Håll det kort och rakt på sak
-- Om DOMÄNSITUATION säger "INGEN VERIFIERAD HEMSIDA", påstå ALDRIG att du besökt deras hemsida
-- Avsluta med:
-  "Med vänliga hälsningar,
+ABSOLUTA REGLER:
+- Skriv på svenska
+- ALDRIG "Ämne:" i mejlet
+- ALDRIG flera namn - tilltala bara en person
+- ALDRIG klyschor som "digitala era", "online-närvaro är A och O", "konkurrenskraftig"
+- Om INGEN VERIFIERAD HEMSIDA: påstå ALDRIG att du besökt deras sida
+- Avsluta exakt såhär:
+  "Mvh,
   [Ditt namn]
   SajtStudio.se"
 
-Skriv endast mejlet (börja med hälsningen), inget annat:"""
+Skriv endast mejlet:"""
 
     return prompt
 
@@ -265,16 +322,21 @@ def build_subject_prompt(company_name: str, verksamhet: str) -> str:
     if len(short_name) > 25:
         short_name = short_name[:22] + "..."
 
-    return f"""Skapa en kort ämnesrad (max 45 tecken) för ett säljmejl till {short_name}.
+    return f"""Skapa en kort, neutral ämnesrad (max 40 tecken) för ett mejl till {short_name}.
 
 Verksamhet: {verksamhet if verksamhet else "Ej specificerad"}
 
+Bra exempel:
+- "Demo-sida för {short_name[:15]}?"
+- "Hemsida - snabb fråga"
+- "Webbförslag {short_name[:15]}"
+
 Regler:
-- Max 45 tecken totalt
-- På svenska
-- Saklig och konkret, t.ex. "Hemsida för {short_name}?" eller "Webbförslag till {short_name}"
-- UNDVIK: "Välkommen", "Grattis", "Spännande", utropstecken
-- Skriv ENDAST ämnesraden, inget annat, inga citattecken:"""
+- Max 40 tecken
+- Svenska
+- Neutral ton, inte säljig
+- UNDVIK: "Välkommen", "Grattis", "Spännande", "Erbjudande", utropstecken
+- Skriv ENDAST ämnesraden, inga citattecken:"""
 
 
 def clean_email_text(text: str) -> str:
@@ -520,7 +582,7 @@ def main() -> int:
         recipient_name = guess_recipient_name(recipient_email, people, company_name)
 
         # Generate email
-        email_prompt = build_email_prompt(data, recipient_name)
+        email_prompt = build_email_prompt(data, recipient_name, cfg)
         email_text, cost_info = generate_email(client, email_prompt, model)
 
         if "error" in cost_info:

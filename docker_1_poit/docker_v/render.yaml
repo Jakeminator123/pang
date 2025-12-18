@@ -1,0 +1,24 @@
+# render.yaml - Konfiguration för Render deployment
+# Denna fil används av Render för att automatiskt deploya Flask-servern
+
+services:
+  - type: web
+    name: bolagsverket-scraper-server
+    runtime: docker
+    dockerfilePath: ./Dockerfile.server
+    dockerContext: .
+    plan: free  # Free tier för testning, uppgradera vid behov
+    region: frankfurt  # EU-region för bättre latency från Sverige
+    envVars:
+      - key: FLASK_ENV
+        value: production
+    healthCheckPath: /health
+    # Render sätter PORT automatiskt, server.py läser den
+    
+    # Persistent disk för att spara scrapad data (kostar $1/månad per GB)
+    # Kommentera ut om du inte behöver persistent storage
+    # disk:
+    #   name: bolagsverket-data
+    #   mountPath: /app/info_server
+    #   sizeGB: 1
+

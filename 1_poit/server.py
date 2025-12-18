@@ -58,7 +58,19 @@ LANDING_PAGE_KEYWORDS = [
 VALID_KUNGO_URL_RE = re.compile(r"/poit-app/(?:kungorelse|enskild)/K\d{3,}-\d{2}", re.IGNORECASE)
 
 # Keywords in company names to exclude
-NAME_EXCLUDE_KEYWORDS = ("förening", "holding", "lagerbolag")
+NAME_EXCLUDE_KEYWORDS = (
+    "förening", "holding", "lagerbolag", "lagerbolaget", "startplattan", 
+    "stiftelse", "bostadsrättsförening", "brf ", "ideell", "kapital"
+)
+
+# Regex patterns for "shelf companies" (lagerbolag)
+# Pattern 1: "Startplattan 201499 Aktiebolag"
+# Pattern 2: "Lagerbolaget C 28068 AB"
+LAGERBOLAG_PATTERNS = [
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+\d{5,6}\s+Aktiebolag$", re.IGNORECASE),
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+[A-Z]\s+\d{4,6}\s+AB$", re.IGNORECASE),
+    re.compile(r"^[A-Za-zÅÄÖåäö]+\s+\d{4,6}\s+AB$", re.IGNORECASE),
+]
 
 # Keywords in email domains that indicate accounting firm (bulk registrations)
 EMAIL_DOMAIN_EXCLUDE_KEYWORDS = (
@@ -323,10 +335,22 @@ def _normalize_company_name(name: str | None) -> str | None:
 
 
 def _should_skip_company(name: str | None) -> bool:
+    """Check if company should be skipped based on name patterns."""
     if not isinstance(name, str):
         return False
     lowered = name.lower()
-    return any(keyword in lowered for keyword in NAME_EXCLUDE_KEYWORDS)
+    
+    # Check keywords
+    if any(keyword in lowered for keyword in NAME_EXCLUDE_KEYWORDS):
+        return True
+    
+    # Check lagerbolag patterns (e.g., "Startplattan 201499 Aktiebolag", "Lagerbolaget C 28068 AB")
+    stripped = name.strip()
+    for pattern in LAGERBOLAG_PATTERNS:
+        if pattern.match(stripped):
+            return True
+    
+    return False
 
 
 def _should_skip_email_domain(email: str | None) -> tuple[bool, str]:

@@ -52,3 +52,19 @@ min_confidence = 40
 # Max mails to generate (0 = all matching criteria)
 max_mails = 150
 
+# ============================================================================
+# TON OCH STIL (skala 1-10)
+# ============================================================================
+
+# Formalitet: 1 = casual/kompis, 10 = formellt/stelt
+formality = 4
+
+# Säljighet: 1 = bara info, 10 = aggressiv sälj
+salesiness = 3
+
+# Smicker/rövslickeri: 1 = rakt på sak, 10 = "ni är fantastiska!"
+flattery = 2
+
+# Längd: 1 = ultrakort (80 ord), 10 = längre (200 ord)
+length = 5
+

@@ -1,0 +1,25 @@
+# Dockerfile för Flask-servern
+# Denna körs på Render och tar emot data från extensionen
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Installera Flask
+COPY requirements-server.txt .
+RUN pip install --no-cache-dir -r requirements-server.txt
+
+# Kopiera server-filer
+COPY server.py .
+COPY config.txt .
+
+# Skapa nödvändiga mappar
+RUN mkdir -p info_server log/documents
+
+# Exponera port 5000
+EXPOSE 5000
+
+# Kör servern
+# server.py hanterar nu PORT env var automatiskt
+CMD ["python", "server.py"]
+

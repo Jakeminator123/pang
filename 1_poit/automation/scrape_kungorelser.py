@@ -140,6 +140,7 @@ IMG_OK = str((COOKIE_DIR / "ok.jpg").resolve())
 
 SOK_DIR = BASE_DIR / "bilder" / "2_sok_kunngorelse"
 IMG_LANK = str((SOK_DIR / "lank.jpg").resolve())  # kräver ≥ 0.88
+IMG_LANK_ALT = str((SOK_DIR / "alternativ_lank.jpg").resolve())  # hoppa klick om redan på söksidan
 
 MENY_DIR = BASE_DIR / "bilder" / "3_menyer"
 MENY_GLOB = "*.*"  # jpg/png/jpeg
@@ -1698,33 +1699,47 @@ def main():
         if not check_chrome_alive():
             return 1
 
-        # Länk (≥ 0.88)
+        # Kontrollera om vi redan är på söksidan (autocomplete har tagit oss dit)
         region = refresh_region(win)
-        print("[*] Letar efter 'lank.jpg' (≥ 0.88)...")
-        best, best_score = locate_best_over_samples(
-            IMG_LANK,
+        print("[*] Letar efter 'alternativ_lank.jpg' (≥ 0.82)...")
+        alt_best, alt_score = locate_best_over_samples(
+            IMG_LANK_ALT,
             region,
             threshold=CONF_LANK,
             timeout_sec=LANK_TIMEOUT,
             scales=SCALES_LANK,
             samples=SAMPLES_LANK,
         )
-        if not best:
-            print("[FEL] Hittade inte 'lank.jpg' över tröskeln. Se debug i 'debug\\'.")
+
+        if alt_best:
+            print(f"[✓] Redan på söksidan (alternativ_lank) score={alt_score:.3f} – hoppar över klick.")
+        else:
+            # Länk (≥ 0.82)
+            print("[*] Letar efter 'lank.jpg' (≥ 0.82)...")
+            best, best_score = locate_best_over_samples(
+                IMG_LANK,
+                region,
+                threshold=CONF_LANK,
+                timeout_sec=LANK_TIMEOUT,
+                scales=SCALES_LANK,
+                samples=SAMPLES_LANK,
+            )
+            if not best:
+                print("[FEL] Hittade inte 'lank.jpg' över tröskeln. Se debug i 'debug\\'.")
+                if not check_chrome_alive():
+                    return 1
+                return 1
+            print(f"[+] Hittade länk: score={best_score:.3f}")
+            if not safe_click_center(best, region, win=win):
+                print("[VARN] Klick blockerat (kant/header) – avbryter.")
+                if not check_chrome_alive():
+                    return 1
+                return 1
+
             if not check_chrome_alive():
                 return 1
-            return 1
-        print(f"[+] Hittade länk: score={best_score:.3f}")
-        if not safe_click_center(best, region, win=win):
-            print("[VARN] Klick blockerat (kant/header) – avbryter.")
-            if not check_chrome_alive():
-                return 1
-            return 1
 
-        if not check_chrome_alive():
-            return 1
-
-        rsleep(*WAIT_AFTER_LINK)
+            rsleep(*WAIT_AFTER_LINK)
         run_menu_sequence(win)
         print("[✓] Sökformulär klar.")
 

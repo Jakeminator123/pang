@@ -1,0 +1,60 @@
+# Docker Compose för Bolagsverket Kungörelse Scraper
+# ==================================================
+#
+# Användning:
+#   docker-compose up --build              # Bygg och kör
+#   docker-compose up -d                   # Kör i bakgrunden
+#   docker-compose down                    # Stoppa
+#
+# Med parametrar (via miljövariabler):
+#   TARGET_DATE=20251218 SCRAPE_COUNT=10 docker-compose up --build
+
+services:
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.scraper
+    container_name: bolagsverket-scraper
+    
+    # Volymer för att spara output och konfig
+    volumes:
+      # Output sparas till huvudprojektets info_server
+      - ../1_poit/info_server:/app/output
+      # Config kan uppdateras utan ombyggnad
+      - ./config.txt:/app/config.txt:ro
+      # PERSISTENT CHROME PROFIL - behåller cookies mellan körningar!
+      - chrome_profile:/app/chrome_profile
+    
+    # Miljövariabler
+    environment:
+      - HEADLESS=true
+      - IS_DOCKER=true
+      - TARGET_DATE=${TARGET_DATE:-}
+      - SCRAPE_COUNT=${SCRAPE_COUNT:-10}
+      - COOKIE_WAIT=${COOKIE_WAIT:-15}
+      - PYTHONUNBUFFERED=1
+    
+    # Resurssbegränsningar (Chrome kan vara hungrigt)
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+    
+    # Kör en gång och avsluta
+    restart: "no"
+    
+    # Nätverk (behövs inte för scraping men bra att ha)
+    networks:
+      - scraper-net
+
+# Persistent volym för Chrome-profil
+volumes:
+  chrome_profile:
+    name: bolagsverket-chrome-profile
+
+networks:
+  scraper-net:
+    driver: bridge
+

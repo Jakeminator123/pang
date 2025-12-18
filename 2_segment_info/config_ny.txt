@@ -1,22 +1,32 @@
 [RUNNER]
-max_companies_for_testing = 5
+max_companies_for_testing = 10
 
 [ANALYZE]
-analyze_max_companies = 5
+analyze_max_companies = 10
 analyze_model = gpt-4o
 
 [VERIFY]
-verify_max_companies = 5
+verify_max_companies = 10
 verify_domain_confidence_threshold = 0.40
 
 [FINALIZE]
-finalize_max_companies = 5
-site_audit_max_antal = 5
-site_audit_threshold = 0.60
-site_audit_depth = LOW
+finalize_max_companies = 10
+
+[SITE]
+# Site generation settings (used by interactive_batch.py and headless_main.py)
+site_enabled = y
+site_threshold = 0.80
+site_max_antal = 30
+
+[AUDIT]
+# Audit settings - crawls existing company websites and generates PDF reports
+audit_enabled = y
+audit_threshold = 0.60
+audit_max_antal = 10
+audit_depth = LOW
 
 [MAIL]
-mail_max_companies = 5
+mail_max_companies = 10
 mail_enabled = y
 mail_min_probability = 0.40
 

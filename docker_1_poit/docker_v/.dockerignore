@@ -1,0 +1,23 @@
+# Ignorera onödiga filer i Docker builds
+chrome_profile/
+info_server/
+log/
+debug/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist/
+build/
+.git/
+.gitignore
+.vscode/
+.idea/
+*.log
+*.db
+*.zip
+

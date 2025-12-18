@@ -322,6 +322,73 @@ def generate_subtitle(verksamhet: str, industry_hints: Dict[str, str] = None) ->
         return "Professionella tjänster anpassade efter dina behov."
 
 
+def get_industry_design_suggestions(verksamhet: str) -> Dict[str, str]:
+    """
+    Get industry-specific design suggestions to make demo sites less generic.
+    Returns dict with color_scheme, style_notes, and unique_components.
+    """
+    verksamhet_lower = verksamhet.lower()
+    
+    # Default/fallback
+    suggestions = {
+        "color_scheme": "mörkt tema med teal/cyan accenter",
+        "style_notes": "modern och professionell",
+        "unique_components": "hero med företagsnamn, tjänster-sektion, kontaktformulär"
+    }
+    
+    # Industry-specific design
+    if any(word in verksamhet_lower for word in ["kakel", "keramik", "bad", "inredning", "renovering"]):
+        suggestions = {
+            "color_scheme": "varm beige/terracotta med vit bakgrund och mässing-accenter",
+            "style_notes": "elegant, galleri-inspirerad layout med stora bilder. Lägg till ett interaktivt 'Hitta din stil'-quiz",
+            "unique_components": "bildgalleri med hover-zoom, färgpalettväljare, rum-inspirations-sektion"
+        }
+    elif any(word in verksamhet_lower for word in ["estetik", "botox", "filler", "skönhet", "spa", "hudvård"]):
+        suggestions = {
+            "color_scheme": "mjuk rosa/mauve med guld-accenter och vit bakgrund",
+            "style_notes": "lyxig, minimalistisk design med mjuka kurvor och animerade gradients",
+            "unique_components": "behandlings-prislista med tabs, före/efter-slider, bokningsknapp med kalender-ikon"
+        }
+    elif any(word in verksamhet_lower for word in ["bygg", "snickare", "entreprenad", "fastighet"]):
+        suggestions = {
+            "color_scheme": "industriell grå/mörkblå med orange/gul accent",
+            "style_notes": "robust, tillförlitlig känsla med geometriska former och ikoner",
+            "unique_components": "projekt-tidslinje, certifikats-badges, kontaktformulär med projekttyp-dropdown"
+        }
+    elif any(word in verksamhet_lower for word in ["restaurang", "café", "mat", "catering", "bageri"]):
+        suggestions = {
+            "color_scheme": "varm orange/brun med krämvit bakgrund",
+            "style_notes": "inbjudande, aptitretande design med matbilder och handskriven typsnitt för rubriker",
+            "unique_components": "meny-sektion med priskolumner, öppettider-kort, reservations-CTA"
+        }
+    elif any(word in verksamhet_lower for word in ["it", "tech", "mjukvara", "data", "ai", "digital"]):
+        suggestions = {
+            "color_scheme": "mörkblå/svart med neon-grön/blå gradient-accenter",
+            "style_notes": "futuristisk, tech-forward med kod-animations eller data-visualiseringar",
+            "unique_components": "animerad hero med typing-effekt, tech-stack-ikoner, case studies-karusell"
+        }
+    elif any(word in verksamhet_lower for word in ["juridik", "advokat", "juridisk", "redovisning", "revision"]):
+        suggestions = {
+            "color_scheme": "marinblå med guld/brons accenter, vit bakgrund",
+            "style_notes": "auktoritär, förtroendeingivande med serif-typsnitt för rubriker",
+            "unique_components": "expertis-områden med ikoner, team-grid med bilder, CTA för gratis konsultation"
+        }
+    elif any(word in verksamhet_lower for word in ["träning", "gym", "fitness", "sport", "hälsa"]):
+        suggestions = {
+            "color_scheme": "energisk svart/röd eller svart/lime-grön",
+            "style_notes": "dynamisk, motiverande design med diagonal lines och kraftfulla bilder",
+            "unique_components": "klass-schema, medlemskaps-priser med jämförelse, testimonials från medlemmar"
+        }
+    elif any(word in verksamhet_lower for word in ["foto", "film", "video", "media", "kreativ", "design"]):
+        suggestions = {
+            "color_scheme": "minimalistisk svart/vit med en stark accent-färg",
+            "style_notes": "portfolio-fokuserad med masonry-grid, stort fokus på visuellt innehåll",
+            "unique_components": "fullskärms-portfolio-galleri, filterbara projekt-kategorier, klient-logos"
+        }
+    
+    return suggestions
+
+
 async def build_v0_prompt(
     data: Dict[str, Any],
     use_openai: bool = True,
@@ -350,7 +417,10 @@ async def build_v0_prompt(
     # Build domain text
     domain_text = ", ".join(domain_options) if domain_options else "Ej angivet"
 
-    # Base prompt
+    # Get industry-specific design suggestions
+    design = get_industry_design_suggestions(verksamhet)
+    
+    # Base prompt with industry-specific suggestions
     base_prompt = f"""Skapa en professionell, modern React-landningssida för {company_name}.
 
 FÖRETAGSINFORMATION:
@@ -362,10 +432,15 @@ FÖRETAGSINFORMATION:
 - Telefon: {phone}
 - Domän: {domain_text}{people_text}
 
+BRANSCHSPECIFIK DESIGN:
+- Färgschema: {design['color_scheme']}
+- Stil: {design['style_notes']}
+- Unika komponenter: {design['unique_components']}
+
 DESIGNKRAV:
-- Modern, professionell design med mörkt tema och accentfärger (teal/cyan eller branschpassande)
+- Använd färgschemat ovan för att skapa en branschanpassad design
 - Hero-sektion med företagsnamn och värdeerbjudande
-- Sektioner för: Vad vi erbjuder, Vårt team, Kontaktinformation
+- Inkludera de unika komponenterna ovan för att göra sidan mer specifik för branschen
 - Responsiv design (mobile-first)
 - Smooth scroll och Intersection Observer animations
 - Tailwind CSS för all styling
@@ -381,12 +456,12 @@ TEKNISKA KRAV:
 
 INNEHÅLL:
 - Hero med kraftfull rubrik och värdeerbjudande baserat på verksamheten
-- Beskrivning av tjänster/produkter
+- Beskrivning av tjänster/produkter anpassade efter {verksamhet[:50]}
 - Team-sektion med personerna ovan
 - Kontaktformulär eller tydlig CTA för kontakt
 - Footer med kontaktuppgifter
 
-Anpassa designen efter branschen ({verksamhet[:100]})."""
+VIKTIGT: Gör designen unik och branschspecifik, undvik generiska mallar."""
 
     # Enhance with OpenAI if enabled
     if use_openai and openai_key:

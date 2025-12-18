@@ -1,0 +1,41 @@
+# Dockerfile för headless Playwright-baserad scraper
+# =================================================
+# Använder Microsoft's officiella Playwright image med Chrome förinstallerad
+#
+# Byggkommando:
+#   docker build -t bolagsverket-scraper -f Dockerfile.scraper .
+#
+# Körning:
+#   docker run -v ./output:/app/output bolagsverket-scraper
+
+FROM mcr.microsoft.com/playwright/python:v1.57.0-jammy
+
+LABEL maintainer="pang-project"
+LABEL description="Headless scraper for Bolagsverket kungörelser"
+
+WORKDIR /app
+
+# Installera Python-dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Kopiera scraper-kod
+COPY lib/ ./lib/
+COPY scrape.py .
+COPY config.txt .
+
+# Skapa output-mapp
+RUN mkdir -p /app/output
+
+# Miljövariabler
+ENV HEADLESS=true
+ENV PYTHONUNBUFFERED=1
+ENV IS_DOCKER=true
+
+# Använd icke-root användare (säkerhet)
+# Playwright-imagen skapar pwuser
+USER pwuser
+
+# Entry point
+CMD ["python", "-u", "scrape.py"]
+

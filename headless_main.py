@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-main.py - Central orchestrator för hela datapipelinen
+headless_main.py - HEADLESS variant av datapipelinen
 
 Användning:
-    python main.py           # Kör med inställningar från config-filer
-    python main.py <nummer>  # Kör med master-nummer (t.ex. python main.py 88)
+    python headless_main.py           # Kör med inställningar från config-filer
+    python headless_main.py <nummer>  # Kör med master-nummer (t.ex. python headless_main.py 10)
+    python headless_main.py 10 --visible  # Visa Chrome-fönster (för CAPTCHA)
+
+SKILLNAD MOT main.py:
+- Använder HEADLESS scraping (headless_1_poit/) istället för GUI-baserad (1_poit/automation/)
+- Snabbare: ~6-10s per sida istället för ~25s
+- Ingen bildigenkänning eller pyautogui
+- Behöver fortfarande Chrome men styr via Playwright CDP
 
 Master-nummer styr ALLT:
 - Antal företag att skrapa
@@ -14,13 +21,13 @@ Master-nummer styr ALLT:
 - Antal företag att köra site audit på
 
 Kör i sekvens:
-1. Starta Flask-server (1_poit/server.py)
-2. Kör scraping (scrape_kungorelser.py) - endast om dagens data saknas
+1. Starta Flask-server (1_poit/server.py) - för framtida användning
+2. HEADLESS scraping (headless_1_poit/) - snabbare än GUI
 3. Kör process_raw_data.py (bearbetar rådata)
 4. Kör segmentering pipeline (2_segment_info/ALLA.py)
-5. Kör evaluation och generera hemsidor (3_sajt/) - bedömer företag och genererar hemsidor för 20-30% av värda företag
-6. Kopiera till Dropbox (9_dropbox/) - kopierar datum-mapp till Dropbox + 10_jocke
-7. Bearbeta styrelsedata (10_jocke/) - parsear och strukturerar styrelsedata till jocke.xlsx
+5. Kör evaluation och generera hemsidor (3_sajt/)
+6. Kopiera till Dropbox (9_dropbox/)
+7. Bearbeta styrelsedata (10_jocke/)
 """
 
 import asyncio
@@ -757,6 +764,162 @@ async def generate_sites_for_worthy_companies(
         return 0, 0
 
 
+def load_audit_config() -> dict:
+    """Load audit settings from config_ny.txt."""
+    config = {
+        "audit_enabled": True,
+        "audit_threshold": 0.60,
+        "audit_max_antal": 10,
+        "audit_depth": "LOW",
+    }
+    
+    config_path = SEGMENT_DIR / "config_ny.txt"
+    if config_path.exists():
+        try:
+            parser = configparser.ConfigParser()
+            parser.optionxform = str
+            parser.read(config_path, encoding="utf-8")
+            
+            if parser.has_section("AUDIT"):
+                enabled = parser.get("AUDIT", "audit_enabled", fallback="y")
+                config["audit_enabled"] = enabled.lower() in ("y", "yes", "true", "1")
+                
+                threshold = parser.get("AUDIT", "audit_threshold", fallback="0.60")
+                config["audit_threshold"] = float(threshold)
+                
+                max_antal = parser.get("AUDIT", "audit_max_antal", fallback="10")
+                config["audit_max_antal"] = int(max_antal)
+                
+                config["audit_depth"] = parser.get("AUDIT", "audit_depth", fallback="LOW")
+        except Exception as e:
+            log_warn(f"Kunde inte läsa audit-config: {e}")
+    
+    return config
+
+
+async def run_audits_for_qualified_companies(date_folder: Path) -> tuple[int, int]:
+    """
+    Kör audits för företag med verifierad domän och tillräcklig confidence.
+    
+    Audits crawlar företagets befintliga hemsida och genererar:
+    - audit_report.json - Detaljerad analys
+    - audit_report.pdf - Snygg PDF-rapport
+    - company_analysis.json - Strukturerad företagsdata
+    - company_profile.txt - Läsbar profil
+    
+    Returns:
+        (qualified_count, audited_count) - Antal kvalificerade och antal auditade
+    """
+    audit_config = load_audit_config()
+    
+    if not audit_config["audit_enabled"]:
+        log_info("Audits är inaktiverade i config (audit_enabled = n)")
+        return 0, 0
+    
+    threshold = audit_config["audit_threshold"]
+    max_antal = audit_config["audit_max_antal"]
+    
+    log_info(f"Audit-inställningar: threshold={threshold:.0%}, max={max_antal}")
+    
+    try:
+        # Importera audit-funktion (dynamisk import från 3_sajt/all_the_scripts)
+        sys.path.insert(0, str(SAJT_DIR / "all_the_scripts"))
+        from standalone_audit import run_audit_to_folder  # type: ignore[import-not-found]
+        
+        # Hitta alla K-mappar
+        company_dirs = [d for d in date_folder.iterdir() if d.is_dir() and d.name.startswith("K")]
+        
+        qualified_companies = []
+        
+        for company_dir in company_dirs:
+            # Läs company_data.json
+            company_data_file = company_dir / "company_data.json"
+            if not company_data_file.exists():
+                continue
+            
+            try:
+                data = json.loads(company_data_file.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                continue
+            
+            # Kontrollera domän
+            domain_info = data.get("domain", {})
+            domain_url = domain_info.get("guess", "")
+            confidence = domain_info.get("confidence", 0)
+            status = domain_info.get("status", "unknown")
+            
+            # Kräv verifierad domän med tillräcklig confidence
+            if not domain_url:
+                continue
+            if status not in ("verified", "ai_verified"):
+                continue
+            if confidence < threshold:
+                continue
+            
+            # Skippa om audit redan finns
+            if (company_dir / "audit_report.json").exists():
+                continue
+            
+            qualified_companies.append({
+                "dir": company_dir,
+                "domain": domain_url,
+                "confidence": confidence,
+                "company_name": data.get("company_name", company_dir.name),
+            })
+        
+        if not qualified_companies:
+            log_info("Inga företag kvalificerade för audit")
+            return 0, 0
+        
+        # Begränsa till max_antal
+        to_audit = qualified_companies[:max_antal]
+        
+        log_info(f"Kör audits för {len(to_audit)} av {len(qualified_companies)} kvalificerade företag")
+        
+        audited_count = 0
+        for idx, company in enumerate(to_audit, 1):
+            company_dir = company["dir"]
+            domain_url = company["domain"]
+            company_name = company["company_name"]
+            confidence = company["confidence"]
+            
+            # Säkerställ https://
+            if not domain_url.startswith("http"):
+                domain_url = f"https://{domain_url}"
+            
+            log_info(f"  [{idx}/{len(to_audit)}] Audit: {company_name} ({domain_url}, {confidence:.0%})")
+            
+            try:
+                result = run_audit_to_folder(domain_url, company_dir)
+                
+                if result.get("audit_pdf"):
+                    log_info(f"    ✅ PDF skapad: audit_report.pdf")
+                else:
+                    log_info(f"    ✅ Audit klar (ingen PDF - reportlab saknas?)")
+                
+                audited_count += 1
+                
+                # Kort paus mellan audits
+                if idx < len(to_audit):
+                    await asyncio.sleep(1)
+                    
+            except Exception as e:
+                log_error(f"    ❌ Audit misslyckades: {e}")
+                continue
+        
+        log_info(f"Audits klara: {audited_count} av {len(to_audit)} lyckades")
+        return len(qualified_companies), audited_count
+        
+    except ImportError as e:
+        log_error(f"Kunde inte importera standalone_audit: {e}")
+        return 0, 0
+    except Exception as e:
+        log_error(f"Fel vid audits: {e}")
+        import traceback
+        traceback.print_exc()
+        return 0, 0
+
+
 MAIL_GREETING_KEYWORDS = ("hej", "hejsan", "tjena", "tjabba", "hallå", "god ")
 
 
@@ -1125,8 +1288,18 @@ def update_config_with_master_number(master_number: int):
             if not parser.has_section("FINALIZE"):
                 parser.add_section("FINALIZE")
             parser.set("FINALIZE", "finalize_max_companies", str(master_number))
-            parser.set("FINALIZE", "site_audit_max_antal", str(master_number))
-            # BEHÅLLER site_audit_threshold, site_audit_depth och andra inställningar från config
+
+            # Uppdatera SITE-sektionen (bara max_antal)
+            if not parser.has_section("SITE"):
+                parser.add_section("SITE")
+            parser.set("SITE", "site_max_antal", str(master_number))
+            # BEHÅLLER site_enabled, site_threshold
+
+            # Uppdatera AUDIT-sektionen (bara max_antal)
+            if not parser.has_section("AUDIT"):
+                parser.add_section("AUDIT")
+            parser.set("AUDIT", "audit_max_antal", str(master_number))
+            # BEHÅLLER audit_enabled, audit_threshold, audit_depth
 
             # Uppdatera MAIL-sektionen (bara max_companies)
             if not parser.has_section("MAIL"):
@@ -1229,15 +1402,18 @@ def main():
     setup_run_logging()
     log_info(f"Run-logg: {RUN_LOG_FILE}")
 
-    # Parse arguments - hantera både master_number och datumargument
+    # Parse arguments - hantera master_number, datumargument och --visible
     raw_args = sys.argv[1:]
 
     master_number = None
     target_date_str = None
+    visible_chrome = False  # HEADLESS: Visa Chrome-fönster?
 
     # Parse argumenten manuellt för att hantera både nummer och -15 format
     for arg in raw_args:
-        if arg.startswith("-") and arg[1:].isdigit():
+        if arg == "--visible" or arg == "-v":
+            visible_chrome = True
+        elif arg.startswith("-") and arg[1:].isdigit():
             # Först kolla om det är ett kort master-nummer (1-2 siffror, t.ex. -4)
             num_part = arg[1:]
             if len(num_part) <= 2:
@@ -1255,37 +1431,43 @@ def main():
             # Detta är master-nummer
             master_number = int(arg)
         elif arg in ("--help", "-h"):
-            print("""Kör komplett datapipeline
+            print("""Kör HEADLESS datapipeline (snabbare scraping)
 
 Användning:
-  python main.py                    # Kör med inställningar från config-filer
-  python main.py 88                 # Kör med master-nummer 88 (styr allt)
-  python main.py -4                 # Kör med master-nummer 4 (begränsar till 4 företag)
-  python main.py 10                 # Kör med master-nummer 10 (begränsar till 10 företag)
-  python main.py 5 -7               # Kör med master-nummer 5 och datum 7:e dagen i månaden
-  python main.py 5 -1107            # Kör med master-nummer 5 och datum 11:e månaden, dag 7 (nuvarande år)
-  python main.py 5 -20251107       # Kör med master-nummer 5 och komplett datum 2025-11-07
-  python main.py --help             # Visa denna hjälp
+  python headless_main.py                    # Kör med inställningar från config-filer
+  python headless_main.py 10                 # Kör med master-nummer 10
+  python headless_main.py 10 --visible       # Visa Chrome (för CAPTCHA)
+  python headless_main.py 5 -1218            # Master 5, datum 18 december
+  python headless_main.py --help             # Visa denna hjälp
 
 Argument:
   master_number                     Master-nummer som styr antal företag genom hela pipelinen
+  --visible, -v                     Visa Chrome-fönster (för debugging/CAPTCHA)
   -<nummer>                         Master-nummer (1-2 siffror, t.ex. -4 för 4 företag)
   -<dag>                            Välj specifik dag i månaden (3+ siffror, t.ex. -15 för 15:e dagen)
   -<månaddag>                       Välj månad och dag (4 siffror, t.ex. -1107 för 11:e månaden, dag 7)
   -<YYYYMMDD>                       Välj komplett datum (8 siffror, t.ex. -20251107 för 2025-11-07)
+
+SKILLNAD MOT main.py:
+  - Använder headless scraping (snabbare, ~6-10s per sida)
+  - Ingen bildigenkänning eller GUI-automation
+  - Sparar till samma plats (1_poit/info_server/)
 """)
             return 0
 
     # Om inget master-nummer angavs, använd None (använder config)
     if master_number is None and target_date_str is None and len(raw_args) > 0:
-        # Om det finns argument men inget matchade, visa fel
-        log_error(f"Okänt argument: {raw_args[0]}")
-        log_info("Använd: python main.py [master_number] [-dag]")
-        return 1
+        # Filtrera bort --visible från kontrollen
+        non_flag_args = [a for a in raw_args if a not in ("--visible", "-v")]
+        if non_flag_args:
+            log_error(f"Okänt argument: {non_flag_args[0]}")
+            log_info("Använd: python headless_main.py [master_number] [-dag] [--visible]")
+            return 1
 
     log_info("=" * 60)
-    log_info("STARTAR KOMPLETT DATAPIPELINE")
+    log_info("STARTAR HEADLESS DATAPIPELINE")
     log_info("=" * 60)
+    log_info(f"Chrome synlig: {'JA' if visible_chrome else 'NEJ (off-screen)'}")
     log_info(f"Projektrot: {PROJECT_ROOT}")
     log_info(f"Python: {sys.executable}")
     log_info("Config-filer:")
@@ -1293,7 +1475,6 @@ Argument:
         PROJECT_ROOT / ".env",
         POIT_DIR / "config.txt",
         SEGMENT_DIR / "config_ny.txt",
-        SAJT_DIR / "config.txt",
     ]:
         exists = "OK" if cfg_path.exists() else "SAKNAS"
         log_info(f"  - {cfg_path.relative_to(PROJECT_ROOT)}: {exists}")
@@ -1429,9 +1610,9 @@ Argument:
         mark_step_done(target_date_str, status, "server_started")
         print()
 
-        # Steg 2: Kontrollera om scraping-data redan finns
+        # Steg 2: HEADLESS SCRAPING
         log_info("=" * 60)
-        log_info("STEG 2: SCRAPING")
+        log_info("STEG 2: HEADLESS SCRAPING")
         log_info("=" * 60)
 
         info_server_dir = POIT_DIR / "info_server"
@@ -1446,38 +1627,52 @@ Argument:
             # Om dagens JSON redan finns, hoppa över scraping helt
             if today_json.exists() and today_json.stat().st_size > 0:
                 log_info(f"✓ Dagens scraping-data finns redan: {today_json}")
-                log_info(
-                    "Hoppar över scraping - Chrome-extensionen + servern har redan sparat data"
-                )
+                log_info("Hoppar över scraping - data finns redan")
                 mark_step_done(target_date_str, status, "scraping")
             else:
-                scripts_to_run = [
-                    (AUTOMATION_DIR / "scrape_kungorelser.py", "scraping"),
-                ]
-
-                target_date_check = os.environ.get("TARGET_DATE")
-                log_info(f"[DEBUG] TARGET_DATE innan scraping: {target_date_check}")
-
-                for script_path, step_key in scripts_to_run:
-                    if not script_path.exists():
-                        log_error(f"Skript saknas: {script_path}")
-                        failures.append((script_path.name, "Saknas"))
-                        mark_failed_step(
-                            target_date_str, status, step_key, "skript saknas"
-                        )
-                        return 1
-
-                    exit_code, duration, step_log, tail = run_script(
-                        step_key, script_path, cwd=AUTOMATION_DIR
+                # HEADLESS: Kör headless scraping istället för GUI-baserad
+                log_info("Kör HEADLESS scraping (snabbare än GUI-variant)")
+                
+                # Bestäm antal att scrapa:
+                # - Om master_number anges: använd det
+                # - Annars: None = låt config_headless.txt bestämma (MAX_KUN_DAG)
+                scrape_count = master_number if master_number and master_number > 0 else None
+                if scrape_count:
+                    log_info(f"Antal att scrapa: {scrape_count} (från argument)")
+                else:
+                    log_info("Antal att scrapa: styrs av config_headless.txt (MAX_KUN_DAG)")
+                log_info(f"Chrome synlig: {'JA' if visible_chrome else 'NEJ'}")
+                
+                try:
+                    # Importera headless scraper (dynamisk import från headless_1_poit)
+                    sys.path.insert(0, str(PROJECT_ROOT / "headless_1_poit"))
+                    from scrape import run_headless_scrape  # type: ignore[import-not-found]
+                    
+                    # Kör headless scraping
+                    success, total_in_list, scraped_count = asyncio.run(
+                        run_headless_scrape(date_str, scrape_count, visible=visible_chrome)
                     )
-                    if exit_code != 0:
-                        failures.append((script_path.name, exit_code, step_log))
-                        summarize_failure(step_key, exit_code, step_log, tail)
-                        mark_failed_step(
-                            target_date_str, status, step_key, f"exit {exit_code}"
-                        )
+                    
+                    if not success:
+                        log_error("Headless scraping misslyckades")
+                        mark_failed_step(target_date_str, status, "scraping", "headless failed")
                         return 1
-                mark_step_done(target_date_str, status, "scraping")
+                    
+                    log_info(f"✓ Headless scraping klar: {scraped_count}/{total_in_list} kungörelser")
+                    mark_step_done(target_date_str, status, "scraping")
+                    
+                except ImportError as e:
+                    log_error(f"Kunde inte importera headless scraper: {e}")
+                    log_error("Kontrollera att headless_1_poit/scrape.py finns")
+                    mark_failed_step(target_date_str, status, "scraping", f"import error: {e}")
+                    return 1
+                except Exception as e:
+                    log_error(f"Fel vid headless scraping: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    mark_failed_step(target_date_str, status, "scraping", str(e))
+                    return 1
+                
                 print()
 
         # Verifiera att JSON-fil finns (antingen befintlig eller nyss skapad)
@@ -1495,13 +1690,11 @@ Argument:
                 log_error(
                     f"Ingen kungorelser_*.json fil hittades i {date_folder} eller någon annan mapp"
                 )
-                log_error(
-                    "JSON-filen skapas när extensionen fångar API-anrop från /poit/rest/SokKungorelse"
-                )
+                log_error("Headless scraping borde ha skapat denna fil.")
                 log_error("Kontrollera att:")
-                log_error("  1. Extensionen är laddad i Chrome")
-                log_error("  2. Server körs och svarar på /health")
-                log_error("  3. API-anrop görs när du söker efter kungörelser")
+                log_error("  1. Chrome kunde starta (prova med --visible)")
+                log_error("  2. Inga CAPTCHA blockerade")
+                log_error("  3. API:et svarade korrekt")
                 mark_failed_step(
                     target_date_str, status, "scraping", "JSON-data saknas"
                 )
@@ -1612,6 +1805,17 @@ Argument:
                         log_warn(
                             "Inga värda företag hittades - hoppar över site generation"
                         )
+
+                    # Kör audits för företag med verifierad domän
+                    log_info("")
+                    log_info("Kör audits för företag med befintlig hemsida...")
+                    qualified_count, audited_count = asyncio.run(
+                        run_audits_for_qualified_companies(latest_date_dir)
+                    )
+                    if audited_count > 0:
+                        log_info("Audit sammanfattning:")
+                        log_info(f"  - Kvalificerade företag: {qualified_count}")
+                        log_info(f"  - Genomförda audits: {audited_count}")
                 else:
                     log_warn(
                         "Hittade ingen datum-mapp i djupanalys/ - hoppar över evaluation"

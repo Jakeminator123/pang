@@ -1,0 +1,27 @@
+# Bolagsverket Kungörelse Scraper - Konfiguration
+# ================================================
+
+# Antal kungörelser att hämta
+count = 20
+
+# Datum (YYYYMMDD, lämna tomt för idag)
+date = 
+
+# Antal parallella tabs (1 = säkrast, 2 = lite snabbare)
+# Rekommendation: Börja med 1, öka till 2 om inga CAPTCHA
+parallel = 1
+
+# Visa Chrome-fönster (true = synlig, false = off-screen)
+visible = false
+
+# Väntetid per sida i sekunder (random mellan min-max)
+# Ökade för att minska CAPTCHA-risk
+wait_min = 6
+wait_max = 10
+
+# Väntetid mellan batches/sidor
+between_min = 4
+between_max = 8
+
+# Väntetid efter cookie-banner klickats
+cookie_wait = 14

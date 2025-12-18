@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Flask-servern - denna kan deployas till Render
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mounta mappar så data sparas lokalt
+      - ./info_server:/app/info_server
+      - ./log:/app/log
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Scrapern - körs automatiskt med Chrome + extension förinstallerad
+  # Använder Selenium med headless Chrome
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.scraper
+    depends_on:
+      - server
+    volumes:
+      - ./info_server:/app/info_server
+      - ./chrome_profile:/app/chrome_profile  # Persistent Chrome profile
+      - ./bilder:/app/bilder
+      - ./config.txt:/app/config.txt
+      - ./debug:/app/debug
+    env_file:
+      - .env  # Läs Google credentials från .env-fil
+    environment:
+      - HEADLESS=true
+      - SERVER_URL=http://server:5000  # Docker service name
+    # Körs en gång när containern startar
+    restart: "no"
+    # Network: använder samma network som server (default)
+
