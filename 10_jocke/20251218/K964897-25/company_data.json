@@ -1,0 +1,99 @@
+{
+  "folder": "K964897-25",
+  "extracted_at": "2025-12-18T02:32:04.284492",
+  "company_name": "Stellar Ally AB",
+  "orgnr": "559562-9899",
+  "verksamhet": "Bolaget ska bedriva utveckling, försäljning och tillhandahållande av programvaror och applikationer, konsultverksamhet inom systemutveckling och kvalitetssäkring av programvara, samt därmed förenlig verksamhet.",
+  "sate": "Linköping",
+  "address": "c/o Jenny Choudhury, Bataljonsgatan 2A, 587 52 LINKÖPING,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-08",
+  "emails": [
+    "jen.choudhury@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Jenny Maria Zafrin Choudhury",
+      "role": "Styrelsesuppleant",
+      "personnr": "197610-XXXX"
+    },
+    {
+      "name": "Ann Choudhury",
+      "role": "Styrelsesuppleant",
+      "personnr": "195710-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "stellarally.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "stellarally.com",
+        "source": "generated"
+      },
+      {
+        "domain": "stellarally.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "stellarallyab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Stellar Ally AB",
+    "searches": [
+      {
+        "query": "Stellar Ally AB hemsida website",
+        "summary": "Här är den information som finns tillgänglig om företaget **Stellar Ally AB**:\n\n- Stellar Ally AB är ett svenskt aktiebolag med organisationsnummer **559562‑9899**. Företaget har sitt säte i **Linköping**, på adress **Bataljonsgatan 2A, 587 52 Linköping**. Det grundades den 8 november 2025 och registrerades hos Bolagsverket den 16 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595629899-Stellar_Ally_AB?utm_source=openai)).\n\n- Bolaget har följande styrelseledamöter: **Jenny Choudhury",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629899-Stellar_Ally_AB?utm_source=openai",
+            "title": "Stellar Ally AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Stellar Ally AB Bolaget ska bedriva utveckling, försäljning och ti kontakt",
+        "summary": "Här är en kort sammanfattning av Stellar Ally AB:\n\n- Bolaget är registrerat med organisationsnummer 559562‑9899 och har sitt säte i Linköping. Adressen är Bataljonsgatan 2 A, 587 52 Linköping ([bolagsfakta.se](https://www.bolagsfakta.se/5595629899-Stellar_Ally_AB?utm_source=openai)).\n- Verksamhetsbeskrivningen enligt Bolagsverket anger att bolaget ska bedriva utveckling, försäljning och tillhandahållande av programvaror och applikationer, konsultverksamhet inom systemutveckling och kvalitetssäkr",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629899-Stellar_Ally_AB?utm_source=openai",
+            "title": "Stellar Ally AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Stellar Ally AB\" site:se",
+        "summary": "Här är en kort sammanfattning om **Stellar Ally AB**, baserat på svensk information från Bolagsfakta:\n\n- **Organisationsnummer**: 559562‑9899 ([bolagsfakta.se](https://www.bolagsfakta.se/5595629899-Stellar_Ally_AB?utm_source=openai))  \n- **Status**: Aktivt aktiebolag med säte i Linköping, Östergötlands län ([bolagsfakta.se](https://www.bolagsfakta.se/5595629899-Stellar_Ally_AB?utm_source=openai))  \n- **Adress**: c/o Jenny Choudhury, Bataljonsgatan 2A, 587 52 Linköping ([bolagsfakta.se](https://w",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629899-Stellar_Ally_AB?utm_source=openai",
+            "title": "Stellar Ally AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "stellarally.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "stellarally.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:33:27.629359"
+  }
+}

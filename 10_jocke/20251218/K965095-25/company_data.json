@@ -1,0 +1,114 @@
+{
+  "folder": "K965095-25",
+  "extracted_at": "2025-12-18T02:32:04.293837",
+  "company_name": "KMJ Partner AB",
+  "orgnr": "559563-0533",
+  "verksamhet": "Bolaget ska bedriva konsultverksamhet inom tillverknings- och processindustrin samt därmed förenlig verksamhet.",
+  "sate": "Bjuv",
+  "address": "Rosentorpsvägen 6B, 267 90 BJUV,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-22",
+  "emails": [
+    "kristian.jonsson@icloud.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Lars Inge Kristian Jönsson",
+      "role": "Styrelseledamot",
+      "personnr": "197301-XXXX"
+    },
+    {
+      "name": "Mia Maria Josefin Jönsson",
+      "role": "Styrelseledamot",
+      "personnr": "197106-XXXX"
+    },
+    {
+      "name": "Isabell Marie Jönsson",
+      "role": "Styrelsesuppleant",
+      "personnr": "199908-XXXX"
+    },
+    {
+      "name": "Pontus Kristian Jönsson",
+      "role": "Styrelsesuppleant",
+      "personnr": "200201-XXXX"
+    },
+    {
+      "name": "Alex Karl Stefan Persson",
+      "role": "Styrelsesuppleant",
+      "personnr": "199708-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "kmjpartner.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "kmjpartner.com",
+        "source": "generated"
+      },
+      {
+        "domain": "kmjpartner.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "kmjpartnerab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "KMJ Partner AB",
+    "searches": [
+      {
+        "query": "KMJ Partner AB hemsida website",
+        "summary": "Jag har kontrollerat webben och hittade ingen officiell hemsida för **KMJ Partner AB** (organisationsnummer 559563‑0533), ett aktiebolag med säte i Bjuv, registrerat år 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595630533-KMJ_Partner_AB?utm_source=openai)). Det verkar alltså inte finnas någon tillgänglig företagswebbplats för detta bolag i dagsläget.\n\nKortfattat:\n- **KMJ Partner AB**, registrerat den 16 december 2025, har sitt säte i Bjuv och bedriver konsultverksamhet inom tillverknings",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630533-KMJ_Partner_AB?utm_source=openai",
+            "title": "KMJ Partner AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "KMJ Partner AB Bolaget ska bedriva konsultverksamhet inom tillver kontakt",
+        "summary": "Här är en kortfattad beskrivning av KMJ Partner AB enligt registrerade uppgifter:\n\n- KMJ Partner AB är ett svenskt aktiebolag med organisationsnummer 559563‑0533, med säte i Bjuv, Skåne län. Bolaget bildades den 22 november 2025 och registrerades den 16 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595630533-KMJ_Partner_AB?utm_source=openai)).\n\n- Enligt bolagsordningen ska bolaget bedriva \"konsultverksamhet inom tillverknings- och processindustrin samt därmed förenlig verksamhet\" (",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630533-KMJ_Partner_AB?utm_source=openai",
+            "title": "KMJ Partner AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"KMJ Partner AB\" site:se",
+        "summary": "Här är kort information om \"KMJ Partner AB\" i Sverige (källa: bolagsfakta.se):\n\n• KMJ Partner AB är ett aktivt aktiebolag med organisationsnummer 559563‑0533, med säte i Bjuv, Skåne län, på adressen Rosentorpsvägen 6B, 267 90 Bjuv ([bolagsfakta.se](https://www.bolagsfakta.se/5595630533-KMJ_Partner_AB?utm_source=openai)).  \n• Bolaget bildades den 22 november 2025 och registrerades hos Bolagsverket den 16 december 2025. Verksamheten beskrivs som konsultverksamhet inom tillverknings‑ och processind",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630533-KMJ_Partner_AB?utm_source=openai",
+            "title": "KMJ Partner AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "kmjpartner.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "kmjpartner.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:35:43.544290"
+  }
+}

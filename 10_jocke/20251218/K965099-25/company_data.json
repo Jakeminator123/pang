@@ -1,0 +1,109 @@
+{
+  "folder": "K965099-25",
+  "extracted_at": "2025-12-18T02:32:04.295304",
+  "company_name": "Havslyckan i Helsingborg AB",
+  "orgnr": "559563-2836",
+  "verksamhet": "Bolaget skall bedriva restaurang- och cateringverksamhet. Utöver detta kommer man även ha musik samt dansunderhållning och därmed förenlig verksamhet.",
+  "sate": "Helsingborg",
+  "address": "Bollbrogatan 6, 252 18 HELSINGBORG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-18",
+  "emails": [
+    "info@bollbrolyckan.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Sabina Gabriella Söder",
+      "role": "Styrelseledamot",
+      "personnr": "197604-XXXX"
+    },
+    {
+      "name": "Sven Anders Nordström",
+      "role": "Styrelsesuppleant",
+      "personnr": "195803-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "bollbrolyckan.com",
+    "confidence": 0.5,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "havslyckanihelsingborg.se",
+        "source": "generated"
+      },
+      {
+        "domain": "havslyckanihelsingborg.com",
+        "source": "generated"
+      },
+      {
+        "domain": "havslyckanihelsingborg.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Havslyckan i Helsingborg AB",
+    "searches": [
+      {
+        "query": "Havslyckan i Helsingborg AB hemsida website",
+        "summary": "Jag hittade ingen officiell hemsida för Havslyckan i Helsingborg AB. Följande information är tillgänglig:\n\n• Enligt uppgifter från Bolagsfakta saknas det en angiven hemsida för företaget Havslyckan i Helsingborg AB.([bolagsfakta.se](https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_source=openai))  \n• Företagets adress är Bollbrogatan 6, 252 18 Helsingborg och det registrerades hösten 2025. Verksamheten omfattar restaurang- och cateringverksamhet samt musik och dansunderhålln",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_source=openai",
+            "title": "Havslyckan i Helsingborg AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "Havslyckan i Helsingborg AB Bolaget skall bedriva restaurang- och cateringverk kontakt",
+        "summary": "Här är en kort och tydlig svarsinformation om Havslyckan i Helsingborg AB, enligt tillgängliga uppgifter:\n\n‑ **Företagsnamn**: Havslyckan i Helsingborg AB  \n‑ **Adress**: Bollbrogatan 6, 252 18 Helsingborg ([bolagsfakta.se](https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_source=openai))  \n‑ **Organisationsnummer**: 559563‑2836 ([bolagsfakta.se](https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_source=openai))  \n‑ **Verksamhet**: Skall bedriva restaurang‑",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_source=openai",
+            "title": "Havslyckan i Helsingborg AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"Havslyckan i Helsingborg AB\" site:se",
+        "summary": "Här är kort information om **Havslyckan i Helsingborg AB**, enligt svenska källor:\n\n• Organisationsnummer: 559563‑2836 ([bolagsfakta.se](https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_source=openai))  \n• Säte: Helsingborg (Skåne län) ([bolagsfakta.se](https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_source=openai))  \n• Adress: Bollbrogatan 6, 252 18 Helsingborg ([bolagsfakta.se](https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_sour",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632836-Havslyckan_i_Helsingborg_AB?utm_source=openai",
+            "title": "Havslyckan i Helsingborg AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "bollbrolyckan.com",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "bollbrolyckan.com",
+        "url": "https://bollbrolyckan.com/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.5,
+        "title": "Start / Hem - Bollbrolyckan",
+        "description": "",
+        "text_sample": "Start / Hem - Bollbrolyckan VÄLKOMNA TILL EN VÄRLD AV UPPLEVELSER PÅ BOLLBROLYCKAN Nöjespalatset vid stadsparken i Helsingborg är fyllt med musik, sång, dans, mat, dryck, glädje och möten. Här får du många unika upplevelser och kan skapa goda minnen ofta. 🎭 Bollbrolyckan – Helsingborgs kultur-, show- & eventpalats Bollbrolyckan – “Makes People Come Alive” Upplevelser och Händelser Upptäck våra mest populära upplevelser – från spektakulära middagsföreställningar, temafester till karaoketävlingar ",
+        "ai_verified": false,
+        "ai_confidence": 0.8,
+        "ai_reason": "Hemsidan bollbrolyckan.com beskriver en verksamhet som fokuserar på kultur, show och event i Helsingborg, vilket delvis överensstämmer med Havslyckan i Helsingborg AB:s verksamhet inom restaurang och underhållning. Dock nämns inte företagsnamnet 'Havslyckan i Helsingborg AB' eller organisationsnumret 559563-2836 på hemsidan, vilket gör det osäkert om det är samma företag."
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:35:57.112385"
+  }
+}

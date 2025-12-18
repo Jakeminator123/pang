@@ -1380,41 +1380,8 @@ Argument:
 
             traceback.print_exc()
 
-        # Rensa Chrome-cache för att undvika gamla JSON-filer
-        chrome_cache_script = AUTOMATION_DIR / "clear_chrome_cache.py"
-        if chrome_cache_script.exists():
-            log_info("Rensar Chrome-cache...")
-            try:
-                result = subprocess.run(
-                    [sys.executable, str(chrome_cache_script)],
-                    cwd=str(AUTOMATION_DIR),
-                    capture_output=True,
-                    text=True,
-                    encoding="utf-8",
-                    errors="replace",
-                    timeout=60,
-                )
-                if result.returncode == 0:
-                    # Visa bara sammanfattningen (sista raderna)
-                    lines = result.stdout.strip().split("\n")
-                    summary_lines = [
-                        line
-                        for line in lines
-                        if "Minskning:" in line or "frigjort:" in line
-                    ]
-                    if summary_lines:
-                        for line in summary_lines:
-                            log_info(f"  {line.strip()}")
-                    else:
-                        log_info("  Chrome-cache rensad")
-                else:
-                    log_warn(
-                        f"Chrome-cache rensning misslyckades (exit {result.returncode})"
-                    )
-            except subprocess.TimeoutExpired:
-                log_warn("Chrome-cache rensning timeout (>60s)")
-            except Exception as e:
-                log_warn(f"Kunde inte rensa Chrome-cache: {e}")
+        # NOTERA: Chrome-cache rensas INTE automatiskt för att bevara browser-session
+        # Kör manuellt vid behov: python 1_poit/automation/clear_chrome_cache.py
 
         print()
 

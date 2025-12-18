@@ -1,0 +1,97 @@
+{
+  "folder": "K965202-25",
+  "extracted_at": "2025-12-18T02:32:04.307403",
+  "company_name": "Klausea AB",
+  "orgnr": "559563-2802",
+  "verksamhet": "Bolaget ska bedriva juridisk och ekonomisk rådgivning samt därmed förenlig verksamhet.",
+  "sate": "Stockholm",
+  "address": "Fleminggatan 22b, 112 32 STOCKHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-11",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Sebastian Soume",
+      "role": "Styrelsesuppleant",
+      "personnr": "200103-XXXX"
+    },
+    {
+      "name": "Simon Sharro",
+      "role": "Styrelsesuppleant",
+      "personnr": "200112-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "klausea.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "klausea.com",
+        "source": "generated"
+      },
+      {
+        "domain": "klausea.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "klauseaab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Klausea AB",
+    "searches": [
+      {
+        "query": "Klausea AB hemsida website",
+        "summary": "Jag kunde inte hitta någon officiell hemsida för Klausea AB. Enligt extern företagsinformation anges bolaget vara registrerat i Stockholm, ha verksamhet inom juridisk och ekonomisk rådgivning, och vara aktiv sedan november–december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595632802-Klausea_AB?utm_source=openai)). Ingen webbadress eller hemsida nämns i de offentliga källorna.\n\nOm du har mer information — till exempel en länk, bransch, eller kontaktuppgifter — kan jag gärna försöka hjälp",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632802-Klausea_AB?utm_source=openai",
+            "title": "Klausea AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Klausea AB Bolaget ska bedriva juridisk och ekonomisk rådgivn kontakt",
+        "summary": "Här är en kortfattad uppdatering om Klausea AB:\n\n- Klausea AB är ett **aktiebolag** med organisationsnummer **559563‑2802** och säte i **Stockholm**. Företaget är aktivt och registrerades hos Bolagsverket den **16 december 2025**. Verksamheten består av **juridisk och ekonomisk rådgivning samt därmed förenlig verksamhet** ([bolagsfakta.se](https://www.bolagsfakta.se/5595632802-Klausea_AB?utm_source=openai)).\n- Bolagets adress är **Fleminggatan 22b, 112 32 Stockholm** ([bolagsfakta.se](https://ww",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632802-Klausea_AB?utm_source=openai",
+            "title": "Klausea AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Klausea AB\" site:se",
+        "summary": "Här är en kortfattad presentation av Klausea AB baserat på offentligt tillgänglig information från svenska sidor:\n\n- Klausea AB är ett svenskt aktiebolag med organisationsnummer 559563‑2802 ([bolagsfakta.se](https://www.bolagsfakta.se/5595632802-Klausea_AB?utm_source=openai)).  \n- Bolaget har sitt säte i Stockholm och är registrerat på adressen Fleminggatan 22b, 112 32 Stockholm ([bolagsfakta.se](https://www.bolagsfakta.se/5595632802-Klausea_AB?utm_source=openai)).  \n- Klausea AB bildades den 11",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632802-Klausea_AB?utm_source=openai",
+            "title": "Klausea AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "klausea.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "klausea.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:38:13.832421"
+  }
+}

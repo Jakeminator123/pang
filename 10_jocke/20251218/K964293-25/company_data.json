@@ -1,0 +1,99 @@
+{
+  "folder": "K964293-25",
+  "extracted_at": "2025-12-18T02:32:04.280835",
+  "company_name": "Janodan AB",
+  "orgnr": "559563-2026",
+  "verksamhet": "Bolaget ska äga och förvalta aktier och andelar i andra bolag, bedriva investeringar samt därmed förenlig verksamhet.",
+  "sate": "Göteborg",
+  "address": "Tredje Långgatan 26E lgh 1302, 413 28 GÖTEBORG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-14",
+  "emails": [
+    "sebastiankinnander@icloud.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Sebastian Jan Daniel Kinnander",
+      "role": "Styrelsesuppleant",
+      "personnr": "199903-XXXX"
+    },
+    {
+      "name": "Josephine Emma Maria Kinnander",
+      "role": "Styrelsesuppleant",
+      "personnr": "199608-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "janodan.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "janodan.com",
+        "source": "generated"
+      },
+      {
+        "domain": "janodan.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "janodanab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Janodan AB",
+    "searches": [
+      {
+        "query": "Janodan AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell hemsida för Janodan AB. Däremot finns det detaljerad företagsinformation på Bolagsfakta:\n\n• Janodan AB har organisationsnummer 559563‑2026 och har säte i Göteborg på adressen Tredje Långgatan 26E lgh 1302, 413 28 Göteborg ([bolagsfakta.se](https://www.bolagsfakta.se/5595632026-Janodan_AB?utm_source=openai)).  \n• Bolaget registrerades med bildande den 14 november 2025 och registrerades hos Bolagsverket den 16 december 2025 ([bolagsfakta.se](https://www.",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632026-Janodan_AB?utm_source=openai",
+            "title": "Janodan AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Janodan AB Bolaget ska äga och förvalta aktier och andelar i  kontakt",
+        "summary": "Här är en kort svar på din förfrågan:\n\nJanodan AB är ett aktiebolag med organisationsnummer 559563‑2026, registrerat den 16 december 2025 och med säte i Göteborg. Bolagets verksamhetsbeskrivning lyder att det “skall äga och förvalta aktier och andelar i andra bolag, bedriva investeringar samt därmed förenlig verksamhet” ([bolagsfakta.se](https://www.bolagsfakta.se/5595632026-Janodan_AB?utm_source=openai)).\n\nOm du vill ha kontaktuppgifter till bolaget:\n- Adress: Tredje Långgatan 26E, lgh 1302, 41",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632026-Janodan_AB?utm_source=openai",
+            "title": "Janodan AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Janodan AB\" site:se",
+        "summary": "Här är kort information om Janodan AB, baserat på tillgängliga svenska källor:\n\n- Janodan AB är ett aktivt aktiebolag med organisationsnummer 559563‑2026. Företagets säte är i Göteborg, med adress Tredje Långgatan 26E lgh 1302, 413 28 Göteborg ([bolagsfakta.se](https://www.bolagsfakta.se/5595632026-Janodan_AB?utm_source=openai)).\n\n- Bolaget registrerades hos Bolagsverket den 16 december 2025, och bolagsordning och bildande skedde den 14 november 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632026-Janodan_AB?utm_source=openai",
+            "title": "Janodan AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "janodan.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "janodan.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:32:39.796108"
+  }
+}

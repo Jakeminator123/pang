@@ -1,0 +1,106 @@
+{
+  "folder": "K965193-25",
+  "extracted_at": "2025-12-18T02:32:04.303227",
+  "company_name": "RPN Invest AB",
+  "orgnr": "559563-2380",
+  "verksamhet": "Äga aktier i andra bolag samt konsulttjänster inom bygg och anläggning.",
+  "sate": "Katrineholm",
+  "address": "c/o Rickard Pettersson, Villagatan 2B, 641 36 KATRINEHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-05",
+  "emails": [
+    "rickard.pettersson@spectramark.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Kenneth Rickard Pettersson",
+      "role": "Styrelseledamot",
+      "personnr": "197905-XXXX"
+    },
+    {
+      "name": "Anna Elisabeth Norén",
+      "role": "Styrelsesuppleant",
+      "personnr": "197912-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "spectramark.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "rpninvest.se",
+        "source": "generated"
+      },
+      {
+        "domain": "rpninvest.com",
+        "source": "generated"
+      },
+      {
+        "domain": "rpninvest.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "RPN Invest AB",
+    "searches": [
+      {
+        "query": "RPN Invest AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell webbplats (\"hemsida\") för RPN Invest AB. Här är vad som framgår:\n\n• Enligt Bolagsfakta finns inga länkar till en webbplats för RPN Invest AB ([bolagsfakta.se](https://www.bolagsfakta.se/5595632380-RPN_Invest_AB?utm_source=openai)).  \n• Informationen hos Bolagsfakta är omfattande när det gäller bolagets registreringsuppgifter, adress (Villagatan 2B, 641 36 Katrineholm), organisationsnummer (559563-2380) och huvudman, men ingen hemsida omnämns ([bolagsfa",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632380-RPN_Invest_AB?utm_source=openai",
+            "title": "RPN Invest AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "RPN Invest AB Äga aktier i andra bolag samt konsulttjänster inom kontakt",
+        "summary": "Här är en kort presentation av RPN Invest AB enligt Bolagsverkets registrerade verksamhetsbeskrivning:\n\n• RPN Invest AB är ett aktivt aktiebolag med organisationsnummer 559563‑2380, med säte i Katrineholm. Det registrerades officiellt den 16 december 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595632380-RPN_Invest_AB?utm_source=openai))  \n• Enligt registrerade uppgifter avser bolagets verksamhet: \"Äga aktier i andra bolag samt konsulttjänster inom bygg och anläggning.\" ([bolagsfakta.se](",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632380-RPN_Invest_AB?utm_source=openai",
+            "title": "RPN Invest AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"RPN Invest AB\" site:se",
+        "summary": "Här är en kort sammanfattning av företaget **RPN Invest AB** med svensk källa:\n\n- RPN Invest AB har organisationsnummer **559563-2380**, och har sitt säte i **Katrineholm, Södermanlands län**, med adress **Villagatan 2B, 641 36 Katrineholm**. ([bolagsfakta.se](https://www.bolagsfakta.se/5595632380-RPN_Invest_AB?utm_source=openai))\n- Bolaget bildades den **5 december 2025** och registrerades den **16 december 2025**. ([bolagsfakta.se](https://www.bolagsfakta.se/5595632380-RPN_Invest_AB?utm_source",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632380-RPN_Invest_AB?utm_source=openai",
+            "title": "RPN Invest AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "spectramark.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "spectramark.se",
+        "url": "https://spectramark.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Spectra – Mark och anläggning",
+        "description": "",
+        "text_sample": "Spectra – Mark och anläggning Meny En komplett markentreprenör Vi utför allt inom mark och anläggning i hela mellansverige. Våra kunder är kommuner, kommunala bolag, bostadsrättsföreningar, företag och privatpersoner. Spectras vision är att vara kundens naturliga val när det kommer till anläggningsarbete. Kundernas upplevelse av Spectra ska alltid vara positiv genom vårt arbete med att leverera kvalitet, enkelhet och trygghet. En komplett markentreprenör Vi utför allt inom mark och anläggning i "
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:37:28.312755"
+  }
+}

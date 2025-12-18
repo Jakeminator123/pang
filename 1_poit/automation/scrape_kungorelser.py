@@ -131,7 +131,7 @@ def read_config():
 MAX_KUN_DAG = read_config()
 
 URL_FIRST = "https://www.aftonbladet.se"
-URL_SECOND = "https://poit.bolagsverket.se/poit-app/?start=1"  # Lägg till parameter för att undvika cache/autofill
+URL_SECOND = "https://poit.bolagsverket.se/poit-app/"
 
 # Bildvägar
 COOKIE_DIR = BASE_DIR / "bilder" / "1_cookie"
@@ -155,25 +155,25 @@ CONF_MENY_ORB = 0.50  # inlier-ratio, sänkt för mer flexibilitet
 
 # Tidsouts & beteenden
 WINDOW_FIND_TIMEOUT = 8.0
-POPUP_TIMEOUT_SEC = 16.0  # <= 12s
-STEP_TIMEOUT = 18.0
-POST_CLICK_WAIT = (0.5, 1.0)  # Halverat från (1.0, 2.0)
+POPUP_TIMEOUT_SEC = 12.0  # <= 12s
+STEP_TIMEOUT = 12.0
+POST_CLICK_WAIT = (1.2, 1.4)  # Halverat från (1.0, 2.0)
 STRICT_SEQUENCE = True
 
 # ===========================
 # Väntetider (sekunder) - halverade för snabbare körning
 # ===========================
-WAIT_NEW_TAB = (0.4, 0.6)  # Vänta efter ny flik (halv av 0.8-1.2)
+WAIT_NEW_TAB = (1.0, 1.4)  # Vänta efter ny flik (halv av 0.8-1.2)
 WAIT_AFTER_URL_TYPE = (0.15, 0.25)  # Efter URL-skrivning (halv av 0.3-0.5)
-WAIT_PAGE_LOAD = (1.0, 1.5)  # Sidladdning (halv av 2.0-3.0)
+WAIT_PAGE_LOAD = (1.5, 1.6)  # Sidladdning (halv av 2.0-3.0)
 WAIT_ENSKILD_CHECK = (1.2, 1.8)  # Enskild-hantering (halv av 2.5-3.5)
 WAIT_DATA_CAPTURE = (2.0, 3.0)  # Datafångst av extension (halv av 4.0-6.0)
 WAIT_CLOSE_TAB = (0.25, 0.4)  # Efter stäng flik (halv av 0.5-0.8)
 WAIT_BETWEEN_KUNG = (0.75, 1.5)  # Paus mellan kungörelser (halv av 1.5-3.0)
 WAIT_CHROME_START = 8  # Vänta på Chrome start (behöver tid för profil)
 WAIT_AFTER_COOKIE = (2.0, 3.0)  # Efter cookie-hantering (halv av 4.0-6.0)
-WAIT_AFTER_LINK = (1.75, 2.5)  # Efter länk-klick (halv av 3.5-5.0)
-WAIT_SEARCH_RESULTS = (1.0, 1.5)  # Vänta på sökresultat (halv av 2.0-3.0)
+WAIT_AFTER_LINK = (1.9, 2.5)  # Efter länk-klick (halv av 3.5-5.0)
+WAIT_SEARCH_RESULTS = (1.5, 2.5)  # Vänta på sökresultat (halv av 2.0-3.0)
 WAIT_MOUSE_SHORT = 0.25  # Kort väntan vid musrörelse
 WAIT_SCROLL_SHORT = 0.25  # Kort väntan vid scroll
 
@@ -269,12 +269,181 @@ def pick_best_chrome_window(timeout: float = WINDOW_FIND_TIMEOUT):
     return None
 
 
+def is_window_foreground(win):
+    """Kontrollera om ett fönster faktiskt är i foreground"""
+    try:
+        if sys.platform != "win32":
+            return True  # Skip check on non-Windows
+        
+        hwnd = win._hWnd
+        user32 = ctypes.windll.user32
+        foreground_hwnd = user32.GetForegroundWindow()
+        return foreground_hwnd == hwnd
+    except Exception:
+        return False
+
+
+def set_clipboard_text(text):
+    """Sätt text i Windows clipboard med ctypes (inga extra dependencies)"""
+    try:
+        if sys.platform != "win32":
+            return False
+        
+        # Windows API för clipboard
+        user32 = ctypes.windll.user32
+        kernel32 = ctypes.windll.kernel32
+        
+        # Öppna clipboard
+        if not user32.OpenClipboard(None):
+            return False
+        
+        user32.EmptyClipboard()
+        
+        # Allokera minne för texten (UTF-16LE med null terminator)
+        text_utf16 = text.encode('utf-16le')
+        size = len(text_utf16) + 2  # +2 för null terminator
+        GMEM_MOVEABLE = 0x0002
+        mem_handle = kernel32.GlobalAlloc(GMEM_MOVEABLE, size)
+        if not mem_handle:
+            user32.CloseClipboard()
+            return False
+        
+        mem_ptr = kernel32.GlobalLock(mem_handle)
+        if not mem_ptr:
+            kernel32.GlobalFree(mem_handle)
+            user32.CloseClipboard()
+            return False
+        
+        # Kopiera text till minnet
+        ctypes.memmove(ctypes.c_void_p(mem_ptr), text_utf16, len(text_utf16))
+        # Lägg till null terminator
+        null_term = ctypes.c_char_p(mem_ptr + len(text_utf16))
+        ctypes.memmove(null_term, b'\x00\x00', 2)
+        
+        kernel32.GlobalUnlock(mem_handle)
+        
+        # Sätt clipboard-data
+        CF_UNICODETEXT = 13
+        if user32.SetClipboardData(CF_UNICODETEXT, mem_handle):
+            user32.CloseClipboard()
+            return True
+        else:
+            kernel32.GlobalFree(mem_handle)
+            user32.CloseClipboard()
+            return False
+    except Exception as e:
+        try:
+            user32.CloseClipboard()
+        except:
+            pass
+        print(f"[CLIPBOARD] Kunde inte sätta clipboard: {e}")
+        return False
+
+
+def get_clipboard_text():
+    """Hämta text från Windows clipboard med ctypes"""
+    try:
+        if sys.platform != "win32":
+            return None
+        
+        user32 = ctypes.windll.user32
+        kernel32 = ctypes.windll.kernel32
+        
+        if not user32.OpenClipboard(None):
+            return None
+        
+        CF_UNICODETEXT = 13
+        handle = user32.GetClipboardData(CF_UNICODETEXT)
+        
+        if handle:
+            mem_ptr = kernel32.GlobalLock(handle)
+            if mem_ptr:
+                text_len = kernel32.GlobalSize(handle)
+                # Skapa buffer och kopiera data
+                buffer = (ctypes.c_char * text_len).from_address(mem_ptr)
+                text_bytes = bytes(buffer)
+                kernel32.GlobalUnlock(handle)
+                user32.CloseClipboard()
+                
+                # Konvertera från UTF-16LE till Python string
+                try:
+                    text = text_bytes.decode('utf-16le').rstrip('\x00')
+                    return text
+                except:
+                    return None
+            else:
+                user32.CloseClipboard()
+                return None
+        
+        user32.CloseClipboard()
+        return None
+    except Exception as e:
+        try:
+            user32.CloseClipboard()
+        except:
+            pass
+        return None
+
+
+def write_url_via_clipboard(url: str, max_attempts: int = 3) -> bool:
+    """
+    Skriv en URL till adressfältet via clipboard för att undvika autocomplete-artefakter som '-sok'.
+    Returnerar True om texten i adressfältet matchar URL:en utan oönskade suffix, annars False.
+    """
+    # Spara nuvarande clipboard
+    old_clipboard = get_clipboard_text()
+
+    def paste_once() -> bool:
+        if not set_clipboard_text(url):
+            return False
+        # Markera allt, rensa, klistra in
+        safe_hotkey("ctrl", "a")
+        rsleep(0.1, 0.15)
+        pg.press("delete")
+        rsleep(0.1, 0.15)
+        safe_hotkey("ctrl", "v")
+        rsleep(0.2, 0.3)
+        # Stäng ev. dropdown
+        pg.press("escape")
+        rsleep(0.1, 0.15)
+        return True
+
+    success = paste_once()
+    if not success:
+        return False
+
+    for attempt in range(max_attempts):
+        # Läs tillbaka adressfältet för att verifiera att inga suffix (t.ex. "-sok") lades till
+        safe_hotkey("ctrl", "a")
+        rsleep(0.1, 0.15)
+        safe_hotkey("ctrl", "c")
+        rsleep(0.1, 0.15)
+        current = get_clipboard_text() or ""
+        cur_clean = current.strip().rstrip("/")
+        target_clean = url.strip().rstrip("/")
+        if cur_clean == target_clean and "-sok" not in cur_clean and "sok" != cur_clean.lower():
+            break
+
+        # Försök igen om det inte matchar
+        paste_once()
+    else:
+        # Max försök, misslyckades
+        if old_clipboard:
+            set_clipboard_text(old_clipboard)
+        return False
+
+    # Återställ clipboard till tidigare värde
+    if old_clipboard:
+        set_clipboard_text(old_clipboard)
+    return True
+
+
 def force_window_focus(win):
     """Tvinga fokus på ett fönster med Windows API"""
     try:
         hwnd = win._hWnd
         user32 = ctypes.windll.user32
-        kernel32 = ctypes.windll.kernel32  # GetCurrentThreadId finns här
+        kernel32 = ctypes.windll.kernel32
 
         # Visa fönstret om det är minimerat
         SW_RESTORE = 9
@@ -305,6 +474,50 @@ def force_window_focus(win):
     except Exception as e:
         print(f"[CHROME] Kunde inte tvinga fokus: {e}")
         return False
+
+
+def ensure_chrome_foreground(win, max_retries=3):
+    """
+    Säkerställ att Chrome-fönstret är i foreground innan input-operationer.
+    Försöker flera gånger om nödvändigt.
+    
+    Returns:
+        True om Chrome är i foreground, False om det misslyckades efter max_retries
+    """
+    if not win:
+        print("[FOCUS] Ingen Chrome-fönster att fokusera")
+        return False
+    
+    for attempt in range(max_retries):
+        # Verifiera att fönstret är i foreground
+        if is_window_foreground(win):
+            return True
+        
+        # Om inte, försök tvinga fokus
+        print(f"[FOCUS] Försök {attempt + 1}/{max_retries}: Tvingar Chrome till foreground...")
+        
+        # Försök med force_window_focus
+        force_window_focus(win)
+        
+        # Försök även med pygetwindow's activate
+        try:
+            win.activate()
+            time.sleep(0.2)
+        except Exception:
+            pass
+        
+        # Verifiera igen efter fokus-försök
+        if is_window_foreground(win):
+            print("[FOCUS] Chrome är nu i foreground")
+            return True
+        
+        # Om det inte fungerade, vänta lite och försök igen
+        if attempt < max_retries - 1:
+            time.sleep(0.3)
+    
+    print(f"[FOCUS] VARNING: Kunde inte säkerställa att Chrome är i foreground efter {max_retries} försök")
+    print("[FOCUS] Fortsätter ändå, men input kan hamna på fel fönster")
+    return False
 
 
 def set_window_always_on_top(win, on_top=True):
@@ -593,61 +806,50 @@ def refresh_region(win):
         return None
 
 
-def goto_url(url: str):
+def goto_url(url: str, win=None):
     """Navigera till en URL med förbättrad adressfältshantering"""
     check_pause()  # Kolla om pausad
 
+    # VIKTIGT: Säkerställ att Chrome är i foreground innan vi gör något
+    if win:
+        ensure_chrome_foreground(win)
+        # Extra säkerhet: aktivera fönstret igen
+        try:
+            win.activate()
+            time.sleep(0.2)
+        except Exception:
+            pass
+
     print(f"[URL] Navigerar till: {url[:60]}...")
 
-    # Steg 1: Fokusera adressfältet tydligt med flera metoder
+    # Steg 1: Fokusera adressfältet
     print("  -> Fokuserar adressfältet...")
-
-    # Första försöket: F6 (alternativ metod för att fokusera adressfältet)
     pg.press("f6")
     rsleep(0.2, 0.3)
-
-    # Andra försöket: Ctrl+L (standard)
     safe_hotkey("ctrl", "l")
-    rsleep(0.3, 0.5)  # Längre väntan för visuell feedback
+    rsleep(0.3, 0.5)
 
-    # Tredje försöket: Ctrl+A för att markera allt i adressfältet
-    safe_hotkey("ctrl", "a")
+    # Steg 2: Skriv URL via clipboard (robust mot autocomplete)
+    print("  -> Skriver URL via clipboard (för att undvika '-sok')")
+    ok = write_url_via_clipboard(url)
+    if not ok:
+        # Fallback: skriv manuellt om clipboard misslyckas
+        print("  -> Fallback: clipboard misslyckades, skriver manuellt...")
+        safe_hotkey("ctrl", "a")
+        rsleep(0.1, 0.15)
+        pg.press("delete")
+        rsleep(0.1, 0.15)
+        pg.typewrite(url, interval=random.uniform(0.04, 0.08))
+        rsleep(0.2, 0.3)
+        pg.press("escape")
+        rsleep(0.1, 0.15)
+
+    # Ytterligare väntan innan Enter
     rsleep(0.2, 0.3)
 
-    # Blockera input under delete och typewrite
-    try:
-        if sys.platform == "win32":
-            user32 = ctypes.windll.user32
-            time.sleep(0.15)
-            user32.BlockInput(True)
-
-        # Rensa adressfältet
-        pg.press("delete")
-        rsleep(0.1, 0.15)
-
-        # Extra säkerhet: markera och radera igen
-        pg.hotkey("ctrl", "a")
-        rsleep(0.1, 0.15)
-        pg.press("delete")
-        rsleep(0.1, 0.15)
-
-        # Vänta lite så användaren ser att fältet är tomt
-        time.sleep(0.3)
-
-        # Skriv URL med tydlig hastighet
-        print("  -> Skriver URL...")
-        pg.typewrite(url, interval=random.uniform(0.04, 0.08))
-        rsleep(0.4, 0.6)
-
-        # Tryck Enter
-        print("  -> Enter...")
-        pg.press("enter")
-
-    finally:
-        if sys.platform == "win32":
-            user32 = ctypes.windll.user32
-            user32.BlockInput(False)
-            time.sleep(0.3)
+    # Tryck Enter
+    print("  -> Enter...")
+    pg.press("enter")
 
     print("  -> Navigering startad")
 
@@ -864,7 +1066,11 @@ def locate_menu_robust(img_path: str, window_region, timeout_sec: float):
 # ===========================
 # Klick (med 1s vila före & efter + kort input-lås)
 # ===========================
-def safe_click_center(box, win_region):
+def safe_click_center(box, win_region, win=None):
+    # Säkerställ att Chrome är i foreground innan klick
+    if win:
+        ensure_chrome_foreground(win)
+    
     # vila sedan senaste screenshot
     wait_since_last_capture(IDLE_BEFORE_CLICK_SEC)
 
@@ -1030,6 +1236,9 @@ def after_step_select_one():
 # Orkestrering
 # ===========================
 def handle_cookie_then_proceed(win):
+    # Säkerställ att Chrome är i foreground innan vi klickar
+    ensure_chrome_foreground(win)
+    
     region = refresh_region(win)
     if not region:
         return
@@ -1058,12 +1267,15 @@ def handle_cookie_then_proceed(win):
                 if score and score >= CONF_OK:
                     x, y = loc
                     box = (region[0] + x, region[1] + y, tw, th)
-                    if safe_click_center(box, region):
+                    if safe_click_center(box, region, win=win):
                         print("[+] OK klickad.")
                     break
 
 
 def locate_menu_and_click(img_path: str, win, timeout: float):
+    # Säkerställ att Chrome är i foreground innan vi letar/klickar
+    ensure_chrome_foreground(win)
+    
     region = refresh_region(win)
     print(f"[*] Matchar {Path(img_path).name} ...", end="")
     box, score, sc, mode = locate_menu_robust(img_path, region, timeout_sec=timeout)
@@ -1099,7 +1311,7 @@ def locate_menu_and_click(img_path: str, win, timeout: float):
         )
         return False, None
     print(" ✓")
-    ok = safe_click_center(box, region)
+    ok = safe_click_center(box, region, win=win)
     return ok, box
 
 
@@ -1255,7 +1467,8 @@ def open_missing_kungorelser(win, max_count=None):
         print("✅ Alla kungörelser redan nedladdade!")
         return
 
-    # Aktivera Chrome-fönstret
+    # Aktivera Chrome-fönstret och säkerställ fokus
+    ensure_chrome_foreground(win)
     try:
         win.activate()
         time.sleep(0.5)
@@ -1287,17 +1500,33 @@ def open_missing_kungorelser(win, max_count=None):
     for i, kung_id in enumerate(missing[:count], 1):
         print(f"\n[{i}/{count}] Kungörelse: {kung_id}")
 
+        # Säkerställ att Chrome är i foreground innan varje operation
+        ensure_chrome_foreground(win)
+
         # Öppna ny flik med lite mänskliga rörelser först
         pg.moveRel(random.randint(-20, 20), random.randint(-10, 10), duration=0.15)
         pg.hotkey("ctrl", "t")
         time.sleep(random.uniform(*WAIT_NEW_TAB))
 
+        # Säkerställ fokus igen innan URL-skrivning (fliken kan ha förlorat fokus)
+        ensure_chrome_foreground(win)
+        
         # Skriv URL (konvertera / till -)
         url_id = kung_id.replace("/", "-")
         url = f"https://poit.bolagsverket.se/poit-app/kungorelse/{url_id}"
 
-        # Skriv URL med slumpmässig hastighet
-        pg.typewrite(url, interval=random.uniform(0.01, 0.03))
+        # Fokusera adressfältet
+        safe_hotkey("ctrl", "l")
+        rsleep(0.2, 0.3)
+        
+        # Använd samma robusta clipboard-metod som goto_url
+        if not write_url_via_clipboard(url):
+            # Fallback till typewrite
+            pg.typewrite(url, interval=random.uniform(0.01, 0.03))
+            rsleep(0.2, 0.3)
+            pg.press("escape")
+            rsleep(0.1, 0.15)
+        
         time.sleep(random.uniform(*WAIT_AFTER_URL_TYPE))
         pg.press("enter")
 
@@ -1460,7 +1689,9 @@ def main():
         pg.hotkey("ctrl", "0")
         time.sleep(0.1)
 
-        goto_url(URL_SECOND)
+        # Säkerställ att Chrome är i foreground innan navigation
+        ensure_chrome_foreground(win)
+        goto_url(URL_SECOND, win=win)
         handle_cookie_then_proceed(win)
         rsleep(*WAIT_AFTER_COOKIE)
 
@@ -1484,7 +1715,7 @@ def main():
                 return 1
             return 1
         print(f"[+] Hittade länk: score={best_score:.3f}")
-        if not safe_click_center(best, region):
+        if not safe_click_center(best, region, win=win):
             print("[VARN] Klick blockerat (kant/header) – avbryter.")
             if not check_chrome_alive():
                 return 1

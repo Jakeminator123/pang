@@ -62,6 +62,13 @@ SAFE_TO_DELETE = [
     "Default/Web Applications/Temp",
 ]
 
+# Filer som innehåller autocomplete-history (kan raderas för att rensa URL-förslag)
+AUTOCOMPLETE_FILES = [
+    "Default/History",  # Chrome history (innehåller autocomplete-data)
+    "Default/Shortcuts",  # URL shortcuts/autocomplete
+    "Default/Top Sites",  # Top sites som kan påverka autocomplete
+]
+
 # Filer som kan raderas (logs och temp)
 SAFE_FILES_TO_DELETE = [
     "*.log",

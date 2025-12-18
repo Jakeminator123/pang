@@ -1,0 +1,105 @@
+{
+  "folder": "K965093-25",
+  "extracted_at": "2025-12-18T02:32:04.292600",
+  "company_name": "Skaw Hullcleaning AB",
+  "orgnr": "559563-2430",
+  "verksamhet": "Bolaget ska bedriva rengöring av fartyg och därmed förenlig verksamhet.",
+  "sate": "Stenungsund",
+  "address": "Lilla Strandvägen 4, 444 31 STENUNGSUND,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-04",
+  "emails": [
+    "david@skaw.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Klas Olof Johannes Berg",
+      "role": "Styrelsesuppleant",
+      "personnr": "197208-XXXX"
+    },
+    {
+      "name": "David Rickard Bäckerbo",
+      "role": "Styrelsesuppleant",
+      "personnr": "198003-XXXX"
+    },
+    {
+      "name": "Fredrik Andersson",
+      "role": "Styrelsesuppleant",
+      "personnr": "197009-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "skaw.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "skawhullcleaning.se",
+        "source": "generated"
+      },
+      {
+        "domain": "skawhullcleaning.com",
+        "source": "generated"
+      },
+      {
+        "domain": "skawhullcleaning.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Skaw Hullcleaning AB",
+    "searches": [
+      {
+        "query": "Skaw Hullcleaning AB hemsida website",
+        "summary": "Här är en kort svarsinformation om Skaw Hullcleaning AB och dess hemsida:\n\nSkaw Hullcleaning AB är ett svenskt aktiebolag med organisationsnummer 559563‑2430, registrerat den 16 december 2025. Företaget är baserat i Stenungsund på adressen Lilla Strandvägen 4, 444 31 Stenungsund, och bedriver verksamhet inom rengöring av fartyg ([bolagsfakta.se](https://www.bolagsfakta.se/5595632430-Skaw_Hullcleaning_AB?utm_source=openai)). \n\nFör närvarande finns ingen officiell hemsida eller webbadress tillgäng",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632430-Skaw_Hullcleaning_AB?utm_source=openai",
+            "title": "Skaw Hullcleaning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Skaw Hullcleaning AB Bolaget ska bedriva rengöring av fartyg och därmed kontakt",
+        "summary": "Här är en kort beskrivning av företaget enligt Bolagsverket:\n\n- Skaw Hullcleaning AB är ett aktiebolag registrerat för att bedriva rengöring av fartyg samt därmed förenlig verksamhet.([bolagsfakta.se](https://www.bolagsfakta.se/5595632430-Skaw_Hullcleaning_AB?utm_source=openai))  \n- Bolaget har organisationsnummer 559563‑2430 och är registrerat den 16 december 2025 med säte i Stenungsund, Västra Götalands län. Bolaget bildades den 4 november 2025.([bolagsfakta.se](https://www.bolagsfakta.se/5595",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632430-Skaw_Hullcleaning_AB?utm_source=openai",
+            "title": "Skaw Hullcleaning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Skaw Hullcleaning AB\" site:se",
+        "summary": "Här är kort information om Skaw Hullcleaning AB från svenska källor:\n\n• Skaw Hullcleaning AB är ett aktivt svenskt aktiebolag med organisationsnummer 559563‑2430. Företaget har säte i Stenungsund och adressen är Lilla Strandvägen 4, 444 31 Stenungsund. Bolaget registrerades hos Bolagsverket den 16 december 2025, med bolagsordning fastställd den 4 november 2025. Verksamhetsbeskrivningen anger att bolaget ska bedriva rengöring av fartyg och därmed förenlig verksamhet. ([bolagsfakta.se](https://www",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632430-Skaw_Hullcleaning_AB?utm_source=openai",
+            "title": "Skaw Hullcleaning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "skaw.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "skaw.se",
+        "status": "error",
+        "http_code": 403
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:35:29.138939"
+  }
+}

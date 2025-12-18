@@ -1,0 +1,99 @@
+{
+  "folder": "K965103-25",
+  "extracted_at": "2025-12-18T02:32:04.296572",
+  "company_name": "Fridlunds Rental AB",
+  "orgnr": "559563-1994",
+  "verksamhet": "Fridlunds Rental AB förmedlar och administrerar uthyrning av bostäder och lokaler.",
+  "sate": "Karlskrona",
+  "address": "Kristoffer Fridlund, Fridhemsvägen 8, 372 25 RONNEBY,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-10-07",
+  "emails": [
+    "fridlundkristoffer@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Anders Kristoffer Fridlund",
+      "role": "Styrelsesuppleant",
+      "personnr": "199010-XXXX"
+    },
+    {
+      "name": "Stina Veronica Helen Fridlund",
+      "role": "Styrelsesuppleant",
+      "personnr": "199202-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "fridlundsrental.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "fridlundsrental.com",
+        "source": "generated"
+      },
+      {
+        "domain": "fridlundsrental.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "fridlundsrentalab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Fridlunds Rental AB",
+    "searches": [
+      {
+        "query": "Fridlunds Rental AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell hemsida för \"Fridlunds Rental AB\". Företaget är registrerat i Sverige sedan 7 oktober 2025 och registrerades hos Bolagsverket den 16 december 2025. Det har sitt säte i Karlskrona kommun och adressen är Fridhemsvägen 8, 372 25 Ronneby. Företaget verkar inom förmedling och administration av uthyrning av bostäder och lokaler ([bolagsfakta.se](https://www.bolagsfakta.se/5595631994-Fridlunds_Rental_AB?utm_source=openai)).\n\nEftersom ingen websida är angiven ",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595631994-Fridlunds_Rental_AB?utm_source=openai",
+            "title": "Fridlunds Rental AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Fridlunds Rental AB Fridlunds Rental AB förmedlar och administrerar ut kontakt",
+        "summary": "Här är en kortfattad beskrivning av Fridlunds Rental AB, inklusive källhänvisningar:\n\n• Fridlunds Rental AB är ett svenskt aktiebolag (organisationsnummer 559563‑1994) med säte i Karlskrona, Blekinge län, och med adress Fridhemsvägen 8, 372 25 Ronneby. ([bolagsfakta.se](https://www.bolagsfakta.se/5595631994-Fridlunds_Rental_AB?utm_source=openai))  \n• Företaget registrerades den 16 december 2025 och bildades genom stämmobeslut den 7 oktober 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/55956",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595631994-Fridlunds_Rental_AB?utm_source=openai",
+            "title": "Fridlunds Rental AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Fridlunds Rental AB\" site:se",
+        "summary": "Här är grundläggande information om Fridlunds Rental AB hittad på en svensk webbplats:\n\n- Fridlunds Rental AB är ett aktivt aktiebolag med organisationsnummer 559563‑1994, med säte i Karlskrona, Blekinge län. Företaget har adressen c/o Kristoffer Fridlund, Fridhemsvägen 8, 372 25 Ronneby ([bolagsfakta.se](https://www.bolagsfakta.se/5595631994-Fridlunds_Rental_AB?utm_source=openai)).  \n- Bolaget registrerades hos Bolagsverket den 16 december 2025, och bildades genom den konstituerande stämman den",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595631994-Fridlunds_Rental_AB?utm_source=openai",
+            "title": "Fridlunds Rental AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "fridlundsrental.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "fridlundsrental.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:36:20.000161"
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "folder": "K964950-25",
+  "extracted_at": "2025-12-18T02:32:04.289176",
+  "company_name": "OP Box & Fitness AB",
+  "orgnr": "559563-0350",
+  "verksamhet": "Bolaget ska bedriva träningsverksamhet inom boxning, erbjuda personlig träning och gruppträning, sälja träningspass samt bedriva verksamhet kopplad till fysisk träning och motion inom boxning.",
+  "sate": "Enköping",
+  "address": "Fårticksgatan 115, 749 45 ENKÖPING,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-02",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Oliver Martin Persson",
+      "role": "Styrelseledamot",
+      "personnr": "200609-XXXX"
+    },
+    {
+      "name": "Lenita Annikki Leipälä",
+      "role": "Styrelsesuppleant",
+      "personnr": "197001-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "op-box.com",
+    "confidence": 0.5,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "opboxfitness.com",
+        "source": "generated"
+      },
+      {
+        "domain": "opboxfitness.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "opboxfitnessab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "OP Box & Fitness AB",
+    "searches": [
+      {
+        "query": "OP Box & Fitness AB hemsida website",
+        "summary": "Jag kunde inte hitta någon officiell hemsida för OP Box & Fitness AB. Det finns däremot företagsinformation via Bolagsfakta, där adress, organisationsnummer, VD med mera finns angivna ([bolagsfakta.se](https://www.bolagsfakta.se/5595630350-OP_Box_%26_Fitness_AB?utm_source=openai)).\n\nDet finns en webbplats på domänen op‑box.com, men det går inte att bekräfta att den är kopplad till detta bolag ([op-box.com](https://www.op-box.com/?utm_source=openai)).\n\nSammanfattningsvis: ingen tydlig eller bekrä",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630350-OP_Box_%26_Fitness_AB?utm_source=openai",
+            "title": "OP Box & Fitness AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          },
+          {
+            "url": "https://www.op-box.com/?utm_source=openai",
+            "title": "OP-Box.com"
+          }
+        ]
+      },
+      {
+        "query": "OP Box & Fitness AB Bolaget ska bedriva träningsverksamhet inom boxnin kontakt",
+        "summary": "Här är en kortfattad beskrivning av OP Box & Fitness AB, inklusive källhänvisningar:\n\n- OP Box & Fitness AB är ett aktiebolag med organisationsnummer 559563‑0350, har sitt säte på Fårticksgatan 115, 749 45 Enköping, i Uppsala län. Bolaget bildades den 2 december 2025 och registrerades den 16 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595630350-OP_Box_%26_Fitness_AB?utm_source=openai)).\n\n- Bolagets verksamhetsbeskrivning lyder: “Bolaget ska bedriva träningsverksamhet inom boxning",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630350-OP_Box_%26_Fitness_AB?utm_source=openai",
+            "title": "OP Box & Fitness AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"OP Box & Fitness AB\" site:se",
+        "summary": "Här är kort information om företaget \"OP Box & Fitness AB\" från svenska källor:\n\n- OP Box & Fitness AB har organisationsnummer 559563-0350 och är ett aktivt aktiebolag med säte i Enköping, Uppsala län. Företaget är registrerat på adressen Fårticksgatan 115, 749 45 Enköping.([bolagsfakta.se](https://www.bolagsfakta.se/5595630350-OP_Box_%26_Fitness_AB?utm_source=openai))\n\n- Bolaget grundades den 2 december 2025 och registrerades officiellt den 16 december 2025.([bolagsfakta.se](https://www.bolagsf",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630350-OP_Box_%26_Fitness_AB?utm_source=openai",
+            "title": "OP Box & Fitness AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "op-box.com",
+        "confidence": 0.85
+      },
+      {
+        "domain": "opboxfitness.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "op-box.com",
+        "url": "https://op-box.com/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.5,
+        "title": "OP-Box.com",
+        "description": "",
+        "text_sample": "OP-Box.com",
+        "ai_verified": false,
+        "ai_confidence": 0.3,
+        "ai_reason": "Hemsidan op-box.com innehåller mycket begränsad information och det finns ingen tydlig koppling till OP Box & Fitness AB, dess verksamhet eller plats i Enköping. Utan mer detaljerad information är det svårt att verifiera att hemsidan tillhör det specifika företaget."
+      },
+      {
+        "domain": "opboxfitness.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:34:36.459272"
+  }
+}

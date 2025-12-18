@@ -1,0 +1,145 @@
+{
+  "folder": "K966350-25",
+  "extracted_at": "2025-12-18T02:32:04.308857",
+  "company_name": "Startplattan 201499 Aktiebolag",
+  "orgnr": "559563-0699",
+  "verksamhet": "Bolaget ska äga och förvalta fast och lös egendom samt därmed förenlig verksamhet.",
+  "sate": "Göteborg",
+  "address": "Bolagsstiftarna, Box 12086, 402 41 GÖTEBORG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-15",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Peter Jonas Michael Carlborg",
+      "role": "Styrelsesuppleant",
+      "personnr": "198712-XXXX"
+    },
+    {
+      "name": "Bo Torsten Patrik Nilsson",
+      "role": "Styrelsesuppleant",
+      "personnr": "197805-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "startplattan201499.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "startplattan201499.com",
+        "source": "generated"
+      },
+      {
+        "domain": "startplattan201499.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "startplattan201499ab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Startplattan 201499 Aktiebolag",
+    "searches": [
+      {
+        "query": "Startplattan 201499 Aktiebolag hemsida website",
+        "summary": "Jag hittade i dagsläget ingen specifik webbplats för Startplattan 201499 Aktiebolag. Det verkar inte finnas någon offentlig hemsida kopplad till detta bolag under det sökta numret.\n\nDock finns registreringsinformation för andra “Startplattan … Aktiebolag” via LEI-källor såsom Bloomberg/LEI-registret, där bolaget typiskt är adresserat via Bolagsstiftarna i Göteborg ([lei.bloomberg.com](https://lei.bloomberg.com/leis/view/549300EBO1BFUCRQAC23?utm_source=openai)).\n\nOm du behöver officiell informati",
+        "sources": [
+          {
+            "url": "https://lei.bloomberg.com/leis/view/549300EBO1BFUCRQAC23?utm_source=openai",
+            "title": "Startplattan 170410 Aktiebolag - LEI: 549300EBO1BFUCRQAC23"
+          },
+          {
+            "url": "https://lei.bloomberg.com/leis/view/636700EBUQCHTA6UVO37?utm_source=openai",
+            "title": "Startplattan 201184 Aktiebolag - LEI: 636700EBUQCHTA6UVO37"
+          }
+        ]
+      },
+      {
+        "query": "Startplattan 201499 Aktiebolag Bolaget ska äga och förvalta fast och lös egendom  kontakt",
+        "summary": "Jag hittade inget specifikt om “Startplattan 201499 Aktiebolag” med det numret i mina källor. Däremot framgår följande generella information om företag med namnet \"Startplattan\" som anges i bolagsordningen:\n\n– \"Startplattan XXXXXX Aktiebolag\" är ett lagerbolag konstruerat för att snabbt komma igång – namnet \"Startplattan\" följs av ett särskiljande nummer. Bolaget etableras ofta av aktörer som Bolagsstiftarna AB ([bolagsstiftarna.se](https://www.bolagsstiftarna.se/en/lagerbolag/?utm_source=openai",
+        "sources": [
+          {
+            "url": "https://www.bolagsstiftarna.se/en/lagerbolag/?utm_source=openai",
+            "title": "Lagerbolag snabbt & tryggt med Bolagsstiftarna! Leverans direkt!"
+          },
+          {
+            "url": "https://krafman.se/startplattan-888528-aktiebolag/5569672602/sammanfattning?utm_source=openai",
+            "title": "Startplattan 888528 Aktiebolag - 556967-2602"
+          }
+        ]
+      },
+      {
+        "query": "\"Startplattan 201499 Aktiebolag\" site:se",
+        "summary": "Jag kunde tyvärr inte hitta någon information om \"Startplattan 201499 Aktiebolag\" på svenska källor som Bloomberg LEI-register eller Allabolag.se. Det finns inga träffar som matchar exakt detta företagsnamn eller nummer i de databaser som är tillgängliga.",
+        "sources": []
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "lei.bloomberg.com",
+        "confidence": 0.5
+      },
+      {
+        "domain": "krafman.se",
+        "confidence": 0.5
+      },
+      {
+        "domain": "bolagsstiftarna.se",
+        "confidence": 0.5
+      },
+      {
+        "domain": "startplattan201499.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "lei.bloomberg.com",
+        "url": "https://lei.bloomberg.com/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Bloomberg LEI",
+        "description": "Bloomberg provides clients with Legal Entity Identifier (LEI) services and solutions. Register, renew, transfer, search, and download LEIs with Bloomberg today.",
+        "text_sample": "Bloomberg LEI Please enable JavaScript in your browser See enable-javascript.com for help. Please use a modern browser We use modern web technologies to provide many fluid, powerful and user-friendly features. It seems your browser does not support all of these technologies. Please use a modern browser to start using lei.bloomberg.com. Legal Entity Identifier (LEI)"
+      },
+      {
+        "domain": "krafman.se",
+        "url": "https://krafman.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Krafman kreditupplysning för företag och privatpersoner",
+        "description": "Krafman säljer styckvis kreditupplysningar. Företag faktureras. Privatpersoner betalar med Swish. Snabbt, enkelt och leverans direkt.",
+        "text_sample": "Krafman kreditupplysning för företag och privatpersoner Ring oss gärna på 042-28 01 35 Skanna QR koden med en mobiltelefon för att ladda ner appen X Skanna QR koden med en mobiltelefon för att ladda ner appen X Ta en kreditupplysning Se betalningsanmärkningar och ekonomi Hos oss registreras INTE antalet tagna kreditupplysningar Läs mer om vår kreditupplysning Jag är en privatperson Jag företräder ett företag Jag vill ta en kreditupplysning på mig själv - kr Leverans på några sekunder - kr Jag vi"
+      },
+      {
+        "domain": "bolagsstiftarna.se",
+        "url": "https://www.bolagsstiftarna.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Snabbavveckling och lagerbolag hos Bolagsstiftarna!",
+        "description": "Bolagsstiftarnas huvudsakliga verksamhetsområden är köp av vilande aktiebolag för snabbavveckling samt försäljning av lagerbolag.",
+        "text_sample": "Snabbavveckling och lagerbolag hos Bolagsstiftarna! Javascript must be enabled for the correct page display Skip to Content Snabbavveckling och Lagerbolag Vi köper vilande aktiebolag för Snabbavveckling. Inkom med aktuell balans- och resultatrapport och få en offert inom två timmar. Vi säljer färdiga aktiebolag så kallade lagerbolag. Handlingar och organisationsnummer inom två timmar! Snabbavveckla aktiebolag Vi köper vilande aktiebolag för snabbavveckling. Inom 2h översänder vi offert. Pris frå"
+      },
+      {
+        "domain": "startplattan201499.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:38:27.528585"
+  }
+}

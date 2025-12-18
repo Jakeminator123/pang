@@ -1,0 +1,97 @@
+{
+  "folder": "K964349-25",
+  "extracted_at": "2025-12-18T02:32:04.283275",
+  "company_name": "M.Ström förvaltning AB",
+  "orgnr": "559562-9923",
+  "verksamhet": "Bolaget skall äga och förvalta aktier och andelar i andra bolag, handel med värdepapper samt därmed förenlig verksamhet.",
+  "sate": "Örebro",
+  "address": "c/o Marcus Ström, Rävgräva 401, 705 94 ÖREBRO,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-13",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Marcus Fredrik Ström",
+      "role": "Styrelsesuppleant",
+      "personnr": "199402-XXXX"
+    },
+    {
+      "name": "Nicklas Oskar Kenneth Ström",
+      "role": "Styrelsesuppleant",
+      "personnr": "199201-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "mstromforvaltning.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "mstromforvaltning.com",
+        "source": "generated"
+      },
+      {
+        "domain": "mstromforvaltning.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "mstromforvaltningab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "M.Ström förvaltning AB",
+    "searches": [
+      {
+        "query": "M.Ström förvaltning AB hemsida website",
+        "summary": "Här är vad jag hittade om \"M.Ström förvaltning AB\":\n\nEnligt Bolagsfakta har företaget organisationsnummer 559562‑9923 och är registrerat med säte i Örebro, på adress Rävgräva 401, 705 94 Örebro. Bolaget är aktivt och registrerades nyligen – bolaget bildades den 13 november 2025 och registrerades hos Bolagsverket den 16 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595629923-M.Strom_forvaltning_AB?utm_source=openai)).  \nFöretagets verksamhetsbeskrivning är: att äga och förvalta akti",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629923-M.Strom_forvaltning_AB?utm_source=openai",
+            "title": "M.Ström förvaltning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "M.Ström förvaltning AB Bolaget skall äga och förvalta aktier och andelar  kontakt",
+        "summary": "Här är kontaktinformationen för M.Ström förvaltning AB, ett bolag vars syfte är att äga och förvalta aktier och andelar i andra bolag samt handla med värdepapper:\n\n• Adress  \n  c/o Marcus Ström  \n  Rävgräva 401  \n  705 94 Örebro  \n([bolagsfakta.se](https://www.bolagsfakta.se/5595629923-M.Strom_forvaltning_AB?utm_source=openai))\n\nDet finns för närvarande inget telefonnummer eller e-postadress offentligt registrerat hos tillgängliga källor. Bolaget registrerades nyligen — organisationsnummer 55956",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629923-M.Strom_forvaltning_AB?utm_source=openai",
+            "title": "M.Ström förvaltning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"M.Ström förvaltning AB\" site:se",
+        "summary": "Här är kort information om **M.Ström förvaltning AB**, med uppgifter från svenska källor:\n\n- M.Ström förvaltning AB är ett **aktiebolag** med **organisationsnummer 559562‑9923**. Det är registrerat i **Örebro**, med adress **Rävgräva 401, 705 94 Örebro**. ([bolagsfakta.se](https://www.bolagsfakta.se/5595629923-M.Strom_forvaltning_AB?utm_source=openai))\n\n- Bolaget bildades den **13 november 2025** och registrerades hos Bolagsverket den **16 december 2025**. Detta är även det datum då firmanamnet ",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629923-M.Strom_forvaltning_AB?utm_source=openai",
+            "title": "M.Ström förvaltning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "mstromforvaltning.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "mstromforvaltning.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:33:10.780676"
+  }
+}

@@ -661,7 +661,11 @@ def update_excel(xlsx_path: Path, updates: Dict[str, Dict]):
                     u = updates[folder]
                     df.at[idx, "domain_verified"] = u.get("domain", "")
                     df.at[idx, "domain_status"] = u.get("status", "")
-                    df.at[idx, "domain_confidence"] = f"{u.get('confidence', 0):.2f}"
+                    # Store numeric confidence (float) to avoid dtype warnings
+                    try:
+                        df.at[idx, "domain_confidence"] = float(u.get("confidence", 0))
+                    except (TypeError, ValueError):
+                        df.at[idx, "domain_confidence"] = 0.0
                     df.at[idx, "research_done"] = "Ja"
 
         with pd.ExcelWriter(

@@ -1,0 +1,105 @@
+{
+  "folder": "K965088-25",
+  "extracted_at": "2025-12-18T02:32:04.290324",
+  "company_name": "Wrangensten Gastronomi AB",
+  "orgnr": "559563-0186",
+  "verksamhet": "Bolaget ska bedriva konsult- och cateringverksamhet samt uthyrning av personal inom restaurang och hotell. Bolaget ska också bedriva kursverksamhet inom gastronomiområdet samt därmed förenlig verksamhet.",
+  "sate": "Sundbyberg",
+  "address": "c/o Wrangensten, Kavallerivägen 4A, 174 58 SUNDBYBERG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-10-15",
+  "emails": [
+    "info@wrangenstengastronomi.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Anders Fredrik Wrangensten",
+      "role": "Styrelsesuppleant",
+      "personnr": "198102-XXXX"
+    },
+    {
+      "name": "Tommy Waldemar Pettersson",
+      "role": "Styrelsesuppleant",
+      "personnr": "194305-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "wrangenstengastronomi.se",
+    "confidence": 0.9,
+    "source": "ai_verified",
+    "status": "verified",
+    "alternatives": [
+      {
+        "domain": "wrangenstengastronomi.com",
+        "source": "generated"
+      },
+      {
+        "domain": "wrangenstengastronomi.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Wrangensten Gastronomi AB",
+    "searches": [
+      {
+        "query": "Wrangensten Gastronomi AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell webbplats (hemsida) för Wrangensten Gastronomi AB. Enligt Bolagsfakta har företaget sitt säte på Kavallerivägen 4A i Sundbyberg och är registrerat 16 december 2025, men ingen webbadress anges där ([bolagsfakta.se](https://www.bolagsfakta.se/5595630186-Wrangensten_Gastronomi_AB?utm_source=openai)).\n\nDet verkar därför som att företaget ännu inte har lanserat en hemsida, eller att den inte är lättillgänglig via sökmotorer.",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630186-Wrangensten_Gastronomi_AB?utm_source=openai",
+            "title": "Wrangensten Gastronomi AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "Wrangensten Gastronomi AB Bolaget ska bedriva konsult- och cateringverksamhe kontakt",
+        "summary": "Här är den korta kontaktinformationen för **Wrangensten Gastronomi AB**:\n\n- Organisationsnummer: 559563‑0186 ([bolagsfakta.se](https://www.bolagsfakta.se/5595630186-Wrangensten_Gastronomi_AB?utm_source=openai))  \n- Adress: c/o Wrangensten, Kavallerivägen 4A, 174 58 Sundbyberg, Sverige ([bolagsfakta.se](https://www.bolagsfakta.se/5595630186-Wrangensten_Gastronomi_AB?utm_source=openai))  \n\nFöretagets verksamhet är beskriven som: \"Bolaget ska bedriva konsult‑ och cateringverksamhet samt uthyrning a",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630186-Wrangensten_Gastronomi_AB?utm_source=openai",
+            "title": "Wrangensten Gastronomi AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"Wrangensten Gastronomi AB\" site:se",
+        "summary": "Här är en kort översikt av företaget \"Wrangensten Gastronomi AB\" med källhänvisningar:\n\n- Organisationsnummer: 559563‑0186 ([bolagsfakta.se](https://www.bolagsfakta.se/5595630186-Wrangensten_Gastronomi_AB?utm_source=openai))  \n- Säte och adress: Kavallerivägen 4A, 174 58 Sundbyberg, Stockholms län ([bolagsfakta.se](https://www.bolagsfakta.se/5595630186-Wrangensten_Gastronomi_AB?utm_source=openai))  \n- Registreringsinformation:\n  - Bolaget bildades den 15 oktober 2025\n  - Registrerat hos Bolagsve",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630186-Wrangensten_Gastronomi_AB?utm_source=openai",
+            "title": "Wrangensten Gastronomi AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "wrangenstengastronomi.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "wrangenstengastronomi.se",
+        "url": "https://wrangenstengastronomi.se/",
+        "status": "verified",
+        "is_parked": false,
+        "is_match": true,
+        "match_ratio": 1.0,
+        "title": "wrangenstengastronomi.se",
+        "description": "",
+        "text_sample": "wrangenstengastronomi.se Hem Hem Menyer fÃ¶r matlagningskurser Kontakta oss VÃ¤lkommen till Wrangensten Gastronomi VÃ¥ra tjÃ¤nster Catering Vi skrÃ¤ddarsyr alla former av event; brÃ¶llop, fÃ¶delsedagsfest, personalevent, dop, svensexa eller annan aktivitet. Vi har som policy att alltid ge snabb personlig service och offert. Konsult BehÃ¶ver du hyra en kock eller kÃ¶kschef? Vi har ett brett register inom hotell och restaurang, matbutik och storkÃ¶k. Matlagningskurser Vi hÃ¥ller i matlagningskurse",
+        "ai_verified": true,
+        "ai_confidence": 0.9,
+        "ai_reason": "Hemsidan wrangenstengastronomi.se beskriver tjänster som catering, konsultverksamhet och matlagningskurser, vilket stämmer överens med företagets verksamhetsbeskrivning. Namnet på hemsidan matchar företagsnamnet, och det finns inga indikationer på att det skulle tillhöra ett annat företag med liknande namn. Dock saknas specifik information om stad och organisationsnummer på hemsidan, vilket gör att säkerheten inte är 100%."
+      }
+    ],
+    "best_domain": "wrangenstengastronomi.se",
+    "best_confidence": 0.9,
+    "researched_at": "2025-12-18T02:34:55.964758"
+  }
+}

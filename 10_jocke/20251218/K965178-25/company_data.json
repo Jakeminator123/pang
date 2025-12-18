@@ -1,0 +1,99 @@
+{
+  "folder": "K965178-25",
+  "extracted_at": "2025-12-18T02:32:04.299271",
+  "company_name": "SELLAND Miljökonsult AB",
+  "orgnr": "559563-2398",
+  "verksamhet": "Företaget kommer att leverera miljökonsulttjänster inom transportinfrastruktur (väg och järnväg). Inledningsvis kommer det framförallt att vara miljötjänster inom väg- och järnvägsentreprenader och då som byggledare miljö alternativt byggplatsuppföljare miljö.",
+  "sate": "Gagnef",
+  "address": "c/o Anders Sellner, Fix gattu 11, 785 62 DJURMO,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-03",
+  "emails": [
+    "sellnera10@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Anders Birger Sellner",
+      "role": "Styrelseledamot",
+      "personnr": "195607-XXXX"
+    },
+    {
+      "name": "Mats Åke Sellner",
+      "role": "Styrelsesuppleant",
+      "personnr": "196108-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "sellandmiljokonsult.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "sellandmiljokonsult.com",
+        "source": "generated"
+      },
+      {
+        "domain": "sellandmiljokonsult.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "sellandmiljokonsultab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "SELLAND Miljökonsult AB",
+    "searches": [
+      {
+        "query": "SELLAND Miljökonsult AB hemsida website",
+        "summary": "Jag hittade ingen officiell hemsida för SELLAND Miljökonsult AB. Enligt Bolagsfakta finns företaget registrerat med organisationsnummer 559563‑2398 och adress Fix gattu 11, 785 62 Djurmo i Gagnefs kommun, Dalarnas län ([bolagsfakta.se](https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_source=openai)). Däremot anges ingen länk till en webbplats, och ingen sådan hittas genom tillgängliga sökresultat.\n\nSammanfattningsvis: det verkar **inte finnas någon synlig hemsida** för SELLAND M",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_source=openai",
+            "title": "SELLAND Miljökonsult AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "SELLAND Miljökonsult AB Företaget kommer att leverera miljökonsulttjänster kontakt",
+        "summary": "Här är grundläggande kontaktinformation för SELLAND Miljökonsult AB:\n\n• Organisationsnummer: 559563‑2398 ([bolagsfakta.se](https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_source=openai))  \n• Adress: Fix gattu 11, 785 62 Djurmo (säte i Gagnef, Dalarnas län) ([bolagsfakta.se](https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_source=openai))  \n• VD och firmatecknare: Anders Sellner ([bolagsfakta.se](https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_source=openai",
+            "title": "SELLAND Miljökonsult AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"SELLAND Miljökonsult AB\" site:se",
+        "summary": "Här är kort information om **SELLAND Miljökonsult AB** med källhänvisningar:\n\n- Organisationsnummer: 559563‑2398 ([bolagsfakta.se](https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_source=openai))  \n- Juridisk form: Aktiebolag, status: Aktiv ([bolagsfakta.se](https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_source=openai))  \n- Säte: Gagnef kommun i Dalarnas län. Huvadressen är Fix gattu 11, 785 62 Djurmo ([bolagsfakta.se](https://www.bolagsfakta.se/5595632398-SEL",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595632398-SELLAND_Miljokonsult_AB?utm_source=openai",
+            "title": "SELLAND Miljökonsult AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "sellandmiljokonsult.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "sellandmiljokonsult.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:36:43.367265"
+  }
+}

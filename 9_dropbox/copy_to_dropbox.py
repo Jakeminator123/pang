@@ -15,6 +15,7 @@ import os
 import shutil
 import sys
 import zipfile
+import time
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -109,16 +110,16 @@ def deduplicate_excel_by_email_domain(excel_path: Path) -> Tuple[int, dict]:
         return 0, {}
 
     try:
-        # Read all sheets from Excel file
-        excel_file = pd.ExcelFile(excel_path)
-        sheet_names = excel_file.sheet_names
-
-        if not sheet_names:
-            return 0, {}
+        # Read all sheets up front to avoid re-opening while writing
+        with pd.ExcelFile(excel_path, engine="openpyxl") as xls:
+            sheet_names = xls.sheet_names
+            if not sheet_names:
+                return 0, {}
+            sheets = {name: xls.parse(name) for name in sheet_names}
 
         # Process first sheet (usually the main data sheet)
         main_sheet = sheet_names[0]
-        df = pd.read_excel(excel_path, sheet_name=main_sheet)
+        df = sheets[main_sheet]
         original_count = len(df)
 
         # Find email column
@@ -142,31 +143,23 @@ def deduplicate_excel_by_email_domain(excel_path: Path) -> Tuple[int, dict]:
             domain = extract_email_domain(email)
 
             if domain is None:
-                # Keep rows without valid email
                 rows_to_keep.append(idx)
             elif domain not in domains_seen:
-                # First occurrence of this domain - keep it
                 domains_seen[domain] = idx
                 rows_to_keep.append(idx)
             else:
-                # Duplicate domain - remove this row
                 rows_removed += 1
                 if domain not in domains_deduplicated:
                     domains_deduplicated[domain] = []
                 domains_deduplicated[domain].append(idx)
 
-        # Filter DataFrame to keep only unique domains
         df_deduplicated = df.loc[rows_to_keep].reset_index(drop=True)
+        sheets[main_sheet] = df_deduplicated
 
-        # Save back to Excel, preserving all sheets
+        print(f"  [DEBUG] Writing deduplicated Excel: {excel_path.name}")
         with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
-            # Write deduplicated main sheet
-            df_deduplicated.to_excel(writer, index=False, sheet_name=main_sheet)
-
-            # Copy other sheets as-is
-            for sheet_name in sheet_names[1:]:
-                other_df = pd.read_excel(excel_path, sheet_name=sheet_name)
-                other_df.to_excel(writer, index=False, sheet_name=sheet_name)
+            for sheet_name, sheet_df in sheets.items():
+                sheet_df.to_excel(writer, index=False, sheet_name=sheet_name)
 
         print(
             f"  OK: Deduplicated: {rows_removed} rows removed ({original_count} -> {len(df_deduplicated)})"
@@ -185,9 +178,9 @@ def deduplicate_excel_by_email_domain(excel_path: Path) -> Tuple[int, dict]:
 
     except Exception as e:
         print(f"  Error deduplicating {excel_path.name}: {e}")
-        import traceback
+        import traceback, sys
 
-        traceback.print_exc()
+        traceback.print_exc(file=sys.stdout)
         return 0, {}
 
 
@@ -283,62 +276,82 @@ def copy_date_folder_to_jocke(date_folder: Path) -> bool:
 
 def copy_date_folder_to_dropbox(date_folder: Path, dropbox_base: Path) -> bool:
     """Zippa datum-mapp och kopiera zip-fil till Dropbox."""
-    # Deduplicate Excel files before copying
-    deduplicate_excel_files_in_folder(date_folder)
-
-    # Create final harmonized Excel file
     try:
-        from create_final_excel import create_final_excel
+        # Deduplicate Excel files before copying
+        deduplicate_excel_files_in_folder(date_folder)
+        time.sleep(0.2)
 
-        final_path = create_final_excel(date_folder)
-        if final_path:
-            print(f"Final Excel created: {final_path.name}")
-    except ImportError:
-        print("Warning: create_final_excel not available")
+        # Create final harmonized Excel file
+        try:
+            from create_final_excel import create_final_excel
+
+            final_path = create_final_excel(date_folder)
+            if final_path:
+                print(f"Final Excel created: {final_path.name}")
+        except ImportError:
+            print("Warning: create_final_excel not available")
+        except Exception as e:
+            print(f"Warning: Could not create final Excel: {e}")
+            import traceback, sys
+
+            traceback.print_exc(file=sys.stdout)
+
+        # Skapa zip-fil temporärt (i samma mapp som date_folder)
+        zip_filename = f"{date_folder.name}.zip"
+        temp_zip = date_folder.parent / zip_filename
+
+        # Ta bort gammal zip om den finns
+        if temp_zip.exists():
+            print(f"Tar bort gammal zip-fil: {temp_zip.name}")
+            temp_zip.unlink()
+
+        # Skapa zip-fil från hela mappen
+        if not create_zip_from_folder(date_folder, temp_zip):
+            return False
+
+        # Kopiera zip-fil till önskad Dropbox-mapp (direkt till leads)
+        dropbox_target_dir = Path(r"C:/Users/Propietario/Dropbox/leads")
+        dropbox_target_dir.mkdir(parents=True, exist_ok=True)
+
+        dropbox_zip = dropbox_target_dir / zip_filename
+
+        # Ta bort gammal zip i Dropbox om den finns
+        if dropbox_zip.exists():
+            print(f"Tar bort gammal zip i Dropbox: {dropbox_zip.name}")
+            dropbox_zip.unlink()
+
+        print("Kopierar zip-fil till Dropbox...")
+        shutil.copy2(temp_zip, dropbox_zip)
+        time.sleep(0.2)
+
+        print(f"OK: Klart! Zip-fil kopierad till: {dropbox_zip}")
+        print(f"   Storlek: {dropbox_zip.stat().st_size / 1024 / 1024:.2f} MB")
+
+        # Kopiera också till 10_jocke (utan zip)
+        try:
+            copy_date_folder_to_jocke(date_folder)
+        except Exception as e:
+            print(f"Warning: Kunde inte kopiera till 10_jocke: {e}")
+            import traceback, sys
+
+            traceback.print_exc(file=sys.stdout)
+            # Fortsätt ändå - detta är inte kritiskt
+
+        # Ta bort temporär zip-fil
+        try:
+            if temp_zip.exists():
+                temp_zip.unlink()
+        except Exception:
+            pass
+
+        return True
+
     except Exception as e:
-        print(f"Warning: Could not create final Excel: {e}")
+        print(f"[ERROR] copy_date_folder_to_dropbox: {e}")
+        import traceback, sys
 
-    # Skapa zip-fil temporärt (i samma mapp som date_folder)
-    zip_filename = f"{date_folder.name}.zip"
-    temp_zip = date_folder.parent / zip_filename
-
-    # Ta bort gammal zip om den finns
-    if temp_zip.exists():
-        print(f"Tar bort gammal zip-fil: {temp_zip.name}")
-        temp_zip.unlink()
-
-    # Skapa zip-fil från hela mappen
-    if not create_zip_from_folder(date_folder, temp_zip):
+        traceback.print_exc(file=sys.stdout)
         return False
-
-    # Kopiera zip-fil till önskad Dropbox-mapp (direkt till leads)
-    dropbox_target_dir = Path(r"C:/Users/Propietario/Dropbox/leads")
-    dropbox_target_dir.mkdir(parents=True, exist_ok=True)
-
-    dropbox_zip = dropbox_target_dir / zip_filename
-
-    # Ta bort gammal zip i Dropbox om den finns
-    if dropbox_zip.exists():
-        print(f"Tar bort gammal zip i Dropbox: {dropbox_zip.name}")
-        dropbox_zip.unlink()
-
-    print("Kopierar zip-fil till Dropbox...")
-    shutil.copy2(temp_zip, dropbox_zip)
-
-    print(f"OK: Klart! Zip-fil kopierad till: {dropbox_zip}")
-    print(f"   Storlek: {dropbox_zip.stat().st_size / 1024 / 1024:.2f} MB")
-
-    # Kopiera också till 10_jocke (utan zip)
-    try:
-        copy_date_folder_to_jocke(date_folder)
-    except Exception as e:
-        print(f"Warning: Kunde inte kopiera till 10_jocke: {e}")
-        # Fortsätt ändå - detta är inte kritiskt
-
-    # Ta bort temporär zip-fil (valfritt - kommentera bort om du vill behålla den)
-    # temp_zip.unlink()
-
-    return True
 
 
 def main():

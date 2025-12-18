@@ -1,0 +1,106 @@
+{
+  "folder": "K965090-25",
+  "extracted_at": "2025-12-18T02:32:04.291451",
+  "company_name": "M. Tuolja AB",
+  "orgnr": "559563-0293",
+  "verksamhet": "Aktiebolaget ska äga och förvalta fast och lös egendom samt idka därmed förenlig verksamhet.",
+  "sate": "Jokkmokk",
+  "address": "Skabramgatan 12, 962 33 JOKKMOKK,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-28",
+  "emails": [
+    "mattiastuolja@hotmail.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Lars Mattias Tuolja",
+      "role": "Styrelsesuppleant",
+      "personnr": "198803-XXXX"
+    },
+    {
+      "name": "Lisa Lucia Lyngman Gælok",
+      "role": "Styrelsesuppleant",
+      "personnr": "199304-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "hotmail.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "mtuolja.se",
+        "source": "generated"
+      },
+      {
+        "domain": "mtuolja.com",
+        "source": "generated"
+      },
+      {
+        "domain": "mtuolja.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "M. Tuolja AB",
+    "searches": [
+      {
+        "query": "M. Tuolja AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell webbplats (“hemsida”) för M. Tuolja AB. Det finns dock företagsinformation tillgänglig via tredjepartstjänster som Bolagsfakta, som visar följande detaljer:\n\n• Namn: M. Tuolja AB, organisationsnummer 559563‑0293  \n• Adress: Skabramgatan 12, 962 33 Jokkmokk  \n• Bolaget bildades den 28 november 2025 och registrerades den 16 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595630293-M._Tuolja_AB?utm_source=openai))\n\nOm du söker en hemsida kan d",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630293-M._Tuolja_AB?utm_source=openai",
+            "title": "M. Tuolja AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "M. Tuolja AB Aktiebolaget ska äga och förvalta fast och lös ege kontakt",
+        "summary": "Här är den efterfrågade informationen om M. Tuolja AB:\n\nKort svar:  \nM. Tuolja AB är ett svenskt aktiebolag med verksamhetsbeskrivningen: \"Aktiebolaget ska äga och förvalta fast och lös egendom samt idka därmed förenlig verksamhet.\" Företaget har organisationsnummer 559563‑0293 och är registrerat i Jokkmokk. Kontaktinformation: adressen är Skabramgatan 12, 962 33 Jokkmokk. ([bolagsfakta.se](https://www.bolagsfakta.se/5595630293-M._Tuolja_AB?utm_source=openai))  \n\nOm du behöver telefonnummer, mej",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630293-M._Tuolja_AB?utm_source=openai",
+            "title": "M. Tuolja AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"M. Tuolja AB\" site:se",
+        "summary": "Här är en kort sammanställning av företaget **M. Tuolja AB** (sök resultat med suffix “.se”):\n\n- **Organisationsnummer**: 559563‑0293 ([bolagsfakta.se](https://www.bolagsfakta.se/5595630293-M._Tuolja_AB?utm_source=openai))  \n- **Status**: Aktivt aktiebolag, registrerat i Jokkmokk, Norrbottens län ([bolagsfakta.se](https://www.bolagsfakta.se/5595630293-M._Tuolja_AB?utm_source=openai))  \n- **Adress**: Skabramgatan 12, 962 33 Jokkmokk ([bolagsfakta.se](https://www.bolagsfakta.se/5595630293-M._Tuolj",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595630293-M._Tuolja_AB?utm_source=openai",
+            "title": "M. Tuolja AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "hotmail.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "hotmail.se",
+        "url": "https://outlook.live.com/mail/0/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Outlook",
+        "description": "",
+        "text_sample": "JavaScript must be enabled. Outlook"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:35:13.655995"
+  }
+}

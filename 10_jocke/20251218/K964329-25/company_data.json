@@ -1,0 +1,99 @@
+{
+  "folder": "K964329-25",
+  "extracted_at": "2025-12-18T02:32:04.282061",
+  "company_name": "Thörner Däck AB",
+  "orgnr": "559562-9949",
+  "verksamhet": "Bolaget ska bedriva verksamhet inom däckservice, inklusive försäljning, montering, reparation och förvaring av däck. Bolaget ska även utföra service- och reparationsarbeten på personbilar och lättare fordon. Bolaget ska därutöver hyra ut personal för olika typer av arbetsuppgifter inom flera branscher. Bolaget får även äga, förvalta och hyra ut fast egendom samt bedriva därmed förenlig verksamhet.",
+  "sate": "Säffle",
+  "address": "Öcken Smederud, 661 92 SÄFFLE,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-20",
+  "emails": [
+    "thornerdack@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Karl Axel Andreas Thörner",
+      "role": "Styrelseledamot",
+      "personnr": "199903-XXXX"
+    },
+    {
+      "name": "Karl Axel Henrik Thörner",
+      "role": "Styrelsesuppleant",
+      "personnr": "200207-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "thornerdack.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "thornerdack.com",
+        "source": "generated"
+      },
+      {
+        "domain": "thornerdack.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "thornerdackab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "research": {
+    "company": "Thörner Däck AB",
+    "searches": [
+      {
+        "query": "Thörner Däck AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell webbplats för \"Thörner Däck AB\". Företaget är registrerat sedan den 20 november 2025 och har säte i Säffle (adress: Öcken Smederud, 661 92 Säffle) ([bolagsfakta.se](https://www.bolagsfakta.se/5595629949-Thorner_Dack_AB?utm_source=openai)). Det finns ingen länk eller information om en hemsida på bolagsregister eller företagsinformationssidor som Bolagsfakta ([bolagsfakta.se](https://www.bolagsfakta.se/5595629949-Thorner_Dack_AB?utm_source=openai)).\n\nKor",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629949-Thorner_Dack_AB?utm_source=openai",
+            "title": "Thörner Däck AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Thörner Däck AB Bolaget ska bedriva verksamhet inom däckservice, i kontakt",
+        "summary": "Här är en kort beskrivning av Thörner Däck AB med källhänvisningar:\n\n• Bolaget är ett aktiebolag med organisationsnummer 559562‑9949, med säte i Säffle (adress: Öcken Smederud, 661 92 Säffle) ([bolagsfakta.se](https://www.bolagsfakta.se/5595629949-Thorner_Dack_AB?utm_source=openai)).  \n• Verksamhetsbeskrivningen anger att bolaget ska bedriva däckservice inklusive försäljning, montering, reparation och förvaring av däck. Dessutom omfattar verksamheten service‑ och reparationsarbeten på personbila",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629949-Thorner_Dack_AB?utm_source=openai",
+            "title": "Thörner Däck AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Thörner Däck AB\" site:se",
+        "summary": "Här är kort information om Thörner Däck AB, baserat på svenska källor:\n\n- Thörner Däck AB är ett aktiebolag, med organisationsnummer 559562‑9949, registrerat i Säffle, Värmlands län, och har säte på adressen Öcken Smederud, 661 92 Säffle ([bolagsfakta.se](https://www.bolagsfakta.se/5595629949-Thorner_Dack_AB?utm_source=openai)).\n- Bolaget registrerades nyligen: det bildades den 20 november 2025 och registrerades formellt den 16 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/559562994",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595629949-Thorner_Dack_AB?utm_source=openai",
+            "title": "Thörner Däck AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "thornerdack.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "thornerdack.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-18T02:32:56.519606"
+  }
+}
