@@ -1,0 +1,10 @@
+evaluate=y
+threshold=0.80
+re_input_website_link=y
+max_sites=30
+
+AUDIT_ENABLED=y
+AUDIT_THRESHOLD=0.85
+RE_INPUT_AUDIT=y
+MAX_AUDITS=30
+MAX_TOTAL_JUDGEMENT_APPROVALS=4

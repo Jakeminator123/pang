@@ -1,0 +1,27 @@
+.env
+.env.*
+
+# Cursor / IDE
+.preprompt_history.json
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Logs / runtime output
+logs/
+log/
+**/*.log
+
+# Local browser profiles + debug artifacts
+**/chrome_profile/
+**/debug/
+
+# Data/output folders (generated)
+**/info_server/
+**/djupanalys/
+**/output/
+**/8_ready/
+**/testning/output/
+
+

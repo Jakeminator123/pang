@@ -1,0 +1,23 @@
+# Bolagsverket Scraper Config
+# Lines starting with # are ignored
+
+# Number of kungörelser to scrape
+count = 20
+
+# Date (YYYYMMDD or YYYY-MM-DD, leave empty for today)
+date = 
+
+# Parallel tabs (1 = sequential, safer but slower)
+parallel = 1
+
+# Show Chrome window (true/false)
+visible = false
+
+# Wait times in seconds (random between min and max)
+wait_min = 8
+wait_max = 12
+
+# Wait between pages
+between_min = 3
+between_max = 6
+

@@ -1,0 +1,47 @@
+	Ij	@	085cfe0…?type=9:78
+(anonymous)	@	injected.js:174
+(anonymous)	@	index-913862d2.js:18
+af	@	index-913862d2.js:18
+AE	@	index-913862d2.js:18
+bi.request	@	index-913862d2.js:18
+bi.<computed>	@	index-913862d2.js:18
+(anonymous)	@	index-913862d2.js:17
+getKoppling	@	index-913862d2.js:44
+(anonymous)	@	index-913862d2.js:22
+created	@	index-913862d2.js:44
+bs	@	index-913862d2.js:13
+xr	@	index-913862d2.js:13
+jv	@	index-913862d2.js:13
+k2	@	index-913862d2.js:13
+H1	@	index-913862d2.js:13
+Z2	@	index-913862d2.js:13
+Q2	@	index-913862d2.js:13
+q	@	index-913862d2.js:13
+G	@	index-913862d2.js:13
+b	@	index-913862d2.js:13
+Oe	@	index-913862d2.js:13
+run	@	index-913862d2.js:9
+W.P.update	@	index-913862d2.js:13
+bs	@	index-913862d2.js:13
+p1	@	index-913862d2.js:13
+Promise.then		
+c1	@	index-913862d2.js:13
+Kh	@	index-913862d2.js:13
+C	@	index-913862d2.js:13
+Ih	@	index-913862d2.js:9
+Yy	@	index-913862d2.js:9
+ho	@	index-913862d2.js:9
+set value	@	index-913862d2.js:9
+X	@	index-913862d2.js:26
+(anonymous)	@	index-913862d2.js:26
+Promise.then		
+S	@	index-913862d2.js:26
+E	@	index-913862d2.js:26
+i	@	index-913862d2.js:26
+bs	@	index-913862d2.js:13
+xr	@	index-913862d2.js:13
+n	@	index-913862d2.js:17
+Request initiator chain
+https://poit.bolagsverket.se/poit-app/kungorelse/K961666-25
+https://poit.bolagsverket.se/TSPD/085cfe028fab200026c19fc0873407acc06eaa3064d1f21f3b52b8938916d7da0d4fb578b581b90b?type=9
+https://poit.bolagsverket.se/poit/rest/HamtaKoppling

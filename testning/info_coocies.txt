@@ -1,0 +1,436 @@
+idget: {heading: {tcfLead: "Sekretessinställningar", lead: "Vi använder cookies",…},…},…}
+categories
+: 
+{common: {moreInfo: "Mer", sharedWith: "Delad med", privacyPolicy: "Integritetspolicy",…},…}
+advertising
+: 
+{title: "Reklam / marknadsföring",…}
+description
+: 
+"Dessa cookies kan användas av tredjepartsföretag för att skapa en grundläggande profil för dina intressen och visa dig relevanta annonser på andra webbplatser. De identifierar din webbläsare och din enhet. Om du väljer att inte tillåta dessa kakor spåras du inte av vår riktade annonsering på andra webbplatser."
+excerpt
+: 
+"Dessa cookies ställs in via vår webbplats av våra reklampartners."
+title
+: 
+"Reklam / marknadsföring"
+common
+: 
+{moreInfo: "Mer", sharedWith: "Delad med", privacyPolicy: "Integritetspolicy",…}
+moreInfo
+: 
+"Mer"
+privacyPolicy
+: 
+"Integritetspolicy"
+privacySettings
+: 
+"inställningar"
+privacySettings_label
+: 
+"Inställningar. Extern länk. Öppnas i en ny flik eller ett nytt fönster."
+sharedWith
+: 
+"Delad med"
+functional
+: 
+{title: "Funktionell",…}
+description
+: 
+"Dessa cookies kan ställas in av oss själva eller av våra tredjepartsleverantörer, vars digitala tjänster vi har lagt till. Om du inte tillåter dessa cookies kanske vissa av dessa funktioner inte fungerar korrekt."
+excerpt
+: 
+"Vi använder dessa kakor för att förbättra funktionaliteten och möjliggöra personalisering, till exempel livechatt, videor och användning av sociala medier."
+title
+: 
+"Funktionell"
+necessary
+: 
+{title: "Nödvändig",…}
+description
+: 
+"Vanligtvis bestäms dessa cookies av dina handlingar i dina förfrågningar om våra tjänster. Exempel på dessa åtgärder är att logga in, fylla i formulär eller ställa in dina sekretesspreferenser. Det är möjligt att låta din webbläsare blockera dessa kakor, men vissa delar av vår webbplats kanske inte fungerar korrekt när dessa är blockerade."
+excerpt
+: 
+"Dessa cookies krävs för att vår webbplats ska fungera bra och kan inte stängas av i vårt system."
+title
+: 
+"Nödvändig"
+performance
+: 
+{title: "Prestanda",…}
+description
+: 
+"Denna kategori kallas också Analytics. Aktiviteter som sidbesöksräkning, sidhastighetshastighet, avvisningsfrekvens och tekniker som används för att komma åt vår webbplats ingår i denna kategori."
+excerpt
+: 
+"Vi använder dessa cookies för att tillhandahålla statistisk information om vår webbplats - de används för prestandamätning och förbättring."
+title
+: 
+"Prestanda"
+unclassified
+: 
+{title: "Ej klassificerad"}
+title
+: 
+"Ej klassificerad"
+declaration
+: 
+{created: "Denna cookie-policy har skapats och uppdaterats av CookieFirst.com.",…}
+cookie_types
+: 
+{heading: "Vilken typ av cookies använder vi?", necessary: {heading: "Nödvändig cookies",…},…}
+created
+: 
+"Denna cookie-policy har skapats och uppdaterats av CookieFirst.com."
+disable_cookies
+: 
+{heading: "Hur kan jag stänga av eller ta bort cookies?",…}
+heading
+: 
+"Hur kan jag stänga av eller ta bort cookies?"
+text
+: 
+"Du kan välja att välja bort alla utom de nödvändiga cookies. I webbläsarens inställningar kan du ändra inställningarna för att säkerställa att cookies blockeras. De flesta webbläsare ger dig en förklaring om hur du gör detta i den så kallade \"hjälpfunktionen\". Men om du blockerar kakorna är det möjligt att du inte kommer att kunna njuta av alla tekniska funktioner som vår webbplats har att erbjuda och det kan påverka din användarupplevelse negativt."
+manage_consent
+: 
+{heading: "Vi har gjort det enkelt att hantera dina medgivanden.", change: "Ändra ditt samtycke",…}
+change
+: 
+"Ändra ditt samtycke"
+consent_datetime
+: 
+"Din senaste samtyckeändring har registrerats den"
+heading
+: 
+"Vi har gjort det enkelt att hantera dina medgivanden."
+no_data
+: 
+"För närvarande lagras inga uppgifter om dina samtyckespreferenser."
+view_consents
+: 
+"Kontakta webbplatsadministratören om du vill se din samtyckesrevision."
+withdraw
+: 
+"Återkalla ditt samtycke"
+your_id
+: 
+"Det här är din unika id"
+our_cookies
+: 
+{,…}
+bulk-consent
+: 
+"Denna cookie ställs in av CookieFirst och möjliggör synkronisering av cookie-inställningar mellan domäner anslutna till ett företag."
+cookiefirst-consent
+: 
+"Den här cookien sparar dina cookie-inställningar för den här webbplatsen. Du kan ändra dessa eller dra tillbaka ditt samtycke enkelt."
+cookiefirst-id
+: 
+"Denna cookie innehåller ditt unika ID så att CookieFirst kan identifiera unika besökare på denna webbplats."
+updated
+: 
+"Uppdaterad:"
+used_cookies
+: 
+{heading: "De cookies vi använder på vår webbplats", name: "namn", domain: "Domän namn",…}
+advertising
+: 
+"Reklam / marknadsföring"
+domain
+: 
+"Domän namn"
+expiration
+: 
+"Utgångstid"
+expiration_persistent
+: 
+"Beständig"
+expiration_session
+: 
+"session"
+functional
+: 
+"Funktionell"
+heading
+: 
+"De cookies vi använder på vår webbplats"
+name
+: 
+"namn"
+necessary
+: 
+"Nödvändig"
+performance
+: 
+"Prestanda"
+provider
+: 
+"leverantör"
+purpose
+: 
+"Ändamål"
+type
+: 
+"Typ"
+type_cookie
+: 
+"Cookie"
+type_local_storage
+: 
+"Local storage"
+unclassified
+: 
+"oklassificerade"
+unclassified_desc
+: 
+"Denna cookie har ännu inte fått någon beskrivning. Vårt team arbetar för att ge mer information."
+what_are_cookies
+: 
+{heading: "Vad är cookies?",…}
+heading
+: 
+"Vad är cookies?"
+text
+: 
+"Cookies och liknande tekniker är mycket små textdokument eller kodkoder som ofta innehåller en unik identifikationskod. När du besöker en webbplats eller använder en mobil applikation ber en dator din dator eller mobilenhet om tillstånd att spara den här filen på din dator eller mobilenhet och få tillgång till information. Information som samlas in via cookies och liknande tekniker kan innehålla datum och tid för besöket och hur du använder en viss webbplats eller mobilapplikation."
+why_cookies
+: 
+{heading: "Varför använder vi cookies?",…}
+heading
+: 
+"Varför använder vi cookies?"
+text
+: 
+"Cookies ser till att du under ditt besök i vår onlinebutik förblir inloggad, alla föremål förblir lagrade i din kundvagn, du kan handla säkert och webbplatsen fortsätter att fungera smidigt. Cookiesna säkerställer också att vi kan se hur vår webbplats används och hur vi kan förbättra den. Beroende på dina preferenser kan dessutom våra egna cookies användas för att ge dig riktade annonser som matchar dina personliga intressen."
+iab_purposes
+: 
+{purposes: "IAB:s ändamål med behandlingen:", specialPurposes: "IAB Särskilda ändamål",…}
+features
+: 
+"IAB-funktioner:"
+non_iab
+: 
+"Behandlingsändamål som inte rör IAB:"
+purposes
+: 
+"IAB:s ändamål med behandlingen:"
+specialFeatures
+: 
+"IAB Special Features:"
+specialPurposes
+: 
+"IAB Särskilda ändamål"
+modal
+: 
+{see_more_about: "Se mer om",…}
+acc_title
+: 
+"Cookie banner"
+additional_link_text
+: 
+""
+additional_link_text_label
+: 
+""
+additional_link_url
+: 
+""
+buttons
+: 
+{reject_second: "Neka", reject_secondLabel: "Neka alla cookies", close: "Stäng",…}
+illustrations
+: 
+"Illustrationer"
+lead
+: 
+"Vi vill ha din tillåtelse att använda dina data för följande ändamål:"
+logo
+: 
+"logotyp"
+opens_new_tab
+: 
+"Extern länk. Öppnas i en ny flik eller ett nytt fönster."
+policy
+: 
+"Integritetspolicy"
+policy_label
+: 
+"Integritetspolicy. Extern länk. Öppnas i en ny flik eller ett nytt fönster."
+policy_url
+: 
+""
+search
+: 
+"Sök"
+see_more_about
+: 
+"Se mer om"
+services
+: 
+"tjänster"
+services_active
+: 
+"tjänster aktiva"
+tabIntro
+: 
+"Denna kaklista visar i allmänhet alla kakor som finns på denna webbplats. Det återspeglar inte användarens individuella borttagningsalternativ."
+tabs
+: 
+{settings: "inställningar", cookies: "Cookies", policy: "Cookie policy", data: "Mina uppgifter",…}
+tcfLead
+: 
+"Vissa leverantörer ber inte om ditt samtycke och kan behandla dina personuppgifter baserat på berättigat intresse. Se vår lista över ändamål som de tror att de har berättigat intresse för. För att invända mot behandling av data baserat på berättigat intresse, ställ reglaget till avstängt läge."
+title
+: 
+"Sekretessinställningar"
+vendors
+: 
+"säljare"
+remove_data_requests
+: 
+{title: "Ta bort mina data",…}
+description
+: 
+"Klicka på knappen nedan för att utfärda en begäran om borttagning av data som måste godkännas av webbplatsens ägare. Du kommer att få ett e-postmeddelande när din begäran har behandlats."
+modal
+: 
+{title: "Ta bort mina data",…}
+title
+: 
+"Ta bort mina data"
+vendors
+: 
+{view_policies: "Se integritetspolicy", lifespan: "Livslängd: ", features: "Funktioner",…}
+cookie_max_time
+: 
+"Cookie max utgångstid"
+cookie_refresh
+: 
+"Cookie uppdatering"
+cookie_use
+: 
+"Användning av Cookie"
+dataDeclaration
+: 
+"Kategorier av insamlad data"
+dataProcessing
+: 
+"Samtycke till databehandling"
+days
+: 
+"dagar"
+days_l
+: 
+"dagar"
+device_disclosure
+: 
+"Upplysningar om enhetslagring"
+device_disclosure_error
+: 
+"Tyvärr, vi kunde inte ladda den nödvändiga informationen."
+domain
+: 
+"Domän"
+features
+: 
+"Funktioner"
+g_vendors
+: 
+"Google Ad Tech Providers (ATP)"
+iab
+: 
+{features: "IAB-funktioner", purposes: "IABs syften", specialPurposes: "IAB Special Purposes",…}
+iab_vendors
+: 
+"IAB-leverantörer"
+identifier
+: 
+"Identifierare"
+illustrations
+: 
+"Illustrationer"
+legInt
+: 
+"Databehandling baserad på berättigat intresse"
+legIntClaim
+: 
+"Se berättigat intresseanspråk"
+legIntTitle
+: 
+"Berättigade intressesyften"
+lifespan
+: 
+"Livslängd: "
+no
+: 
+"Nej"
+non_cookie_storage
+: 
+"Använder icke- cookie"
+non_iab_vendors
+: 
+"Icke-IAB-leverantörer"
+purposes
+: 
+"Syften"
+reload
+: 
+"Klicka för att ladda om"
+retention_days
+: 
+"(lagringsperiod: {{retentionPeriod}} dagar)"
+retention_period
+: 
+"Standardtid för datalagring"
+specialFeatures
+: 
+"Specialfunktioner"
+specialPurposes
+: 
+"Särskilda ändamål"
+storage_info
+: 
+"Datalagringsinformation"
+type
+: 
+"Typ"
+types
+: 
+"Leverantörstyper"
+view_policies
+: 
+"Se integritetspolicy"
+yes
+: 
+"Ja"
+widget
+: 
+{heading: {tcfLead: "Sekretessinställningar", lead: "Vi använder cookies",…},…}
+buttons
+: 
+{acceptAll: "Acceptera alla", acceptAllLabel: "Acceptera alla cookies", reject: "Neka",…}
+heading
+: 
+{tcfLead: "Sekretessinställningar", lead: "Vi använder cookies",…}
+poweredBy
+: 
+"drivs av"
+withdraw
+: 
+{title: "Vill du verkligen dra tillbaka ditt samtycke?", mydata_title: "Återkalla ditt samtycke",…}
+cancel
+: 
+"Avbryt"
+confirm
+: 
+"Dra tillbaka"
+mydata_title
+: 
+"Återkalla ditt samtycke"
+text
+: 
+"Om du drar tillbaka ditt samtycke raderas alla dina cookie-inställningar för den här webbplatsen så att du kan få en ny start."
+title
+: 
+"Vill du verkligen dra tillbaka ditt samtycke?"

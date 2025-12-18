@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "PoIT Listener Dev Tool",
+  "version": "1.2.1",
+  "description": "Lyssnar på PoIT-sökningar på poit.bolagsverket.se och skickar resultat till en lokal utvecklingsserver.",
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "https://poit.bolagsverket.se/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "PoIT Listener"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected.js"
+      ],
+      "matches": [
+        "https://poit.bolagsverket.se/*"
+      ]
+    }
+  ],
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://poit.bolagsverket.se/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

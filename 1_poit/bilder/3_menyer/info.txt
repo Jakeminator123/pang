@@ -1,0 +1,13 @@
+Strålande. När vi väntat några sekunder efter att ha kommit till den nya sidan vill jag att fler bildmatchningar på liknande sätt ska göras.
+Alla dessa bilder ligger i undermappen från vart skriptet körs ifrån som är "bilder\3_menyer". Här ska skritpet helt enkelt göra såhär, att det ska börja med skritpet som börjar med en etta (1),
+och sedan gå uppåt i klättrande ordning till 9, för att sedan bli 10, 11 och så vidare. De kan heta tex "4_visa.jpg" eller "5_amne.jpg" och så vidare..
+
+Vad so ska ske är att första bilden ska hittas och klicas på, sedan ska 1- 3 sekunder randomiseras och väntas. Sedan ska bild nummer 2 (altså tex "2_valj.jpg) klicas på. Viktigt är att ett nytt fotto tas för varje av stegen så sidan hinner uppdateras.
+
+hursomhelst finns ett litet undantagsom är följande:
+
+Efter att ha klickat på "3_bol.jpg" så ska vänsterklickas 10 ggr till vänster. Sedan ska dagens datum fyllas i (mm/dd/yyyy).
+Sedan ska 'tab' och igen 'tab' blickas på med en randomisering från 0.5 sek till 1 sek.
+Nu ska vi fylla i dagens datum igen, enligt samma typ av metod. Om dagens datum är en lördag eller söndag, så ska senaste fredagen tas som datum.
+
+Sedan ska skriptet fortsätta tills alla dessa bilder mednummer är klickade på!

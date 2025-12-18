@@ -1,0 +1,432 @@
+# -*- coding: utf-8 -*-
+from __future__ import annotations
+
+import json
+import os
+import queue
+import subprocess
+import sys
+import threading
+from dataclasses import dataclass
+from datetime import date, datetime, timedelta
+from pathlib import Path
+from typing import List, Tuple, Optional
+
+import requests
+import ttkbootstrap as tb
+from ttkbootstrap.constants import *
+from tkinter import filedialog, messagebox
+
+
+# =========
+# KONFIG
+# =========
+APP_TITLE = "Export Nerladdare"
+APP_SUBTITLE = "Batchade CSV/XLSX-exporter via datumintervall"
+
+API_BASE_URL = "https://example.com/api"   # <-- ÄNDRA HÄR
+API_ENDPOINT = "/export"                  # <-- ÄNDRA HÄR
+
+API_KEY = "12345"                         # Fast nyckel enligt din spec
+API_HEADER_NAME = "X-API-Key"
+
+
+# =========
+# HELPERS
+# =========
+def resource_path(relative: str) -> str:
+    """Fungerar både i dev och PyInstaller."""
+    base = getattr(sys, "_MEIPASS", None)
+    if base:
+        return os.path.join(base, relative)
+    return str(Path(__file__).resolve().parent / relative)
+
+
+def app_config_dir(app_name: str = "export_nerladdare") -> Path:
+    """Skrivbar settings-mapp (bra för .exe/.app)."""
+    if os.name == "nt":
+        base = os.environ.get("APPDATA") or str(Path.home() / "AppData" / "Roaming")
+    else:
+        base = os.environ.get("XDG_CONFIG_HOME") or str(Path.home() / ".config")
+    d = Path(base) / app_name
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def safe_filename(s: str) -> str:
+    bad = '<>:"/\\|?*'
+    for ch in bad:
+        s = s.replace(ch, "_")
+    return s
+
+
+def month_end(d: date) -> date:
+    first_next = (d.replace(day=1) + timedelta(days=32)).replace(day=1)
+    return first_next - timedelta(days=1)
+
+
+def build_batches(start: date, end: date, mode: str) -> List[Tuple[date, date]]:
+    if start > end:
+        raise ValueError("Startdatum måste vara före eller samma som slutdatum.")
+
+    batches: List[Tuple[date, date]] = []
+    cur = start
+
+    while cur <= end:
+        if mode == "Vecka":
+            b_end = min(cur + timedelta(days=6), end)
+        elif mode == "Månad":
+            b_end = min(month_end(cur), end)
+        else:
+            raise ValueError("Okänt batchläge.")
+
+        batches.append((cur, b_end))
+        cur = b_end + timedelta(days=1)
+
+    return batches
+
+
+def open_folder(path: str) -> None:
+    p = Path(path).expanduser().resolve()
+    if os.name == "nt":
+        os.startfile(str(p))
+    elif sys.platform == "darwin":
+        subprocess.run(["open", str(p)], check=False)
+    else:
+        subprocess.run(["xdg-open", str(p)], check=False)
+
+
+@dataclass
+class ApiConfig:
+    base_url: str
+    endpoint: str
+    api_key: str
+    header_name: str = "X-API-Key"
+
+
+class ExportApiClient:
+    def __init__(self, cfg: ApiConfig, timeout_s: int = 90) -> None:
+        self.cfg = cfg
+        self.timeout_s = timeout_s
+
+    def url(self) -> str:
+        return self.cfg.base_url.rstrip("/") + "/" + self.cfg.endpoint.lstrip("/")
+
+    def download_export(self, start: date, end: date, fmt: str) -> bytes:
+        headers = {self.cfg.header_name: self.cfg.api_key}
+        params = {
+            "start": start.isoformat(),
+            "end": end.isoformat(),
+            "format": fmt.lower(),
+        }
+        r = requests.get(self.url(), headers=headers, params=params, timeout=self.timeout_s)
+        if r.status_code != 200:
+            raise RuntimeError(f"API-fel {r.status_code}: {r.text[:500]}")
+        return r.content
+
+
+# =========
+# APP
+# =========
+class App(tb.Window):
+    def __init__(self) -> None:
+        super().__init__(themename="flatly")
+        self.title(APP_TITLE)
+        self.minsize(860, 560)
+
+        self._q: queue.Queue = queue.Queue()
+        self._worker: Optional[threading.Thread] = None
+        self._cancel = threading.Event()
+
+        self.settings_path = app_config_dir() / "settings.json"
+
+        self._build_ui()
+        self._load_settings()
+        self.after(120, self._poll)
+
+    def _build_ui(self) -> None:
+        # Root layout
+        root = tb.Frame(self, padding=18)
+        root.pack(fill=BOTH, expand=True)
+        root.columnconfigure(0, weight=1)
+        root.rowconfigure(2, weight=1)
+
+        # Header card
+        header = tb.Frame(root, padding=16)
+        header.grid(row=0, column=0, sticky=EW)
+        header.columnconfigure(1, weight=1)
+
+        self._logo_img = None
+        logo_path = resource_path("logo.png")
+        if os.path.exists(logo_path):
+            try:
+                self._logo_img = tb.PhotoImage(file=logo_path)
+                tb.Label(header, image=self._logo_img).grid(row=0, column=0, rowspan=2, padx=(0, 14))
+                try:
+                    self.iconphoto(True, self._logo_img)
+                except Exception:
+                    pass
+            except Exception:
+                self._logo_img = None
+
+        tb.Label(header, text=APP_TITLE, font=("Segoe UI", 18, "bold")).grid(row=0, column=1, sticky=W)
+        tb.Label(header, text=APP_SUBTITLE).grid(row=1, column=1, sticky=W, pady=(2, 0))
+
+        # Form card
+        card = tb.Labelframe(root, text="Nerladdning", padding=16)
+        card.grid(row=1, column=0, sticky=EW, pady=(14, 0))
+        for c in range(6):
+            card.columnconfigure(c, weight=1)
+
+        today = date.today()
+        self.var_batch = tb.StringVar(value="Vecka")
+        self.var_format = tb.StringVar(value="csv")
+        self.var_outdir = tb.StringVar(value=str((Path.home() / "Downloads").resolve()))
+
+        # Date widgets (ttkbootstrap DateEntry)
+        # Om du vill tvinga ISO i display, kör med vanliga Entry istället.
+        try:
+            self.start_de = tb.DateEntry(card, bootstyle="secondary", firstweekday=0)
+            self.end_de = tb.DateEntry(card, bootstyle="secondary", firstweekday=0)
+            self.start_de.set_date(today - timedelta(days=30))
+            self.end_de.set_date(today)
+            has_dateentry = True
+        except Exception:
+            has_dateentry = False
+            self.var_start = tb.StringVar(value=(today - timedelta(days=30)).isoformat())
+            self.var_end = tb.StringVar(value=today.isoformat())
+            self.start_de = tb.Entry(card, textvariable=self.var_start)
+            self.end_de = tb.Entry(card, textvariable=self.var_end)
+
+        tb.Label(card, text="Start").grid(row=0, column=0, sticky=W)
+        self.start_de.grid(row=1, column=0, sticky=EW, padx=(0, 10), pady=(6, 0))
+
+        tb.Label(card, text="Slut").grid(row=0, column=1, sticky=W)
+        self.end_de.grid(row=1, column=1, sticky=EW, padx=(0, 10), pady=(6, 0))
+
+        tb.Label(card, text="Batch").grid(row=0, column=2, sticky=W)
+        tb.Combobox(
+            card,
+            textvariable=self.var_batch,
+            values=["Vecka", "Månad"],
+            state="readonly",
+            bootstyle="secondary",
+        ).grid(row=1, column=2, sticky=EW, padx=(0, 10), pady=(6, 0))
+
+        tb.Label(card, text="Format").grid(row=0, column=3, sticky=W)
+        fmt_row = tb.Frame(card)
+        fmt_row.grid(row=1, column=3, sticky=EW, pady=(6, 0))
+        tb.Radiobutton(fmt_row, text="CSV", value="csv", variable=self.var_format, bootstyle="success-toolbutton").pack(side=LEFT)
+        tb.Radiobutton(fmt_row, text="XLSX", value="xlsx", variable=self.var_format, bootstyle="success-toolbutton").pack(side=LEFT, padx=(8, 0))
+
+        # Outdir
+        out = tb.Labelframe(root, text="Utdatamapp", padding=16)
+        out.grid(row=2, column=0, sticky=NSEW, pady=(14, 0))
+        out.columnconfigure(0, weight=1)
+
+        tb.Entry(out, textvariable=self.var_outdir, bootstyle="secondary").grid(row=0, column=0, sticky=EW)
+        tb.Button(out, text="Välj…", command=self._choose_outdir, bootstyle="secondary").grid(row=0, column=1, padx=(10, 0))
+        tb.Button(out, text="Öppna mapp", command=self._open_outdir, bootstyle="secondary").grid(row=0, column=2, padx=(10, 0))
+
+        # Status + progress + actions
+        footer = tb.Frame(root, padding=(2, 14, 2, 0))
+        footer.grid(row=3, column=0, sticky=EW)
+        footer.columnconfigure(0, weight=1)
+
+        self.var_status = tb.StringVar(value="Redo.")
+        tb.Label(footer, textvariable=self.var_status).grid(row=0, column=0, sticky=W)
+
+        self.progress = tb.Progressbar(footer, mode="determinate", bootstyle="success-striped")
+        self.progress.grid(row=1, column=0, sticky=EW, pady=(8, 0))
+
+        btns = tb.Frame(footer)
+        btns.grid(row=2, column=0, sticky=W, pady=(14, 0))
+
+        self.btn_download = tb.Button(btns, text="Ladda ner", command=self._start_download, bootstyle="success")
+        self.btn_download.pack(side=LEFT)
+
+        self.btn_cancel = tb.Button(btns, text="Avbryt", command=self._cancel_download, bootstyle="danger", state="disabled")
+        self.btn_cancel.pack(side=LEFT, padx=(10, 0))
+
+        # Spara om vi har DateEntry eller fallback
+        self._has_dateentry = has_dateentry
+
+    def _choose_outdir(self) -> None:
+        d = filedialog.askdirectory(title="Välj utdatamapp")
+        if d:
+            self.var_outdir.set(d)
+            self._save_settings()
+
+    def _open_outdir(self) -> None:
+        try:
+            open_folder(self.var_outdir.get())
+        except Exception as e:
+            messagebox.showinfo("Mapp", f"{self.var_outdir.get()}\n\n{e}")
+
+    def _set_running(self, running: bool) -> None:
+        self.btn_download.config(state="disabled" if running else "normal")
+        self.btn_cancel.config(state="normal" if running else "disabled")
+
+    def _get_dates(self) -> Tuple[date, date]:
+        if self._has_dateentry:
+            s = self.start_de.get_date()
+            e = self.end_de.get_date()
+            return s, e
+
+        # fallback: parse ISO från Entry
+        s = datetime.strptime(self.start_de.get().strip(), "%Y-%m-%d").date()
+        e = datetime.strptime(self.end_de.get().strip(), "%Y-%m-%d").date()
+        return s, e
+
+    def _validate(self) -> Tuple[List[Tuple[date, date]], str, Path]:
+        try:
+            start, end = self._get_dates()
+        except Exception:
+            raise ValueError("Datum är ogiltigt. Använd YYYY-MM-DD (om du kör fallback-entries).")
+
+        batch = self.var_batch.get().strip()
+        fmt = self.var_format.get().strip().lower()
+        outdir = Path(self.var_outdir.get().strip()).expanduser()
+
+        if fmt not in ("csv", "xlsx"):
+            raise ValueError("Format måste vara CSV eller XLSX.")
+
+        outdir.mkdir(parents=True, exist_ok=True)
+
+        batches = build_batches(start, end, batch)
+        return batches, fmt, outdir
+
+    def _start_download(self) -> None:
+        if self._worker and self._worker.is_alive():
+            return
+
+        try:
+            batches, fmt, outdir = self._validate()
+        except Exception as e:
+            messagebox.showerror("Fel", str(e))
+            return
+
+        self._save_settings()
+
+        self.progress["value"] = 0
+        self.progress["maximum"] = len(batches)
+        self.var_status.set(f"Startar… ({len(batches)} batchar)")
+        self._set_running(True)
+        self._cancel.clear()
+
+        cfg = ApiConfig(
+            base_url=API_BASE_URL,
+            endpoint=API_ENDPOINT,
+            api_key=API_KEY,
+            header_name=API_HEADER_NAME,
+        )
+
+        self._worker = threading.Thread(
+            target=self._worker_fn,
+            args=(cfg, batches, fmt, outdir),
+            daemon=True,
+        )
+        self._worker.start()
+
+    def _cancel_download(self) -> None:
+        self._cancel.set()
+        self.var_status.set("Avbryter…")
+
+    def _worker_fn(self, cfg: ApiConfig, batches: List[Tuple[date, date]], fmt: str, outdir: Path) -> None:
+        client = ExportApiClient(cfg)
+        ok = 0
+
+        for idx, (s, e) in enumerate(batches, start=1):
+            if self._cancel.is_set():
+                self._q.put(("done", (ok, len(batches), True)))
+                return
+
+            self._q.put(("status", f"Hämtar {s.isoformat()} → {e.isoformat()} ({idx}/{len(batches)})…"))
+
+            try:
+                data = client.download_export(s, e, fmt)
+                name = safe_filename(f"export_{s:%Y%m%d}_{e:%Y%m%d}.{fmt}")
+                (outdir / name).write_bytes(data)
+                ok += 1
+            except Exception as ex:
+                self._q.put(("error", f"Fel vid {s} → {e}:\n{ex}"))
+
+            self._q.put(("progress", idx))
+
+        self._q.put(("done", (ok, len(batches), False)))
+
+    def _poll(self) -> None:
+        try:
+            while True:
+                kind, payload = self._q.get_nowait()
+
+                if kind == "status":
+                    self.var_status.set(str(payload))
+                elif kind == "progress":
+                    self.progress["value"] = int(payload)
+                elif kind == "error":
+                    messagebox.showwarning("API-fel", str(payload))
+                elif kind == "done":
+                    ok, total, cancelled = payload
+                    self._set_running(False)
+                    self.var_status.set("Redo.")
+                    if cancelled:
+                        messagebox.showinfo("Klart", f"Avbrutet.\nLyckades: {ok}/{total}")
+                    else:
+                        messagebox.showinfo("Klart", f"Färdigt!\nLyckades: {ok}/{total}")
+        except queue.Empty:
+            pass
+        finally:
+            self.after(120, self._poll)
+
+    def _load_settings(self) -> None:
+        p = self.settings_path
+        if not p.exists():
+            return
+        try:
+            data = json.loads(p.read_text(encoding="utf-8"))
+            self.var_batch.set(data.get("batch", self.var_batch.get()))
+            self.var_format.set(data.get("format", self.var_format.get()))
+            self.var_outdir.set(data.get("outdir", self.var_outdir.get()))
+
+            # Datum: bara om DateEntry finns
+            if self._has_dateentry:
+                if "start" in data:
+                    self.start_de.set_date(datetime.strptime(data["start"], "%Y-%m-%d").date())
+                if "end" in data:
+                    self.end_de.set_date(datetime.strptime(data["end"], "%Y-%m-%d").date())
+            else:
+                if "start" in data:
+                    self.start_de.delete(0, "end")
+                    self.start_de.insert(0, data["start"])
+                if "end" in data:
+                    self.end_de.delete(0, "end")
+                    self.end_de.insert(0, data["end"])
+        except Exception:
+            return
+
+    def _save_settings(self) -> None:
+        try:
+            if self._has_dateentry:
+                s, e = self._get_dates()
+                start_s = s.isoformat()
+                end_s = e.isoformat()
+            else:
+                start_s = self.start_de.get().strip()
+                end_s = self.end_de.get().strip()
+
+            data = {
+                "start": start_s,
+                "end": end_s,
+                "batch": self.var_batch.get().strip(),
+                "format": self.var_format.get().strip(),
+                "outdir": self.var_outdir.get().strip(),
+            }
+            self.settings_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception:
+            pass
+
+
+if __name__ == "__main__":
+    # dependencies: requests, ttkbootstrap
+    App().mainloop()

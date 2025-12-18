@@ -1,0 +1,49 @@
+id: 4, kungorelseRubrik: "Aktiebolagsregistret", beskrivning: "Aktiebolagsregistret",…}
+amnesOmrade
+: 
+{id: 2, beskrivning: "Bolagsverkets registreringar", namn: "Bolagsverkets registreringar",…}
+beskrivning
+: 
+"Bolagsverkets registreringar"
+bolagsverkets
+: 
+true
+id
+: 
+2
+namn
+: 
+"Bolagsverkets registreringar"
+beskrivning
+: 
+"Aktiebolagsregistret"
+datumTyp
+: 
+"Registreringsdatum"
+externKod
+: 
+"ABREG"
+fysiskJuridiskPersonregel
+: 
+"obligatorisk"
+id
+: 
+4
+intervall
+: 
+"D"
+kanHaBild
+: 
+true
+kungorelseRubrik
+: 
+"Aktiebolagsregistret"
+lanRegel
+: 
+"obligatorisk"
+publiceringsTid
+: 
+24
+pulKanslig
+: 
+false

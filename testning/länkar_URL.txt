@@ -1,0 +1,7 @@
+Huvudsida: https://poit.bolagsverket.se/poit-app/
+
+Sökresultatet: https://poit.bolagsverket.se/poit-app/sok (här finns och laddas json)
+
+Konstig omlänkning: https://poit.bolagsverket.se/poit-app/enskild/K961664-25 (omdiregering sker ibland härifrån till den riktiga efter ca 3 sek)
+
+Riktiga länken: https://poit.bolagsverket.se/poit-app/kungorelse/K961666-25

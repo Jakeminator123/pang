@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 10px;
+      font-size: 18px;
+    }
+    .status {
+      background: white;
+      padding: 12px;
+      border-radius: 5px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+    }
+    .status-line {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .status-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .status-indicator.active {
+      background: #4CAF50;
+      box-shadow: 0 0 5px #4CAF50;
+    }
+    .status-indicator.inactive {
+      background: #ccc;
+    }
+    .info {
+      font-size: 12px;
+      color: #666;
+      padding: 10px;
+      background: #fff;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      line-height: 1.5;
+    }
+    .info strong {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎧 PoIT Listener</h2>
+  
+  <div class="status">
+    <div class="status-line">
+      <span class="status-indicator" id="indicator"></span>
+      Status: <strong id="status">Initializing...</strong>
+    </div>
+    <div class="status-line" style="font-size: 12px; color: #666;">
+      Mode: Passive monitoring
+    </div>
+  </div>
+  
+  <div class="info">
+    <strong>🔍 Listener Mode Aktiv</strong><br><br>
+    Extensionen lyssnar passivt på API-anrop från Bolagsverket och skickar data till din lokala server (127.0.0.1:51234).
+    <br><br>
+    <strong>Ingen automation</strong> - bara lyssnande!<br>
+    Använd scrape_kungorelser.py för navigering och klickande.
+  </div>
+</body>
+<script src="popup.js"></script>
+</html>

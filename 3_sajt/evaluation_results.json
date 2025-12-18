@@ -1,0 +1,32 @@
+[
+  {
+    "folder": "K928251-25",
+    "company_name": "Green PM AB",
+    "date_folder": "20251208",
+    "evaluated_at": "2025-12-08T16:11:56.160277",
+    "should_get_site": true,
+    "confidence": 0.75,
+    "reasoning": "Green PM AB verkar ha ekonomiska resurser med ett aktiekapital på 25.000 SEK och bedriver konsultverksamhet inom projektledning och produktionsteknik, vilket kräver en professionell webbnärvaro. Företaget är nyregistrerat och kan vara i en expansionsfas, vilket gör dem till en potentiell kund för webbdesign-tjänster.",
+    "error": null
+  },
+  {
+    "folder": "K928253-25",
+    "company_name": "Kakelstudion Nordic AB",
+    "date_folder": "20251208",
+    "evaluated_at": "2025-12-08T16:11:59.784044",
+    "should_get_site": true,
+    "confidence": 0.8,
+    "reasoning": "Kakelstudion Nordic AB verkar ha ekonomiska resurser med ett aktiekapital på 27.000 SEK och är verksamt inom handel med kakel och heminredning, vilket är en bransch som starkt gynnas av en professionell webbnärvaro. Företaget är nyregistrerat och kan vara i en expansionsfas, vilket gör dem till en potentiell kund för webbdesign-tjänster.",
+    "error": null
+  },
+  {
+    "folder": "K928261-25",
+    "company_name": "Glowiq Estetik AB",
+    "date_folder": "20251208",
+    "evaluated_at": "2025-12-08T16:12:03.980058",
+    "should_get_site": true,
+    "confidence": 0.85,
+    "reasoning": "Glowiq Estetik AB verkar ha ekonomiska resurser med ett aktiekapital på 25.000 SEK och erbjuder tjänster inom en bransch som starkt behöver professionell webbnärvaro. Eftersom de erbjuder estetiska behandlingar, är en attraktiv och informativ hemsida avgörande för att attrahera kunder.",
+    "error": null
+  }
+]
