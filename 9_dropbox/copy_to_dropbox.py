@@ -255,25 +255,6 @@ def create_zip_from_folder(folder: Path, zip_path: Path) -> bool:
     return True
 
 
-def copy_date_folder_to_jocke(date_folder: Path) -> bool:
-    """Kopiera datum-mapp till 10_jocke (utan att zippa)."""
-    if not JOCKE_DIR.exists():
-        JOCKE_DIR.mkdir(parents=True, exist_ok=True)
-
-    target_folder = JOCKE_DIR / date_folder.name
-
-    # Ta bort gammal mapp om den finns
-    if target_folder.exists():
-        print(f"Tar bort gammal mapp i 10_jocke: {target_folder.name}")
-        shutil.rmtree(target_folder)
-
-    print("Kopierar mapp till 10_jocke...")
-    shutil.copytree(date_folder, target_folder)
-
-    print(f"OK: Klart! Mapp kopierad till: {target_folder}")
-    return True
-
-
 def copy_date_folder_to_dropbox(date_folder: Path, dropbox_base: Path) -> bool:
     """Zippa datum-mapp och kopiera zip-fil till Dropbox."""
     try:
@@ -320,22 +301,27 @@ def copy_date_folder_to_dropbox(date_folder: Path, dropbox_base: Path) -> bool:
             print(f"Tar bort gammal zip i Dropbox: {dropbox_zip.name}")
             dropbox_zip.unlink()
 
-        print("Kopierar zip-fil till Dropbox...")
-        shutil.copy2(temp_zip, dropbox_zip)
+        # Kopiera zip till både Dropbox och data_bundles
+        data_bundles_dir = JOCKE_DIR / "data_bundles"
+        data_bundles_dir.mkdir(parents=True, exist_ok=True)
+        bundle_zip = data_bundles_dir / zip_filename
+
+        destinations = [
+            (dropbox_zip, "Dropbox"),
+            (bundle_zip, "data_bundles"),
+        ]
+
+        for dest_path, dest_name in destinations:
+            try:
+                if dest_path.exists():
+                    dest_path.unlink()
+                shutil.copy2(temp_zip, dest_path)
+                print(f"OK: Zip kopierad till {dest_name}: {dest_path.name}")
+            except Exception as e:
+                print(f"Warning: Kunde inte kopiera till {dest_name}: {e}")
+
+        print(f"   Storlek: {temp_zip.stat().st_size / 1024 / 1024:.2f} MB")
         time.sleep(0.2)
-
-        print(f"OK: Klart! Zip-fil kopierad till: {dropbox_zip}")
-        print(f"   Storlek: {dropbox_zip.stat().st_size / 1024 / 1024:.2f} MB")
-
-        # Kopiera också till 10_jocke (utan zip)
-        try:
-            copy_date_folder_to_jocke(date_folder)
-        except Exception as e:
-            print(f"Warning: Kunde inte kopiera till 10_jocke: {e}")
-            import traceback, sys
-
-            traceback.print_exc(file=sys.stdout)
-            # Fortsätt ändå - detta är inte kritiskt
 
         # Ta bort temporär zip-fil
         try:

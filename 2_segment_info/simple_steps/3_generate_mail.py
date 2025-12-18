@@ -75,27 +75,112 @@ def load_config(config_path: Path) -> Dict[str, str]:
 # =============================================================================
 
 
-def build_email_prompt(data: Dict) -> str:
+def guess_recipient_name(email: str, people: List[Dict], company_name: str = "") -> str:
+    """
+    Guess the recipient's first name from email prefix by matching against people list.
+    
+    Examples:
+    - "peter.maksinen@..." + ["Bengt Peter Maksinen", "Anna ..."] → "Peter" (first name match)
+    - "o.olson@..." + ["Frida Jonson", "Olle Olson"] → "Olle" (initial + surname match)
+    - "info@..." + ["Anna Berg"] → "Anna" (fallback to first person)
+    - "info@..." + [] → "Företagsnamn" or "" (fallback)
+    
+    Returns: First name of best match, or fallback.
+    """
+    if not email or "@" not in email:
+        # No email - use first person's name or company
+        if people:
+            first_person = people[0].get("name", "")
+            if first_person:
+                return first_person.split()[0]
+        return ""
+
+    prefix = email.split("@")[0].lower()
+    # Clean prefix: split on dots, underscores, dashes
+    prefix_parts = re.split(r"[._\-]", prefix)
+    prefix_parts = [p.strip() for p in prefix_parts if p.strip()]
+
+    if not people:
+        return ""
+
+    best_match_name = ""
+    best_score = 0
+
+    for person in people:
+        full_name = person.get("name", "")
+        if not full_name:
+            continue
+
+        name_parts = full_name.split()
+        if not name_parts:
+            continue
+
+        first_name = name_parts[0]
+        surname = name_parts[-1] if len(name_parts) > 1 else ""
+        
+        for prefix_part in prefix_parts:
+            prefix_lower = prefix_part.lower()
+            
+            # Check each name part (first name, middle names, surname)
+            for name_part in name_parts:
+                name_lower = name_part.lower()
+                
+                # Full match or prefix match (at least 3 chars, or 1 char if it's an initial)
+                if name_lower == prefix_lower:
+                    # Exact match - very high score
+                    score = 100 + len(name_lower)
+                elif len(prefix_lower) >= 3 and name_lower.startswith(prefix_lower):
+                    # Prefix match: "pet" → "Peter"
+                    score = 50 + len(prefix_lower)
+                elif len(prefix_lower) >= 3 and prefix_lower.startswith(name_lower):
+                    # Name is prefix: "peter" starts with "pet" from name
+                    score = 40 + len(name_lower)
+                elif len(prefix_lower) == 1 and name_lower.startswith(prefix_lower):
+                    # Initial match: "o" → "Olle"
+                    # Only count if we also match surname in another prefix part
+                    # e.g. "o.olson@..." should match "Olle Olson" but not "Oscar Svensson"
+                    if surname and any(
+                        surname.lower().startswith(p.lower()) or p.lower().startswith(surname.lower())
+                        for p in prefix_parts if len(p) >= 3
+                    ):
+                        score = 80  # High score - initial + surname match
+                    else:
+                        continue  # Skip initial-only matches
+                else:
+                    continue
+                
+                if score > best_score:
+                    best_score = score
+                    best_match_name = first_name
+
+    # If we found a match, return it
+    if best_match_name:
+        return best_match_name
+
+    # Fallback: use first person's first name if email looks personal (not info@, kontakt@, etc.)
+    generic_prefixes = {"info", "kontakt", "contact", "admin", "hello", "hej", "mail", "post"}
+    if prefix_parts and prefix_parts[0].lower() not in generic_prefixes:
+        # Email looks personal but no match - still use first person
+        if people:
+            first_person = people[0].get("name", "")
+            if first_person:
+                return first_person.split()[0]
+
+    # Last fallback: empty (will use "Hej," without name)
+    return ""
+
+
+def build_email_prompt(data: Dict, recipient_name: str) -> str:
     """Build prompt for email generation."""
     company_name = data.get("company_name", "Företaget")
-    orgnr = data.get("orgnr", "")
     verksamhet = data.get("verksamhet", "")
     sate = data.get("sate", "")
-    address = data.get("address", "")
 
     # Domain info
     domain_info = data.get("domain", {})
     domain_guess = domain_info.get("guess", "")
     domain_status = domain_info.get("status", "unknown")
     confidence = domain_info.get("confidence", 0)
-
-    # People
-    people = data.get("people", [])
-    people_str = (
-        ", ".join([p.get("name", "") for p in people[:3]])
-        if people
-        else "Ingen angiven"
-    )
 
     # Emails
     emails = data.get("emails", [])
@@ -122,85 +207,87 @@ def build_email_prompt(data: Dict) -> str:
         domain_situation = f"VERIFIERAD HEMSIDA: {best_domain} - Du kan referera till att du besökt denna."
         offer_focus = "erbjud förbättringar och modernisering av hemsidan"
     else:
-        # NOT VERIFIED - do NOT mention any domain guess!
         domain_situation = "INGEN VERIFIERAD HEMSIDA - Företaget verkar sakna hemsida."
         offer_focus = "erbjud att hjälpa dem etablera sig online med domän och hemsida"
-
-    # Alternative domains from research
-    alt_domains_str = ""
-    candidates = research.get("domain_candidates", [])
-    if candidates and domain_status not in ("verified", "match"):
-        alt_list = [
-            c.get("domain", "")
-            for c in candidates[:3]
-            if c.get("domain") != domain_guess
-        ]
-        if alt_list:
-            alt_domains_str = f"\n\nAlternativa domänförslag: {', '.join(alt_list)}"
 
     # Build research context
     research_context = ""
     if research_summary:
         research_context = f"\n\nRESEARCH OM FÖRETAGET:{research_summary}"
 
+    # Greeting instruction
+    if recipient_name:
+        greeting_instruction = f"Börja med 'Hej {recipient_name},' (endast detta namn, inga fler)"
+    else:
+        greeting_instruction = "Börja med 'Hej,' (utan namn)"
+
     prompt = f"""Du är en säljare från SajtStudio.se som ska skriva ett personligt e-postmeddelande till ett nyregistrerat företag för att erbjuda hemsidestjänster.
 
 FÖRETAGSINFORMATION:
 - Företagsnamn: {company_name}
-- Org.nr: {orgnr}
 - Verksamhet: {verksamhet}
 - Säte: {sate}
-- Adress: {address}
 - E-post: {email_str}
-- Kontaktpersoner: {people_str}
 
 DOMÄNSITUATION:
-{domain_situation}{alt_domains_str}{research_context}
+{domain_situation}{research_context}
 
 UPPGIFT:
-Skriv ett kort (150-200 ord), professionellt och personligt e-postmeddelande som:
+Skriv ett kort (120-150 ord), professionellt och avslappnat e-postmeddelande som:
 
-1. Gratulerar till företagsregistreringen
-2. Visar att du förstår deras verksamhet (baserat på verksamhetsbeskrivningen)
-3. {offer_focus.capitalize()}
-4. Ger konkreta fördelar specifikt för deras bransch
-5. Avslutas med en tydlig men inte påträngande call-to-action
+1. {greeting_instruction}
+2. Nämner kort att ni sett deras nyregistrerade företag (INTE "Grattis!" eller "Välkommen till företagsvärlden/näringslivet" - det låter för klyschigt)
+3. Visar att du förstår deras verksamhet kort
+4. {offer_focus.capitalize()}
+5. Avslutas med enkel call-to-action
 
-REGLER:
-- Skriv på svenska
-- Var personlig och referera till företagets specifika verksamhet
-- Undvik klyschor och alltför säljande språk
-- Håll det kort och läsbart
-- KRITISKT: Om DOMÄNSITUATION säger "INGEN VERIFIERAD HEMSIDA", påstå ALDRIG att du besökt deras hemsida eller sett deras sajt! Skriv istället att de verkar sakna hemsida och att du vill hjälpa.
-- Om DOMÄNSITUATION säger "VERIFIERAD HEMSIDA", KAN du nämna att du tittat på den.
+VIKTIGA REGLER:
+- Skriv på svenska, naturligt och avslappnat
+- SKRIV ALDRIG "Ämne:" i brödtexten - ämnesraden hanteras separat
+- Tilltala ENDAST en person (den i hälsningen), använd aldrig flera namn
+- Undvik klyschor: "Välkommen till näringslivet", "spännande resa", "digitala era"
+- Håll det kort och rakt på sak
+- Om DOMÄNSITUATION säger "INGEN VERIFIERAD HEMSIDA", påstå ALDRIG att du besökt deras hemsida
 - Avsluta med:
   "Med vänliga hälsningar,
   [Ditt namn]
   SajtStudio.se"
 
-Skriv endast mailet, inget annat:"""
+Skriv endast mejlet (börja med hälsningen), inget annat:"""
 
     return prompt
 
 
-def build_subject_prompt(company_name: str, verksamhet: str, domain_status: str) -> str:
+def build_subject_prompt(company_name: str, verksamhet: str) -> str:
     """Build prompt for subject line."""
-    if domain_status in ("verified", "match"):
-        situation = "som har hemsida"
-    else:
-        situation = "utan hemsida"
+    # Shorten company name if needed
+    short_name = company_name.replace(" AB", "").replace(" Aktiebolag", "").strip()
+    if len(short_name) > 25:
+        short_name = short_name[:22] + "..."
 
-    return f"""Skapa en kort ämnesrad (max 50 tecken) för ett e-post till {company_name}, ett nyregistrerat företag {situation}.
+    return f"""Skapa en kort ämnesrad (max 45 tecken) för ett säljmejl till {short_name}.
 
 Verksamhet: {verksamhet if verksamhet else "Ej specificerad"}
 
 Regler:
-- Max 50 tecken
+- Max 45 tecken totalt
 - På svenska
-- Personlig och relevant
-- Inte för säljig eller spam-liknande
+- Saklig och konkret, t.ex. "Hemsida för {short_name}?" eller "Webbförslag till {short_name}"
+- UNDVIK: "Välkommen", "Grattis", "Spännande", utropstecken
+- Skriv ENDAST ämnesraden, inget annat, inga citattecken:"""
 
-Skriv endast ämnesraden, inget annat:"""
+
+def clean_email_text(text: str) -> str:
+    """Remove any 'Ämne:' lines from email body."""
+    lines = text.split("\n")
+    cleaned = []
+    for line in lines:
+        stripped = line.strip().lower()
+        # Skip lines that are just subject lines
+        if stripped.startswith("ämne:") and len(stripped) < 80:
+            continue
+        cleaned.append(line)
+    return "\n".join(cleaned).strip()
 
 
 def generate_email(
@@ -213,15 +300,17 @@ def generate_email(
             messages=[
                 {
                     "role": "system",
-                    "content": "Du är en professionell säljare som skriver personliga och engagerande e-postmeddelanden.",
+                    "content": "Du är en professionell säljare som skriver personliga e-postmeddelanden. Skriv aldrig 'Ämne:' i mejlet.",
                 },
                 {"role": "user", "content": prompt},
             ],
-            max_tokens=800,
+            max_tokens=600,
             temperature=0.7,
         )
 
         email_text = response.choices[0].message.content.strip()
+        # Clean up any stray subject lines in body
+        email_text = clean_email_text(email_text)
 
         # Cost calculation (approximate)
         usage = response.usage
@@ -258,12 +347,14 @@ def generate_subject(client: OpenAI, prompt: str, model: str = "gpt-4o") -> str:
         )
 
         subject = response.choices[0].message.content.strip()
-        # Clean up
-        subject = subject.replace('"', "").replace("'", "")[:60]
-        return subject
+        # Clean up: remove quotes, "Ämne:" prefix, limit length
+        subject = subject.replace('"', "").replace("'", "")
+        if subject.lower().startswith("ämne:"):
+            subject = subject[5:].strip()
+        return subject[:55]
 
     except Exception as e:
-        return f"Grattis till nyregistreringen - {e}"[:50]
+        return "Hemsida för ert företag?"
 
 
 # =============================================================================
@@ -295,6 +386,11 @@ def should_generate_mail(data: Dict, cfg: Dict) -> Tuple[bool, str]:
     """Check if mail should be generated for this company."""
     if not data:
         return False, "No data"
+
+    # Check if company was marked for skip (accounting firm, excluded keyword)
+    if data.get("skip_company"):
+        skip_reason = data.get("skip_reason", "marked_for_skip")
+        return False, f"Skipped ({skip_reason})"
 
     # Must have email
     emails = data.get("emails", [])
@@ -418,8 +514,13 @@ def main() -> int:
         company_name = data.get("company_name", "Företag")
         print(f"  [{mails_generated + 1}] {company_name}...")
 
+        # Guess recipient name from email
+        recipient_email = data.get("emails", [""])[0]
+        people = data.get("people", [])
+        recipient_name = guess_recipient_name(recipient_email, people, company_name)
+
         # Generate email
-        email_prompt = build_email_prompt(data)
+        email_prompt = build_email_prompt(data, recipient_name)
         email_text, cost_info = generate_email(client, email_prompt, model)
 
         if "error" in cost_info:
@@ -430,7 +531,6 @@ def main() -> int:
         subject_prompt = build_subject_prompt(
             company_name,
             data.get("verksamhet", ""),
-            data.get("domain", {}).get("status", "unknown"),
         )
         subject = generate_subject(client, subject_prompt, model)
 

@@ -25,14 +25,24 @@ except ImportError:
         print(f"❌ Fel: Kan inte importera batch_generate: {e}")
         GENERATE_AVAILABLE = False
 
-# Importera evaluate-funktionen för auto-bedömning
+# Importera evaluate-funktioner (konsoliderat - alla gemensamma funktioner finns här)
 EVALUATE_AVAILABLE = True
 try:
-    from evaluate_companies import evaluate_companies_in_folder  # type: ignore
+    from evaluate_companies import (  # type: ignore
+        evaluate_companies_in_folder,
+        find_company_folders,
+        find_date_folders,
+        load_evaluation_from_folder,
+        is_company_worthy,
+    )
 except ImportError:
     try:
         eval_mod = importlib.import_module("evaluate_companies")
         evaluate_companies_in_folder = eval_mod.evaluate_companies_in_folder
+        find_company_folders = eval_mod.find_company_folders
+        find_date_folders = eval_mod.find_date_folders
+        load_evaluation_from_folder = eval_mod.load_evaluation_from_folder
+        is_company_worthy = eval_mod.is_company_worthy
     except Exception as e:
         print(f"❌ Fel: Kan inte importera evaluate_companies: {e}")
         EVALUATE_AVAILABLE = False
@@ -76,86 +86,8 @@ def load_config() -> dict:
     return config
 
 
-def load_evaluation_from_folder(company_folder: Path) -> Optional[dict]:
-    """Ladda bedömning från evaluation.json i företagsmappen."""
-    eval_file = company_folder / "evaluation.json"
-    if not eval_file.exists():
-        return None
-    
-    try:
-        import json
-        return json.loads(eval_file.read_text(encoding="utf-8"))
-    except Exception:
-        return None
-
-
-def is_company_worthy(company_folder: Path, require_evaluation: bool = False, min_confidence: float = 0.0) -> bool:
-    """Kontrollera om företaget är 'värdigt' baserat på evaluation.json.
-    
-    Args:
-        company_folder: Företagsmapp att kontrollera
-        require_evaluation: Om True, kräv att evaluation.json finns (annars returnera True om saknas)
-        min_confidence: Minsta confidence-nivå (0.0-1.0) för att anses värdigt
-    """
-    evaluation = load_evaluation_from_folder(company_folder)
-    if not evaluation:
-        # Om require_evaluation=True, kräv att bedömning finns
-        if require_evaluation:
-            return False
-        # Annars, för bakåtkompatibilitet, anta att det är värdigt om ingen bedömning finns
-        return True
-    
-    # Kontrollera om should_get_site är True
-    if not evaluation.get("should_get_site", False):
-        return False
-    
-    # Kontrollera confidence-nivå om threshold är satt
-    if min_confidence > 0.0:
-        confidence = evaluation.get("confidence", 0.0)
-        if confidence < min_confidence:
-            return False
-    
-    return True
-
-
-def find_date_folders(base_dir: Path) -> List[Path]:
-    """Hitta alla datum-mappar i djupanalys (t.ex. 20251208)."""
-    if not base_dir.exists():
-        raise FileNotFoundError(f"Katalogen finns inte: {base_dir}")
-    
-    folders = [
-        d
-        for d in base_dir.iterdir()
-        if d.is_dir() and d.name.isdigit() and len(d.name) == 8  # YYYYMMDD format
-    ]
-    
-    return sorted(folders, key=lambda p: p.name, reverse=True)  # Nyaste först
-
-
-def find_company_folders(date_dir: Path, filter_worthy: bool = False, min_confidence: float = 0.0) -> List[Path]:
-    """Hitta alla företagsmappar i en datum-mapp (K + siffror + '-25').
-    
-    Args:
-        date_dir: Datum-mapp att söka i
-        filter_worthy: Om True, filtrera bort företag som inte är 'värdiga'
-                       (kräver att evaluation.json finns och should_get_site=True)
-        min_confidence: Minsta confidence-nivå (0.0-1.0) för att anses värdigt
-    """
-    if not date_dir.exists():
-        raise FileNotFoundError(f"Katalogen finns inte: {date_dir}")
-    
-    folders = [
-        d
-        for d in date_dir.iterdir()
-        if d.is_dir() and d.name.startswith("K") and d.name.endswith("-25")
-    ]
-    
-    # Filtrera bort icke-värdiga företag om begärt
-    # När filter_worthy=True, kräv att evaluation.json finns (require_evaluation=True)
-    if filter_worthy:
-        folders = [f for f in folders if is_company_worthy(f, require_evaluation=True, min_confidence=min_confidence)]
-    
-    return sorted(folders, key=lambda p: p.name)
+# Funktionerna find_date_folders, find_company_folders, load_evaluation_from_folder, 
+# is_company_worthy importeras nu från evaluate_companies.py (se ovan)
 
 
 def read_company_domain(company_dir: Path) -> tuple[Optional[str], float]:

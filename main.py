@@ -679,7 +679,7 @@ async def generate_sites_for_worthy_companies(
         from batch_generate import generate_site_for_company  # type: ignore
 
         sys.path.insert(0, str(SAJT_DIR))
-        from interactive_batch import (  # type: ignore
+        from evaluate_companies import (  # type: ignore
             find_company_folders,
             load_evaluation_from_folder,
         )

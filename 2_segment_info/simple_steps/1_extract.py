@@ -243,6 +243,59 @@ GENERIC_EMAIL_DOMAINS = {
     "tele2.se",
 }
 
+# Keywords in email domains that indicate accounting firm (bulk registration)
+ACCOUNTING_DOMAIN_KEYWORDS = {
+    "redovisning", "bokföring", "bokforing", "revision",
+    "ekonomi", "accounting", "konto", "skatt", "deklaration",
+    "revisionsbyrå", "revisionsbyra", "ekonomibyrå", "ekonomibyra",
+}
+
+# Keywords in company names to skip
+NAME_EXCLUDE_KEYWORDS = {"förening", "holding", "lagerbolag"}
+
+
+def should_skip_company(company_name: str, emails: List[str]) -> Tuple[bool, str]:
+    """
+    Check if company should be skipped (accounting firm registration or excluded name).
+    Returns: (should_skip, reason)
+    """
+    # Check company name for excluded keywords
+    if company_name:
+        name_lower = company_name.lower()
+        for kw in NAME_EXCLUDE_KEYWORDS:
+            if kw in name_lower:
+                return True, f"name_keyword:{kw}"
+
+    # Check email domain for accounting keywords
+    if emails:
+        email = emails[0].lower()
+        if "@" in email:
+            try:
+                domain = email.split("@")[1]
+                for kw in ACCOUNTING_DOMAIN_KEYWORDS:
+                    if kw in domain:
+                        return True, f"accounting_domain:{kw}"
+            except IndexError:
+                pass
+
+    return False, ""
+
+
+def get_email_category(emails: List[str]) -> str:
+    """Categorize email: 'direct' (company domain), 'generic' (gmail etc), or 'unknown'."""
+    if not emails:
+        return "unknown"
+    email = emails[0].lower()
+    if "@" not in email:
+        return "unknown"
+    try:
+        domain = email.split("@")[1]
+        if domain in GENERIC_EMAIL_DOMAINS:
+            return "generic"
+        return "direct"
+    except IndexError:
+        return "unknown"
+
 
 def normalize_company_name(name: str) -> str:
     """Normalize company name for domain guessing."""
@@ -357,6 +410,10 @@ def process_company_folder(company_dir: Path) -> Optional[Dict]:
     if info["email"] and info["email"] not in emails:
         emails.insert(0, info["email"])
 
+    # Check if company should be skipped
+    should_skip, skip_reason = should_skip_company(info["company_name"], emails)
+    email_category = get_email_category(emails)
+
     # Guess domain
     domain, confidence, source = guess_domain(info["company_name"], emails)
 
@@ -386,6 +443,10 @@ def process_company_folder(company_dir: Path) -> Optional[Dict]:
             "status": "unknown",  # Will be set by step 2
             "alternatives": alternatives,
         },
+        # Filtering metadata
+        "skip_company": should_skip,
+        "skip_reason": skip_reason,
+        "email_category": email_category,
     }
 
     return company_data
@@ -647,6 +708,8 @@ def main() -> int:
     # Summary
     with_domain = sum(1 for c in companies_data if c and c["domain"]["guess"])
     with_email = sum(1 for c in companies_data if c and c["emails"])
+    skipped = sum(1 for c in companies_data if c and c.get("skip_company"))
+    active = len(companies_data) - skipped
 
     print()
     print("=" * 60)
@@ -655,6 +718,9 @@ def main() -> int:
     print(f"Companies processed: {len(companies_data)}")
     print(f"With domain guess: {with_domain}")
     print(f"With email: {with_email}")
+    if skipped > 0:
+        print(f"Marked for skip (accounting/excluded): {skipped}")
+        print(f"Active companies: {active}")
     print("=" * 60)
 
     return 0

@@ -225,6 +225,15 @@ def extract_company_data(folder_path: Path) -> Dict[str, Any]:
     poit_data = safe_read_json(folder_path / "data.json") or {}
     mail_text = safe_read_text(folder_path / "mail.txt")
 
+    # Check if company_data.json is missing or empty
+    company_data_file = folder_path / "company_data.json"
+    if not company_data_file.exists():
+        print(f"  ⚠️  company_data.json saknas i {folder_path.name}")
+        print("     → Hemsidan får placeholders för alla fält")
+    elif not company_data:
+        print(f"  ⚠️  company_data.json är tom i {folder_path.name}")
+        print("     → Hemsidan får placeholders för alla fält")
+
     # Extract with fallbacks
     company_name = pick([company_data.get("company_name"), "Företag"], "Företag")
     orgnr = pick([company_data.get("orgnr")], "")
@@ -239,6 +248,12 @@ def extract_company_data(folder_path: Path) -> Dict[str, Any]:
 
     phones = company_data.get("phones", [])
     phone = pick([phones[0] if phones else None], "")
+
+    # Warn if using placeholders for critical fields
+    if company_name == "Företag":
+        print(f"  ⚠️  Företagsnamn saknas - använder placeholder 'Företag'")
+    if verksamhet == "Verksamhetsbeskrivning saknas.":
+        print(f"  ⚠️  Verksamhetsbeskrivning saknas - hemsidan får väldigt generiskt innehåll!")
 
     # Extract domain options
     domain_options = []
@@ -375,7 +390,12 @@ Anpassa designen efter branschen ({verksamhet[:100]})."""
 
     # Enhance with OpenAI if enabled
     if use_openai and openai_key:
+        print("  🤖 Förbättrar prompt med OpenAI...")
         base_prompt = await enhance_prompt_with_openai(base_prompt, data, openai_key)
+        print("  ✅ Prompt förbättrad med OpenAI")
+    elif use_openai and not openai_key:
+        print("  ⚠️  OPENAI_API_KEY saknas - prompt förbättras INTE!")
+        print("     → Lägg till OPENAI_API_KEY i .env-filen")
 
     # Add images if enabled
     image_section = ""
@@ -385,6 +405,7 @@ Anpassa designen efter branschen ({verksamhet[:100]})."""
 
         # Try Unsplash first, then Pexels
         if unsplash_key:
+            print(f"  🖼️  Söker bilder på Unsplash (nyckelord: {', '.join(keywords)})...")
             for keyword in keywords:
                 found = await search_images_unsplash(keyword, unsplash_key, 1)
                 images.extend(found)
@@ -392,6 +413,7 @@ Anpassa designen efter branschen ({verksamhet[:100]})."""
                     break
 
         if len(images) < 3 and pexels_key:
+            print(f"  🖼️  Söker bilder på Pexels (nyckelord: {', '.join(keywords)})...")
             for keyword in keywords:
                 found = await search_images_pexels(keyword, pexels_key, 1)
                 images.extend(found)
@@ -403,6 +425,12 @@ Anpassa designen efter branschen ({verksamhet[:100]})."""
             for i, img in enumerate(images[:3], 1):
                 image_section += f"{i}. {img['url']} (Alt: {img['alt']})\n"
             image_section += "\nAnvänd dessa bilder i hero-sektionen och relevanta sektioner. Sätt lämplig alt-text."
+            print(f"  ✅ Hittade {len(images)} bilder")
+        elif not unsplash_key and not pexels_key:
+            print("  ⚠️  UNSPLASH_ACCESS_KEY och PEXELS_API_KEY saknas - INGA bilder!")
+            print("     → Lägg till nycklarna i .env-filen")
+        else:
+            print("  ⚠️  Hittade inga bilder (bildtjänster svarade inte)")
 
     return base_prompt + image_section
 

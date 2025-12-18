@@ -56,7 +56,15 @@ LANDING_PAGE_KEYWORDS = [
 ]
 
 VALID_KUNGO_URL_RE = re.compile(r"/poit-app/(?:kungorelse|enskild)/K\d{3,}-\d{2}", re.IGNORECASE)
-NAME_EXCLUDE_KEYWORDS = ("förening", "holding")
+
+# Keywords in company names to exclude
+NAME_EXCLUDE_KEYWORDS = ("förening", "holding", "lagerbolag")
+
+# Keywords in email domains that indicate accounting firm (bulk registrations)
+EMAIL_DOMAIN_EXCLUDE_KEYWORDS = (
+    "redovisning", "bokföring", "bokforing", "revision",
+    "ekonomi", "accounting", "konto", "skatt", "deklaration"
+)
 
 
 # --- Hjälpare ---
@@ -321,23 +329,53 @@ def _should_skip_company(name: str | None) -> bool:
     return any(keyword in lowered for keyword in NAME_EXCLUDE_KEYWORDS)
 
 
+def _should_skip_email_domain(email: str | None) -> tuple[bool, str]:
+    """Check if email domain indicates accounting firm."""
+    if not isinstance(email, str) or "@" not in email:
+        return False, ""
+    try:
+        domain = email.split("@")[1].lower()
+        for keyword in EMAIL_DOMAIN_EXCLUDE_KEYWORDS:
+            if keyword in domain:
+                return True, keyword
+    except (IndexError, AttributeError):
+        pass
+    return False, ""
+
+
+def _extract_email_from_text(text: str) -> str | None:
+    """Extract first email from text content."""
+    if not text:
+        return None
+    match = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", text)
+    return match.group(0).lower() if match else None
+
+
 def _deduplicate_kungorelse_items(items: list) -> tuple[list, dict]:
-    """Remove duplicate entries by kungorelseId and company name."""
+    """Remove duplicate entries by kungorelseId, company name, and email domain."""
     base_stats = {
         "removed": 0,
         "duplicate_ids": 0,
         "duplicate_names": 0,
+        "duplicate_email_domains": 0,
         "filtered_keywords": 0,
+        "filtered_accounting": 0,
     }
     if not isinstance(items, list):
         return items, base_stats
 
     seen_ids = set()
     seen_names = set()
+    seen_email_domains = set()
     cleaned: list = []
     duplicate_ids = 0
     duplicate_names = 0
+    duplicate_email_domains = 0
     filtered_keywords = 0
+    filtered_accounting = 0
+
+    # Generic email domains to allow duplicates (these are personal, not bulk)
+    generic_domains = {"gmail.com", "hotmail.com", "outlook.com", "icloud.com", "yahoo.com", "live.se", "msn.com"}
 
     for obj in items:
         if not isinstance(obj, dict):
@@ -353,6 +391,25 @@ def _deduplicate_kungorelse_items(items: list) -> tuple[list, dict]:
         if _should_skip_company(raw_name):
             filtered_keywords += 1
             continue
+
+        # Check email domain for accounting firms
+        raw_email = obj.get("email") or obj.get("e-post") or obj.get("epost")
+        if raw_email:
+            skip_email, reason = _should_skip_email_domain(raw_email)
+            if skip_email:
+                filtered_accounting += 1
+                continue
+
+            # Check for duplicate email domains (but allow generic domains)
+            try:
+                domain = raw_email.split("@")[1].lower()
+                if domain not in generic_domains:
+                    if domain in seen_email_domains:
+                        duplicate_email_domains += 1
+                        continue
+                    seen_email_domains.add(domain)
+            except (IndexError, AttributeError):
+                pass
 
         raw_id = obj.get("kungorelseid") or obj.get("kungorelseId")
         normalized_id = None
@@ -378,7 +435,9 @@ def _deduplicate_kungorelse_items(items: list) -> tuple[list, dict]:
         "removed": removed,
         "duplicate_ids": duplicate_ids,
         "duplicate_names": duplicate_names,
+        "duplicate_email_domains": duplicate_email_domains,
         "filtered_keywords": filtered_keywords,
+        "filtered_accounting": filtered_accounting,
     }
 
 
@@ -477,12 +536,12 @@ def _save_payload(packed_obj: dict, raw_bytes: bytes) -> dict:
     
     if isinstance(packed_obj.get("data"), list):
         cleaned, stats = _deduplicate_kungorelse_items(packed_obj["data"])
-        if stats["removed"] or stats["filtered_keywords"]:
+        if stats["removed"] or stats["filtered_keywords"] or stats["filtered_accounting"]:
             print(
                 "[DEDUP] Removed "
                 f"{stats['removed']} entries (same name: {stats['duplicate_names']}, "
-                f"same kungorelseid: {stats['duplicate_ids']}, "
-                f"keyword filtered: {stats['filtered_keywords']})"
+                f"same id: {stats['duplicate_ids']}, same email domain: {stats['duplicate_email_domains']}, "
+                f"keyword filtered: {stats['filtered_keywords']}, accounting firms: {stats['filtered_accounting']})"
             )
         packed_obj["data"] = cleaned
         if isinstance(packed_obj.get("meta"), dict):

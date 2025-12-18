@@ -391,14 +391,15 @@ def clean_all_pipeline_data() -> Tuple[int, List[str]]:
                     total_removed += 1
             log_info("Rensade logs/")
 
-        # 7. Rensa 10_jocke datummappar
+        # 7. Rensa 10_jocke datummappar (behåller data_bundles/ med zip-arkiv!)
         jocke_dir = PROJECT_ROOT / "10_jocke"
         if jocke_dir.exists():
             for item in jocke_dir.iterdir():
+                # Endast radera datummappar, INTE data_bundles/
                 if item.is_dir() and re.fullmatch(r"\d{8}", item.name):
                     if remove_path(item, f"(jocke date dir: {item.name})"):
                         total_removed += 1
-            log_info("Rensade 10_jocke/")
+            log_info("Rensade 10_jocke/ (bevarade data_bundles/)")
 
         # 8. Rensa root-nivå loggfiler (logg.txt, logg server.txt etc)
         for log_pattern in ["logg*.txt", "logg *.txt"]:

@@ -1,0 +1,108 @@
+================================================================================
+ LOGIK-ÖVERSIKT: 3_sajt/ - Hemsidegenerering
+================================================================================
+
+FLÖDE (körs från main.py):
+--------------------------
+
+  main.py
+     │
+     ├─► evaluate_companies.py
+     │   └─► Bedömer vilka företag som ska få hemsida (OpenAI)
+     │       - Läser content.txt från företagsmapp
+     │       - Sparar evaluation.json i varje mapp
+     │       - Exporterar: find_company_folders, is_company_worthy, etc.
+     │
+     └─► interactive_batch.py (importerar från evaluate_companies.py)
+         └─► batch_generate.py (all_the_scripts/)
+             └─► generator.py
+                 ├─► v0_client.py (API mot v0.dev)
+                 ├─► cost_tracker.py (spårar kostnader)
+                 └─► Unsplash/Pexels (bilder via API)
+
+
+FILER OCH DERAS SYFTE:
+----------------------
+
+3_sajt/
+├── config.txt                # Inställningar (evaluate, threshold, max_sites)
+├── beskrivning.txt           # Målgruppsbeskrivning för bedömning
+├── evaluate_companies.py     # KÄRNFIL: Bedömer företag + gemensamma funktioner
+├── interactive_batch.py      # Interaktivt/batch-körning av sajt-generering
+│
+└── all_the_scripts/
+    ├── generator.py          # Bygger prompts, hämtar bilder, anropar v0
+    ├── batch_generate.py     # Genererar sajt för ett företag
+    ├── v0_client.py          # HTTP-klient mot v0 Platform API
+    ├── cost_tracker.py       # Beräknar och loggar kostnader
+    ├── screenshot.py         # Tar screenshot av genererad sajt
+    ├── standalone_audit.py   # Webbplats-audit (SEO, prestanda)
+    └── __init__.py           # Package marker
+
+
+GEMENSAMMA FUNKTIONER (evaluate_companies.py):
+----------------------------------------------
+
+find_date_folders(base_dir)
+  - Hittar YYYYMMDD-mappar i djupanalys/
+
+find_company_folders(date_dir, filter_worthy=False, min_confidence=0.0)
+  - Hittar K*-25 mappar
+  - filter_worthy=True filtrerar på evaluation.json
+
+load_evaluation_from_folder(company_folder)
+  - Läser evaluation.json
+
+is_company_worthy(company_folder, require_evaluation=False, min_confidence=0.0)
+  - Kollar should_get_site och confidence
+
+
+KONFIGURATION (config.txt):
+---------------------------
+
+evaluate=y              # Kräv bedömning innan generering
+threshold=0.80          # Minsta confidence (80%)
+max_sites=30            # Max antal sajter att generera
+re_input_website_link=y # Lägg till preview-URL i mail.txt
+
+AUDIT_ENABLED=y         # Kör webbplats-audit
+AUDIT_THRESHOLD=0.85    # Kräv 85% domain-confidence för audit
+MAX_AUDITS=30           # Max antal audits
+
+
+API-NYCKLAR (.env):
+-------------------
+
+V0_API_KEY              # v0 Platform API (genererar React-komponenter)
+OPENAI_API_KEY          # OpenAI (förbättrar prompts + bedömer företag)
+UNSPLASH_ACCESS_KEY     # Unsplash (bilder)
+PEXELS_API_KEY          # Pexels (backup för bilder)
+
+
+DATAFLÖDE FÖR ETT FÖRETAG:
+--------------------------
+
+1. evaluate_companies.py läser content.txt
+2. OpenAI bedömer om företaget ska få sajt → evaluation.json
+3. batch_generate.py extraherar data från company_data.json
+4. generator.py bygger prompt med:
+   - OpenAI-förbättring (branschspecifik text)
+   - Bilder från Unsplash/Pexels
+5. v0_client.py skickar prompt till v0 API
+6. v0 returnerar demoUrl → preview_url.txt
+7. screenshot.py tar screenshot → preview_screenshot.png
+
+
+OUTPUT PER FÖRETAG:
+-------------------
+
+K123456-25/
+├── company_data.json     # Input: företagsdata
+├── content.txt           # Input: info från Bolagsverket
+├── evaluation.json       # Bedömning (should_get_site, confidence)
+├── preview_url.txt       # v0 demo-URL
+├── site_metadata.json    # Kostnad, timestamps, etc.
+├── preview_screenshot.png # Screenshot av sajten
+├── audit_report.json     # (om audit kört) SEO/prestanda-rapport
+└── mail.txt              # Mail med preview-länk tillagd
+
