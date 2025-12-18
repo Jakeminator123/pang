@@ -1,0 +1,54 @@
+# =============================================================================
+# SIMPLIFIED PIPELINE CONFIGURATION (with AI research)
+# =============================================================================
+# Run with: python ALLA_simple.py
+
+[PIPELINE]
+# Source directory for date folders (relative to pang root or absolute)
+source_dir = 1_poit/info_server
+
+# Max companies to process (0 = all)
+max_companies = 150
+
+# Delete CSV after converting to XLSX
+delete_csv = y
+
+[RESEARCH]
+# Enable AI web search for company/person info
+enabled = y
+
+# AI model for web search (gpt-4o = better quality, gpt-4o-mini = cheaper)
+model = gpt-4o
+
+# Max web search queries per company (3-5 recommended)
+max_searches = 3
+
+# Search for person contact info
+search_persons = y
+
+# Max persons to search per company
+max_persons = 2
+
+[DOMAIN]
+# HTTP timeout for domain checks (seconds)
+timeout_seconds = 5
+
+# Max domains to crawl/verify per company
+max_crawl = 5
+
+# Parallel domain checks
+parallel_checks = 5
+
+[MAIL]
+# Enable mail generation
+enabled = y
+
+# AI model for mail generation
+model = gpt-4o
+
+# Minimum domain confidence to generate mail (0-100)
+min_confidence = 40
+
+# Max mails to generate (0 = all matching criteria)
+max_mails = 150
+

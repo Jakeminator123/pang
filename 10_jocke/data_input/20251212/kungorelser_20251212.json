@@ -1,0 +1,3388 @@
+{
+  "data": [
+    {
+      "kungorelseid": "K948700/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990734 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948703/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990732 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948724/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201346 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948726/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201344 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948731/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201349 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948734/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201355 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947404/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "MIDO Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947406/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "FCL Compliance AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948707/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990730 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948709/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990728 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948729/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201350 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948736/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201353 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947408/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Lasses Agrolantbruk AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947412/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Fepe Förvaltning AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947476/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Axnord AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947479/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Skillinge Diversehandel AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948650/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 490842 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948653/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 490840 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947416/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Axstedt Solutions AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947417/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Techtify Labs AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948681/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38784 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948683/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38786 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948686/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38788 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948689/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38790 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948691/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38792 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948712/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990726 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948715/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990724 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947419/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Advokat Jirestig AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947422/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "U93 Consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948718/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990722 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948720/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990720 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947425/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Witasp Kött Och Mekaniska AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947427/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Crid Adventure AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948740/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201359 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948742/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201357 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948749/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201343 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948751/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201342 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947429/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Leo C Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947772/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Lerkärlet 4 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948745/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201360 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948747/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201339 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948753/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201340 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948757/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201367 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948759/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201365 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948760/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201364 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948763/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201370 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948764/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201368 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948766/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201374 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948774/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201383 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948777/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201381 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948783/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201409 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948785/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201387 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947432/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "FL Invest Sweden AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947434/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "MATEA Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948769/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201379 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948772/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201378 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948779/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201385 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948781/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201411 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948787/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201390 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948790/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201388 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948792/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201394 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948795/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201392 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948796/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201398 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948799/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201397 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948801/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201403 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948804/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201401 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948812/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201415 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948816/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201413 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948829/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201417 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948832/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201423 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947437/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Tanriver Academy AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947439/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Kobetski Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948808/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201406 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948810/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201405 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948818/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201419 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948834/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201421 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948837/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201427 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948839/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201425 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948840/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201431 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948842/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201429 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948846/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201428 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948849/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201433 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948850/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38720 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948853/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38722 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948855/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38723 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948857/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38725 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948859/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38727 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948861/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38729 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948863/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38706 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948866/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38708 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948868/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38710 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948870/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38712 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948872/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38714 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948874/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38716 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948876/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38718 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948905/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NYAB 25237 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947384/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Elin Breitholtz AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947386/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Arrangörsgruppen Kom Tillsammans i Alingsås AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947441/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "A Holmberg Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947443/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "JayJay i Växjö AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948893/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NYAB 25236 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947392/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Blomberg Kapital AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947394/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "MvGB Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947445/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Westberg Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947446/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Bredhammar Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947396/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "JvG Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947398/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "G Siegler Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947453/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "SofClo AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947463/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Alexandra Fürst Consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947400/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Ekum Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947402/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Vargvägen Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948124/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Forma 8488 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948621/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201475 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948624/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201473 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946664/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Atrina AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947340/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Hammarö Gunla AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947342/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Filippa Kraft AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947366/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Elham beauty &Style AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947424/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "HalloIO AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947426/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Stina C Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948627/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201478 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948629/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201476 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946967/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Javiers Multiservice AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947186/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "PD Invest Skåne AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947213/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "FT Technologies Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947345/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "KL Bygg & Plåtslageri AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947348/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Castor Mann Bridge AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947368/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "T. Wetterling Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947371/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Görgens Skog & Mek AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947428/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Ope Måleri AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947430/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Rifae Group AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948631/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201480 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948633/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201458 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946701/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Veloria MF AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946704/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Vida Nilsson AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946976/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "ABSK Solutions AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946982/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NCH Heden AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947207/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Zenith Cloud Consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947253/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Tre Magma AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947255/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Southeast Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947373/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Mackan och Ina AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947375/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "David Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947431/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Mettävainio Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947433/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "GN Consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948634/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201463 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948637/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201461 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946383/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Aktiebolag Juninatten",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946710/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "CIA Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947227/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Edqvist Media AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947229/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Keshumi Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947258/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "PGS Financial Services AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947262/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Mölndal Laxen 8 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947379/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Herman & Nelson AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947380/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "TLFA Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947436/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Daales Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947438/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "AirDock Gates AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948639/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201467 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948640/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201465 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947238/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Sidewind Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947266/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "JFORCE SWEDEN AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947269/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Frelsi AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947440/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Adin Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947444/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Tocelis AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948643/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201471 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948645/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201469 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947039/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Linds Entreprenad AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947044/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Solid Core AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947272/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Code and Conductivity AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947278/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "VillaFix - Bohuslän AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947447/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "DL Maskinservice AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947449/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Roger Wibring AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948647/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201468 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948649/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 490843 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946433/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "ABRAAK Group AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946775/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Studio Blomsøy AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947282/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Doris Studio AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947284/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Mat & Opinion Maria Sitell AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947451/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Marcus Tengmer AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947455/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "A Eklund Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948652/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 490841 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946451/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Traditionsarbetaren Andersson Trähantverk AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946788/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Nordin Innovation AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946794/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "XP IT Consulting Sweden AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947286/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Taylor & Oak AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947288/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Hertsmere Partners AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947351/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Nimbira AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947457/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goez Holding 2 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947469/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "JSB Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947289/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Kisch Clinic AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947295/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Wes Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947354/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Frick Advisory AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947356/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Norrsken Spa i Malmö AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947474/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Flakeberg brus AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947478/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Sättkvist AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948581/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 786 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948585/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 788 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946812/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Trenor Måleri AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947299/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Nyman Advisory AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947301/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Klibbemannen consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947382/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "PHEK AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947500/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goez Investment AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948173/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NewCo 8644 Sweden AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948175/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NewCo 8646 Sweden AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948588/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 790 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948591/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 792 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946817/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Stabil Mark & Väg Sverige AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946819/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Ragnarök Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947388/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "CBY AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947390/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Lisetts Fotvård AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948196/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NYAB 25234 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948198/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38781 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948199/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38783 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948593/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 794 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948596/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 796 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946562/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Grävcentret i Sverige AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947056/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Norrlys Pharma Consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947303/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Svevr Malmö AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947305/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Svevr Jönköping AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947393/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "BKT Köks Konsulterna AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947395/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Jinghage Kapital AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947539/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Third Place Group AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948202/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Fundamentet 10570 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948204/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Kommstart 4057 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948599/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 798 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948601/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 800 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946853/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Carter Project AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947312/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goodwill Projekt & Fastigheter Sverige AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947314/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "ABC123 Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947358/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "QB Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947397/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Jonheden Kapital AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947401/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "ABC Gemma AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948603/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 802 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948605/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 804 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947097/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Venturepoint AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947325/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "JustFocus AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947327/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Skog & Bengtsson Fastighetsholding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947361/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Eriksson Sandåtervinning Ankarsrum AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947364/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Kattkistan AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947403/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Nordmark Media House AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947407/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Jörsmo Trading AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948607/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 806 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948609/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 808 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946618/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Aegis InfraSys AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947120/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Viggo kan Consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947330/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Studio Carleklev AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947333/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Limpan 63 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947413/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "P1M Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947414/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Fredrik Langkilde AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948612/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 810 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946308/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Almi Östra Mellansverige AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946643/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Golden Spicy Lanka AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947334/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Aurifodina Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947337/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "MT Mariestad AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947418/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Dentec Norr AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947421/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Nisse Olssons Entreprenad AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948692/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38793 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948701/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990733 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948773/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201376 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948775/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201382 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948776/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201380 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948778/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201386 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948705/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990731 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948780/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201384 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948782/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201410 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948708/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990729 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948711/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990727 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948784/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201408 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948786/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201391 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948714/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990725 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948717/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990723 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948789/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201389 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948791/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201395 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948719/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 990721 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948722/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201347 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948793/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201393 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948797/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201399 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948725/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201345 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948728/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201351 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948800/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201396 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948802/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201402 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948733/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201348 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948735/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201354 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948806/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201400 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948809/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201407 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948738/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201352 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948741/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201358 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948811/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201404 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948814/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201414 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948744/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201356 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948746/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201361 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948817/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201412 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948819/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201418 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948748/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201338 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948750/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201337 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948854/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38721 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948831/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201416 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948833/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201422 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948752/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201341 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948754/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201363 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948836/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201420 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948838/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201426 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948756/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201362 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948758/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201366 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948841/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201424 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948843/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201430 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948761/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201371 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948762/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201369 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948845/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201435 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948847/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201434 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948765/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201375 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948767/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201373 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948851/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201432 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948856/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38724 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948858/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38726 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948860/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38728 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948862/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38705 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948865/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38707 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948867/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38709 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948869/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38711 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948871/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38713 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948873/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38715 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948875/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38717 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948877/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38719 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948682/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38785 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948685/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38787 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948687/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38789 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948690/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38791 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948768/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201372 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948770/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201377 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946529/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Nine Lives Productions AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946865/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Flytt & Städteamet VM AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946970/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "A Olsson i Skedvik AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947073/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Tidskrift MH AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947138/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Körkortskartan AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947151/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "SmartInfra Nordic AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947077/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Friberg Management AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947280/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Brandt Athletics AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947281/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Igal Taxi AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947341/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "REDSAM RESURS AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947343/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Badger Bowl AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946603/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Hårverkstan Zetterquist AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947153/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "anartmit AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947233/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "KPJ Bergarbeten Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947381/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Anita Beauty AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946608/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "H.O.N Sweden AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947176/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Looper Textile Co. Trading AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947247/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Singular Diagnostics Sweden AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947249/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NJ Fastighetsförmedling AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947283/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "O.G i Mora AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947285/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "EMKAGA CAPITAL HOLDING AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947313/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Adving Digital AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947322/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Nova Luna Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948125/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Forma 8489 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947252/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Resilience Hub AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947254/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "DTP Förvaltning i Hudiksvall AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947290/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Hilda Normark Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947300/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Svevr Stockholm AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947346/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Klemm Company AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947349/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Pierrefekt AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947362/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Lerums elektriska AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947365/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "MikRos Consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947324/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "U.S Pizza House AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947329/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Lilla Sauna AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947353/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "LTR Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947355/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "JT Perspektiv AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947367/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Humle Entreprenad AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947369/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "A. Wetterling Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948195/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NYAB 25235 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948197/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38780 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948200/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Goldcup 38782 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948203/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Fundamentet 10571 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948589/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 791 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948592/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 793 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946702/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Lintech Nord AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948174/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NewCo 8645 Sweden AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948622/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201474 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948623/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201472 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946376/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "IDOM Sverige AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946725/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Elevate Ventures AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948641/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201466 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948644/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201464 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946737/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Samdrift Sverige AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948594/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 795 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948598/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 797 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946436/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Immer Geradeaus Consulting AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948583/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 787 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948587/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 789 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948600/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 799 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948602/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 801 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948604/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 803 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948606/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 805 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948625/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201479 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948628/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201477 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946443/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Hotell Nämforsen AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947081/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Hedeby Konstruktion AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948608/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 807 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948610/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "NorrGuldet 809 AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948630/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201481 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948632/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201459 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948646/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201470 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948648/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 490839 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K946813/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Ivan Johnssons Åkeri-Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947048/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Veyra AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947225/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Novai AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947260/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Newira AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947264/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Ängssvalan Åbyberg S H AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948635/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201457 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948636/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201462 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K948638/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Startplattan 201460 Aktiebolag",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947268/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "BTA aesthetics AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947271/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Robin Carlholmer Invest AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947302/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Svevr Örebro AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947304/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Svevr Göteborg AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947331/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Alexandras städservice AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947332/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Johannas Motorik AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947335/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Femz AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947339/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Hammarö Ullar AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947357/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Oskan KMMR Bilhandel AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947359/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Kochwall AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947374/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Axabo AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    },
+    {
+      "kungorelseid": "K947377/25",
+      "kungorelsetyp": "Aktiebolagsregistret",
+      "namn": "Emma & Erika Holding AB",
+      "personOrgnummer": "",
+      "publiceringsdatum": "2025-12-12",
+      "uppgiftslamnare": "Bolagsverket"
+    }
+  ],
+  "meta": {
+    "contains_target_keys": false,
+    "host": null,
+    "item_count": 421,
+    "path": "/poit/rest/SokKungorelse",
+    "query": {
+      "amnesomradeId": "2",
+      "kungorelsetypId": "4",
+      "tidsperiod": "ANNAN_PERIOD",
+      "tidsperiodFrom": "2025-12-12",
+      "tidsperiodTom": "2025-12-12",
+      "underRubrikId": "6"
+    },
+    "timestamp": "20251212_110401",
+    "url": "/poit/rest/SokKungorelse?sokord=&kungorelseid=&kungorelseObjektPersonOrgnummer=&kungorelseObjektNamn=&tidsperiod=ANNAN_PERIOD&tidsperiodFrom=2025-12-12&tidsperiodTom=2025-12-12&amnesomradeId=2&kungorelsetypId=4&underRubrikId=6"
+  }
+}

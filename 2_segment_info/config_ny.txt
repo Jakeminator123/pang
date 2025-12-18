@@ -1,0 +1,22 @@
+[RUNNER]
+max_companies_for_testing = 9
+
+[ANALYZE]
+analyze_max_companies = 9
+analyze_model = gpt-4o
+
+[VERIFY]
+verify_max_companies = 9
+verify_domain_confidence_threshold = 0.40
+
+[FINALIZE]
+finalize_max_companies = 9
+site_audit_max_antal = 9
+site_audit_threshold = 0.60
+site_audit_depth = LOW
+
+[MAIL]
+mail_max_companies = 9
+mail_enabled = y
+mail_min_probability = 0.40
+

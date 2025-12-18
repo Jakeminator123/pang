@@ -8,6 +8,18 @@
 __pycache__/
 *.py[cod]
 
+# Node / web build artifacts
+**/node_modules/
+**/.next/
+**/out/
+**/dist/
+**/.turbo/
+**/.cache/
+**/.vercel/
+**/.parcel-cache/
+**/.vite/
+**/coverage/
+
 # Logs / runtime output
 logs/
 log/
@@ -16,6 +28,10 @@ log/
 # Local browser profiles + debug artifacts
 **/chrome_profile/
 **/debug/
+
+# Temporary backups created when removing nested git repos
+*_git_backup/
+*_git_subrepo_backup/
 
 # Data/output folders (generated)
 **/info_server/
