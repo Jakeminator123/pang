@@ -1,0 +1,12 @@
+old
+debug
+docker_v/
+
+**/data_bundles/
+**/dashboard/
+**/gui/
+chrome_profile/
+
+# Ignorera innehållet i 10_jocke, men inte mappen själv
+10_jocke/**
+!10_jocke/.gitkeep
