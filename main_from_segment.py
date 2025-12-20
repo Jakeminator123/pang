@@ -32,6 +32,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import pandas as pd
+from utils.erase import run_full_cleanup
 
 # Project root
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -104,6 +105,37 @@ def log_warn(msg: str):
     line = f"[WARN {ts()}] {msg}"
     print(line)
     append_run_log(line)
+
+
+def prompt_yes_no(question: str, default: bool = False) -> bool:
+    """Simple interactive yes/no prompt."""
+    if not sys.stdin.isatty():
+        return default
+    suffix = " [Y/n] " if default else " [y/N] "
+    while True:
+        ans = input(question + suffix).strip().lower()
+        if not ans:
+            return default
+        if ans in ("y", "yes", "j", "ja"):
+            return True
+        if ans in ("n", "no", "nej"):
+            return False
+        print("Svara med y/yes eller n/no.")
+
+
+def prompt_int(question: str, default: Optional[int] = None) -> Optional[int]:
+    """Simple interactive integer prompt."""
+    if not sys.stdin.isatty():
+        return default
+    suffix = f" [{default}]" if default is not None else ""
+    ans = input(f"{question}{suffix}: ").strip()
+    if not ans:
+        return default
+    try:
+        return int(ans)
+    except ValueError:
+        print("Ogiltigt tal, använder default.")
+        return default
 
 
 def run_script(
@@ -214,6 +246,47 @@ def get_target_date_dir(base_dir: Path) -> Optional[Path]:
     return None
 
 
+def load_sajt_config() -> Dict[str, Any]:
+    """Läs config från 3_sajt/config_ny.txt."""
+    config = {
+        "evaluate": True,
+        "threshold": 0.80,
+        "max_sites": 30,
+        "max_total_judgement_approvals": 0,
+        "re_input_website_link": True,
+        "audit_enabled": False,
+        "audit_threshold": 0.60,
+        "max_audits": 10,
+        "re_input_audit": True,
+    }
+    
+    config_path = SAJT_DIR / "config_ny.txt"
+    if not config_path.exists():
+        log_warn(f"Config-fil saknas: {config_path}")
+        return config
+    
+    try:
+        for line in config_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "=" in line:
+                key, value = line.split("=", 1)
+                key = key.strip().lower()
+                value = value.strip()
+                
+                if key in ("evaluate", "audit_enabled", "re_input_website_link", "re_input_audit"):
+                    config[key] = value.lower() in ("y", "yes", "true", "1")
+                elif key in ("threshold", "audit_threshold"):
+                    config[key] = float(value)
+                elif key in ("max_sites", "max_audits", "max_total_judgement_approvals"):
+                    config[key] = int(value)
+    except Exception as e:
+        log_warn(f"Kunde inte läsa sajt-config: {e}")
+    
+    return config
+
+
 async def run_company_evaluation(date_folder: Path) -> Tuple[int, int]:
     """Kör evaluation för alla företag i en datum-mapp."""
     try:
@@ -246,10 +319,14 @@ async def run_company_evaluation(date_folder: Path) -> Tuple[int, int]:
         return 0, 0
 
 
-async def generate_sites_for_worthy_companies(
-    date_folder: Path, percentage: float = 0.25
-) -> Tuple[int, int]:
-    """Generera hemsidor för en procentandel av värda företag."""
+async def generate_sites_for_worthy_companies(date_folder: Path) -> Tuple[int, int]:
+    """Generera hemsidor för värda företag (styrs av config)."""
+    sajt_config = load_sajt_config()
+    max_sites = sajt_config["max_sites"]
+    threshold = sajt_config["threshold"]
+    
+    log_info(f"Site-inställningar: threshold={threshold:.0%}, max={max_sites}")
+    
     try:
         sys.path.insert(0, str(SAJT_DIR / "all_the_scripts"))
         from batch_generate import generate_site_for_company  # type: ignore[import-not-found]
@@ -262,17 +339,26 @@ async def generate_sites_for_worthy_companies(
         worthy_companies = []
         for company_folder in all_companies:
             evaluation = load_evaluation_from_folder(company_folder)
-            if evaluation and evaluation.get("should_get_site", False):
-                worthy_companies.append(company_folder)
+            if not evaluation:
+                continue
+            if not evaluation.get("should_get_site", False):
+                continue
+            # Kolla threshold
+            if evaluation.get("confidence", 0) < threshold:
+                continue
+            # Skippa om redan har preview
+            if (company_folder / "preview_url.txt").exists():
+                continue
+            worthy_companies.append(company_folder)
 
         if not worthy_companies:
             log_warn("Inga värda företag hittades för site generation")
             return 0, 0
 
-        num_to_generate = max(1, int(len(worthy_companies) * percentage))
-        selected_companies = random.sample(worthy_companies, min(num_to_generate, len(worthy_companies)))
+        # Begränsa till max_sites (0 = obegränsat)
+        selected_companies = worthy_companies[:max_sites] if max_sites > 0 else worthy_companies
 
-        log_info(f"Genererar hemsidor för {len(selected_companies)} av {len(worthy_companies)} värda företag ({percentage * 100:.0f}%)")
+        log_info(f"Genererar hemsidor för {len(selected_companies)} av {len(worthy_companies)} kvalificerade företag")
 
         generated_count = 0
         for idx, company_folder in enumerate(selected_companies, 1):
@@ -322,7 +408,229 @@ async def generate_sites_for_worthy_companies(
         return 0, 0
 
 
+async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
+    """
+    Kör audits för företag med verifierad domän och tillräcklig confidence.
+    
+    Audits analyserar företagets BEFINTLIGA hemsida och genererar:
+    - audit_report.json - Detaljerad analys med scores
+    - audit_report.pdf - Snygg PDF-rapport
+    - company_analysis.json - Strukturerad företagsdata
+    - company_profile.txt - Läsbar profil
+    """
+    sajt_config = load_sajt_config()
+    
+    if not sajt_config["audit_enabled"]:
+        log_info("Audits är inaktiverade i config (audit_enabled = n)")
+        return 0, 0
+    
+    threshold = sajt_config["audit_threshold"]
+    max_antal = sajt_config["max_audits"]
+    
+    log_info(f"Audit-inställningar: threshold={threshold:.0%}, max={max_antal}")
+    
+    try:
+        sys.path.insert(0, str(SAJT_DIR / "all_the_scripts"))
+        from standalone_audit import run_audit_to_folder  # type: ignore[import-not-found]
+        
+        company_dirs = [d for d in date_folder.iterdir() if d.is_dir() and d.name.startswith("K")]
+        
+        qualified_companies = []
+        
+        for company_dir in company_dirs:
+            company_data_file = company_dir / "company_data.json"
+            if not company_data_file.exists():
+                continue
+            
+            try:
+                data = json.loads(company_data_file.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                continue
+            
+            domain_info = data.get("domain", {})
+            domain_url = domain_info.get("guess", "")
+            confidence = domain_info.get("confidence", 0)
+            status = domain_info.get("status", "unknown")
+            
+            if not domain_url:
+                continue
+            if status not in ("verified", "ai_verified", "match"):
+                continue
+            if confidence < threshold:
+                continue
+            
+            # Skippa om audit redan finns
+            if (company_dir / "audit_report.json").exists():
+                continue
+            
+            qualified_companies.append({
+                "dir": company_dir,
+                "domain": domain_url,
+                "confidence": confidence,
+                "company_name": data.get("company_name", company_dir.name),
+            })
+        
+        if not qualified_companies:
+            log_info("Inga företag kvalificerade för audit")
+            return 0, 0
+        
+        to_audit = qualified_companies[:max_antal] if max_antal > 0 else qualified_companies
+        
+        log_info(f"Kör audits för {len(to_audit)} av {len(qualified_companies)} kvalificerade företag")
+        
+        audited_count = 0
+        for idx, company in enumerate(to_audit, 1):
+            company_dir = company["dir"]
+            domain_url = company["domain"]
+            company_name = company["company_name"]
+            confidence = company["confidence"]
+            
+            if not domain_url.startswith("http"):
+                domain_url = f"https://{domain_url}"
+            
+            log_info(f"  [{idx}/{len(to_audit)}] Audit: {company_name} ({domain_url}, {confidence:.0%})")
+            
+            try:
+                result = run_audit_to_folder(domain_url, company_dir)
+                
+                if result.get("audit_pdf"):
+                    log_info(f"    ✅ PDF skapad: audit_report.pdf")
+                else:
+                    log_info(f"    ✅ Audit klar")
+                
+                audited_count += 1
+                
+                if idx < len(to_audit):
+                    await asyncio.sleep(1)
+                    
+            except Exception as e:
+                log_error(f"    ❌ Audit misslyckades: {e}")
+                continue
+        
+        log_info(f"Audits klara: {audited_count} av {len(to_audit)} lyckades")
+        return len(qualified_companies), audited_count
+        
+    except ImportError as e:
+        log_error(f"Kunde inte importera standalone_audit: {e}")
+        return 0, 0
+    except Exception as e:
+        log_error(f"Fel vid audits: {e}")
+        import traceback
+        traceback.print_exc()
+        return 0, 0
+
+
 MAIL_GREETING_KEYWORDS = ("hej", "hejsan", "tjena", "tjabba", "hallå", "god ")
+
+
+def generate_dummy_data_for_testing(date_folder: Path, max_companies: int = 0) -> Dict[str, int]:
+    """
+    Generera dummy-data för testning utan AI-kostnader.
+    
+    Skapar:
+    - evaluation.json i varje K-mapp (med dummy should_get_site, confidence, reasoning)
+    - preview_url.txt för ~20% av företagen (med dummy URL)
+    - audit_report.json för ~30% av företagen (med dummy scores)
+    
+    Args:
+        date_folder: Datum-mapp att bearbeta
+        max_companies: Max antal företag att bearbeta (0 = alla)
+    
+    Returns:
+        Dict med antal genererade filer per typ
+    """
+    log_info("[DUMMY] Genererar testdata utan AI...")
+    
+    # Hitta alla K-mappar
+    company_dirs = [
+        d for d in date_folder.iterdir()
+        if d.is_dir() and d.name.startswith("K") and "-" in d.name
+    ]
+    
+    if max_companies > 0:
+        company_dirs = company_dirs[:max_companies]
+    
+    if not company_dirs:
+        log_warn("[DUMMY] Inga K-mappar hittades")
+        return {"evaluations": 0, "previews": 0, "audits": 0}
+    
+    log_info(f"[DUMMY] Bearbetar {len(company_dirs)} företag...")
+    
+    evaluations_created = 0
+    previews_created = 0
+    audits_created = 0
+    
+    for idx, company_dir in enumerate(company_dirs):
+        company_name = company_dir.name
+        
+        # Läs företagsnamn från company_data.json om det finns
+        company_data_file = company_dir / "company_data.json"
+        if company_data_file.exists():
+            try:
+                data = json.loads(company_data_file.read_text(encoding="utf-8"))
+                company_name = data.get("company_name", company_dir.name)
+            except (json.JSONDecodeError, OSError):
+                pass
+        
+        # 1. Skapa dummy evaluation.json
+        eval_file = company_dir / "evaluation.json"
+        if not eval_file.exists():
+            # Variera dummy-värdena lite
+            should_get_site = (idx % 3) != 0  # ~67% får "ja"
+            confidence = 0.5 + (idx % 5) * 0.1  # 0.5-0.9
+            
+            dummy_eval = {
+                "should_get_site": should_get_site,
+                "confidence": confidence,
+                "reasoning": f"[DUMMY TEST DATA] Företag {company_name} - automatiskt genererad testdata utan AI.",
+                "_dummy": True,
+                "_generated_at": datetime.now().isoformat(),
+            }
+            eval_file.write_text(json.dumps(dummy_eval, ensure_ascii=False, indent=2), encoding="utf-8")
+            evaluations_created += 1
+        
+        # 2. Skapa dummy preview_url.txt för ~20% av företagen
+        preview_file = company_dir / "preview_url.txt"
+        if not preview_file.exists() and (idx % 5) == 0:
+            dummy_url = f"https://dummy-preview.example.com/{company_dir.name}"
+            preview_file.write_text(dummy_url, encoding="utf-8")
+            previews_created += 1
+        
+        # 3. Skapa dummy audit_report.json för ~30% av företagen
+        audit_file = company_dir / "audit_report.json"
+        if not audit_file.exists() and (idx % 3) == 0:
+            dummy_audit = {
+                "company": {
+                    "name": company_name,
+                    "industry": "Dummy-bransch",
+                },
+                "scores": {
+                    "design": 3 + (idx % 3),
+                    "content": 2 + (idx % 4),
+                    "usability": 3 + (idx % 2),
+                    "mobile": 2 + (idx % 3),
+                    "seo": 3 + (idx % 2),
+                    "overall": 3.0,
+                },
+                "strengths": ["[DUMMY] Styrka 1", "[DUMMY] Styrka 2"],
+                "weaknesses": ["[DUMMY] Svaghet 1", "[DUMMY] Svaghet 2"],
+                "recommendations": ["[DUMMY] Rekommendation 1", "[DUMMY] Rekommendation 2"],
+                "_meta": {
+                    "url": f"https://dummy-site.example.com/{company_dir.name}",
+                    "audit_date": datetime.now().isoformat(),
+                    "_dummy": True,
+                },
+            }
+            audit_file.write_text(json.dumps(dummy_audit, ensure_ascii=False, indent=2), encoding="utf-8")
+            audits_created += 1
+    
+    log_info(f"[DUMMY] Klart: {evaluations_created} evaluations, {previews_created} previews, {audits_created} audits")
+    
+    return {
+        "evaluations": evaluations_created,
+        "previews": previews_created,
+        "audits": audits_created,
+    }
 
 
 def _collect_preview_audit_entries(date_folder: Path) -> List[Dict[str, Any]]:
@@ -413,8 +721,10 @@ def _update_mail_ready_with_links(date_folder: Path, entries: List[Dict[str, Any
             mail_file = entry["folder_path"] / "mail.txt"
             if mail_file.exists():
                 try:
-                    new_content = mail_file.read_text(encoding="utf-8")
-                    df.loc[mask, mail_col] = new_content
+                    raw_content = mail_file.read_text(encoding="utf-8")
+                    parts = raw_content.split("=" * 60, 1)
+                    body_only = parts[1].strip() if len(parts) > 1 else raw_content.strip()
+                    df.loc[mask, mail_col] = body_only
                 except OSError:
                     pass
 
@@ -704,6 +1014,9 @@ def main():
     master_number = None
     target_date_str = None
     skip_process = False
+    interactive_mode = sys.stdin.isatty()
+    use_ai = True
+    do_cleanup = False
 
     for arg in raw_args:
         if arg == "--skip-process":
@@ -750,6 +1063,20 @@ Kör:
     log_info("=" * 60)
     log_info(f"Projektrot: {PROJECT_ROOT}")
 
+    # Interaktiva val (endast om terminalen är interaktiv och inga motsvarande flaggar satts)
+    if interactive_mode:
+        # Fråga om cleanup (OBS: raderar datum-mappar, som i main.py)
+        do_cleanup = prompt_yes_no(
+            "Köra cleanup som tar bort datum-mappar/loggar (risk att data försvinner)?", default=False
+        )
+
+        # Fråga AI-läge: skarpt (AI) eller utan AI
+        use_ai = prompt_yes_no("Köra med AI (evaluation/site/audit)?", default=True)
+
+        # Fråga antal företag om inte satt
+        if master_number is None:
+            master_number = prompt_int("Ange antal företag (master-nummer), tomt = obegränsat", default=None)
+
     if target_date_str:
         log_info(f"Använder specifikt datum: {target_date_str}")
     else:
@@ -768,11 +1095,28 @@ Kör:
             if not update_config_with_master_number(master_number):
                 log_error("Kunde inte uppdatera config-filer")
                 return 1
+        else:
+            log_info("Master-nummer: 0 (obegränsat)")
 
     print()
     failures = []
 
     try:
+        # Valfri cleanup (använd med försiktighet om du vill återanvända befintliga datum-mappar)
+        if do_cleanup:
+            log_info("=" * 60)
+            log_info("STEG 0 (Cleanup - valfritt): RENSAR DATA")
+            log_info("=" * 60)
+            # Viktigt: hoppa info_server/ för att behålla rådata
+            removed, errors = run_full_cleanup(
+                keep_days=7, clean_chrome=False, skip_info_server=True
+            )
+            if errors:
+                for e in errors:
+                    log_warn(e)
+            log_info(f"Cleanup klar: {removed} objekt raderade")
+            print()
+
         # Steg 4: Kör process_raw_data.py (skapar CSV/DB från JSON)
         if not skip_process:
             log_info("=" * 60)
@@ -814,9 +1158,9 @@ Kör:
             return 1
         print()
 
-        # Steg 6: Evaluation och site generation
+        # Steg 6: Evaluation, Site Generation & Audit
         log_info("=" * 60)
-        log_info("STEG 6: EVALUATION OCH SITE GENERATION")
+        log_info("STEG 6: EVALUATION, SITE GENERATION & AUDIT")
         log_info("=" * 60)
 
         latest_date_dir: Optional[Path] = None
@@ -826,23 +1170,45 @@ Kör:
             if latest_date_dir:
                 log_info(f"Bearbetar datum-mapp: {latest_date_dir.name}")
 
-                log_info("Kör evaluation av företag...")
-                total_evaluated, worthy_count = asyncio.run(
-                    run_company_evaluation(latest_date_dir)
-                )
-
-                if worthy_count > 0:
-                    percentage = 0.25
-                    log_info(f"Genererar hemsidor för {percentage * 100:.0f}% av värda företag...")
-                    total_worthy, generated_count = asyncio.run(
-                        generate_sites_for_worthy_companies(latest_date_dir, percentage)
+                if use_ai:
+                    # 6a: Evaluation
+                    log_info("Kör evaluation av företag...")
+                    total_evaluated, worthy_count = asyncio.run(
+                        run_company_evaluation(latest_date_dir)
                     )
-                    log_info(f"  - Värda företag: {total_worthy}")
-                    log_info(f"  - Genererade hemsidor: {generated_count}")
-                else:
-                    log_warn("Inga värda företag hittades - hoppar över site generation")
 
-                sync_preview_and_audit_links(latest_date_dir)
+                    # 6b: Site Generation
+                    if worthy_count > 0:
+                        log_info("Genererar hemsidor för kvalificerade företag...")
+                        total_worthy, generated_count = asyncio.run(
+                            generate_sites_for_worthy_companies(latest_date_dir)
+                        )
+                        log_info(f"  - Kvalificerade: {total_worthy}, Genererade: {generated_count}")
+                    else:
+                        log_warn("Inga värda företag hittades - hoppar över site generation")
+
+                    # 6c: Audit (för företag med verifierad domän)
+                    log_info("Kör audits för företag med verifierad domän...")
+                    qualified_count, audited_count = asyncio.run(
+                        run_audits_for_companies(latest_date_dir)
+                    )
+                    log_info(f"  - Kvalificerade: {qualified_count}, Auditerade: {audited_count}")
+
+                    # 6d: Synka länkar till mail/excel
+                    sync_preview_and_audit_links(latest_date_dir)
+                else:
+                    # Generera dummy-data för testning
+                    log_info("AI avstängt: genererar dummy-data för testning...")
+                    dummy_stats = generate_dummy_data_for_testing(
+                        latest_date_dir, 
+                        max_companies=master_number if master_number and master_number > 0 else 0
+                    )
+                    log_info(f"  - Evaluations: {dummy_stats['evaluations']}")
+                    log_info(f"  - Previews: {dummy_stats['previews']}")
+                    log_info(f"  - Audits: {dummy_stats['audits']}")
+                    
+                    # Synka länkar även med dummy-data
+                    sync_preview_and_audit_links(latest_date_dir)
             else:
                 log_warn("Hittade ingen datum-mapp i djupanalys/")
         else:

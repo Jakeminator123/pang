@@ -668,8 +668,16 @@ def run_audit_to_folder(url: str, output_dir: Path) -> Dict[str, Any]:
     )
     profile_file.write_text(profile_text, encoding="utf-8")
 
-    # 5. Generate PDF
-    pdf_generated = generate_audit_pdf(audit_data, pdf_file)
+    # 5. Generate PDF (försök först med snyggare version)
+    pdf_generated = False
+    try:
+        # Importera det nya skriptet om det finns
+        from generate_beautiful_pdf import generate_pdf
+        pdf_generated = generate_pdf(audit_data, pdf_file)
+    except ImportError:
+        # Fallback till gamla metoden
+        pdf_generated = generate_audit_pdf(audit_data, pdf_file)
+    
     if pdf_generated:
         print(f"   ✓ Skapade PDF: {pdf_file.name}")
 

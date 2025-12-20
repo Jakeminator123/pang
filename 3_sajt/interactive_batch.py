@@ -58,46 +58,34 @@ CONFIG_FILE = Path(__file__).parent / "config_ny.txt"
 
 
 def load_config() -> dict:
-    """Ladda konfiguration från config_ny.txt (konsoliderad config)."""
+    """Ladda konfiguration från config_ny.txt (enkel key=value format)."""
     config = {
         "evaluate": "n",
-        "threshold": "0.5",  # Default: 50% confidence minimum
+        "threshold": "0.5",
         "audit_enabled": "n",
         "audit_threshold": "0.60",
         "re_input_website_link": "n",
         "re_input_audit": "n",
-        "max_sites": "0",    # 0 = ingen gräns
-        "max_audits": "0",   # 0 = ingen gräns
+        "max_sites": "0",
+        "max_audits": "0",
+        "max_total_judgement_approvals": "0",
     }
     if CONFIG_FILE.exists():
         try:
-            content = CONFIG_FILE.read_text(encoding="utf-8").strip()
-            for line in content.split("\n"):
+            for line in CONFIG_FILE.read_text(encoding="utf-8").splitlines():
                 line = line.strip()
-                if not line or line.startswith("#") or line.startswith("["):
-                    continue  # Skip empty lines, comments, and section headers
+                if not line or line.startswith("#"):
+                    continue
                 if "=" in line:
                     key, value = line.split("=", 1)
                     key = key.strip().lower()
                     value = value.strip()
                     
-                    # Map config_ny.txt keys to internal keys
-                    key_mapping = {
-                        "site_enabled": "evaluate",
-                        "site_threshold": "threshold",
-                        "site_max_antal": "max_sites",
-                        "audit_enabled": "audit_enabled",
-                        "audit_threshold": "audit_threshold",
-                        "audit_max_antal": "max_audits",
-                        "evaluate_enabled": "evaluate",
-                        "evaluate_threshold": "threshold",
-                    }
-                    
-                    mapped_key = key_mapping.get(key, key)
-                    if mapped_key == "evaluate" or mapped_key == "audit_enabled":
-                        config[mapped_key] = value.lower()
+                    # Boolean values normaliseras
+                    if key in ("evaluate", "audit_enabled", "re_input_website_link", "re_input_audit"):
+                        config[key] = value.lower()
                     else:
-                        config[mapped_key] = value
+                        config[key] = value
         except Exception:
             pass
     return config

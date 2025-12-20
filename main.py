@@ -21,6 +21,8 @@ Kör i sekvens:
 5. Kör evaluation och generera hemsidor (3_sajt/) - bedömer företag och genererar hemsidor för 20-30% av värda företag
 6. Kopiera till Dropbox (9_dropbox/) - kopierar datum-mapp till Dropbox + 10_jocke
 7. Bearbeta styrelsedata (10_jocke/) - parsear och strukturerar styrelsedata till jocke.xlsx
+8. Ladda upp till Dashboard (9_dropbox/upload_to_dashboard.py) - laddar upp ZIP till dashboard persistent disk
+   Kräver: UPLOAD_SECRET eller JOCKE_API miljövariabel
 """
 
 import asyncio
@@ -759,19 +761,21 @@ async def generate_sites_for_worthy_companies(
 
 def load_sajt_config() -> Dict[str, Any]:
     """
-    Läs audit/site-config från 3_sajt/config_ny.txt.
+    Läs config från 3_sajt/config_ny.txt.
     
     Returns:
         Dict med config-värden
     """
     config = {
+        "evaluate": True,
+        "threshold": 0.80,
+        "max_sites": 30,
+        "max_total_judgement_approvals": 0,
+        "re_input_website_link": True,
         "audit_enabled": False,
         "audit_threshold": 0.60,
-        "audit_max_antal": 10,
-        "audit_depth": "LOW",
-        "site_enabled": True,
-        "site_threshold": 0.80,
-        "site_max_antal": 30,
+        "max_audits": 10,
+        "re_input_audit": True,
     }
     
     config_path = SAJT_DIR / "config_ny.txt"
@@ -782,28 +786,22 @@ def load_sajt_config() -> Dict[str, Any]:
     try:
         for line in config_path.read_text(encoding="utf-8").splitlines():
             line = line.strip()
-            # Skip empty lines, comments, and section headers
-            if not line or line.startswith("#") or line.startswith("["):
+            if not line or line.startswith("#"):
                 continue
             if "=" in line:
                 key, value = line.split("=", 1)
                 key = key.strip().lower()
                 value = value.strip()
                 
-                if key == "audit_enabled":
-                    config["audit_enabled"] = value.lower() in ("y", "yes", "true", "1")
-                elif key == "audit_threshold":
-                    config["audit_threshold"] = float(value)
-                elif key == "audit_max_antal":
-                    config["audit_max_antal"] = int(value)
-                elif key == "audit_depth":
-                    config["audit_depth"] = value.upper()
-                elif key == "site_enabled":
-                    config["site_enabled"] = value.lower() in ("y", "yes", "true", "1")
-                elif key == "site_threshold":
-                    config["site_threshold"] = float(value)
-                elif key == "site_max_antal":
-                    config["site_max_antal"] = int(value)
+                # Boolean values
+                if key in ("evaluate", "audit_enabled", "re_input_website_link", "re_input_audit"):
+                    config[key] = value.lower() in ("y", "yes", "true", "1")
+                # Float values
+                elif key in ("threshold", "audit_threshold"):
+                    config[key] = float(value)
+                # Int values
+                elif key in ("max_sites", "max_audits", "max_total_judgement_approvals"):
+                    config[key] = int(value)
     except Exception as e:
         log_warn(f"Kunde inte läsa sajt-config: {e}")
     
@@ -830,7 +828,7 @@ async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
         return 0, 0
     
     threshold = sajt_config["audit_threshold"]
-    max_antal = sajt_config["audit_max_antal"]
+    max_antal = sajt_config["max_audits"]
     
     log_info(f"Audit-inställningar: threshold={threshold:.0%}, max={max_antal}")
     
@@ -2052,6 +2050,38 @@ Argument:
                     )
             else:
                 log_warn("10_jocke/ mapp saknas - hoppar över styrelsedata-bearbetning")
+        print()
+
+        # Steg 8: Ladda upp till Dashboard (valfritt)
+        log_info("=" * 60)
+        log_info("STEG 8: LADDA UPP TILL DASHBOARD")
+        log_info("=" * 60)
+
+        if is_step_done(status, "dashboard_upload"):
+            log_info("Hoppar över dashboard-upload (markerad klar i pipeline_status.json)")
+        else:
+            # Kontrollera om UPLOAD_SECRET finns
+            upload_secret = os.environ.get("UPLOAD_SECRET") or os.environ.get("JOCKE_API")
+            
+            if not upload_secret:
+                log_info("Dashboard-upload hoppad över (UPLOAD_SECRET eller JOCKE_API ej satt)")
+                log_info("Sätt UPLOAD_SECRET i .env för att aktivera automatisk upload")
+            else:
+                upload_script = DROPBOX_DIR / "upload_to_dashboard.py"
+                if upload_script.exists():
+                    log_info("Laddar upp data bundles till dashboard...")
+                    exit_code, duration, step_log, tail = run_script(
+                        "dashboard_upload", upload_script, cwd=DROPBOX_DIR
+                    )
+                    if exit_code != 0:
+                        # Dashboard-upload är valfritt - logga varning men fortsätt
+                        log_warn(f"Dashboard-upload misslyckades (exit {exit_code})")
+                        log_warn("Pipeline fortsätter ändå - uppladdning är valfri")
+                    else:
+                        mark_step_done(target_date_str, status, "dashboard_upload")
+                        log_info("✅ Dashboard-upload lyckades")
+                else:
+                    log_warn(f"Upload-skript saknas: {upload_script}")
         print()
 
     except KeyboardInterrupt:

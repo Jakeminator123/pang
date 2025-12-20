@@ -37,17 +37,20 @@ CONFIG_FILE = Path(__file__).parent / "config_ny.txt"
 
 
 def load_config() -> Dict[str, str]:
-    """Ladda konfiguration från config_ny.txt (INI-format med sektioner)."""
+    """Ladda konfiguration från config_ny.txt (enkel key=value format)."""
     cfg: Dict[str, str] = {}
     if CONFIG_FILE.exists():
         for line in CONFIG_FILE.read_text(encoding="utf-8").splitlines():
             line = line.strip()
-            # Skip empty lines, comments, and section headers
-            if not line or line.startswith("#") or line.startswith("["):
+            # Skip empty lines and comments
+            if not line or line.startswith("#"):
                 continue
             if "=" in line:
                 k, v = line.split("=", 1)
-                cfg[k.strip().upper()] = v.strip()
+                # Store both original and uppercase for compatibility
+                key = k.strip().lower()
+                cfg[key] = v.strip()
+                cfg[key.upper()] = v.strip()
     return cfg
 
 

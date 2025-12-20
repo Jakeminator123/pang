@@ -735,7 +735,9 @@ def cleanup_old_directories(base_dir: Path, keep_days: int = 7) -> int:
     return removed_count
 
 
-def run_full_cleanup(keep_days: int = 7, clean_chrome: bool = True) -> Tuple[int, List[str]]:
+def run_full_cleanup(
+    keep_days: int = 7, clean_chrome: bool = True, skip_info_server: bool = False
+) -> Tuple[int, List[str]]:
     """
     Kör komplett cleanup: rensar gamla mappar OCH all data för dagens körning.
     Detta är huvudfunktionen som anropas från main.py vid start.
@@ -743,6 +745,7 @@ def run_full_cleanup(keep_days: int = 7, clean_chrome: bool = True) -> Tuple[int
     Args:
         keep_days: Antal dagar att behålla gamla mappar (default: 7)
         clean_chrome: Om True, rensa Chrome-profilernas cache (default: True)
+        skip_info_server: Om True, rensa inte info_server/ (behåll rådata)
 
     Returns:
         Tuple of (total_items_removed, list_of_errors)
@@ -761,7 +764,9 @@ def run_full_cleanup(keep_days: int = 7, clean_chrome: bool = True) -> Tuple[int
         info_server_dir = POIT_DIR / "info_server"
         djupanalys_dir = SEGMENT_DIR / "djupanalys"
 
-        removed_info = cleanup_old_directories(info_server_dir, keep_days=keep_days)
+        removed_info = 0
+        if not skip_info_server:
+            removed_info = cleanup_old_directories(info_server_dir, keep_days=keep_days)
         removed_djup = cleanup_old_directories(djupanalys_dir, keep_days=keep_days)
 
         log_info(f"Rensade {removed_info} gamla mappar från info_server/")
@@ -777,7 +782,7 @@ def run_full_cleanup(keep_days: int = 7, clean_chrome: bool = True) -> Tuple[int
     # Steg 2: Rensa ALL data för dagens körning
     log_info("Steg 2: Rensar ALL data för dagens körning...")
     try:
-        removed_count, errors = clean_all_pipeline_data()
+        removed_count, errors = clean_all_pipeline_data(skip_info_server=skip_info_server)
         total_removed += removed_count
         all_errors.extend(errors)
         if not errors:
@@ -816,6 +821,7 @@ def cleanup_pipeline_data(
     clean_today_only: bool = True,
     keep_old_logs: bool = True,
     force_clean_all: bool = False,
+    skip_info_server: bool = False,
 ) -> Tuple[int, List[str]]:
     """
     Main cleanup function - removes previous run data.
@@ -824,6 +830,7 @@ def cleanup_pipeline_data(
         clean_today_only: If True, only clean today's data. If False, clean all date dirs.
         keep_old_logs: If True, keep log files older than today.
         force_clean_all: If True, clean EVERYTHING including all dates and logs (for fresh start)
+        skip_info_server: If True, do NOT delete anything in info_server/
 
     Returns:
         Tuple of (total_items_removed, list_of_errors)
@@ -848,40 +855,38 @@ def cleanup_pipeline_data(
         keep_old_logs = False
 
     try:
-        # 1. Clean 1_poit/info_server/YYYYMMDD/ (today's scraped data)
-        info_server_dir = POIT_DIR / "info_server"
-        if info_server_dir.exists():
-            # ALLTID rensa dagens mapp helt för att undvika duplicering
-            removed = clean_today_date_dir(info_server_dir, today)
-            total_removed += removed
-            if removed > 0:
-                log_info(f"Cleaned today's date directory from info_server/{today}/")
+        # 1. Clean 1_poit/info_server/YYYYMMDD/ (today's scraped data) - optional
+        if not skip_info_server:
+            info_server_dir = POIT_DIR / "info_server"
+            if info_server_dir.exists():
+                removed = clean_today_date_dir(info_server_dir, today)
+                total_removed += removed
+                if removed > 0:
+                    log_info(f"Cleaned today's date directory from info_server/{today}/")
 
-            # Rensa också kungorelser_*.json filer i root (om de finns där)
-            for json_file in info_server_dir.glob(f"kungorelser_{today}.json"):
-                if remove_path(json_file, "(kungörelse JSON)"):
-                    total_removed += 1
-            for csv_file in info_server_dir.glob(f"kungorelser_{today}.csv"):
-                if remove_path(csv_file, "(kungörelse CSV)"):
-                    total_removed += 1
-
-            if not clean_today_only:
-                # Clean all date directories
-                date_dirs = [
-                    d
-                    for d in info_server_dir.iterdir()
-                    if d.is_dir() and re.fullmatch(r"\d{8}", d.name)
-                ]
-                for date_dir in date_dirs:
-                    if remove_path(date_dir, f"(date: {date_dir.name})"):
+                for json_file in info_server_dir.glob(f"kungorelser_{today}.json"):
+                    if remove_path(json_file, "(kungörelse JSON)"):
                         total_removed += 1
-                if date_dirs:
-                    log_info(
-                        f"Cleaned {len(date_dirs)} date directories from info_server/"
-                    )
-        else:
-            log_warn(f"Directory does not exist: {info_server_dir}")
-        print()
+                for csv_file in info_server_dir.glob(f"kungorelser_{today}.csv"):
+                    if remove_path(csv_file, "(kungörelse CSV)"):
+                        total_removed += 1
+
+                if not clean_today_only:
+                    date_dirs = [
+                        d
+                        for d in info_server_dir.iterdir()
+                        if d.is_dir() and re.fullmatch(r"\d{8}", d.name)
+                    ]
+                    for date_dir in date_dirs:
+                        if remove_path(date_dir, f"(date: {date_dir.name})"):
+                            total_removed += 1
+                    if date_dirs:
+                        log_info(
+                            f"Cleaned {len(date_dirs)} date directories from info_server/"
+                        )
+            else:
+                log_warn(f"Directory does not exist: {info_server_dir}")
+            print()
 
         # 2. Clean 2_segment_info/djupanalys/YYYYMMDD/ (today's processed data)
         djupanalys_dir = SEGMENT_DIR / "djupanalys"

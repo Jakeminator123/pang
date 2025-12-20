@@ -28,6 +28,7 @@ log/
 # Local browser profiles + debug artifacts
 **/chrome_profile/
 **/debug/
+**/User Data/
 
 # Temporary backups created when removing nested git repos
 *_git_backup/
@@ -40,4 +41,15 @@ log/
 **/8_ready/
 **/testning/output/
 
+# Old/archive folders
+old/
+RENSADE/
 
+10_jocke/**
+!10_jocke/.gitkeep
+preprompt_history.json
+
+docker_main.py
+headless_main.py
+api
+**/*.zip

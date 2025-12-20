@@ -5,3 +5,14 @@ RENSADE
 
 node_modules
 .next
+
+
+preprompt_history.json
+
+docker_main.py
+headless_main.py
+
+
+docker_1_poit
+headless_1_poit
+testmapp
