@@ -1,0 +1,102 @@
+{
+  "folder": "K969513-25",
+  "extracted_at": "2025-12-19T16:05:00.919329",
+  "company_name": "JRO PM Consult AB",
+  "orgnr": "559563-4055",
+  "verksamhet": "Konsulttjänster inom projektledning inklusive men inte begränsat till projektkontroll, riskhantering, kalkylering, projekt- styrning, tillsyn och kontrollaktiviteter samt intressent- hantering.",
+  "sate": "Stockholm",
+  "address": "c/o Julien Roby, Hantverkargatan 33, 112 21 STOCKHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-26",
+  "emails": [
+    "julienroby@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Julien Arnaud Raymond Roby",
+      "role": "Styrelsesuppleant",
+      "personnr": "197603-XXXX"
+    },
+    {
+      "name": "Elsa Catherine Béatrice Roby",
+      "role": "Styrelsesuppleant",
+      "personnr": "197705-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "jropmconsult.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "jropmconsult.com",
+        "source": "generated"
+      },
+      {
+        "domain": "jropmconsult.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "jropmconsultab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "JRO PM Consult AB",
+    "searches": [
+      {
+        "query": "JRO PM Consult AB hemsida website",
+        "summary": "Jag hittade ingen officiell webbplats (hemsida) för JRO PM Consult AB. Företaget finns dock registrerat och syns i bolagsregister med följande information:\n\n• Organisationsnummer: 559563‑4055. Bolaget är registrerat som ett aktiebolag med säte på Hantverkargatan 33, 112 21 Stockholm ([bolagsfakta.se](https://www.bolagsfakta.se/5595634055-JRO_PM_Consult_AB?utm_source=openai)).  \n• Verksamhetsbeskrivningen: konsulttjänster inom projektledning, projektkontroll, riskhantering, kalkylering, projektst",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634055-JRO_PM_Consult_AB?utm_source=openai",
+            "title": "JRO PM Consult AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "JRO PM Consult AB Konsulttjänster inom projektledning inklusive men  kontakt",
+        "summary": "Här är en kort sammanfattning av **JRO PM Consult AB** och deras konsulttjänster inom projektledning:\n\n• **Företagsinformation**  \n  JRO PM Consult AB är ett svenskt aktiebolag med organisationsnummer 559563–4055, registrerat den 17 december 2025 i Stockholm. Bolaget har sitt säte på Hantverkargatan 33, 112 21 Stockholm. Styrelseledamot är Julien Arnaud Raymond Roby, med Elsa Catherine Béatrice Roby som suppleant. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634055-JRO_PM_Consult_AB?utm_sour",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634055-JRO_PM_Consult_AB?utm_source=openai",
+            "title": "JRO PM Consult AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"JRO PM Consult AB\" site:se",
+        "summary": "Här är kort information om \"JRO PM Consult AB\":\n\n• Företagsnamn: JRO PM Consult AB  \n• Organisationsnummer: 559563‑4055 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634055-JRO_PM_Consult_AB?utm_source=openai))  \n• Status: Aktivt aktiebolag med säte i Stockholm. Bolaget bildades den 26 november 2025 och registrerades den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634055-JRO_PM_Consult_AB?utm_source=openai))  \n• Adress: c/o Julien Roby, Hantverkargatan 33, 112 21 Stockho",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634055-JRO_PM_Consult_AB?utm_source=openai",
+            "title": "JRO PM Consult AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "jropmconsult.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "jropmconsult.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:10:22.119982"
+  }
+}

@@ -4,6 +4,8 @@ import asyncio
 import random
 from datetime import datetime
 from pathlib import Path
+from enum import Enum
+from typing import Optional
 
 from playwright.async_api import async_playwright
 
@@ -14,10 +16,144 @@ _captcha_backoff_seconds = 0
 _captcha_count = 0
 
 
-async def get_cookies_from_chrome(cookie_wait: int = 14) -> dict:
+class BlockReason(Enum):
+    """Reasons why a page might be blocked or need intervention."""
+    NONE = "none"
+    COOKIE_BANNER = "cookie_banner"
+    CAPTCHA = "captcha"
+    RATE_LIMITED = "rate_limited"
+    ENSKILD_PAGE = "enskild_page"
+    ACCESS_DENIED = "access_denied"
+    UNKNOWN = "unknown"
+
+
+async def detect_block_reason(page) -> BlockReason:
+    """
+    Detect WHY a page is blocked or needs intervention.
+    This is more specific than just detect_captcha().
+    
+    Returns:
+        BlockReason enum indicating the type of block.
+    """
+    try:
+        url = page.url.lower()
+        
+        # Check URL first (fastest)
+        if "/enskild/" in url:
+            return BlockReason.ENSKILD_PAGE
+        
+        # Get page text for content analysis
+        text = await page.inner_text("body")
+        text_lower = text.lower()
+        
+        # Check for cookie banner (highest priority - easy to fix)
+        cookie_indicators = [
+            "acceptera cookies",
+            "vi använder cookies",
+            "cookie policy",
+            "godkänn cookies",
+            "accept all cookies",
+        ]
+        if any(ind in text_lower for ind in cookie_indicators):
+            # Verify banner is actually visible
+            banner_selectors = [
+                '[data-cf-action="accept"]',
+                '.cookie-banner',
+                '#cookie-banner',
+                '.consent-banner',
+                '[class*="cookie"]',
+            ]
+            for sel in banner_selectors:
+                elem = await page.query_selector(sel)
+                if elem and await elem.is_visible():
+                    return BlockReason.COOKIE_BANNER
+        
+        # Check for rate limiting (second priority - need to wait)
+        rate_limit_indicators = [
+            "rate limit",
+            "too many requests",
+            "429",
+            "för många förfrågningar",
+            "vänta en stund",
+            "try again later",
+        ]
+        if any(ind in text_lower for ind in rate_limit_indicators):
+            return BlockReason.RATE_LIMITED
+        
+        # Check for CAPTCHA (third priority - need user intervention or wait)
+        captcha_indicators = [
+            "human visitor",
+            "captcha",
+            "verify you are human",
+            "robot",
+            "inte en robot",
+            "bekräfta att du",
+            "recaptcha",
+            "hcaptcha",
+        ]
+        if any(ind in text_lower for ind in captcha_indicators):
+            return BlockReason.CAPTCHA
+        
+        # Check for access denied (might need re-login)
+        access_indicators = [
+            "access denied",
+            "åtkomst nekad",
+            "forbidden",
+            "403",
+            "behörighet saknas",
+            "inte behörig",
+        ]
+        if any(ind in text_lower for ind in access_indicators):
+            return BlockReason.ACCESS_DENIED
+        
+        return BlockReason.NONE
+        
+    except Exception as e:
+        print(f"    [DETECT ERROR] {e}")
+        return BlockReason.UNKNOWN
+
+
+async def handle_cookie_banner(page, wait_after: int = 3) -> bool:
+    """
+    Handle cookie banner if present.
+    
+    Args:
+        page: Playwright page object.
+        wait_after: Seconds to wait after clicking.
+    
+    Returns:
+        True if banner was found and clicked, False otherwise.
+    """
+    cookie_selectors = [
+        'button[data-cf-action="accept"]',
+        'button:has-text("Acceptera")',
+        'button:has-text("Godkänn")',
+        'button:has-text("Accept")',
+        '.cf-btn-accept',
+        '#accept-cookies',
+        'button:has-text("OK")',
+        'button:has-text("Jag förstår")',
+        '[data-action="accept"]',
+    ]
+    
+    for selector in cookie_selectors:
+        try:
+            btn = await page.query_selector(selector)
+            if btn and await btn.is_visible():
+                print(f"    🍪 Cookie-banner hittad, klickar...")
+                await btn.click()
+                await asyncio.sleep(wait_after)
+                return True
+        except Exception:
+            continue
+    
+    return False
+
+
+async def get_cookies_from_chrome(cookie_wait: int = 10) -> dict:
     """
     Connect to Chrome via CDP and extract cookies.
-    Handles cookie banner automatically.
+    Handles cookie banner, CAPTCHA, and rate limiting automatically.
     
     Args:
         cookie_wait: Seconds to wait after clicking cookie banner.
@@ -27,7 +163,16 @@ async def get_cookies_from_chrome(cookie_wait: int = 14) -> dict:
     """
     try:
         async with async_playwright() as p:
-            browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9222")
+            try:
+                browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9222")
+            except Exception as e:
+                print(f"    ❌ Kunde inte ansluta till Chrome på port 9222!")
+                print(f"    Kontrollera att:")
+                print(f"      1. Chrome körs med --remote-debugging-port=9222")
+                print(f"      2. Ingen annan process använder port 9222")
+                print(f"      3. Du inte har flera Chrome-instanser igång")
+                raise ConnectionError(f"Chrome CDP connection failed: {e}")
+            
             context = browser.contexts[0]
             page = context.pages[0] if context.pages else await context.new_page()
             
@@ -36,30 +181,30 @@ async def get_cookies_from_chrome(cookie_wait: int = 14) -> dict:
                 await page.goto(f"{BASE_URL}/poit-app/", wait_until="domcontentloaded")
                 await asyncio.sleep(3)
             
-            # Handle cookie banner if present
-            try:
-                cookie_selectors = [
-                    'button[data-cf-action="accept"]',
-                    'button:has-text("Acceptera")',
-                    'button:has-text("Godkänn")',
-                    '.cf-btn-accept',
-                    '#accept-cookies',
-                    'button:has-text("OK")',
-                ]
-                for selector in cookie_selectors:
-                    btn = await page.query_selector(selector)
-                    if btn:
-                        print(f"    Cookie-banner hittad, klickar...")
-                        await btn.click()
-                        print(f"    Väntar {cookie_wait}s efter cookie-klick...")
-                        await asyncio.sleep(cookie_wait)
-                        break
-            except Exception:
-                pass
+            # Detect what's blocking us (if anything)
+            block_reason = await detect_block_reason(page)
             
-            # Check for CAPTCHA with backoff
-            if await detect_captcha(page):
+            if block_reason == BlockReason.COOKIE_BANNER:
+                print(f"    🍪 Cookie-banner upptäckt")
+                if await handle_cookie_banner(page, wait_after=cookie_wait):
+                    print(f"    ✓ Cookie-banner hanterad")
+                    # Re-check after handling
+                    block_reason = await detect_block_reason(page)
+            
+            if block_reason == BlockReason.RATE_LIMITED:
+                print(f"    ⏱️  RATE LIMITED - Väntar 60s...")
+                await asyncio.sleep(60)
+                await page.reload()
+                await asyncio.sleep(5)
+                block_reason = await detect_block_reason(page)
+            
+            if block_reason == BlockReason.CAPTCHA:
+                print(f"    🤖 CAPTCHA upptäckt")
                 await handle_captcha_backoff(page, context)
+            
+            if block_reason == BlockReason.ACCESS_DENIED:
+                print(f"    🚫 ÅTKOMST NEKAD - Du kan behöva logga in igen")
+                print(f"    Öppna Chrome och navigera till sajten manuellt.")
             
             # Get all cookies
             cookies = await context.cookies()
@@ -70,6 +215,8 @@ async def get_cookies_from_chrome(cookie_wait: int = 14) -> dict:
             
             return cookie_dict
             
+    except ConnectionError:
+        raise
     except Exception as e:
         print(f"    [COOKIE ERROR] {e}")
         return {}
@@ -160,7 +307,7 @@ async def scrape_single_page(
     
     normalized_id = kung_id.replace("/", "-")
     url = f"{BASE_URL}/poit-app/kungorelse/{normalized_id}"
-    result = {"id": kung_id, "success": False}
+    result = {"id": kung_id, "success": False, "block_reason": None}
     
     page = await context.new_page()
     
@@ -172,12 +319,31 @@ async def scrape_single_page(
         initial_wait = random.uniform(4.0, 5.5)
         await asyncio.sleep(initial_wait)
         
-        # Check for CAPTCHA and handle with backoff
-        if await detect_captcha(page):
+        # Check what's blocking us (more specific than just CAPTCHA)
+        block_reason = await detect_block_reason(page)
+        
+        # Handle different block types
+        if block_reason == BlockReason.COOKIE_BANNER:
+            if await handle_cookie_banner(page, wait_after=3):
+                block_reason = await detect_block_reason(page)
+        
+        if block_reason == BlockReason.RATE_LIMITED:
+            result["error"] = "⏱️ Rate limited"
+            result["block_reason"] = "rate_limited"
+            # Don't retry immediately - signal to caller to slow down
+            return result
+        
+        if block_reason == BlockReason.CAPTCHA:
             await handle_captcha_backoff(page, context)
             # Retry the page after backoff
             await page.goto(url, wait_until="domcontentloaded", timeout=30000)
             await asyncio.sleep(initial_wait)
+            block_reason = await detect_block_reason(page)
+        
+        if block_reason == BlockReason.ACCESS_DENIED:
+            result["error"] = "🚫 Åtkomst nekad"
+            result["block_reason"] = "access_denied"
+            return result
         
         # Extra wait for JavaScript to render content
         wait_time = random.uniform(*wait_range)
@@ -186,19 +352,35 @@ async def scrape_single_page(
         # Handle "enskild" intermediate page (redirect page)
         max_retries = 3
         for retry in range(max_retries):
-            if "/enskild/" in page.url:
+            block_reason = await detect_block_reason(page)
+            
+            if block_reason == BlockReason.ENSKILD_PAGE:
                 # Wait for potential auto-redirect
                 await asyncio.sleep(random.uniform(2, 3))
                 
-                # If still on enskild, try clicking through
+                # Re-check if still on enskild
                 if "/enskild/" in page.url:
-                    # Try multiple selectors
-                    link = await page.query_selector(f'a[href*="/kungorelse/K"]')
+                    # Try clicking through to actual kungörelse
+                    link = await page.query_selector('a[href*="/kungorelse/K"]')
                     if not link:
                         link = await page.query_selector('a.btn-link[href*="/kungorelse"]')
+                    if not link:
+                        link = await page.query_selector('a[title="Visa kungörelse"]')
+                    
                     if link:
                         await link.click()
                         await asyncio.sleep(random.uniform(*wait_range))
+                    else:
+                        # No link found - might be cookie banner blocking
+                        inner_block = await detect_block_reason(page)
+                        if inner_block == BlockReason.COOKIE_BANNER:
+                            print(f"      🍪 Cookie-banner blockerar på enskild-sida")
+                            await handle_cookie_banner(page, wait_after=3)
+                            continue  # Retry finding link
+                        else:
+                            result["error"] = f"Enskild utan länk (block: {inner_block.value})"
+                            result["block_reason"] = "enskild_no_link"
+                            return result
             else:
                 break
         

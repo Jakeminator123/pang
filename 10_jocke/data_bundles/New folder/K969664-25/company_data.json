@@ -1,0 +1,110 @@
+{
+  "folder": "K969664-25",
+  "extracted_at": "2025-12-19T16:05:00.951628",
+  "company_name": "Moderax Förvaltning AB",
+  "orgnr": "559563-5565",
+  "verksamhet": "Bolaget skall idka handel med lös egendom och förvaltning av fast och lös egendom samt därmed förenlig varsamhet.",
+  "sate": "Lomma",
+  "address": "Järngatan 9, 234 35 LOMMA,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-03",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Rasmus Sven Jakob Köhler",
+      "role": "Styrelsesuppleant",
+      "personnr": "198809-XXXX"
+    },
+    {
+      "name": "Lars Robert Henrik Hornbeck",
+      "role": "Styrelsesuppleant",
+      "personnr": "197006-XXXX"
+    },
+    {
+      "name": "Madeleine Petra Hornbeck",
+      "role": "Styrelsesuppleant",
+      "personnr": "197110-XXXX"
+    },
+    {
+      "name": "Olof Karl Jakob Jakobsson",
+      "role": "Styrelsesuppleant",
+      "personnr": "195702-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "moderaxforvaltning.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "moderaxforvaltning.com",
+        "source": "generated"
+      },
+      {
+        "domain": "moderaxforvaltning.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "moderaxforvaltningab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Moderax Förvaltning AB",
+    "searches": [
+      {
+        "query": "Moderax Förvaltning AB hemsida website",
+        "summary": "Jag kunde inte hitta någon egen hemsida för *Moderax Förvaltning AB*. Följande information framkom:\n\n• Enligt Bolagsfakta har företaget organisationsnummer 559563‑5565 och är registrerat i Lomma. Verksamheten omfattar handel med lös egendom och förvaltning av fast och lös egendom ([bolagsfakta.se](https://www.bolagsfakta.se/5595635565-Moderax_Forvaltning_AB?utm_source=openai)).\n\n• Inga tydliga webbadresser eller en officiell webbplats kunde lokaliseras via sökningar på nätet.\n\nSammanfattningsvis",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635565-Moderax_Forvaltning_AB?utm_source=openai",
+            "title": "Moderax Förvaltning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Moderax Förvaltning AB Bolaget skall idka handel med lös egendom och förv kontakt",
+        "summary": "Här är en kort svar som uppfyller din förfrågan:\n\nModerax Förvaltning AB  \n- Organisationsnummer: 559563‑5565 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635565-Moderax_Forvaltning_AB?utm_source=openai))  \n- Registrerades den 17 december 2025 (bolaget bildat den 3 november 2025) ([bolagsfakta.se](https://www.bolagsfakta.se/5595635565-Moderax_Forvaltning_AB?utm_source=openai))  \n- Säte och adress: Järngatan 9, 234 35 Lomma (Skåne län) ([bolagsfakta.se](https://www.bolagsfakta.se/5595635565-M",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635565-Moderax_Forvaltning_AB?utm_source=openai",
+            "title": "Moderax Förvaltning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Moderax Förvaltning AB\" site:se",
+        "summary": "Här är en kort sammanställning av vad som hittas om \"Moderax Förvaltning AB\" via svenska källor:\n\n- Moderax Förvaltning AB (org.nr 559563‑5565) är ett aktivt aktiebolag med säte i Lomma, Skåne län. Adressen är Järngatan 9, 234 35 Lomma. Bolaget bildades den 3 november 2025 och registrerades hos Bolagsverket den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635565-Moderax_Forvaltning_AB?utm_source=openai)).\n- VD och styrelseordförande är Rasmus Köhler (37). Övriga i styrelsen ",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635565-Moderax_Forvaltning_AB?utm_source=openai",
+            "title": "Moderax Förvaltning AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "moderaxforvaltning.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "moderaxforvaltning.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:17:23.508721"
+  }
+}

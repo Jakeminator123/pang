@@ -1,0 +1,66 @@
+# =============================================================================
+# CONFIG FÖR 3_SAJT - Site Generation & Audit
+# =============================================================================
+# Denna fil styr inställningar för:
+# - evaluate_companies.py (bedömning av företag)
+# - interactive_batch.py (site generation)
+# - standalone_audit.py (webbplats-audit)
+# - Anropas även från main.py för automatiserad körning
+# =============================================================================
+
+[SITE]
+# Site generation - skapar preview-hemsidor för potentiella kunder
+# ---------------------------------------------------------------
+# site_enabled: y/n - Ska preview-sajter genereras?
+site_enabled = y
+
+# site_threshold: 0.0-1.0 - Minsta evaluation-confidence för att generera sajt
+#   Exempel: 0.80 = endast företag med 80%+ confidence får sajt
+site_threshold = 0.80
+
+# site_max_antal: Max antal sajter per körning (0 = obegränsat)
+site_max_antal = 30
+
+[AUDIT]
+# Audit - analyserar företagets BEFINTLIGA hemsida och ger betyg
+# ---------------------------------------------------------------
+# audit_enabled: y/n - Ska audit köras på företag som har hemsida?
+audit_enabled = y
+
+# audit_threshold: 0.0-1.0 - Minsta domän-confidence för att köra audit
+#   Kräver att company_data.json har domain.confidence >= detta värde
+#   Exempel: 0.60 = endast företag med 60%+ säkerhet på domän auditeras
+audit_threshold = 0.60
+
+# audit_max_antal: Max antal audits per körning (0 = obegränsat)
+audit_max_antal = 10
+
+# audit_depth: LOW/MEDIUM/HIGH - Analysdjup (påverkar kostnad och tid)
+#   LOW = snabb analys, lägre kostnad
+#   MEDIUM = balanserad analys
+#   HIGH = djupgående analys, högre kostnad
+audit_depth = LOW
+
+[MAIL]
+# Mail-generering - skapar personliga utskick
+# ---------------------------------------------------------------
+# mail_enabled: y/n - Ska mail genereras?
+mail_enabled = y
+
+# mail_max_companies: Max antal mail per körning
+mail_max_companies = 10
+
+# mail_min_probability: 0.0-1.0 - Minsta sannolikhet för att skapa mail
+mail_min_probability = 0.40
+
+[EVALUATE]
+# Evaluation - bedömer om företag är lämpliga kunder
+# ---------------------------------------------------------------
+# evaluate_enabled: y/n - Ska filtrering på evaluation göras?
+#   Om y: endast företag med should_get_site=True och confidence >= threshold visas
+#   Om n: alla företag visas/bearbetas
+evaluate_enabled = y
+
+# evaluate_threshold: 0.0-1.0 - Minsta confidence för "värda" företag
+evaluate_threshold = 0.50
+

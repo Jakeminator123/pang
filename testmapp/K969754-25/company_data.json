@@ -1,0 +1,95 @@
+{
+  "folder": "K969754-25",
+  "extracted_at": "2025-12-19T16:05:00.980038",
+  "company_name": "Leftovers AB",
+  "orgnr": "559563-5581",
+  "verksamhet": "Bolagets verksamhet består i att äga och förvalta aktier och värdepapper samt därmed förenlig verksamhet.",
+  "sate": "Lerum",
+  "address": "Hither AB, Spinnerivägen 1 Fack 5031, 448 50 TOLLERED,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-14",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "John Niklas Johansson",
+      "role": "Styrelsesuppleant",
+      "personnr": "198202-XXXX"
+    },
+    {
+      "name": "Gustav Roland Önneslöv",
+      "role": "Styrelsesuppleant",
+      "personnr": "198108-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "leftovers.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "leftovers.com",
+        "source": "generated"
+      },
+      {
+        "domain": "leftovers.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "leftoversab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Leftovers AB",
+    "searches": [
+      {
+        "query": "Leftovers AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon tydlig webbsida (hemsida) för ett företag som heter “Leftovers AB” i Sverige. Det verkar inte finnas någon officiell webbplats eller närvaro under det namnet som är lättillgänglig via allmänna sökningar.",
+        "sources": []
+      },
+      {
+        "query": "Leftovers AB Bolagets verksamhet består i att äga och förvalta  kontakt",
+        "summary": "Här är en kort och tydlig beskrivning enligt din begäran:\n\nLeftovers AB:s verksamhetsbeskrivning (anmäld till Bolagsverket) lyder:\n\n\"Bolagets verksamhet består i att äga och förvalta aktier och värdepapper samt därmed förenlig verksamhet.\" ([bolagsfakta.se](https://www.bolagsfakta.se/5595635581-Leftovers_AB?utm_source=openai))\n\nOm du vill komma i kontakt med bolaget går det att göra via deras adress i Tollered (Lerum kommun): c/o Hither AB, Spinnerivägen 1 Fack 5031, 448 50 Tollered. ([bolagsfak",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635581-Leftovers_AB?utm_source=openai",
+            "title": "Leftovers AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Leftovers AB\" site:se",
+        "summary": "Här är en kort sammanställning om “Leftovers AB” i Sverige utifrån sökresultaten:\n\n- Det finns inget företag registrerat exakt som \"Leftovers AB\" i Sverige. Det närmaste matchar är \"No Leftovers AB\", ett aktiebolag inom restaurangbranschen i Jönköping. Verksamheten är aktiv sedan 2018, har 6 anställda (2024), och omsatte cirka 7,78 miljoner kronor med en vinstmarginal på omkring 20,2 % ([hitta.se](https://www.hitta.se/no%2Bleftovers%2Bab/j%C3%B6nk%C3%B6ping/jcgbyzjk?utm_source=openai)).\n\nOm du s",
+        "sources": [
+          {
+            "url": "https://www.hitta.se/no%2Bleftovers%2Bab/j%C3%B6nk%C3%B6ping/jcgbyzjk?utm_source=openai",
+            "title": "No Leftovers AB - Företag på Tellusgatan 2A i Jönköping"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "leftovers.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "leftovers.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:23:22.109451"
+  }
+}

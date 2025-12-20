@@ -1,0 +1,102 @@
+{
+  "folder": "K969683-25",
+  "extracted_at": "2025-12-19T16:05:00.958516",
+  "company_name": "Jonas Håkanson AB",
+  "orgnr": "559563-4162",
+  "verksamhet": "Odling och försäljning av lantbruksprodukter Utföra körslor inom lantbruk",
+  "sate": "Höör",
+  "address": "Snogeröd Klinta Gård, 655, 243 95 HÖÖR,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-02",
+  "emails": [
+    "klintagard@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Bengt Erik Jonas Håkanson",
+      "role": "Styrelsesuppleant",
+      "personnr": "196304-XXXX"
+    },
+    {
+      "name": "Märta Catarina Håkanson",
+      "role": "Styrelsesuppleant",
+      "personnr": "196407-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "jonashakanson.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "jonashakanson.com",
+        "source": "generated"
+      },
+      {
+        "domain": "jonashakanson.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "jonashakansonab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Jonas Håkanson AB",
+    "searches": [
+      {
+        "query": "Jonas Håkanson AB hemsida website",
+        "summary": "Här är den tillgängliga informationen om företaget Jonas Håkanson AB:\n\n• Företaget har organisationsnummer 559563‑4162 och är registrerat med säte i Höör, Skåne län, på adressen Snogeröd Klinta Gård 655, 243 95 Höör ([bolagsfakta.se](https://www.bolagsfakta.se/5595634162-Jonas_Hakanson_AB?utm_source=openai)).  \n• Jonas Håkanson är styrelseledamot och Catarina Håkanson är styrelsesuppleant ([bolagsfakta.se](https://www.bolagsfakta.se/5595634162-Jonas_Hakanson_AB?utm_source=openai)).  \n• Bolaget b",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634162-Jonas_Hakanson_AB?utm_source=openai",
+            "title": "Jonas Håkanson AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Jonas Håkanson AB Odling och försäljning av lantbruksprodukter Utför kontakt",
+        "summary": "Här är kort information om Jonas Håkanson AB:\n\n- Jonas Håkanson AB har organisationsnummer 559563‑4162 och är ett aktiebolag med säte i Höör, Skåne län. Företaget är registrerat den 17 december 2025 och har verksamheten beskrivits som odling och försäljning av lantbruksprodukter samt utförande av körslor inom lantbruk.([bolagsfakta.se](https://www.bolagsfakta.se/5595634162-Jonas_Hakanson_AB?utm_source=openai))  \n- Bolagets adress är Snogeröd Klinta Gård 655, 243 95 Höör.([bolagsfakta.se](https:/",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634162-Jonas_Hakanson_AB?utm_source=openai",
+            "title": "Jonas Håkanson AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Jonas Håkanson AB\" site:se",
+        "summary": "Här är kortfattad information om företaget \"Jonas Håkanson AB\", med svenska webbkällor:\n\n• Namn: Jonas Håkanson AB, med organisationsnummer 559563‑4162. Företagsformen är aktiebolag och status är aktivt. Säte i Höör, Skåne län. Adress: Snogeröd Klinta Gård 655, 243 95 Höör. Verksamhetsbeskrivning: odling och försäljning av lantbruksprodukter samt körslor inom lantbruk. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634162-Jonas_Hakanson_AB?utm_source=openai))  \n• Verksamheten ingår inte i någo",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634162-Jonas_Hakanson_AB?utm_source=openai",
+            "title": "Jonas Håkanson AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "jonashakanson.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "jonashakanson.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:18:30.318058"
+  }
+}

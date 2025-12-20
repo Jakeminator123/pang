@@ -1,0 +1,125 @@
+{
+  "folder": "K968866-25",
+  "extracted_at": "2025-12-19T16:05:00.896240",
+  "company_name": "Douglas Neuendorf AB",
+  "orgnr": "559563-7439",
+  "verksamhet": "Aktiebolaget ska bedriva rekond av fordon, konsultverksamhet (bli anlitad av olika företag som ventilationstekniker, snickare, lastmaskinförare).",
+  "sate": "Kramfors",
+  "address": "Matildasvägen 9, 872 43 KRAMFORS,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-06",
+  "emails": [
+    "douglas.neuendorf@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Björn Thomas Neuendorf",
+      "role": "Styrelsesuppleant",
+      "personnr": "197208-XXXX"
+    },
+    {
+      "name": "Veronica Neuendorf",
+      "role": "Styrelsesuppleant",
+      "personnr": "197504-XXXX"
+    },
+    {
+      "name": "Douglas Neuendorf",
+      "role": "Styrelsesuppleant",
+      "personnr": "200305-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "neuendorf.co",
+    "confidence": 0.5,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "douglasneuendorf.com",
+        "source": "generated"
+      },
+      {
+        "domain": "douglasneuendorf.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "douglasneuendorfab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Douglas Neuendorf AB",
+    "searches": [
+      {
+        "query": "Douglas Neuendorf AB hemsida website",
+        "summary": "Här är den officiella webbplatsen för Douglas Neuendorf AB:\n\n- **Neuendorf** (modern konsthandel och rådgivning baserad i New York, med ursprung från Hamburg) har en hemsida på domänen *neuendorf.co*. Detta företag grundades 1964 och har utvecklats från ett galleri till en ledande privat handlare och rådgivare inom modern konst. De driver även en residency i Mallorca sedan 2022. ([neuendorf.co](https://neuendorf.co/about/?utm_source=openai))\n\nJag hittade dock ingen specifik information om ett fö",
+        "sources": [
+          {
+            "url": "https://neuendorf.co/about/?utm_source=openai",
+            "title": "About | NEUENDORF"
+          }
+        ]
+      },
+      {
+        "query": "Douglas Neuendorf AB Aktiebolaget ska bedriva rekond av fordon, konsult kontakt",
+        "summary": "Här är en kort sammanfattning med tillgänglig information om Douglas Neuendorf AB:\n\n- Douglas Neuendorf AB är registrerat med organisationsnummer 559563‑7439. Företaget har sitt säte i Kramfors, Västernorrlands län, på adressen Matildasvägen 9, 872 43 Kramfors. Det registrerades första gången den 6 november 2025 och registrerades hos Bolagsverket den 17 december 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595637439-Douglas_Neuendorf_AB?utm_source=openai))\n\n- Enligt verksamhetsbeskrivning",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595637439-Douglas_Neuendorf_AB?utm_source=openai",
+            "title": "Douglas Neuendorf AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Douglas Neuendorf AB\" site:se",
+        "summary": "Här är kort information om Douglas Neuendorf AB (företag i Sverige, domän .se):\n\n- Douglas Neuendorf AB är ett aktivt aktiebolag med organisationsnummer 559563‑7439. Företaget har sitt säte i Kramfors, Västernorrlands län, och adressen är Matildasvägen 9, 872 43 Kramfors. Det bildades den 6 november 2025 och registrerades hos Bolagsverket den 17 december 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595637439-Douglas_Neuendorf_AB?utm_source=openai))\n\n- Extern VD är Douglas Neuendorf. Styre",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595637439-Douglas_Neuendorf_AB?utm_source=openai",
+            "title": "Douglas Neuendorf AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "neuendorf.co",
+        "confidence": 0.5
+      },
+      {
+        "domain": "douglasneuendorf.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "neuendorf.co",
+        "url": "https://neuendorf.co/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.5,
+        "title": "NEUENDORF",
+        "description": "NEUENDORF is a private art dealership and consultancy specializing in the sale of Modern, Post-War and Contemporary Art.",
+        "text_sample": "NEUENDORF NEUENDORF Skip to main content Cart 0 items $ Checkout Item added to cart View cart & checkout Continue shopping Menu Home Manage cookies Copyright © 2025 Neuendorf LLC Site by Artlogic Instagram , opens in a new tab. Send an email This website uses cookies This site uses cookies to help make it more useful to you. Please contact us to find out more about our Cookie Policy. Manage cookies Accept Cookie preferences Check the boxes for the cookie categories you allow our site to use Cook",
+        "ai_verified": false,
+        "ai_confidence": 1.0,
+        "ai_reason": "The website neuendorf.co is related to an art dealership and consultancy, which does not match the business activities of Douglas Neuendorf AB, which is involved in vehicle reconditioning and technical consultancy. Additionally, the website is associated with Neuendorf LLC, not Douglas Neuendorf AB, and there is no indication of a connection to Kramfors."
+      },
+      {
+        "domain": "douglasneuendorf.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:05:22.158109"
+  }
+}

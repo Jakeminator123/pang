@@ -1,0 +1,98 @@
+{
+  "folder": "K969036-25",
+  "extracted_at": "2025-12-19T16:05:00.900315",
+  "company_name": "Lakh Global Schakt & Transport AB",
+  "orgnr": "559563-4683",
+  "verksamhet": "Bolaget ska bedriva schakt o transport, flytt o sanering. Import o export av kaffe, kakao o nötter. Export av lastbilar o lantbruksmaskiner.",
+  "sate": "Mölndal",
+  "address": "c/o Kodjo Lakh, Våmmedalsvägen 12, 428 31 KÅLLERED,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-09-25",
+  "emails": [
+    "lakh.schakt@outlook.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Kodjo Lakh",
+      "role": "Styrelsesuppleant",
+      "personnr": "196810-XXXX"
+    },
+    {
+      "name": "Acila Florence Morka",
+      "role": "Styrelsesuppleant",
+      "personnr": "197708-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "lakhglobalschakttransport.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "lakhglobalschakttransport.com",
+        "source": "generated"
+      },
+      {
+        "domain": "lakhglobalschakttransport.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Lakh Global Schakt & Transport AB",
+    "searches": [
+      {
+        "query": "Lakh Global Schakt & Transport AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell hemsida för \"Lakh Global Schakt & Transport AB\". Däremot finns företagsinformation på Bolagsfakta, där några grundläggande detaljer framgår:\n\n- Bolaget har organisationsnummer 559563‑4683, med säte i Mölndal (adress: Våmmedalsvägen 12, 428 31 Kållered) ([bolagsfakta.se](https://www.bolagsfakta.se/5595634683-Lakh_Global_Schakt_%26_Transport_AB?utm_source=openai)).  \n- Företagets verksamhet registrerats i september 2025 och registrerades formellt hos Bol",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634683-Lakh_Global_Schakt_%26_Transport_AB?utm_source=openai",
+            "title": "Lakh Global Schakt & Transport AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "Lakh Global Schakt & Transport AB Bolaget ska bedriva schakt o transport, flytt o sa kontakt",
+        "summary": "Här är kort information om Lakh Global Schakt & Transport AB:\n\n• Organisationsnummer: 559563‑4683. Bolaget är aktivt och har sitt säte i Mölndal, Västra Götalands län. Adress: Våmmedalsvägen 12, 428 31 Kållered. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634683-Lakh_Global_Schakt_%26_Transport_AB?utm_source=openai))  \n• Verksamhetsbeskrivning: Bolaget ska bedriva schakt och transport, flytt och sanering samt import och export av kaffe, kakao och nötter, samt export av lastbilar och lantbru",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634683-Lakh_Global_Schakt_%26_Transport_AB?utm_source=openai",
+            "title": "Lakh Global Schakt & Transport AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"Lakh Global Schakt & Transport AB\" site:se",
+        "summary": "Här är en kort sammanställning av information om \"Lakh Global Schakt & Transport AB\" (Sverige, site: .se):\n\n• Företaget Lakh Global Schakt & Transport AB har organisationsnummer 559563‑4683 och är registrerat i Mölndal, Västra Götalands län. Adressen är Våmmedalsvägen 12, 428 31 Kållered ([bolagsfakta.se](https://www.bolagsfakta.se/5595634683-Lakh_Global_Schakt_%26_Transport_AB?utm_source=openai)).  \n• Företaget bildades den 25 september 2025 och registrerades officiellt den 17 december 2025. Bå",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634683-Lakh_Global_Schakt_%26_Transport_AB?utm_source=openai",
+            "title": "Lakh Global Schakt & Transport AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "lakhglobalschakttransport.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "lakhglobalschakttransport.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:06:12.953501"
+  }
+}

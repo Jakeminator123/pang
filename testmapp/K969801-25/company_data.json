@@ -1,0 +1,102 @@
+{
+  "folder": "K969801-25",
+  "extracted_at": "2025-12-19T16:05:00.997754",
+  "company_name": "N. Kuoljok AB",
+  "orgnr": "559563-6464",
+  "verksamhet": "Aktiebolaget ska äga och förvalta fast och lös egendom samt idka därmed förenlig verksamhet.",
+  "sate": "Jokkmokk",
+  "address": "Kvarnbogatan 16, 962 32 JOKKMOKK,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-28",
+  "emails": [
+    "nils_kuoljok@hotmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Nils Karl Kuoljok",
+      "role": "Styrelsesuppleant",
+      "personnr": "198706-XXXX"
+    },
+    {
+      "name": "Sara Emma Angelica Sandberg Aira",
+      "role": "Styrelsesuppleant",
+      "personnr": "199003-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "nkuoljok.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "nkuoljok.com",
+        "source": "generated"
+      },
+      {
+        "domain": "nkuoljok.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "nkuoljokab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "N. Kuoljok AB",
+    "searches": [
+      {
+        "query": "N. Kuoljok AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon aktiv webbplats (hemsida) för företaget \"N. Kuoljok AB\". Enligt företagsdatabasen Bolagsfakta finns ingen URL angiven i företagets profil. Så vitt framgår har de ingen offentlig hemsida registerad ([bolagsfakta.se](https://www.bolagsfakta.se/5595636464-N._Kuoljok_AB?utm_source=openai)).\n\nSammanfattning:\n- Ingen webbplats hittades för N. Kuoljok AB.\n- Informationen från Bolagsfakta (som är uppdaterad senast idag) saknar uppgift om någon hemsida ([bolagsfakta.se](",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636464-N._Kuoljok_AB?utm_source=openai",
+            "title": "N. Kuoljok AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "N. Kuoljok AB Aktiebolaget ska äga och förvalta fast och lös ege kontakt",
+        "summary": "Här är en kortfattad och tydlig svar samt kontaktuppgifter till företaget som du efterfrågar:\n\n• Företagsnamn: N. Kuoljok AB  \n• Org.nr: 559563‑6464  \n• Säte: Jokkmokk, Norrbottens län  \n• Firman är registrerad den 17 december 2025 (bolagsordning upprättad 28 november 2025) ([bolagsfakta.se](https://www.bolagsfakta.se/5595636464-N._Kuoljok_AB?utm_source=openai)).  \n• Verksamhet: Aktiebolaget ska äga och förvalta fast och lös egendom samt idka därmed förenlig verksamhet ([bolagsfakta.se](https://",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636464-N._Kuoljok_AB?utm_source=openai",
+            "title": "N. Kuoljok AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"N. Kuoljok AB\" site:se",
+        "summary": "Här är en kort sammanfattning av företaget \"N. Kuoljok AB\" baserat på uppgifter från svenska källor:\n\n- N. Kuoljok AB har organisationsnummer 559563‑6464 och är ett aktivt aktiebolag med säte i Jokkmokk, Norrbottens län. ([bolagsfakta.se](https://www.bolagsfakta.se/5595636464-N._Kuoljok_AB?utm_source=openai))  \n- Företaget har sin adress på Kvarnbogatan 16, 962 32 Jokkmokk. ([bolagsfakta.se](https://www.bolagsfakta.se/5595636464-N._Kuoljok_AB?utm_source=openai))  \n- Styrelseledamot är Nils Kuolj",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636464-N._Kuoljok_AB?utm_source=openai",
+            "title": "N. Kuoljok AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "nkuoljok.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "nkuoljok.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:27:00.794096"
+  }
+}

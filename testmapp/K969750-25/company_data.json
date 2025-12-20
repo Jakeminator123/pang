@@ -1,0 +1,145 @@
+{
+  "folder": "K969750-25",
+  "extracted_at": "2025-12-19T16:05:00.975274",
+  "company_name": "ALFA Skogsservice Hammarstrand AB",
+  "orgnr": "559563-5631",
+  "verksamhet": "Bolaget bedriver skogliga tjänster såsom röjning, plantering, konsultation, avverkning, planering, trädfällning, samt övrig med dessa verksamheter förenlig verksamhet.",
+  "sate": "Ragunda",
+  "address": "Kärrviolsvägen 3, 554 75 JÖNKÖPING,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-04",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Ivo Krsek",
+      "role": "Styrelsesuppleant",
+      "personnr": "198209-XXXX"
+    },
+    {
+      "name": "Armin Draganovic",
+      "role": "Styrelsesuppleant",
+      "personnr": "198610-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "alfaskogsservice.se",
+    "confidence": 0.67,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "alfaskogsservicehammarstrand.com",
+        "source": "generated"
+      },
+      {
+        "domain": "alfaskogsservicehammarstrand.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "ALFA Skogsservice Hammarstrand AB",
+    "searches": [
+      {
+        "query": "ALFA Skogsservice Hammarstrand AB hemsida website",
+        "summary": "Här är den officiella webbplatsen för ALFA Skogsservice Hammarstrand AB:\n\nWebbplats: www.alfaskogsservice.se ([largestcompanies.com](https://www.largestcompanies.com/company/Alfa-Skogsservice-AB-500208?utm_source=openai))\n\nALFA Skogsservice AB som grundades 2011 i Hammarstrand, har under årens lopp vuxit till att bli en rikstäckande aktör inom skogsvård i Sverige ([alfaskogsservice.se](https://www.alfaskogsservice.se/om-oss/?utm_source=openai)).\n\nKort sagt:\n- Webbplats: www.alfaskogsservice.se (",
+        "sources": [
+          {
+            "url": "https://www.largestcompanies.com/company/Alfa-Skogsservice-AB-500208?utm_source=openai",
+            "title": "Alfa Skogsservice AB - Detailed information - Largestcompanies"
+          },
+          {
+            "url": "https://www.alfaskogsservice.se/om-oss/?utm_source=openai",
+            "title": "Om oss – Alfa Skogsservice"
+          }
+        ]
+      },
+      {
+        "query": "ALFA Skogsservice Hammarstrand AB Bolaget bedriver skogliga tjänster såsom röjning,  kontakt",
+        "summary": "Här är en kortfattad presentation av ALFA Skogsservice Hammarstrand AB och deras tjänster, inklusive kontaktinformation:\n\n- ALFA Skogsservice AB bedriver skogliga tjänster såsom skogsröjning, trädfällning, underhållsröjning längs kraftledningar, plantering med mera över hela Sverige ([alfaskogsservice.se](https://www.alfaskogsservice.se/?utm_source=openai)).\n- Kontor i Hammarstrand finns på adress Kullstavägen 12, 844 32 Hammarstrand ([alfaskogsservice.se](https://www.alfaskogsservice.se/kontakt",
+        "sources": [
+          {
+            "url": "https://www.alfaskogsservice.se/?utm_source=openai",
+            "title": "Alfa Skogsservice – Ett modernt, nytänkande och rikstäckande företag"
+          },
+          {
+            "url": "https://www.alfaskogsservice.se/kontakt/?utm_source=openai",
+            "title": "Kontakt – Alfa Skogsservice"
+          }
+        ]
+      },
+      {
+        "query": "\"ALFA Skogsservice Hammarstrand AB\" site:se",
+        "summary": "Här är en kort sammanfattning av **ALFA Skogsservice Hammarstrand AB**, med källhänvisningar:\n\n- **Adress & plats**: Verksamheten i Hammarstrand finns på *Kullstavägen 12, 844 32 Hammarstrand* ([alfaskogsservice.se](https://www.alfaskogsservice.se/kontakt/?utm_source=openai)).\n\n- **Företagsform & historik**: Företaget, ett aktiebolag (org.nr. 556838‑9133), startades 2011 i Hammarstrand och ingår i Alfa Skogsservice, ett av Sveriges största skogsvårdsföretag ([hitta.se](https://www.hitta.se/alfa%",
+        "sources": [
+          {
+            "url": "https://www.alfaskogsservice.se/kontakt/?utm_source=openai",
+            "title": "Kontakt – Alfa Skogsservice"
+          },
+          {
+            "url": "https://www.hitta.se/alfa%2Bskogsservice%2Bab%2Bhammarstrand/hammarstrand/aobbxdhc?utm_source=openai",
+            "title": "Alfa Skogsservice AB - Hammarstrand - Kullstavägen 12"
+          },
+          {
+            "url": "https://www.alfaskogsservice.se/?utm_source=openai",
+            "title": "Alfa Skogsservice – Ett modernt, nytänkande och rikstäckande företag"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "alfaskogsservice.se",
+        "confidence": 0.85
+      },
+      {
+        "domain": "largestcompanies.com",
+        "confidence": 0.5
+      },
+      {
+        "domain": "alfaskogsservicehammarstrand.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "alfaskogsservice.se",
+        "url": "https://www.alfaskogsservice.se/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.67,
+        "title": "Alfa Skogsservice – Ett modernt, nytänkande och rikstäckande företag",
+        "description": "",
+        "text_sample": "Alfa Skogsservice – Ett modernt, nytänkande och rikstäckande företag Hoppa till innehåll Ett modernt, nytänkande och rikstäckande företag Detta erbjuder vi Alfa skogsservice Utveckling är den enda vägen framåt Vi är ALFA Skogsservice – en av Sveriges största aktörer inom skogsvård. Med fokus på kvalitet, hållbarhet och smarta lösningar erbjuder vi skogliga tjänster över hela landet. Vi växer tillsammans med våra kunder, bygger långsiktiga relationer och tar ansvar – både för människor och miljö.",
+        "ai_verified": false,
+        "ai_confidence": 0.7,
+        "ai_reason": "Hemsidan alfaskogsservice.se beskriver ett företag som verkar rikstäckande och fokuserar på skogliga tjänster, vilket stämmer överens med verksamheten för ALFA Skogsservice Hammarstrand AB. Dock finns det ingen specifik information på hemsidan som direkt kopplar den till företaget i Ragunda med organisationsnummer 559563-5631. Utan ytterligare bevis, som exempelvis kontaktuppgifter eller företagsinformation som matchar exakt, kan vi inte med säkerhet verifiera att hemsidan tillhör det specifika företaget."
+      },
+      {
+        "domain": "largestcompanies.com",
+        "url": "https://largestcompanies.com/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Largestcompanies – The Largest Companies in the Nordic Countries",
+        "description": "",
+        "text_sample": "Largestcompanies – The Largest Companies in the Nordic Countries Login Search Search for companies here! Largestcompanies is the fastest way to understand your customers, monitor your competitors and develop your business. Company/VAT no/Free text Country/City/Municipality Show industry overview Advanced search The best search and selection engine for companies in the Nordic countries Make your own selections with the sharpest company search in the Nordic countries. Segment on location, industry"
+      },
+      {
+        "domain": "alfaskogsservicehammarstrand.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:22:17.745437"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "folder": "K969497-25",
+  "extracted_at": "2025-12-19T16:05:00.916825",
+  "company_name": "Motorpro Performance i Syd AB",
+  "orgnr": "559563-5698",
+  "verksamhet": "Företager ska bedriva konsultverksamhet inom fordon och marin, där i förenlig verksamhet som reparationer, service, underhåll, transporter och försäljning.",
+  "sate": "Sölvesborg",
+  "address": "Dungevägen 6, 294 37 SÖLVESBORG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-08",
+  "emails": [
+    "pidde_schultz@hotmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Jan Emil Fredrik Schultz",
+      "role": "Styrelsesuppleant",
+      "personnr": "198206-XXXX"
+    },
+    {
+      "name": "Malin Josefine Schultz",
+      "role": "Styrelsesuppleant",
+      "personnr": "198509-XXXX"
+    },
+    {
+      "name": "Robin Andreas Svensson",
+      "role": "Styrelsesuppleant",
+      "personnr": "198802-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "motorproperformanceisyd.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "motorproperformanceisyd.com",
+        "source": "generated"
+      },
+      {
+        "domain": "motorproperformanceisyd.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Motorpro Performance i Syd AB",
+    "searches": [
+      {
+        "query": "Motorpro Performance i Syd AB hemsida website",
+        "summary": "Jag har inte kunnat hitta någon offentlig hemsida för Motorpro Performance i Syd AB. Enligt Bolagsfakta finns bolaget registrerat med adress Dungevägen 6, 294 37 Sölvesborg, men det anges inga uppgifter om någon webbplats ([bolagsfakta.se](https://www.bolagsfakta.se/5595635698-Motorpro_Performance_i_Syd_AB?utm_source=openai)).\n\nSammanfattning:\n- Motorpro Performance i Syd AB är registrerat i Sölvesborg (Dungevägen 6) ([bolagsfakta.se](https://www.bolagsfakta.se/5595635698-Motorpro_Performance_i_",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635698-Motorpro_Performance_i_Syd_AB?utm_source=openai",
+            "title": "Motorpro Performance i Syd AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "Motorpro Performance i Syd AB Företager ska bedriva konsultverksamhet inom fordo kontakt",
+        "summary": "Här är en kort sammanfattning om Motorpro Performance i Syd AB:\n\n• Motorpro Performance i Syd AB är ett registrerat aktiebolag med organisationsnummer 559563‑5698. Företaget har säte i Sölvesborg, Blekinge län, och adress Dungevägen 6, 294 37 Sölvesborg ([bolagsfakta.se](https://www.bolagsfakta.se/5595635698-Motorpro_Performance_i_Syd_AB?utm_source=openai)).\n\n• Bolaget registrerades med verksamhetsbeskrivningen: \"Företaget ska bedriva konsultverksamhet inom fordon och marin, där i förenlig verks",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635698-Motorpro_Performance_i_Syd_AB?utm_source=openai",
+            "title": "Motorpro Performance i Syd AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"Motorpro Performance i Syd AB\" site:se",
+        "summary": "Här är en kort sammanfattning av företaget Motorpro Performance i Syd AB (Sverige).\n\n- Motorpro Performance i Syd AB är ett aktivt aktiebolag med organisationsnummer 559563‑5698. Företaget är registrerat i Sölvesborg, Blekinge län, med adress Dungevägen 6, 294 37 Sölvesborg ([bolagsfakta.se](https://www.bolagsfakta.se/5595635698-Motorpro_Performance_i_Syd_AB?utm_source=openai)).\n\n- Företaget bildades den 8 november 2025 och registrerades officiellt den 17 december 2025. Samma dag registrerades ä",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635698-Motorpro_Performance_i_Syd_AB?utm_source=openai",
+            "title": "Motorpro Performance i Syd AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "motorproperformanceisyd.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "motorproperformanceisyd.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:09:54.720508"
+  }
+}

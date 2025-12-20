@@ -1,0 +1,111 @@
+{
+  "folder": "K968957-25",
+  "extracted_at": "2025-12-19T16:05:00.898654",
+  "company_name": "LarsLG AB",
+  "orgnr": "559563-4709",
+  "verksamhet": "Bedriva konsultverksamhet och rådgivning till i första hand bostadsbolag /fastighetsbolag, handel med värdepapper samt köp /försäljning av fast och lös egendom.",
+  "sate": "Göteborg",
+  "address": "Kruniusvägen 8, 427 36 BILLDAL,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-13",
+  "emails": [
+    "lgander60@me.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Lars Göran Mikael Andersson",
+      "role": "Styrelsesuppleant",
+      "personnr": "196003-XXXX"
+    },
+    {
+      "name": "Eva Elisabet Paulson",
+      "role": "Styrelsesuppleant",
+      "personnr": "196804-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "larslg.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "larslg.com",
+        "source": "generated"
+      },
+      {
+        "domain": "larslg.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "larslgab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "LarsLG AB",
+    "searches": [
+      {
+        "query": "LarsLG AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta något företag eller organisation vid namn **LarsLG AB** och inget som tydligt matchar \"LarsLG AB hemsida\" eller \"website\". Det finns inga träffar på en officiell webbplats eller information om sådant bolag i offentligt tillgängliga register.([larsingels.se](https://www.larsingels.se/?utm_source=openai))\n\nOm du har mer information — till exempel ort, verksamhetsområde, organisationsnummer eller eventuella dokument — kan jag hjälpa dig att söka mer effektivt.",
+        "sources": [
+          {
+            "url": "https://www.larsingels.se/?utm_source=openai",
+            "title": "Lars Ingels Reklam och Foto i Leksand"
+          }
+        ]
+      },
+      {
+        "query": "LarsLG AB Bedriva konsultverksamhet och rådgivning till i fö kontakt",
+        "summary": "Här är en kortfattad beskrivning av **LarsLG AB**:\n\n- LarsLG AB (org.nr 559563‑4709) är ett aktivt aktiebolag med säte i Göteborg, närmare bestämt Kruniusvägen 8, 427 36 Billdal ([bolagsfakta.se](https://www.bolagsfakta.se/5595634709-LarsLG_AB?utm_source=openai)).\n- Enligt registrerad verksamhetsbeskrivning ska bolaget \"bedriva konsultverksamhet och rådgivning till i första hand bostadsbolag, fastighetsbolag, handel med värdepapper samt köp–försäljning av fast och lös egendom\" ([bolagsfakta.se](",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634709-LarsLG_AB?utm_source=openai",
+            "title": "LarsLG AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"LarsLG AB\" site:se",
+        "summary": "Här är kort information om LarsLG AB enligt svenska källor:\n\n- LarsLG AB är ett aktivt aktiebolag med organisationsnummer 559563‑4709. Bolaget har sitt säte i Göteborg, Västra Götalands län, med adress Kruniusvägen 8, 427 36 Billdal ([bolagsfakta.se](https://www.bolagsfakta.se/5595634709-LarsLG_AB?utm_source=openai)).\n- Bolaget registrerades den 17 december 2025, och firmanamnet inklusive bolagsordning fastställdes den 13 november 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634709-Lars",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634709-LarsLG_AB?utm_source=openai",
+            "title": "LarsLG AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "larsingels.se",
+        "confidence": 0.5
+      },
+      {
+        "domain": "larslg.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "larsingels.se",
+        "status": "error",
+        "http_code": 403
+      },
+      {
+        "domain": "larslg.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:06:00.711968"
+  }
+}

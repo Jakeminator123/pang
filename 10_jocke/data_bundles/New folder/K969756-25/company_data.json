@@ -1,0 +1,103 @@
+{
+  "folder": "K969756-25",
+  "extracted_at": "2025-12-19T16:05:00.982454",
+  "company_name": "Din Apa AB",
+  "orgnr": "559563-5656",
+  "verksamhet": "Företaget skall bedriva coaching, samtalsterapi. Företaget skall bedriva Bokförsäljning. Företaget skall bedriva föreläsningar inom mentalhälsa och friskvård.Företaget skall bedriva verksamhet in businessutveckling, ledarskapscoaching.",
+  "sate": "Stockholm",
+  "address": "Söderbergs väg 13, Söderbergs väg 13, 139 71 STAVSNÄS,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-27",
+  "emails": [
+    "jennyabrahamsson68@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Christer Åke Abrahamsson",
+      "role": "Styrelseledamot",
+      "personnr": "196709-XXXX"
+    },
+    {
+      "name": "Jenny Maria Abrahamsson",
+      "role": "Styrelsesuppleant",
+      "personnr": "196811-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "dinapa.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "dinapa.com",
+        "source": "generated"
+      },
+      {
+        "domain": "dinapa.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "dinapaab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Din Apa AB",
+    "searches": [
+      {
+        "query": "Din Apa AB hemsida website",
+        "summary": "Jag hittade ingen offentlig hemsida (webbplats) för \"Din Apa AB\". Följande information är tillgänglig från Bolagsfakta, men ingen länk till en officiell webbplats anges:\n\n- Företaget är registrerat med organisationsnummer 559563‑5656 och har sitt säte i Stockholm (Söderbergs väg 13, 139 71 Stavsnäs) ([bolagsfakta.se](https://www.bolagsfakta.se/5595635656-Din_Apa_AB?utm_source=openai)).  \n- Det finns ingen angiven kontakt via telefon eller e‑post, och ingen hemsida nämns ([bolagsfakta.se](https:/",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635656-Din_Apa_AB?utm_source=openai",
+            "title": "Din Apa AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Din Apa AB Företaget skall bedriva coaching, samtalsterapi. F kontakt",
+        "summary": "Här är en kort och tydlig svar:\n\nDin Apa AB är ett nyregistrerat aktiebolag (organisationnummer 559563‑5656) med säte i Stockholm, närmare bestämt på Söderbergs väg 13, 139 71 Stavsnäs ([bolagsfakta.se](https://www.bolagsfakta.se/5595635656-Din_Apa_AB?utm_source=openai)). Verksamhetsbeskrivningen omfattar coaching, samtalsterapi, bokförsäljning, föreläsningar inom mental hälsa och friskvård samt businessutveckling och ledarskapscoaching ([bolagsfakta.se](https://www.bolagsfakta.se/5595635656-Din",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635656-Din_Apa_AB?utm_source=openai",
+            "title": "Din Apa AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Din Apa AB\" site:se",
+        "summary": "Här är en kort sammanfattning av Din Apa AB i Sverige (baserat på information från bolagsfakta.se):\n\n- **Organisationsnummer**: 559563‑5656 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635656-Din_Apa_AB?utm_source=openai))  \n- **Status**: Aktiv aktiebolag ([bolagsfakta.se](https://www.bolagsfakta.se/5595635656-Din_Apa_AB?utm_source=openai))  \n- **Adress**: c/o Söderbergs väg 13, 139 71 Stavsnäs, kommun Stockholm, Stockholms län ([bolagsfakta.se](https://www.bolagsfakta.se/5595635656-Din_Apa_",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635656-Din_Apa_AB?utm_source=openai",
+            "title": "Din Apa AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "dinapa.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "dinapa.se",
+        "status": "error",
+        "http_code": 401
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:23:46.523908"
+  }
+}

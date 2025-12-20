@@ -1,0 +1,15 @@
+Till: stefan.lundgren@deaptech.com
+Ämne: Fråga om fastighetsförvaltning
+============================================================
+
+Hej Mats,
+
+Jag har noterat ert nya bolag, Fabrik 11 AB, och förstår att ni fokuserar på fastighetsförvaltning och värdepappershandel. Det verkar som om ni ännu inte har någon hemsida, och där kan vi på SajtStudio.se hjälpa till.
+
+Vi kan snabbt ta fram en kostnadsfri demo-sida så att ni kan få en känsla för hur er online-närvaro kan se ut. Vi använder AI för att effektivt skapa utkast, och vi bygger sidor med moderna verktyg som React och Next.js.
+
+Om ni är intresserade av att komma igång online, tveka inte att höra av er. Vi hjälper gärna till med design och utveckling för att möta era specifika behov.
+
+Mvh,  
+[Ditt namn]  
+SajtStudio.se

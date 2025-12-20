@@ -100,7 +100,28 @@ def load_max_kun_dag() -> int | None:
 
 
 def load_config() -> dict:
-    """Load configuration from config.txt and config_headless.txt."""
+    """
+    Load configuration from environment variables, config.txt and config_headless.txt.
+    
+    Priority: Environment variables > config.txt > defaults
+    
+    Environment variables:
+        SCRAPE_WAIT_MIN, SCRAPE_WAIT_MAX - Wait time per page (seconds)
+        SCRAPE_BETWEEN_MIN, SCRAPE_BETWEEN_MAX - Wait between pages (seconds)
+        SCRAPE_COOKIE_WAIT - Wait after cookie banner click (seconds)
+    """
+    import os
+    
+    # Try to load .env from project root
+    try:
+        from dotenv import load_dotenv
+        env_path = PROJECT_ROOT / ".env"
+        if env_path.exists():
+            load_dotenv(env_path)
+    except ImportError:
+        pass
+    
+    # Defaults
     config = {
         "parallel": 1,
         "visible": False,
@@ -108,11 +129,11 @@ def load_config() -> dict:
         "wait_max": 6,
         "between_min": 2,
         "between_max": 4,
-        "cookie_wait": 14,
+        "cookie_wait": 10,
         "max_kun_dag": None,  # From config_headless.txt
     }
     
-    # Load from config.txt
+    # Load from config.txt (lower priority)
     if CONFIG_FILE.exists():
         with open(CONFIG_FILE, "r", encoding="utf-8") as f:
             for line in f:
@@ -131,6 +152,23 @@ def load_config() -> dict:
                                 config[key] = int(value) if value else config[key]
                             except ValueError:
                                 pass
+    
+    # Override with environment variables (highest priority)
+    env_mapping = {
+        "SCRAPE_WAIT_MIN": "wait_min",
+        "SCRAPE_WAIT_MAX": "wait_max",
+        "SCRAPE_BETWEEN_MIN": "between_min",
+        "SCRAPE_BETWEEN_MAX": "between_max",
+        "SCRAPE_COOKIE_WAIT": "cookie_wait",
+    }
+    
+    for env_key, config_key in env_mapping.items():
+        env_val = os.environ.get(env_key, "")
+        if env_val:
+            try:
+                config[config_key] = int(env_val)
+            except ValueError:
+                pass
     
     # Load MAX_KUN_DAG from config_headless.txt
     config["max_kun_dag"] = load_max_kun_dag()

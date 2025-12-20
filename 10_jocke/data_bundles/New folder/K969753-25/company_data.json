@@ -1,0 +1,102 @@
+{
+  "folder": "K969753-25",
+  "extracted_at": "2025-12-19T16:05:00.978871",
+  "company_name": "Hallner HR AB",
+  "orgnr": "559563-5532",
+  "verksamhet": "Verksamheten består av konsulttjänster, rådgivning och stöd inom HR, ledarskap, organisationsutveckling, arbetsrätt och närliggande områden, äga och förvalta tillgångar samt därmed förenlig verksamhet.",
+  "sate": "Umeå",
+  "address": "c/o Elizabeth Hallner Eriksson, Solbackavägen 32, 913 32 HOLMSUND,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-07",
+  "emails": [
+    "hallnerhr@outlook.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Elizabeth Hallner Eriksson",
+      "role": "Styrelsesuppleant",
+      "personnr": "198605-XXXX"
+    },
+    {
+      "name": "Mats Robert Eriksson",
+      "role": "Styrelsesuppleant",
+      "personnr": "198110-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "hallnerhr.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "hallnerhr.com",
+        "source": "generated"
+      },
+      {
+        "domain": "hallnerhr.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "hallnerhrab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Hallner HR AB",
+    "searches": [
+      {
+        "query": "Hallner HR AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell hemsida för Hallner HR AB. Det verkar som att företaget ännu inte har någon egen webbplats registrerad eller synlig online. Däremot finns detaljerad företagsinformation via Bolagsfakta där bland annat adress, status och styrelse finns listad ([bolagsfakta.se](https://www.bolagsfakta.se/5595635532-Hallner_HR_AB?utm_source=openai)).\n\nSammanfattning:\n- Inget känt hemside-URL kunde hittas.\n- Företaget är registrerat sedan december 2025 och har sitt säte i ",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635532-Hallner_HR_AB?utm_source=openai",
+            "title": "Hallner HR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Hallner HR AB Verksamheten består av konsulttjänster, rådgivning kontakt",
+        "summary": "Här är en kort beskrivning av Hallner HR AB:\n\n• Hallner HR AB har organisationsnummer 559563‑5532 och är ett aktivt aktiebolag med säte i Umeå, Västerbottens län. Företaget registrerades den 17 december 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635532-Hallner_HR_AB?utm_source=openai))  \n• Verksamheten omfattar konsulttjänster, rådgivning och stöd inom HR, ledarskap, organisationsutveckling, arbetsrätt och närliggande områden, samt att äga och förvalta tillgångar och därmed förenlig ",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635532-Hallner_HR_AB?utm_source=openai",
+            "title": "Hallner HR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Hallner HR AB\" site:se",
+        "summary": "Här är en kort sammanfattning om Hallner HR AB, baserat på offentliga svenska källor:\n\n- Hallner HR AB är ett aktivt aktiebolag med organisationsnummer 559563‑5532, registrerat den 17 december 2025 och med säte i Umeå (Holmsund) ([bolagsfakta.se](https://www.bolagsfakta.se/5595635532-Hallner_HR_AB?utm_source=openai)).  \n- Bolaget har sin juridiska adress på Solbackavägen 32, 913 32 Holmsund ([bolagsfakta.se](https://www.bolagsfakta.se/5595635532-Hallner_HR_AB?utm_source=openai)).  \n- Styrelsen b",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635532-Hallner_HR_AB?utm_source=openai",
+            "title": "Hallner HR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "hallnerhr.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "hallnerhr.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:23:09.418625"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "folder": "K969755-25",
+  "extracted_at": "2025-12-19T16:05:00.981232",
+  "company_name": "Peter Wallgren Sollefteå AB",
+  "orgnr": "559563-5615",
+  "verksamhet": "Bolaget ska bedriva installationer och konsultationer inom el, larm, tele och data samt förvaltning av fastigheter och värdepapper.",
+  "sate": "Sollefteå",
+  "address": "Tjäll 233, 881 93 SOLLEFTEÅ,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-04",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Alf Peter Wallgren",
+      "role": "Styrelsesuppleant",
+      "personnr": "197403-XXXX"
+    },
+    {
+      "name": "Anna Viktoria Margareta Wallgren",
+      "role": "Styrelsesuppleant",
+      "personnr": "197511-XXXX"
+    },
+    {
+      "name": "Hanna Mari Hedin",
+      "role": "Styrelsesuppleant",
+      "personnr": "197109-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "peterwallgrensolleftea.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "peterwallgrensolleftea.com",
+        "source": "generated"
+      },
+      {
+        "domain": "peterwallgrensolleftea.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Peter Wallgren Sollefteå AB",
+    "searches": [
+      {
+        "query": "Peter Wallgren Sollefteå AB hemsida website",
+        "summary": "Jag har inte kunnat hitta någon officiell hemsida för företaget \"Peter Wallgren Sollefteå AB\". Följande uppgifter är vad jag kunnat bekräfta:\n\n- Företaget är registrerat med organisationsnummer 559563‑5615 och har säte i Sollefteå på adressen Tjäll 233, 881 93 Sollefteå ([bolagsfakta.se](https://www.bolagsfakta.se/5595635615-Peter_Wallgren_Solleftea_AB?utm_source=openai)).  \n- Bolaget bildades den 4 december 2025 och registrerades den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635615-Peter_Wallgren_Solleftea_AB?utm_source=openai",
+            "title": "Peter Wallgren Sollefteå AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "Peter Wallgren Sollefteå AB Bolaget ska bedriva installationer och konsultatio kontakt",
+        "summary": "Här är en kortfattad beskrivning och kontaktuppgifter för **Peter Wallgren Sollefteå AB**:\n\n- Organisationsnummer: 559563‑5615 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635615-Peter_Wallgren_Solleftea_AB?utm_source=openai))  \n- Säte och adress: Tjäll 233, 881 93 Sollefteå ([bolagsfakta.se](https://www.bolagsfakta.se/5595635615-Peter_Wallgren_Solleftea_AB?utm_source=openai))  \n- Bolaget ska bedriva installationer och konsultationer inom el, larm, tele och data samt förvaltning av fastighet",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635615-Peter_Wallgren_Solleftea_AB?utm_source=openai",
+            "title": "Peter Wallgren Sollefteå AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"Peter Wallgren Sollefteå AB\" site:se",
+        "summary": "Här är kort information om \"Peter Wallgren Sollefteå AB\" enligt uppgifter från svenska källor:\n\n• Bolaget heter Peter Wallgren Sollefteå AB, är ett aktivt aktiebolag med organisationsnummer 559563‑5615. Det har sitt säte på Tjäll 233, 881 93 Sollefteå i Västernorrlands län. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635615-Peter_Wallgren_Solleftea_AB?utm_source=openai))  \n• Bolaget registrerades den 17 december 2025, med bolagsordning och bildande fastställt den 4 december 2025. ([bolagsfa",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635615-Peter_Wallgren_Solleftea_AB?utm_source=openai",
+            "title": "Peter Wallgren Sollefteå AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "peterwallgrensolleftea.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "peterwallgrensolleftea.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:23:32.764257"
+  }
+}

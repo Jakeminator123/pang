@@ -1,5 +1,10 @@
 # Bolagsverket Kungörelse Scraper - Konfiguration
 # ================================================
+#
+# OBS: Dessa värden kan överskridas av miljövariabler i .env
+# Se chrome_profile_config.env.example för fullständig lista.
+#
+# Prioritet: Miljövariabler > denna fil > standardvärden
 
 # Antal kungörelser att hämta
 count = 20
@@ -15,13 +20,15 @@ parallel = 1
 visible = false
 
 # Väntetid per sida i sekunder (random mellan min-max)
-# Ökade för att minska CAPTCHA-risk
-wait_min = 6
-wait_max = 10
+# Kan överskridas med: SCRAPE_WAIT_MIN, SCRAPE_WAIT_MAX
+wait_min = 4
+wait_max = 6
 
 # Väntetid mellan batches/sidor
-between_min = 4
-between_max = 8
+# Kan överskridas med: SCRAPE_BETWEEN_MIN, SCRAPE_BETWEEN_MAX
+between_min = 2
+between_max = 4
 
 # Väntetid efter cookie-banner klickats
-cookie_wait = 14
+# Kan överskridas med: SCRAPE_COOKIE_WAIT
+cookie_wait = 10

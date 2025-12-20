@@ -1,0 +1,102 @@
+{
+  "folder": "K969693-25",
+  "extracted_at": "2025-12-19T16:05:00.959665",
+  "company_name": "Otzen Fritidsinvest AB",
+  "orgnr": "559563-4493",
+  "verksamhet": "Konsulttjänster inom däckbranschen Köpa sälja värdepapper",
+  "sate": "Ängelholm",
+  "address": "c/o Sven Otzen, Persiljevägen 24, 266 97 HJÄRNARP,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-02",
+  "emails": [
+    "sven.otzen@mail.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Svend Otzen",
+      "role": "Styrelseledamot",
+      "personnr": "197009-XXXX"
+    },
+    {
+      "name": "Emelie Iza Bjärenstam Otzen",
+      "role": "Styrelsesuppleant",
+      "personnr": "200704-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "mail.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "otzenfritidsinvest.se",
+        "source": "generated"
+      },
+      {
+        "domain": "otzenfritidsinvest.com",
+        "source": "generated"
+      },
+      {
+        "domain": "otzenfritidsinvest.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "direct",
+  "research": {
+    "company": "Otzen Fritidsinvest AB",
+    "searches": [
+      {
+        "query": "Otzen Fritidsinvest AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon offentlig företagswebbplats (hemsida) för Otzen Fritidsinvest AB via sökning. Företaget är registrerat i Sverige, organisationsnummer 559563‑4493, med säte i Ängelholm och adress Persiljevägen 24, 266 97 Hjärnarp ([bolagsfakta.se](https://www.bolagsfakta.se/5595634493-Otzen_Fritidsinvest_AB?utm_source=openai)). Om du letar efter information online men inte hittar någon aktiverad webbsida är det möjligt att företaget ännu inte har en offentlig hemsida.\n\nSammanfat",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634493-Otzen_Fritidsinvest_AB?utm_source=openai",
+            "title": "Otzen Fritidsinvest AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Otzen Fritidsinvest AB Konsulttjänster inom däckbranschen Köpa sälja värd kontakt",
+        "summary": "Här är kort information om Otzen Fritidsinvest AB:\n\n• Otzen Fritidsinvest AB är ett aktiebolag med organisationsnummer 559563‑4493, registrerat i Ängelholm. Adressen är c/o Sven Otzen, Persiljevägen 24, 266 97 Hjärnarp ([bolagsfakta.se](https://www.bolagsfakta.se/5595634493-Otzen_Fritidsinvest_AB?utm_source=openai)).  \n• Bolaget är aktivt och registrerades hos Bolagsverket den 17 december 2025, med bolagsbildning den 2 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634493-Otzen_F",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634493-Otzen_Fritidsinvest_AB?utm_source=openai",
+            "title": "Otzen Fritidsinvest AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Otzen Fritidsinvest AB\" site:se",
+        "summary": "Här är en kort sammanställning om Otzen Fritidsinvest AB (baserat på källor från svenska webbplatser):\n\n- Otzen Fritidsinvest AB är ett aktivt aktiebolag med organisationsnummer 559563‑4493. Företaget har säte i Ängelholm, Skåne län, och är registrerat på adressen Persiljevägen 24, 266 97 Hjärnarp ([bolagsfakta.se](https://www.bolagsfakta.se/5595634493-Otzen_Fritidsinvest_AB?utm_source=openai)).  \n- Juridisk huvudman och VD är Svend Otzen, som har 100 % kontroll över bolaget. Styrelsesuppleant ä",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634493-Otzen_Fritidsinvest_AB?utm_source=openai",
+            "title": "Otzen Fritidsinvest AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "mail.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "mail.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:18:46.458754"
+  }
+}

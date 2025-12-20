@@ -1,0 +1,100 @@
+{
+  "folder": "K969594-25",
+  "extracted_at": "2025-12-19T16:05:00.932284",
+  "company_name": "Lejd Capital AB",
+  "orgnr": "559563-4196",
+  "verksamhet": "Bolaget ska bedriva kapitalförvaltning samt därmed förenlig verksamhet.",
+  "sate": "Västerås",
+  "address": "c/o Jesper Lejdström, Norgegatan 23B, 723 50 VÄSTERÅS,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-10-28",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Jesper Urban Lejdström",
+      "role": "Styrelsesuppleant",
+      "personnr": "198802-XXXX"
+    },
+    {
+      "name": "Anna Helena Andersson",
+      "role": "Styrelsesuppleant",
+      "personnr": "196608-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "lejdcapital.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "lejdcapital.com",
+        "source": "generated"
+      },
+      {
+        "domain": "lejdcapital.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "lejdcapitalab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Lejd Capital AB",
+    "searches": [
+      {
+        "query": "Lejd Capital AB hemsida website",
+        "summary": "Jag kunde inte hitta någon officiell hemsida för \"Lejd Capital AB\". Det verkar som att företaget är nyregistrerat – bildat den 28 oktober 2025 och registrerat den 17 december 2025 – och att detaljer kring hemsida, telefon, e‑post och moms-/F‑skatt saknas i offentliga register ([bolagsfakta.se](https://www.bolagsfakta.se/5595634196-Lejd_Capital_AB?utm_source=openai)).\n\nFör kontakt eller mer information rekommenderas att du använder Vit‑908‑register som Bolagsfakta eller väntar på att företaget sj",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634196-Lejd_Capital_AB?utm_source=openai",
+            "title": "Lejd Capital AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Lejd Capital AB Bolaget ska bedriva kapitalförvaltning samt därmed kontakt",
+        "summary": "Lejd Capital AB (org.nr. 559563‑4196) är ett svenskt aktiebolag med säte i Västerås. Enligt registrerade uppgifter hos Bolagsverket har bolaget följande verksamhetsändamål: \n\n- Bolaget \"ska bedriva kapitalförvaltning samt därmed förenlig verksamhet\" ([bolagsfakta.se](https://www.bolagsfakta.se/5595634196-Lejd_Capital_AB?utm_source=openai)).  \n- Det grundades den 28 oktober 2025 och registrerades officiellt den 17 december 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634196-Lejd_Capital",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634196-Lejd_Capital_AB?utm_source=openai",
+            "title": "Lejd Capital AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Lejd Capital AB\" site:se",
+        "summary": "Här är en kort sammanfattning av företaget Lejd Capital AB baserat på svenska källor:\n\n- Lejd Capital AB är ett aktiebolag med organisationsnummer 559563‑4196. Företaget har sitt säte på adressen Norgegatan 23B, 723 50 Västerås. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634196-Lejd_Capital_AB?utm_source=openai))  \n- Bolaget bildades den 28 oktober 2025 och registrerades hos Bolagsverket den 17 december 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634196-Lejd_Capital_AB?utm_sourc",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634196-Lejd_Capital_AB?utm_source=openai",
+            "title": "Lejd Capital AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "lejdcapital.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "lejdcapital.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:13:10.409560"
+  }
+}

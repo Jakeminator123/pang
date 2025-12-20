@@ -1,0 +1,102 @@
+{
+  "folder": "K969752-25",
+  "extracted_at": "2025-12-19T16:05:00.977621",
+  "company_name": "Norrbygruppen AB",
+  "orgnr": "559563-6340",
+  "verksamhet": "Bolagets verksamhet skall som holdingbolag vara att äga och förvalta aktier och andelar i andra bolag samt därmed förenlig verksamhet.",
+  "sate": "Ekerö",
+  "address": "c/o Simon Almquist, Norrby Gård 3, 178 91 MUNSÖ,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-04",
+  "emails": [
+    "simonalmquist@yahoo.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Simon David Leif Almquist",
+      "role": "Styrelsesuppleant",
+      "personnr": "199609-XXXX"
+    },
+    {
+      "name": "Mats Göran Almquist",
+      "role": "Styrelsesuppleant",
+      "personnr": "196103-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "norrbygruppen.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "norrbygruppen.com",
+        "source": "generated"
+      },
+      {
+        "domain": "norrbygruppen.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "norrbygruppenab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Norrbygruppen AB",
+    "searches": [
+      {
+        "query": "Norrbygruppen AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell webbplats (hemsida) för **Norrbygruppen AB**. Företaget är dock registrerat med följande information (enligt Bolagsfakta):\n\n- Organisationsnummer: **559563-6340**  \n- Adress: **c/o Simon Almquist, Norrby Gård 3, 178 91 Munsö**, säte i Ekerö kommun  \n- Bolaget bildades den 4 december 2025 och registrerades den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595636340-Norrbygruppen_AB?utm_source=openai)).\n\nInga uppgifter om en hemsida, e-p",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636340-Norrbygruppen_AB?utm_source=openai",
+            "title": "Norrbygruppen AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Norrbygruppen AB Bolagets verksamhet skall som holdingbolag vara at kontakt",
+        "summary": "Här är en kortfattad beskrivning av Norrbygruppen AB:s verksamhet:\n\nNorrbygruppen AB är ett aktiebolag registrerat i Ekerö kommun, Stockholms län, med organisationsnummer 559563‑6340 ([bolagsfakta.se](https://www.bolagsfakta.se/5595636340-Norrbygruppen_AB?utm_source=openai)).\n\nBolagets verksamhet anges i registret hos Bolagsverket som att det, i egenskap av holdingbolag, ska äga och förvalta aktier och andelar i andra bolag samt bedriva därmed förenlig verksamhet ([bolagsfakta.se](https://www.bo",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636340-Norrbygruppen_AB?utm_source=openai",
+            "title": "Norrbygruppen AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Norrbygruppen AB\" site:se",
+        "summary": "Här är en kortfattad översikt av det svenska företaget \"Norrbygruppen AB\", enligt information från Bolagsfakta.\n\n• Företagsnamn: Norrbygruppen AB, organisationsnummer 559563‑6340 ([bolagsfakta.se](https://www.bolagsfakta.se/5595636340-Norrbygruppen_AB?utm_source=openai))  \n• Säte: Ekerö kommun, Stockholms län, med adress Norrby Gård 3, 178 91 Munsö ([bolagsfakta.se](https://www.bolagsfakta.se/5595636340-Norrbygruppen_AB?utm_source=openai))  \n• Registreringsdatum: Bolaget bildades den 4 december ",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636340-Norrbygruppen_AB?utm_source=openai",
+            "title": "Norrbygruppen AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "norrbygruppen.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "norrbygruppen.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:22:56.159308"
+  }
+}

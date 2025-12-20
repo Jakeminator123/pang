@@ -1,0 +1,17 @@
+Till: hello@monster-puppet.com
+Ämne: Förfrågan om tekniska konsttjänster
+============================================================
+
+Hej,
+
+Jag har noterat ert nya bolag, Monster Puppet Corporation AB, och er specialisering inom teknisk konst och videospelsutveckling. Det är tydligt att ni har en gedigen förståelse för teknisk konst, vilket verkligen framgår på er hemsida.
+
+Vi på SajtStudio.se arbetar med att kombinera AI och design för att skapa moderna och funktionella webbplatser. Vi skulle gärna vilja erbjuda er en kostnadsfri demo-sida för att visa hur er online-närvaro kan se ut och potentiellt förbättras.
+
+Om ni är intresserade, kan vi hjälpa till att modernisera er hemsida med de senaste teknikerna som React och Next.js, samt tillföra en unik design med Tailwind. Vi kan även gå vidare och anpassa sidan efter era specifika behov.
+
+Ser fram emot att höra från er om detta låter intressant.
+
+Mvh,  
+[Ditt namn]  
+SajtStudio.se

@@ -1,0 +1,117 @@
+{
+  "folder": "K969500-25",
+  "extracted_at": "2025-12-19T16:05:00.918079",
+  "company_name": "William Widlund AB",
+  "orgnr": "559563-4147",
+  "verksamhet": "Företaget ska bedriva konsultverksamhet inom affärsutveckling, företagsledning och drift. Verksamheten ska även omfatta uthyrning av personal inom båt- och turistverksamhet samt handel med varor och försäljning av tjänster inom turist- och båtbranschen, avseende exempelvis båtutrustning, marina tillbehör, fritids- och säkerhetsrelaterade produkter samt därmed sammanhängande tjänster, inklusive försäljning via internet. Företaget ska även äga, förvalta, hyra ut och förmedla båtar samt bedriva upp",
+  "sate": "Stockholm",
+  "address": "Sysslomansgatan 24, 112 41 STOCKHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-29",
+  "emails": [
+    "widlund.william@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Per William Widlund",
+      "role": "Styrelseledamot",
+      "personnr": "200112-XXXX"
+    },
+    {
+      "name": "Eva Monika Widlund",
+      "role": "Styrelsesuppleant",
+      "personnr": "196803-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "williamwidlund.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "williamwidlund.com",
+        "source": "generated"
+      },
+      {
+        "domain": "williamwidlund.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "williamwidlundab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "William Widlund AB",
+    "searches": [
+      {
+        "query": "William Widlund AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon tydlig information om en hemsida till ett bolag vid namn \"William Widlund AB\". Det finns flera träffar relaterade till namn som Widlund Consulting AB och Widlund Management AB, men ingen med exakt namnet William Widlund AB eller en tillhörande webbplats.([lei.bloomberg.com](https://lei.bloomberg.com/leis/view/894500P0L31OVEL1MA05?utm_source=openai))\n\nOm du har mer information, till exempel en bransch, ort eller annan detaljer som kan hjälpa till att avgränsa sök",
+        "sources": [
+          {
+            "url": "https://lei.bloomberg.com/leis/view/894500P0L31OVEL1MA05?utm_source=openai",
+            "title": "Widlund Consulting AB - LEI: 894500P0L31OVEL1MA05"
+          }
+        ]
+      },
+      {
+        "query": "William Widlund AB Företaget ska bedriva konsultverksamhet inom affär kontakt",
+        "summary": "Här är en kort sammanfattning av William Widlund AB med verksamhetsbeskrivning och registreringsuppgifter:\n\n- William Widlund AB, organisationsnummer 559563‑4147, är ett aktivt aktiebolag med säte i Stockholm, beläget på Sysslomansgatan 24, 112 41 Stockholm. Bolaget bildades den 29 november 2025 och registrerades den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634147-William_Widlund_AB?utm_source=openai)).\n\n- Enligt Bolagsverkets registrering ska företaget bedriva konsultve",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634147-William_Widlund_AB?utm_source=openai",
+            "title": "William Widlund AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"William Widlund AB\" site:se",
+        "summary": "Här är en kort sammanfattning av \"William Widlund AB\" enligt offentliga svenska källor:\n\n- William Widlund AB är ett aktivt aktiebolag med organisationsnummer 559563‑4147. Det har sitt säte på Sysslomansgatan 24, 112 41 Stockholm.([bolagsfakta.se](https://www.bolagsfakta.se/5595634147-William_Widlund_AB?utm_source=openai))  \n- Bolaget registrerades den 17 december 2025 och bildades den 29 november 2025.([bolagsfakta.se](https://www.bolagsfakta.se/5595634147-William_Widlund_AB?utm_source=openai))",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634147-William_Widlund_AB?utm_source=openai",
+            "title": "William Widlund AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "lei.bloomberg.com",
+        "confidence": 0.5
+      },
+      {
+        "domain": "williamwidlund.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "lei.bloomberg.com",
+        "url": "https://lei.bloomberg.com/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Bloomberg LEI",
+        "description": "Bloomberg provides clients with Legal Entity Identifier (LEI) services and solutions. Register, renew, transfer, search, and download LEIs with Bloomberg today.",
+        "text_sample": "Bloomberg LEI Please enable JavaScript in your browser See enable-javascript.com for help. Please use a modern browser We use modern web technologies to provide many fluid, powerful and user-friendly features. It seems your browser does not support all of these technologies. Please use a modern browser to start using lei.bloomberg.com. Legal Entity Identifier (LEI)"
+      },
+      {
+        "domain": "williamwidlund.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:10:08.101972"
+  }
+}

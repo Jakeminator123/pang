@@ -1,0 +1,10 @@
+{
+  "folder": "K969557-25",
+  "company_name": "HN RESTAURANG JKPG AB",
+  "date_folder": "20251219",
+  "evaluated_at": "2025-12-19T16:37:00.137251",
+  "should_get_site": false,
+  "confidence": 0.3,
+  "reasoning": "Företaget är en restaurang, vilket inte tillhör IT, tech eller finansbranschen. Dessutom verkar det vara ett nystartat företag med begränsat aktiekapital, vilket kan indikera att de har begränsade resurser för webbdesign.",
+  "error": null
+}

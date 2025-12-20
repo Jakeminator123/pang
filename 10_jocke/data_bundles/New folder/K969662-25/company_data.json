@@ -1,0 +1,139 @@
+{
+  "folder": "K969662-25",
+  "extracted_at": "2025-12-19T16:05:00.950405",
+  "company_name": "Nordive Creative AB",
+  "orgnr": "559563-4451",
+  "verksamhet": "Bolaget ska bedriva artistverksamhet, musikproduktion, ljudproduktion, videproduktion, marknadsföring, management tjänster, merchandise, försäljning, studioverksamhet och därmed förenlig verksamhet.",
+  "sate": "Mölndal",
+  "address": "Rävkärrsgatan 57 Lgh 1102, 431 33 MÖLNDAL,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-08",
+  "emails": [
+    "alexanderstrandellmusic@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Bo Eric Alexander Nelson Strandell",
+      "role": "Styrelseledamot",
+      "personnr": "199211-XXXX"
+    },
+    {
+      "name": "Julia Alice Olivia Nelson Strandell",
+      "role": "Styrelsesuppleant",
+      "personnr": "200011-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "nordacreative.com",
+    "confidence": 0.5,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "nordivecreative.com",
+        "source": "generated"
+      },
+      {
+        "domain": "nordivecreative.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "nordivecreativeab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Nordive Creative AB",
+    "searches": [
+      {
+        "query": "Nordive Creative AB hemsida website",
+        "summary": "Jag kunde inte hitta någon information om en webbyrå eller hemsida under namnet \"Nordive Creative AB\". Det närmaste som liknar namnet är \"Nordivo Webbyrå AB\", vars webbplats är nordivo.se, och som innebär en digital partner som skapar och underhåller hemsidor till fasta priser ([nordivo.se](https://nordivo.se/?utm_source=openai)).\n\nOm du har information om ett annat namn, stavning eller detaljer kring företaget \"Nordive Creative AB\", dela gärna det så kan jag hjälpa dig vidare.",
+        "sources": [
+          {
+            "url": "https://nordivo.se/?utm_source=openai",
+            "title": "Nordivo | Skräddarsydda Hemsidor | Enkelt och Kundanpassat."
+          }
+        ]
+      },
+      {
+        "query": "Nordive Creative AB Bolaget ska bedriva artistverksamhet, musikprodukt kontakt",
+        "summary": "Här är en kortfattad beskrivning av Nordive Creative AB enligt aktuell information:\n\n- Verksamhet: Enligt Bolagsfakta ska bolaget bedriva artistverksamhet, musikproduktion, ljud- och videoproduktion, marknadsföring, management, merchandise, försäljning, studioverksamhet, samt därmed förenlig verksamhet ([bolagsfakta.se](https://www.bolagsfakta.se/5595634451-Nordive_Creative_AB?utm_source=openai)).  \n- Organisationsnummer: 559563‑4451 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634451-Nordiv",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634451-Nordive_Creative_AB?utm_source=openai",
+            "title": "Nordive Creative AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Nordive Creative AB\" site:se",
+        "summary": "Jag hittade inga träffar för \"Nordive Creative AB\" på .se‑domänen, vilket tyder på att det sannolikt inte finns ett registrerat företag med det namnet i Sverige.\n\nMöjliga förväxlingar:\n\n- **Norda Creative** – en global digital byrå som erbjuder webbutveckling, grafisk design och digital marknadsföring. Det verkar dock inte vara ett svenskt aktiebolag och ingen koppling till “.se” kunde verifieras ([nordacreative.com](https://nordacreative.com/?utm_source=openai)).\n\n- **Nordic Creative Studio AB*",
+        "sources": [
+          {
+            "url": "https://nordacreative.com/?utm_source=openai",
+            "title": "Professional Website Designers"
+          },
+          {
+            "url": "https://www.allabolag.se/5594382623/nordic-creative-studio-ab?utm_source=openai",
+            "title": "Nordic Creative Studio AB - Org.nr 559438-2623 - Kalmar - Se Nyckeltal, Befattningar med mera."
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "nordacreative.com",
+        "confidence": 0.85
+      },
+      {
+        "domain": "nordivo.se",
+        "confidence": 0.5
+      },
+      {
+        "domain": "nordivecreative.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "nordacreative.com",
+        "url": "https://nordacreative.com/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.5,
+        "title": "Professional Website Designers",
+        "description": "Consistent Branding Across All Platforms Are you launching a new business? Looking to refresh your logo or website to stand out from the competition? Or perhaps you're aiming to grow your online prese",
+        "text_sample": "Professional Website Designers Home About Us Creative Services Brand Identity & Logo Design Graphic Design & Prints Responsive Website & E-Commerce Development Digital Marketing Strategies & SEO Our Work Brand Identity & Logo Portfolio Graphic Design Portfolio Website Design Portfolio Clients Gallery Contact Us Lets Get Started Professional Web and Graphic Solutions without Borders! Contact Us We Develop Stunning Websites that Grow Businesses Across the Globe. Get A Quote Consistent Branding Acr",
+        "ai_verified": false,
+        "ai_confidence": 0.9,
+        "ai_reason": "Hemsidan nordacreative.com verkar fokusera på webbdesign och digitala marknadsföringstjänster, vilket inte helt överensstämmer med Nordive Creative AB:s verksamhetsbeskrivning som inkluderar artistverksamhet och musikproduktion. Dessutom nämns ingen koppling till Mölndal, vilket minskar sannolikheten att det är samma företag."
+      },
+      {
+        "domain": "nordivo.se",
+        "url": "https://nordivo.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Nordivo | Skräddarsydda Hemsidor | Enkelt och Kundanpassat.",
+        "description": "Nordivo är en webbyrå för dig som vill köpa en premium hemsida till billigt pris. Vårt fokus ligger på enkelhet för dig som kund.",
+        "text_sample": "Nordivo | Skräddarsydda Hemsidor | Enkelt och Kundanpassat. Bli kontaktad Bli kontaktad av oss. Jag godkänner att bli kontaktad Bli kontaktad Bli kontaktad av oss. Jag godkänner att bli kontaktad BLI KONTAKTAD Skaffa en hemsida som växer med ditt företag . Digital partner till ditt företag som skapar, underhåller och förbättrar din hemsida. Bli kontaktad idag Bli kontaktad av oss. Jag godkänner att bli kontaktad Bli kontaktad Enkelhet Köp en hemsida. Enkelt . Tror du att det är krångligt och dyr"
+      },
+      {
+        "domain": "nordivecreative.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:17:07.035353"
+  }
+}

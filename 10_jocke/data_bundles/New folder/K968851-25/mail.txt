@@ -1,0 +1,17 @@
+Till: nswe2025@hotmail.com
+Ämne: Förslag till digitalt projekt NSWE
+============================================================
+
+Hej Eléne,
+
+Jag har uppmärksammat ert nya bolag, NSWE AB, och ser att ni har en bred verksamhet inom flera områden, inklusive IT och digital utveckling. 
+
+På SajtStudio.se har vi möjlighet att snabbt ta fram en kostnadsfri demo-sida för er. Detta skulle ge er en visuell förhandsvisning av hur en framtida hemsida kan se ut, med moderna React-sidor byggda med Next.js och Tailwind. 
+
+Vi hjälper er gärna att komma igång med er online-närvaro och kan ta hand om hela projektet från idé till färdig hemsida. Vår kombination av AI och manuell design garanterar både snabbhet och kvalitet.
+
+Om ni är intresserade av att se vad vi kan erbjuda, hör gärna av er så kan vi sätta igång med en demo.
+
+Mvh,  
+[Ditt namn]  
+SajtStudio.se

@@ -1,0 +1,109 @@
+{
+  "folder": "K969805-25",
+  "extracted_at": "2025-12-19T16:05:01.000078",
+  "company_name": "Oscar Otter AB",
+  "orgnr": "559563-6332",
+  "verksamhet": "Företaget kommer fungera som holdingbolag samt vara verksamt inom redovisning. Med konsulttjänster som lönehantering, deklarationsarbete och bokföring.",
+  "sate": "Ale",
+  "address": "Lindängsvägen 1, 449 50 ALAFORS,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-10-22",
+  "emails": [
+    "oscar@aleekonomiservice.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Oscar Nils Thomas Otter",
+      "role": "Styrelsesuppleant",
+      "personnr": "199505-XXXX"
+    },
+    {
+      "name": "Nathali Louise Viklund",
+      "role": "Styrelsesuppleant",
+      "personnr": "199310-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "aleekonomiservice.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "oscarotter.se",
+        "source": "generated"
+      },
+      {
+        "domain": "oscarotter.com",
+        "source": "generated"
+      },
+      {
+        "domain": "oscarotter.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": true,
+  "skip_reason": "accounting_domain:ekonomi",
+  "email_category": "direct",
+  "research": {
+    "company": "Oscar Otter AB",
+    "searches": [
+      {
+        "query": "Oscar Otter AB hemsida website",
+        "summary": "Jag hittade ingen officiell webbplats för Oscar Otter AB (organisationsnummer 559563‑6332), vilket ofta tyder på att företaget inte har någon egen hemsida registrerad eller synlig via vanliga sökvägar. Informationen om företaget hittades främst på affärsinformationssajter:\n\n- Bolagsfakta visar detaljer som organisationsnummer, adress (Lindängsvägen 1, 449 50 Alafors), ägare, registreringsdatum och verksamhetsbeskrivning som holdingbolag och redovisningstjänster ([bolagsfakta.se](https://www.bola",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636332-Oscar_Otter_AB?utm_source=openai",
+            "title": "Oscar Otter AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Oscar Otter AB Företaget kommer fungera som holdingbolag samt var kontakt",
+        "summary": "Här är en kortfattad och tydlig presentation av Oscar Otter AB:\n\n- Oscar Otter AB är ett aktiebolag (AB) med organisationsnummer 559563‑6332 och har sitt säte i Ale kommun, Västra Götalands län. Företaget är verksamt sedan bildandet den 22 oktober 2025 och registrerat den 17 december 2025. Det fungerar som holdingbolag och är också verksamt inom redovisningsrelaterade tjänster som lönehantering, deklarationsarbete och bokföring.([bolagsfakta.se](https://www.bolagsfakta.se/5595636332-Oscar_Otter_",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636332-Oscar_Otter_AB?utm_source=openai",
+            "title": "Oscar Otter AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Oscar Otter AB\" site:se",
+        "summary": "Här kommer en kort sammanfattning om företaget *Oscar Otter AB*, baserat på tillgänglig information från svensk källa:\n\n- Oscar Otter AB är ett aktivt aktiebolag med organisationsnummer **559563‑6332**, registrerat hos Bolagsverket. Bolaget har sitt säte i **Ale kommun**, Västra Götalands län, och verksamhetsorten är **Alafors**, på adressen **Lindängsvägen 1, 449 50 Alafors** ([bolagsfakta.se](https://www.bolagsfakta.se/5595636332-Oscar_Otter_AB?utm_source=openai)).\n\n- Bolaget bildades den **22",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636332-Oscar_Otter_AB?utm_source=openai",
+            "title": "Oscar Otter AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "aleekonomiservice.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "aleekonomiservice.se",
+        "url": "https://aleekonomiservice.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Ale Ekonomiservice AB - Din lokala redovisningsbyrå i Ale",
+        "description": "Din lokala redovisningsbyrå i Ale. Vi hjälper dig och ditt företag med hela eller delar av din ekonomi så du kan ägna dig åt vad du gör bäst.",
+        "text_sample": "Ale Ekonomiservice AB - Din lokala redovisningsbyrå i Ale Hoppa till innehållet Redovisningsbyrå i Ale Hos oss kan du få hjälp med hela eller delar av ditt företags ekonomi. Så att du kan ägna dig åt det du och ditt företag är allra bäst på! Läs mer om våra tjänster TJÄNSTER Vi erbjuder redovisningstjänster utefter ditt företags behov och skräddarsyr en lösning som passar just dig och ditt företag. Våra tjänster OM OSS Vi är en liten redovisningsbyrå i Ale som alltid strävar efter att ge våra ku"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:27:37.316878"
+  }
+}

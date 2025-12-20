@@ -1,0 +1,102 @@
+{
+  "folder": "K969764-25",
+  "extracted_at": "2025-12-19T16:05:00.985946",
+  "company_name": "Tambourine Man AB",
+  "orgnr": "559563-5714",
+  "verksamhet": "Bolaget ska bedriva kapitalförvaltning.",
+  "sate": "Vellinge",
+  "address": "c/o Pekka Koskinen, Boltensternsvägen 38 F, 236 38 HÖLLVIKEN,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-26",
+  "emails": [
+    "pekka@pharmasite.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Pekka Tapani Koskinen",
+      "role": "Styrelsesuppleant",
+      "personnr": "196305-XXXX"
+    },
+    {
+      "name": "Max Henrik Koskinen",
+      "role": "Styrelsesuppleant",
+      "personnr": "199407-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "pharmasite.se",
+    "confidence": 0.5,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "tambourineman.se",
+        "source": "generated"
+      },
+      {
+        "domain": "tambourineman.com",
+        "source": "generated"
+      },
+      {
+        "domain": "tambourineman.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "direct",
+  "research": {
+    "company": "Tambourine Man AB",
+    "searches": [
+      {
+        "query": "Tambourine Man AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon webbplats för ett företag som heter \"Tambourine Man AB\". Möjliga orsaker är att företaget antingen inte finns eller att det inte har någon synlig webbplats på nätet.\n\nOm du har mer information, till exempel en stad, bransch eller organisationsnummer, hjälper det mig att göra en mer precis sökning.",
+        "sources": []
+      },
+      {
+        "query": "Tambourine Man AB Bolaget ska bedriva kapitalförvaltning. kontakt",
+        "summary": "Här är kortfattad information:\n\nTambourine Man AB (organisationsnummer 559563‑5714) är ett aktivt aktiebolag med säte i Vellinge, Skåne län. Bolaget har registrerats för att bedriva kapitalförvaltning. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635714-Tambourine_Man_AB?utm_source=openai))\n\nKontakt uppges via adressen:\nBoltensternsvägen 38 F, 236 38 Höllviken. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635714-Tambourine_Man_AB?utm_source=openai))\n\nTelefonnummer eller e-postadress finn",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635714-Tambourine_Man_AB?utm_source=openai",
+            "title": "Tambourine Man AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Tambourine Man AB\" site:se",
+        "summary": "Du verkar syfta på företaget “Tambourine Man AB” i Sverige, men jag kunde tyvärr inte hitta någon information om det via öppna sökkällor som innehåller “Tambourine Man AB” tillsammans med .se. Det finns inget tydligt registrerat företag eller webbplats med det namnet som är åtkomligt via sökningar.",
+        "sources": []
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "pharmasite.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "pharmasite.se",
+        "url": "https://pharmasite.se/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.5,
+        "title": "Pharmasite | Läkemedelsforskning",
+        "description": "",
+        "text_sample": "Pharmasite | Läkemedelsforskning Pharmasite Delta i studier och bidra till medicinska framsteg för dig och andra. Lider du av en sjukdom och vill hjälpa inte bara dig själv, men även andra människor? Pharmasite är en läkarmottagning där vi utför kliniska läkemedelsstudier inom en rad olika områden. När du deltar i en studie hos oss får du alltid träffa läkare med specialistkompetens. Vi hjälper dig med dina symptom samtidigt som du bidrar till framsteg inom läkemedelsforskning. Ditt deltagande l",
+        "ai_verified": false,
+        "ai_confidence": 0.9,
+        "ai_reason": "Hemsidan pharmasite.se handlar om läkemedelsforskning och kliniska studier, vilket inte stämmer överens med Tambourine Man AB:s verksamhet inom kapitalförvaltning. Dessutom nämns inget om Vellinge, vilket är den stad där Tambourine Man AB är registrerat."
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:24:30.561098"
+  }
+}

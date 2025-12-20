@@ -1,0 +1,115 @@
+{
+  "folder": "K969334-25",
+  "extracted_at": "2025-12-19T16:05:00.911541",
+  "company_name": "LMP Capital Group AB",
+  "orgnr": "559563-5672",
+  "verksamhet": "Bolaget ska äga och förvalta aktier och andelar i andra företag samt bedriva därmed förenlig verksamhet.",
+  "sate": "Malmö",
+  "address": "Ymers gata 33, 215 35 MALMÖ,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-06",
+  "emails": [
+    "p_mhmd@hotmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Leon Muhamed Puhovac",
+      "role": "Styrelsesuppleant",
+      "personnr": "198907-XXXX"
+    },
+    {
+      "name": "Iris Azra Catovic",
+      "role": "Styrelsesuppleant",
+      "personnr": "199103-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "lmpartners.com",
+    "confidence": 0.67,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "lmpcapitalgroup.com",
+        "source": "generated"
+      },
+      {
+        "domain": "lmpcapitalgroup.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "lmpcapitalgroupab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "LMP Capital Group AB",
+    "searches": [
+      {
+        "query": "LMP Capital Group AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon hemsida för ett svenskt företag som heter “LMP Capital Group AB”. Dock finns det ett amerikanskt private equity‑företag med förkortningen LMP, nämligen Lovell Minnick Partners (LMP). Deras officiella hemsida är tillgänglig här:  \n- Hemsidan för Lovell Minnick Partners (LMP) – amerikansk private equity‑aktör inom finansiella tjänster och fintech ([lmpartners.com](https://www.lmpartners.com/?utm_source=openai)).\n\nOm du faktiskt söker efter ett svenskt bolag med ex",
+        "sources": [
+          {
+            "url": "https://www.lmpartners.com/?utm_source=openai",
+            "title": "Lovell Minnick Partners | Private Equity Firm"
+          }
+        ]
+      },
+      {
+        "query": "LMP Capital Group AB Bolaget ska äga och förvalta aktier och andelar i  kontakt",
+        "summary": "LMP Capital Group AB är enligt Bolagsverkets registrerade verksamhetsbeskrivning ett aktiebolag vars verksamhet är att \"äga och förvalta aktier och andelar i andra företag samt bedriva därmed förenlig verksamhet.\"([bolagsfakta.se](https://www.bolagsfakta.se/5595635672-LMP_Capital_Group_AB?utm_source=openai))\n\nKort svar:  \nLMP Capital Group AB (org.nr 559563‑5672) ska enligt sin verksamhetsbeskrivning äga och förvalta aktier och andelar i andra företag samt bedriva därmed förenlig verksamhet.([bo",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635672-LMP_Capital_Group_AB?utm_source=openai",
+            "title": "LMP Capital Group AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"LMP Capital Group AB\" site:se",
+        "summary": "Jag lyckades tyvärr inte hitta någon information om ett bolag med exakt namnet \"LMP Capital Group AB\" på svenska webbplatser (domäner som slutar med .se). Det kan vara så att bolaget inte existerar i Sverige under just det namnet, eller att det är relativt obskyert och därför inte synligt via vanliga sökningar.",
+        "sources": []
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "lmpartners.com",
+        "confidence": 0.85
+      },
+      {
+        "domain": "lmpcapitalgroup.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "lmpartners.com",
+        "url": "https://www.lmpartners.com/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.67,
+        "title": "Lovell Minnick Partners | Private Equity Firm",
+        "description": "We are a private equity firm, investing in growth-oriented, middle-market companies in the financial services, financial technology and business services sectors. Learn more.",
+        "text_sample": "Lovell Minnick Partners | Private Equity Firm Industry Experts. Collaborative Partners. Contact Us Client Login Linkedin Home Our Firm Our Team Investment Focus Sector Specialization Our Portfolio Our Responsibility News/Events/Commentary Contact Us Client Login Linkedin Philadelphia 555 E. Lancaster Avenue, Suite 510 Radnor, PA 19087 610 995 9660 Los Angeles Manhattan Towers 1230 Rosecrans Avenue, Suite 300 Manhattan Beach, CA 90266 310 414 6160 New York 1155 Avenue of the Americas, Suite 2550 ",
+        "ai_verified": false,
+        "ai_confidence": 1.0,
+        "ai_reason": "The website belongs to Lovell Minnick Partners, a private equity firm based in the United States, not LMP Capital Group AB, which is based in Malmö, Sweden and focuses on owning and managing shares in other companies."
+      },
+      {
+        "domain": "lmpcapitalgroup.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:09:08.253175"
+  }
+}

@@ -1,0 +1,15 @@
+Till: rikardroos@gmail.com
+Ämne: Förfrågan om samarbete Roos Invest
+============================================================
+
+Hej Rikard,
+
+Jag noterade att ert nya bolag, Roos Invest AB, har kommit igång. Jag förstår att ni fokuserar på att äga och förvalta aktier och andelar i dotterbolag. För att hjälpa er att etablera en online-närvaro kan vi på SajtStudio.se skapa en kostnadsfri demo-sida som visar hur er hemsida kan se ut.
+
+Vi använder AI för att snabbt ta fram utkast och idéer och bygger moderna React-sidor med Next.js och Tailwind. Om ni skulle vara intresserade, erbjuder vi även att hjälpa till med hela projekt där vi finslipar designen för hand.
+
+Låt oss gärna veta om detta låter intressant så kan vi diskutera hur vi bäst kan hjälpa er att komma igång online.
+
+Mvh,  
+[Ditt namn]  
+SajtStudio.se

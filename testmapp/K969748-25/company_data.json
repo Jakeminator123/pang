@@ -1,0 +1,117 @@
+{
+  "folder": "K969748-25",
+  "extracted_at": "2025-12-19T16:05:00.974111",
+  "company_name": "Skåras Glutenfria Hantverksbageri AB",
+  "orgnr": "559563-5136",
+  "verksamhet": "Vi ska tillverka och sälja glutenfria bakverk av hög kvalitet, med fokus på hantverk och hållbarhet samt att verka för kunskapsspridning av glutenfri bakning. Via workshops och föreläsningar. Vi vänder oss till konsumenter direkt, samt via Business-to Business",
+  "sate": "Kungälv",
+  "address": "c/o Jenny Wiberg, Valsnäsgatan 2, 442 52 YTTERBY,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-28",
+  "emails": [
+    "jenny.wiberg@outlook.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Jenny Marie Wiberg",
+      "role": "Styrelsesuppleant",
+      "personnr": "197301-XXXX"
+    },
+    {
+      "name": "Moa Kristina Larsdotter",
+      "role": "Styrelsesuppleant",
+      "personnr": "198303-XXXX"
+    },
+    {
+      "name": "Petra Rudolph",
+      "role": "Styrelsesuppleant",
+      "personnr": "196505-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "skarasglutenfriahantverksbager.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "skarasglutenfriahantverksbager.com",
+        "source": "generated"
+      },
+      {
+        "domain": "skarasglutenfriahantverksbager.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Skåras Glutenfria Hantverksbageri AB",
+    "searches": [
+      {
+        "query": "Skåras Glutenfria Hantverksbageri AB hemsida website",
+        "summary": "Jag kunde inte hitta någon officiell webbplats för \"Skåras Glutenfria Hantverksbageri AB\". Däremot finns företagsinformation med adress och registreringsuppgifter via Bolagsfakta ([bolagsfakta.se](https://www.bolagsfakta.se/5595635136-Skaras_Glutenfria_Hantverksbageri_AB?utm_source=openai)).\n\nAlltså, det verkar inte finnas någon publik webbplats eller hemsida för bageriet i dagsläget.\n\nKällor:\n- Organisations- och företagsuppgifter från Bolagsfakta ([bolagsfakta.se](https://www.bolagsfakta.se/55",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635136-Skaras_Glutenfria_Hantverksbageri_AB?utm_source=openai",
+            "title": "Skåras Glutenfria Hantverksbageri AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "Skåras Glutenfria Hantverksbageri AB Vi ska tillverka och sälja glutenfria bakverk av h kontakt",
+        "summary": "Här är kort information om “Skåras Glutenfria Hantverksbageri AB” – tyvärr kunde jag inte hitta någon träff under exakt det namnet. Det kan vara att företaget är nytt eller att det finns under en annan företagsform eller stavning.\n\nFör att hjälpa dig vidare kan du överväga att:\n\n- Söka efter liknande namn (t.ex. Göteborgs Glutenfria Bageri) eller stavningsvariationer.\n- Kontrollera företagsregister (Bolagsverket, eniro.se, hitta.se) med organisationsnummer om du har det.\n- Undersöka varumärkesda",
+        "sources": []
+      },
+      {
+        "query": "\"Skåras Glutenfria Hantverksbageri AB\" site:se",
+        "summary": "Här är kort information om Skåras Glutenfria Hantverksbageri AB:\n\n- Skåras Glutenfria Hantverksbageri AB är ett aktivt aktiebolag med organisationsnummer 559563‑5136. Bolaget har säte i Kungälv och adressen är Valsnäsgatan 2, 442 52 Ytterby. Jenny Wiberg är VD och även styrelseordförande, och Moa Larsdotter är vice VD. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635136-Skaras_Glutenfria_Hantverksbageri_AB?utm_source=openai))  \n- Bolaget registrerades den 17 december 2025 och bolagsordningen",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635136-Skaras_Glutenfria_Hantverksbageri_AB?utm_source=openai",
+            "title": "Skåras Glutenfria Hantverksbageri AB | Aktiebolag | Info & Löner"
+          },
+          {
+            "url": "https://www.kungalvsposten.se/nyheter/jenny-ska-baka-glutenfritt-hantverksbrod-startar-bageri-i-ytterby.1eec6eff-9af9-4eb5-b9c4-2d1809246d54?utm_source=openai",
+            "title": "Jenny ska baka glutenfritt hantverksbröd – startar bageri i Ytterby | Kungälvs-Posten"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "kungalvsposten.se",
+        "confidence": 0.5
+      },
+      {
+        "domain": "skarasglutenfriahantverksbager.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "kungalvsposten.se",
+        "url": "https://www.kungalvsposten.se/",
+        "status": "parked",
+        "is_parked": true,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Kungälvs-Posten – Nyheter från Kungälv, Ytterby och Marstrand",
+        "description": "Kungälvs-Posten rapporterar nyheter från Kungälv, Ytterby och Marstrand. Här håller du dig uppdaterad på lokala nyheter i ditt närområde dygnet runt.",
+        "text_sample": "Kungälvs-Posten – Nyheter från Kungälv, Ytterby och Marstrand Hoppa till innehållet Hoppa till sök Hoppa till A-Ö Ikon senaste nytt Senaste nytt Ikon bokmärke Sparat Ikon följ Följer Meny Ikon A-Ö Ikon sök Ikon senaste nytt Senaste nytt Ikon bokmärke Sparat Ikon följ Följer Ikon A-Ö Ikon sök E-tidning Tipsa oss Kundservice Talande webb ANNONS Nyheter Hemtjänst förbjuds utföra arbete hos brukare – efter anhörighot Tips Toppa stämningen – fem tips för helgen innan jul Nu kan du tycka till om hur K"
+      },
+      {
+        "domain": "skarasglutenfriahantverksbager.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:22:01.985623"
+  }
+}

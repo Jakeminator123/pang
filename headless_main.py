@@ -84,10 +84,67 @@ STEP_LOG_DIR = LOG_DIR / "steps"
 RUN_LOG_FILE: Optional[Path] = None
 RUN_TS: str = ""
 
+# Lock file to prevent concurrent pipeline runs
+PIPELINE_LOCK_FILE = LOG_DIR / ".pipeline_lock"
+
 
 def ensure_log_dirs():
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     STEP_LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def acquire_pipeline_lock() -> bool:
+    """
+    Försök skaffa pipeline-lock. Returnerar True om lock kunde skaffas, False annars.
+    """
+    ensure_log_dirs()
+    
+    if PIPELINE_LOCK_FILE.exists():
+        # Kolla om lock-filen är gammal (mer än 2 timmar = troligen stuck process)
+        lock_age = time.time() - PIPELINE_LOCK_FILE.stat().st_mtime
+        if lock_age > 7200:  # 2 timmar
+            log_warn(f"⚠️  Gammal lock-fil hittades ({lock_age/3600:.1f} timmar gammal) - tar bort den")
+            try:
+                PIPELINE_LOCK_FILE.unlink()
+            except Exception as e:
+                log_error(f"Kunde inte ta bort gammal lock-fil: {e}")
+                return False
+        else:
+            # Läs lock-info om den finns
+            try:
+                lock_info = PIPELINE_LOCK_FILE.read_text(encoding="utf-8").strip()
+                log_error("=" * 60)
+                log_error("🚫 PIPELINE REDAN KÖRS!")
+                log_error("=" * 60)
+                log_error(f"En annan pipeline-körning pågår redan.")
+                if lock_info:
+                    log_error(f"Lock-info: {lock_info}")
+                log_error("")
+                log_error("Vänta tills den andra körningen är klar, eller:")
+                log_error(f"  - Ta bort lock-filen manuellt: {PIPELINE_LOCK_FILE}")
+                log_error("  - Eller vänta 2 timmar (lock-filen tas bort automatiskt)")
+                log_error("=" * 60)
+            except Exception:
+                pass
+            return False
+    
+    # Skapa lock-fil med info om denna körning
+    try:
+        lock_info = f"Started: {datetime.now().isoformat()}\nPID: {os.getpid()}\nCommand: {' '.join(sys.argv)}"
+        PIPELINE_LOCK_FILE.write_text(lock_info, encoding="utf-8")
+        return True
+    except Exception as e:
+        log_error(f"Kunde inte skapa lock-fil: {e}")
+        return False
+
+
+def release_pipeline_lock():
+    """Ta bort pipeline-lock."""
+    try:
+        if PIPELINE_LOCK_FILE.exists():
+            PIPELINE_LOCK_FILE.unlink()
+    except Exception as e:
+        log_warn(f"Kunde inte ta bort lock-fil: {e}")
 
 
 def setup_run_logging() -> Path:
@@ -764,37 +821,68 @@ async def generate_sites_for_worthy_companies(
         return 0, 0
 
 
-def load_audit_config() -> dict:
-    """Load audit settings from config_ny.txt."""
+def load_sajt_config() -> Dict[str, Any]:
+    """
+    Läs audit/site-config från 3_sajt/config_ny.txt.
+    
+    Returns:
+        Dict med config-värden
+    """
     config = {
-        "audit_enabled": True,
+        "audit_enabled": False,
         "audit_threshold": 0.60,
         "audit_max_antal": 10,
         "audit_depth": "LOW",
+        "site_enabled": True,
+        "site_threshold": 0.80,
+        "site_max_antal": 30,
     }
     
-    config_path = SEGMENT_DIR / "config_ny.txt"
-    if config_path.exists():
-        try:
-            parser = configparser.ConfigParser()
-            parser.optionxform = str
-            parser.read(config_path, encoding="utf-8")
-            
-            if parser.has_section("AUDIT"):
-                enabled = parser.get("AUDIT", "audit_enabled", fallback="y")
-                config["audit_enabled"] = enabled.lower() in ("y", "yes", "true", "1")
+    config_path = SAJT_DIR / "config_ny.txt"
+    if not config_path.exists():
+        log_warn(f"Config-fil saknas: {config_path}")
+        return config
+    
+    try:
+        for line in config_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            # Skip empty lines, comments, and section headers
+            if not line or line.startswith("#") or line.startswith("["):
+                continue
+            if "=" in line:
+                key, value = line.split("=", 1)
+                key = key.strip().lower()
+                value = value.strip()
                 
-                threshold = parser.get("AUDIT", "audit_threshold", fallback="0.60")
-                config["audit_threshold"] = float(threshold)
-                
-                max_antal = parser.get("AUDIT", "audit_max_antal", fallback="10")
-                config["audit_max_antal"] = int(max_antal)
-                
-                config["audit_depth"] = parser.get("AUDIT", "audit_depth", fallback="LOW")
-        except Exception as e:
-            log_warn(f"Kunde inte läsa audit-config: {e}")
+                if key == "audit_enabled":
+                    config["audit_enabled"] = value.lower() in ("y", "yes", "true", "1")
+                elif key == "audit_threshold":
+                    config["audit_threshold"] = float(value)
+                elif key == "audit_max_antal":
+                    config["audit_max_antal"] = int(value)
+                elif key == "audit_depth":
+                    config["audit_depth"] = value.upper()
+                elif key == "site_enabled":
+                    config["site_enabled"] = value.lower() in ("y", "yes", "true", "1")
+                elif key == "site_threshold":
+                    config["site_threshold"] = float(value)
+                elif key == "site_max_antal":
+                    config["site_max_antal"] = int(value)
+    except Exception as e:
+        log_warn(f"Kunde inte läsa sajt-config: {e}")
     
     return config
+
+
+def load_audit_config() -> dict:
+    """Load audit settings from 3_sajt/config_ny.txt (wrapper for backwards compatibility)."""
+    sajt_config = load_sajt_config()
+    return {
+        "audit_enabled": sajt_config["audit_enabled"],
+        "audit_threshold": sajt_config["audit_threshold"],
+        "audit_max_antal": sajt_config["audit_max_antal"],
+        "audit_depth": sajt_config["audit_depth"],
+    }
 
 
 async def run_audits_for_qualified_companies(date_folder: Path) -> tuple[int, int]:
@@ -813,7 +901,7 @@ async def run_audits_for_qualified_companies(date_folder: Path) -> tuple[int, in
     audit_config = load_audit_config()
     
     if not audit_config["audit_enabled"]:
-        log_info("Audits är inaktiverade i config (audit_enabled = n)")
+        log_info("Audits är inaktiverade i config (audit_enabled = n i 3_sajt/config_ny.txt)")
         return 0, 0
     
     threshold = audit_config["audit_threshold"]
@@ -848,10 +936,11 @@ async def run_audits_for_qualified_companies(date_folder: Path) -> tuple[int, in
             confidence = domain_info.get("confidence", 0)
             status = domain_info.get("status", "unknown")
             
-            # Kräv verifierad domän med tillräcklig confidence
+            # Kräv domän med tillräcklig confidence
             if not domain_url:
                 continue
-            if status not in ("verified", "ai_verified"):
+            # Acceptera verified, ai_verified, eller match status
+            if status not in ("verified", "ai_verified", "match"):
                 continue
             if confidence < threshold:
                 continue
@@ -1174,6 +1263,167 @@ def sync_preview_and_audit_links(date_folder: Path) -> None:
     )
 
 
+def _collect_audit_data(date_folder: Path) -> List[Dict[str, Any]]:
+    """
+    Samla audit-data från alla företagsmappar.
+    
+    Returns:
+        Lista med audit-data för varje företag som har audit_report.json
+    """
+    audit_entries = []
+    
+    for folder in date_folder.iterdir():
+        if not folder.is_dir() or not folder.name.startswith("K") or "-" not in folder.name:
+            continue
+        
+        audit_file = folder / "audit_report.json"
+        if not audit_file.exists():
+            continue
+        
+        try:
+            audit_data = json.loads(audit_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        
+        # Hämta företagsnamn
+        company_name = folder.name
+        company_data_file = folder / "company_data.json"
+        if company_data_file.exists():
+            try:
+                company_data = json.loads(company_data_file.read_text(encoding="utf-8"))
+                company_name = company_data.get("company_name", folder.name)
+            except (json.JSONDecodeError, OSError):
+                pass
+        
+        # Extrahera relevant data
+        company_info = audit_data.get("company", {})
+        scores = audit_data.get("scores", {})
+        meta = audit_data.get("_meta", {})
+        strengths = audit_data.get("strengths", [])
+        weaknesses = audit_data.get("weaknesses", [])
+        recommendations = audit_data.get("recommendations", [])
+        
+        entry = {
+            "folder": folder.name,
+            "company_name": company_name,
+            "url": meta.get("url", ""),
+            "audit_date": meta.get("audit_date", "")[:10] if meta.get("audit_date") else "",
+            "industry": company_info.get("industry", ""),
+            "design_score": scores.get("design", ""),
+            "content_score": scores.get("content", ""),
+            "usability_score": scores.get("usability", ""),
+            "mobile_score": scores.get("mobile", ""),
+            "seo_score": scores.get("seo", ""),
+            "overall_score": scores.get("overall", ""),
+            "strengths": "; ".join(strengths[:3]) if strengths else "",
+            "weaknesses": "; ".join(weaknesses[:3]) if weaknesses else "",
+            "recommendations": "; ".join(recommendations[:3]) if recommendations else "",
+        }
+        audit_entries.append(entry)
+    
+    return audit_entries
+
+
+def create_audits_excel_sheet(date_folder: Path) -> int:
+    """
+    Skapa ett nytt blad 'Audits' i Excel-filerna med audit-data.
+    
+    Lägger till bladet i:
+    - mail_ready.xlsx
+    - kungorelser_*.xlsx
+    
+    Returns:
+        Antal filer som uppdaterades
+    """
+    audit_entries = _collect_audit_data(date_folder)
+    
+    if not audit_entries:
+        log_info("[AUDIT EXCEL] Inga audit-rapporter att lägga till i Excel")
+        return 0
+    
+    # Skapa DataFrame
+    df_audits = pd.DataFrame(audit_entries)
+    
+    # Kolumnordning för bättre läsbarhet
+    column_order = [
+        "folder", "company_name", "url", "audit_date", "industry",
+        "overall_score", "design_score", "content_score", "usability_score",
+        "mobile_score", "seo_score", "strengths", "weaknesses", "recommendations"
+    ]
+    df_audits = df_audits[[c for c in column_order if c in df_audits.columns]]
+    
+    # Byt namn på kolumner för tydlighet
+    column_names = {
+        "folder": "Mapp",
+        "company_name": "Företag",
+        "url": "Hemsida",
+        "audit_date": "Audit-datum",
+        "industry": "Bransch",
+        "overall_score": "Helhet",
+        "design_score": "Design",
+        "content_score": "Innehåll",
+        "usability_score": "Användbarhet",
+        "mobile_score": "Mobil",
+        "seo_score": "SEO",
+        "strengths": "Styrkor",
+        "weaknesses": "Svagheter",
+        "recommendations": "Rekommendationer",
+    }
+    df_audits = df_audits.rename(columns=column_names)
+    
+    updated_files = 0
+    
+    # Uppdatera mail_ready.xlsx
+    mail_ready_xlsx = date_folder / "mail_ready.xlsx"
+    if mail_ready_xlsx.exists():
+        try:
+            # Läs befintliga blad
+            with pd.ExcelFile(mail_ready_xlsx) as xls:
+                sheets = {sheet: pd.read_excel(xls, sheet_name=sheet) for sheet in xls.sheet_names}
+            
+            # Lägg till/ersätt Audits-bladet
+            sheets["Audits"] = df_audits
+            
+            # Skriv tillbaka
+            with pd.ExcelWriter(mail_ready_xlsx, engine="openpyxl") as writer:
+                for sheet_name, sheet_df in sheets.items():
+                    sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
+            
+            log_info(f"[AUDIT EXCEL] Lade till 'Audits'-blad i mail_ready.xlsx ({len(audit_entries)} rader)")
+            updated_files += 1
+        except Exception as e:
+            log_warn(f"[AUDIT EXCEL] Kunde inte uppdatera mail_ready.xlsx: {e}")
+    
+    # Uppdatera kungorelser_*.xlsx
+    date_str = date_folder.name
+    kungorelser_xlsx = date_folder / f"kungorelser_{date_str}.xlsx"
+    if not kungorelser_xlsx.exists():
+        matches = list(date_folder.glob("kungorelser_*.xlsx"))
+        if matches:
+            kungorelser_xlsx = matches[0]
+    
+    if kungorelser_xlsx.exists():
+        try:
+            # Läs befintliga blad
+            with pd.ExcelFile(kungorelser_xlsx) as xls:
+                sheets = {sheet: pd.read_excel(xls, sheet_name=sheet) for sheet in xls.sheet_names}
+            
+            # Lägg till/ersätt Audits-bladet
+            sheets["Audits"] = df_audits
+            
+            # Skriv tillbaka
+            with pd.ExcelWriter(kungorelser_xlsx, engine="openpyxl") as writer:
+                for sheet_name, sheet_df in sheets.items():
+                    sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
+            
+            log_info(f"[AUDIT EXCEL] Lade till 'Audits'-blad i {kungorelser_xlsx.name} ({len(audit_entries)} rader)")
+            updated_files += 1
+        except Exception as e:
+            log_warn(f"[AUDIT EXCEL] Kunde inte uppdatera {kungorelser_xlsx.name}: {e}")
+    
+    return updated_files
+
+
 def copy_to_dropbox(date_folder: Path) -> bool:
     """
     Kopiera datum-mapp till Dropbox.
@@ -1401,6 +1651,10 @@ def main():
     # Initiera loggfil direkt
     setup_run_logging()
     log_info(f"Run-logg: {RUN_LOG_FILE}")
+    
+    # Försök skaffa pipeline-lock för att förhindra samtidiga körningar
+    if not acquire_pipeline_lock():
+        return 1
 
     # Parse arguments - hantera master_number, datumargument och --visible
     raw_args = sys.argv[1:]
@@ -1408,11 +1662,14 @@ def main():
     master_number = None
     target_date_str = None
     visible_chrome = False  # HEADLESS: Visa Chrome-fönster?
+    skip_to_segment = False  # Hoppa över scraping och rådata, starta från segmentering
 
     # Parse argumenten manuellt för att hantera både nummer och -15 format
     for arg in raw_args:
         if arg == "--visible" or arg == "-v":
             visible_chrome = True
+        elif arg == "--alla" or arg == "--from-segment":
+            skip_to_segment = True
         elif arg.startswith("-") and arg[1:].isdigit():
             # Först kolla om det är ett kort master-nummer (1-2 siffror, t.ex. -4)
             num_part = arg[1:]
@@ -1437,12 +1694,14 @@ Användning:
   python headless_main.py                    # Kör med inställningar från config-filer
   python headless_main.py 10                 # Kör med master-nummer 10
   python headless_main.py 10 --visible       # Visa Chrome (för CAPTCHA)
+  python headless_main.py --alla             # Starta från segmentering (hoppa över scraping)
   python headless_main.py 5 -1218            # Master 5, datum 18 december
   python headless_main.py --help             # Visa denna hjälp
 
 Argument:
   master_number                     Master-nummer som styr antal företag genom hela pipelinen
   --visible, -v                     Visa Chrome-fönster (för debugging/CAPTCHA)
+  --alla, --from-segment            Hoppa över scraping och rådata, starta från segmentering
   -<nummer>                         Master-nummer (1-2 siffror, t.ex. -4 för 4 företag)
   -<dag>                            Välj specifik dag i månaden (3+ siffror, t.ex. -15 för 15:e dagen)
   -<månaddag>                       Välj månad och dag (4 siffror, t.ex. -1107 för 11:e månaden, dag 7)
@@ -1610,10 +1869,27 @@ SKILLNAD MOT main.py:
         mark_step_done(target_date_str, status, "server_started")
         print()
 
-        # Steg 2: HEADLESS SCRAPING
-        log_info("=" * 60)
-        log_info("STEG 2: HEADLESS SCRAPING")
-        log_info("=" * 60)
+        # Om --alla flaggan är satt, hoppa över scraping och rådata
+        if skip_to_segment:
+            log_info("=" * 60)
+            log_info("HOPPAR ÖVER SCRAPING OCH RÅDATA")
+            log_info("=" * 60)
+            log_info("Flaggan --alla används - startar från segmentering (STEG 4)")
+            log_info("")
+            log_info("Markerar scraping och process_raw_data som klara...")
+            
+            # Markera scraping och process_raw_data som klara
+            mark_step_done(target_date_str, status, "scraping")
+            mark_step_done(target_date_str, status, "process_raw_data")
+            
+            log_info("✓ Hoppar över STEG 2 (scraping) och STEG 3 (rådata)")
+            log_info("Fortsätter med STEG 4 (segmentering)...")
+            print()
+        else:
+            # Steg 2: HEADLESS SCRAPING
+            log_info("=" * 60)
+            log_info("STEG 2: HEADLESS SCRAPING")
+            log_info("=" * 60)
 
         info_server_dir = POIT_DIR / "info_server"
         # Använd TARGET_DATE om det finns, annars dagens datum
@@ -1676,58 +1952,61 @@ SKILLNAD MOT main.py:
                 print()
 
         # Verifiera att JSON-fil finns (antingen befintlig eller nyss skapad)
-        # Först kolla i TARGET_DATE-mappen specifikt
-        target_date_json = date_folder / f"kungorelser_{date_str}.json"
-        if target_date_json.exists() and target_date_json.stat().st_size > 0:
-            log_info(f"✓ Använder JSON-fil: {target_date_json.name}")
-        else:
-            # Om inte i TARGET_DATE-mappen, sök i alla mappar
-            log_info(
-                "Ingen JSON i dagens mapp - söker fallback bland info_server/**/kungorelser_*.json"
-            )
-            json_files = list(info_server_dir.glob("**/kungorelser_*.json"))
-            if not json_files:
-                log_error(
-                    f"Ingen kungorelser_*.json fil hittades i {date_folder} eller någon annan mapp"
+        # Hoppa över verifiering om --alla används (vi behöver inte JSON-filen)
+        if not skip_to_segment:
+            # Först kolla i TARGET_DATE-mappen specifikt
+            target_date_json = date_folder / f"kungorelser_{date_str}.json"
+            if target_date_json.exists() and target_date_json.stat().st_size > 0:
+                log_info(f"✓ Använder JSON-fil: {target_date_json.name}")
+            else:
+                # Om inte i TARGET_DATE-mappen, sök i alla mappar
+                log_info(
+                    "Ingen JSON i dagens mapp - söker fallback bland info_server/**/kungorelser_*.json"
                 )
-                log_error("Headless scraping borde ha skapat denna fil.")
-                log_error("Kontrollera att:")
-                log_error("  1. Chrome kunde starta (prova med --visible)")
-                log_error("  2. Inga CAPTCHA blockerade")
-                log_error("  3. API:et svarade korrekt")
-                mark_failed_step(
-                    target_date_str, status, "scraping", "JSON-data saknas"
-                )
-                return 1
-            fallback_json = max(json_files, key=lambda p: p.stat().st_mtime)
-            log_info(f"✓ Använder JSON-fil: {fallback_json.name} (från annan mapp)")
-
-        # Steg 3: Kör process_raw_data.py
-        log_info("=" * 60)
-        log_info("STEG 3: BEARBETNING AV RÅDATA")
-        log_info("=" * 60)
-
-        if is_step_done(status, "process_raw_data"):
-            log_info(
-                "Hoppar över process_raw_data (markerad klar i pipeline_status.json)"
-            )
-        else:
-            segmentering_script = AUTOMATION_DIR / "process_raw_data.py"
-            if segmentering_script.exists():
-                exit_code, duration, step_log, tail = run_script(
-                    "process_raw_data", segmentering_script, cwd=AUTOMATION_DIR
-                )
-                if exit_code != 0:
-                    failures.append((segmentering_script.name, exit_code, step_log))
-                    summarize_failure("process_raw_data", exit_code, step_log, tail)
+                json_files = list(info_server_dir.glob("**/kungorelser_*.json"))
+                if not json_files:
+                    log_error(
+                        f"Ingen kungorelser_*.json fil hittades i {date_folder} eller någon annan mapp"
+                    )
+                    log_error("Headless scraping borde ha skapat denna fil.")
+                    log_error("Kontrollera att:")
+                    log_error("  1. Chrome kunde starta (prova med --visible)")
+                    log_error("  2. Inga CAPTCHA blockerade")
+                    log_error("  3. API:et svarade korrekt")
                     mark_failed_step(
-                        target_date_str, status, "process_raw_data", f"exit {exit_code}"
+                        target_date_str, status, "scraping", "JSON-data saknas"
                     )
                     return 1
-                mark_step_done(target_date_str, status, "process_raw_data")
+                fallback_json = max(json_files, key=lambda p: p.stat().st_mtime)
+                log_info(f"✓ Använder JSON-fil: {fallback_json.name} (från annan mapp)")
+
+        # Steg 3: Kör process_raw_data.py (hoppas över om --alla används)
+        if not skip_to_segment:
+            log_info("=" * 60)
+            log_info("STEG 3: BEARBETNING AV RÅDATA")
+            log_info("=" * 60)
+
+            if is_step_done(status, "process_raw_data"):
+                log_info(
+                    "Hoppar över process_raw_data (markerad klar i pipeline_status.json)"
+                )
             else:
-                log_warn(f"Skript saknas: {segmentering_script}")
-        print()
+                segmentering_script = AUTOMATION_DIR / "process_raw_data.py"
+                if segmentering_script.exists():
+                    exit_code, duration, step_log, tail = run_script(
+                        "process_raw_data", segmentering_script, cwd=AUTOMATION_DIR
+                    )
+                    if exit_code != 0:
+                        failures.append((segmentering_script.name, exit_code, step_log))
+                        summarize_failure("process_raw_data", exit_code, step_log, tail)
+                        mark_failed_step(
+                            target_date_str, status, "process_raw_data", f"exit {exit_code}"
+                        )
+                        return 1
+                    mark_step_done(target_date_str, status, "process_raw_data")
+                else:
+                    log_warn(f"Skript saknas: {segmentering_script}")
+            print()
 
         # Steg 4: Kör segmentering pipeline
         log_info("=" * 60)
@@ -1826,6 +2105,8 @@ SKILLNAD MOT main.py:
             if evaluation_ran:
                 if latest_date_dir:
                     sync_preview_and_audit_links(latest_date_dir)
+                    # Skapa Audits-blad i Excel-filer
+                    create_audits_excel_sheet(latest_date_dir)
                 mark_step_done(target_date_str, status, "evaluation")
         print()
 
@@ -1918,6 +2199,8 @@ SKILLNAD MOT main.py:
     finally:
         # Stäng server
         stop_server(server_process)
+        # Ta bort pipeline-lock
+        release_pipeline_lock()
 
     # Sammanfattning
     log_info("=" * 60)

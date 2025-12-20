@@ -1,0 +1,100 @@
+{
+  "folder": "K969058-25",
+  "extracted_at": "2025-12-19T16:05:00.902930",
+  "company_name": "UpMe AB",
+  "orgnr": "559563-7280",
+  "verksamhet": "Bolaget ska bedriva coaching, rådgivning, utbildning och konsultverksamhet riktad till privatpersoner avseende personlig utveckling, livsstilsfrågor, relationer samt yrkes- och karriärutveckling. Bolaget ska även bedriva konsultverksamhet gentemot företag och organisationer inom områdena ledarskap, organisationsutveckling, affärsutveckling, försäljning och strategi. Därutöver ska bolaget bedriva därmed förenlig verksamhet.",
+  "sate": "Stockholm",
+  "address": "c/o Peter Dynér, Eriksbergsgatan 44, 114 30 STOCKHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-24",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Kurt Peter Dynér",
+      "role": "Styrelseledamot",
+      "personnr": "196705-XXXX"
+    },
+    {
+      "name": "Emma Linnéa Kristina Rengholt",
+      "role": "Styrelsesuppleant",
+      "personnr": "199509-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "upme.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "upme.com",
+        "source": "generated"
+      },
+      {
+        "domain": "upme.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "upmeab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "UpMe AB",
+    "searches": [
+      {
+        "query": "UpMe AB hemsida website",
+        "summary": "Här är information om webbplatsen (hemsidan) för UpMe AB baserat på tillgängliga uppgifter:\n\nDen svenska registreringskatalogen Bolagsfakta visar att UpMe AB registrerades den 17 december 2025 och har säte i Stockholm med adress Eriksbergsgatan 44, 114 30, Stockholm. VD och styrelseledamot är Peter Dynér. Däremot finns ingen information om någon officiell webbsida för Bolaget. ([bolagsfakta.se](https://www.bolagsfakta.se/5595637280-UpMe_AB?utm_source=openai))\n\nFör att sammanfatta:  \n• UpMe AB ha",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595637280-UpMe_AB?utm_source=openai",
+            "title": "UpMe AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "UpMe AB Bolaget ska bedriva coaching, rådgivning, utbildni kontakt",
+        "summary": "Här är en kort presentation av UpMe AB enligt registrerad information hos Bolagsverket:\n\n- Företaget har organisationsnummer 559563-7280 och har sitt säte i Stockholm, på Eriksbergsgatan 44, 114 30 Stockholm ([bolagsfakta.se](https://www.bolagsfakta.se/5595637280-UpMe_AB?utm_source=openai)).  \n- UpMe AB registrerades formellt den 17 december 2025 (med bolagsordning upprättad den 24 november 2025) ([bolagsfakta.se](https://www.bolagsfakta.se/5595637280-UpMe_AB?utm_source=openai)).  \n- Verksamhete",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595637280-UpMe_AB?utm_source=openai",
+            "title": "UpMe AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"UpMe AB\" site:se",
+        "summary": "Här är kort information om UpMe AB med svensk källa:\n\nUpMe AB är ett aktivt svenskt aktiebolag med organisationsnummer 559563‑7280. Bolaget har sitt säte i Stockholm på adress **Eriksbergsgatan 44, 114 30 Stockholm**. VD och styrelseledamot är **Peter Dynér**, och styrelsesuppleant är **Emma Rengholt** ([bolagsfakta.se](https://www.bolagsfakta.se/5595637280-UpMe_AB?utm_source=openai)).\n\nBolaget grundades genom bolagsordning den **24 november 2025** och registrerades hos Bolagsverket den **17 dec",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595637280-UpMe_AB?utm_source=openai",
+            "title": "UpMe AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "upme.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "upme.se",
+        "status": "timeout"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:06:44.335873"
+  }
+}

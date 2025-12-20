@@ -57,6 +57,48 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 POIT_DIR = PROJECT_ROOT / "1_poit"
 SEGMENT_DIR = PROJECT_ROOT / "2_segment_info"
 
+# Chrome profile paths
+CHROME_PROFILES = [
+    PROJECT_ROOT / "1_poit" / "automation" / "chrome_profile",
+    PROJECT_ROOT / "headless_1_poit" / "chrome_profile",
+]
+
+# Cache folders that are SAFE to delete (won't affect login/session)
+CHROME_CACHE_FOLDERS = [
+    "Default/Cache",
+    "Default/Code Cache", 
+    "Default/GPUCache",
+    "Default/Service Worker",
+    "Default/blob_storage",
+    "Default/File System",
+    "Default/WebStorage",
+    "GrShaderCache",
+    "ShaderCache",
+    "component_crx_cache",
+]
+
+# Files that are SAFE to delete
+CHROME_CACHE_FILES = [
+    "Default/LOCK",
+    "Default/LOG",
+    "Default/LOG.old",
+]
+
+# NEVER delete these (contains session/login data)
+CHROME_PROTECTED = [
+    "Default/Cookies",
+    "Default/Cookies-journal",
+    "Default/Local Storage",
+    "Default/Session Storage",
+    "Default/Preferences",
+    "Default/Secure Preferences",
+    "Default/Login Data",
+    "Default/Login Data-journal",
+    "Default/Extension*",
+    "Default/IndexedDB",  # Some sites use this for session
+    "Local State",
+]
+
 
 def ts() -> str:
     """Timestamp for logging."""
@@ -76,6 +118,226 @@ def log_warn(msg: str):
 def log_error(msg: str):
     """Log error message."""
     print(f"[ERASE {ts()}] ERROR: {msg}")
+
+
+def load_chrome_cleanup_config() -> dict:
+    """
+    Load Chrome profile cleanup configuration from environment variables.
+    Falls back to sensible defaults if not set.
+    
+    Returns:
+        Dictionary with cleanup settings.
+    """
+    import os
+    
+    # Try to load .env if python-dotenv is available
+    try:
+        from dotenv import load_dotenv
+        env_path = PROJECT_ROOT / ".env"
+        if env_path.exists():
+            load_dotenv(env_path)
+    except ImportError:
+        pass
+    
+    def get_bool(key: str, default: bool) -> bool:
+        val = os.environ.get(key, "").lower()
+        if val in ("true", "1", "yes", "y"):
+            return True
+        elif val in ("false", "0", "no", "n"):
+            return False
+        return default
+    
+    def get_int(key: str, default: int) -> int:
+        val = os.environ.get(key, "")
+        try:
+            return int(val)
+        except (ValueError, TypeError):
+            return default
+    
+    return {
+        "enabled": get_bool("CHROME_CACHE_CLEANUP_ENABLED", True),
+        "max_size_mb": get_int("CHROME_PROFILE_MAX_SIZE_MB", 200),
+        "clean_http_cache": get_bool("CHROME_CLEAN_HTTP_CACHE", True),
+        "clean_code_cache": get_bool("CHROME_CLEAN_CODE_CACHE", True),
+        "clean_gpu_cache": get_bool("CHROME_CLEAN_GPU_CACHE", True),
+        "clean_service_worker": get_bool("CHROME_CLEAN_SERVICE_WORKER", True),
+        "clean_blob_storage": get_bool("CHROME_CLEAN_BLOB_STORAGE", True),
+        "allow_full_reset": get_bool("CHROME_ALLOW_FULL_RESET", False),
+    }
+
+
+def get_profile_size_mb(profile_dir: Path) -> float:
+    """
+    Calculate total size of a Chrome profile directory in MB.
+    
+    Args:
+        profile_dir: Path to Chrome profile directory.
+    
+    Returns:
+        Size in megabytes.
+    """
+    if not profile_dir.exists():
+        return 0.0
+    
+    total_bytes = 0
+    try:
+        for item in profile_dir.rglob("*"):
+            if item.is_file():
+                try:
+                    total_bytes += item.stat().st_size
+                except (OSError, PermissionError):
+                    pass
+    except Exception:
+        pass
+    
+    return total_bytes / (1024 * 1024)
+
+
+def clean_chrome_profile_cache(
+    profile_dir: Path,
+    config: dict = None
+) -> Tuple[int, float]:
+    """
+    Clean cache from a Chrome profile while preserving session/login data.
+    
+    Args:
+        profile_dir: Path to Chrome profile directory.
+        config: Optional config dict from load_chrome_cleanup_config().
+    
+    Returns:
+        Tuple of (items_removed, mb_freed).
+    """
+    if not profile_dir.exists():
+        return 0, 0.0
+    
+    if config is None:
+        config = load_chrome_cleanup_config()
+    
+    if not config["enabled"]:
+        log_info(f"Chrome cache cleanup disabled for {profile_dir.name}")
+        return 0, 0.0
+    
+    # Calculate size before cleanup
+    size_before = get_profile_size_mb(profile_dir)
+    
+    items_removed = 0
+    
+    # Build list of folders to clean based on config
+    folders_to_clean = []
+    if config["clean_http_cache"]:
+        folders_to_clean.extend(["Default/Cache", "Default/Cache2"])
+    if config["clean_code_cache"]:
+        folders_to_clean.append("Default/Code Cache")
+    if config["clean_gpu_cache"]:
+        folders_to_clean.extend(["Default/GPUCache", "GrShaderCache", "ShaderCache"])
+    if config["clean_service_worker"]:
+        folders_to_clean.append("Default/Service Worker")
+    if config["clean_blob_storage"]:
+        folders_to_clean.extend(["Default/blob_storage", "Default/File System"])
+    
+    # Always safe to clean these
+    folders_to_clean.extend([
+        "component_crx_cache",
+        "Default/WebStorage",
+        "Crashpad",
+        "BrowserMetrics",
+    ])
+    
+    # Clean folders
+    for folder_name in folders_to_clean:
+        folder_path = profile_dir / folder_name
+        if folder_path.exists() and folder_path.is_dir():
+            try:
+                shutil.rmtree(folder_path)
+                log_info(f"  Rensade: {folder_name}")
+                items_removed += 1
+            except PermissionError:
+                log_warn(f"  Kunde inte rensa (låst): {folder_name}")
+            except Exception as e:
+                log_warn(f"  Fel vid rensning av {folder_name}: {e}")
+    
+    # Clean log files
+    for file_name in CHROME_CACHE_FILES:
+        file_path = profile_dir / file_name
+        if file_path.exists() and file_path.is_file():
+            try:
+                file_path.unlink()
+                items_removed += 1
+            except Exception:
+                pass
+    
+    # Calculate size after cleanup
+    size_after = get_profile_size_mb(profile_dir)
+    mb_freed = max(0, size_before - size_after)
+    
+    return items_removed, mb_freed
+
+
+def clean_all_chrome_profiles(full_reset: bool = False) -> Tuple[int, float, List[str]]:
+    """
+    Clean all Chrome profiles used by the pipeline.
+    
+    Args:
+        full_reset: If True and CHROME_ALLOW_FULL_RESET is enabled,
+                   delete entire profiles (requires re-login).
+    
+    Returns:
+        Tuple of (total_items_removed, total_mb_freed, list_of_warnings).
+    """
+    config = load_chrome_cleanup_config()
+    
+    log_info("=" * 60)
+    log_info("CHROME PROFIL-RENSNING")
+    log_info("=" * 60)
+    
+    total_items = 0
+    total_mb_freed = 0.0
+    warnings = []
+    
+    for profile_dir in CHROME_PROFILES:
+        if not profile_dir.exists():
+            log_info(f"Profil finns inte (OK): {profile_dir.relative_to(PROJECT_ROOT)}")
+            continue
+        
+        # Calculate current size
+        size_mb = get_profile_size_mb(profile_dir)
+        log_info(f"\nProfil: {profile_dir.relative_to(PROJECT_ROOT)}")
+        log_info(f"  Storlek före: {size_mb:.1f} MB")
+        
+        # Warn if profile is very large
+        if size_mb > config["max_size_mb"]:
+            warn_msg = f"Profilen är stor ({size_mb:.0f} MB > {config['max_size_mb']} MB)"
+            log_warn(f"  ⚠️  {warn_msg}")
+            warnings.append(warn_msg)
+        
+        if full_reset and config["allow_full_reset"]:
+            # DANGER: Full profile reset
+            log_warn("  🔴 FULLSTÄNDIG RESET - Raderar HELA profilen!")
+            try:
+                shutil.rmtree(profile_dir)
+                total_items += 1
+                total_mb_freed += size_mb
+                log_info(f"  Profil raderad. Du måste logga in igen!")
+            except Exception as e:
+                warnings.append(f"Kunde inte radera profil: {e}")
+        else:
+            # Safe cache cleanup
+            items, mb_freed = clean_chrome_profile_cache(profile_dir, config)
+            total_items += items
+            total_mb_freed += mb_freed
+            
+            # Show size after cleanup
+            size_after = get_profile_size_mb(profile_dir)
+            log_info(f"  Storlek efter: {size_after:.1f} MB (frigjorde {mb_freed:.1f} MB)")
+    
+    log_info("")
+    log_info("=" * 60)
+    log_info(f"CHROME CLEANUP KLAR: {total_items} objekt, {total_mb_freed:.1f} MB frigjort")
+    if warnings:
+        log_info(f"Varningar: {len(warnings)}")
+    log_info("=" * 60)
+    
+    return total_items, total_mb_freed, warnings
 
 
 def remove_path(path: Path, description: str = "") -> bool:
@@ -473,13 +735,14 @@ def cleanup_old_directories(base_dir: Path, keep_days: int = 7) -> int:
     return removed_count
 
 
-def run_full_cleanup(keep_days: int = 7) -> Tuple[int, List[str]]:
+def run_full_cleanup(keep_days: int = 7, clean_chrome: bool = True) -> Tuple[int, List[str]]:
     """
     Kör komplett cleanup: rensar gamla mappar OCH all data för dagens körning.
     Detta är huvudfunktionen som anropas från main.py vid start.
 
     Args:
         keep_days: Antal dagar att behålla gamla mappar (default: 7)
+        clean_chrome: Om True, rensa Chrome-profilernas cache (default: True)
 
     Returns:
         Tuple of (total_items_removed, list_of_errors)
@@ -525,6 +788,21 @@ def run_full_cleanup(keep_days: int = 7) -> Tuple[int, List[str]]:
         all_errors.append(error_msg)
 
     print()
+
+    # Steg 3: Rensa Chrome-profilernas cache (om aktiverat)
+    if clean_chrome:
+        log_info("Steg 3: Rensar Chrome-profilernas cache...")
+        try:
+            chrome_items, chrome_mb, chrome_warnings = clean_all_chrome_profiles(full_reset=False)
+            total_removed += chrome_items
+            all_errors.extend(chrome_warnings)
+            log_info(f"Chrome cache rensad: {chrome_items} objekt, {chrome_mb:.1f} MB frigjort")
+        except Exception as e:
+            error_msg = f"Fel vid rensning av Chrome-profiler: {e}"
+            log_error(error_msg)
+            all_errors.append(error_msg)
+        print()
+    
     log_info("=" * 60)
     log_info(f"KOMPLETT CLEANUP - Klar. Totalt {total_removed} objekt raderade")
     if all_errors:
@@ -720,6 +998,8 @@ def main():
   python utils/erase.py              # Clean today's data only (default)
   python utils/erase.py --all        # Clean all date directories
   python utils/erase.py --all-logs   # Also clean old log files
+  python utils/erase.py --chrome     # Clean only Chrome profile cache
+  python utils/erase.py --chrome-full  # Full Chrome reset (kräver CHROME_ALLOW_FULL_RESET=true)
 """,
     )
     parser.add_argument(
@@ -730,8 +1010,32 @@ def main():
         action="store_true",
         help="Also clean old log files (not just today)",
     )
+    parser.add_argument(
+        "--chrome",
+        action="store_true",
+        help="Clean only Chrome profile cache (keeps session/login)",
+    )
+    parser.add_argument(
+        "--chrome-full",
+        action="store_true",
+        help="Full Chrome profile reset (requires CHROME_ALLOW_FULL_RESET=true in .env)",
+    )
+    parser.add_argument(
+        "--no-chrome",
+        action="store_true",
+        help="Skip Chrome profile cleanup",
+    )
 
     args = parser.parse_args()
+
+    # Handle Chrome-only operations
+    if args.chrome or args.chrome_full:
+        items, mb_freed, warnings = clean_all_chrome_profiles(full_reset=args.chrome_full)
+        if warnings:
+            for w in warnings:
+                log_warn(w)
+            return 1 if args.chrome_full else 0
+        return 0
 
     clean_today_only = not args.all
     keep_old_logs = not args.all_logs
@@ -739,6 +1043,12 @@ def main():
     total_removed, errors = cleanup_pipeline_data(
         clean_today_only=clean_today_only, keep_old_logs=keep_old_logs
     )
+
+    # Also run Chrome cleanup unless --no-chrome
+    if not args.no_chrome:
+        chrome_items, chrome_mb, chrome_warnings = clean_all_chrome_profiles(full_reset=False)
+        total_removed += chrome_items
+        errors.extend(chrome_warnings)
 
     if errors:
         return 1

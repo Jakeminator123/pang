@@ -32,16 +32,18 @@ BASE_DJUPANALYS_DIR = (
     Path(__file__).parent.parent / "2_segment_info" / "djupanalys"
 )
 
-# Läs konfiguration
-CONFIG_FILE = Path(__file__).parent / "config.txt"
+# Läs konfiguration från config_ny.txt (INI-format)
+CONFIG_FILE = Path(__file__).parent / "config_ny.txt"
 
 
 def load_config() -> Dict[str, str]:
+    """Ladda konfiguration från config_ny.txt (INI-format med sektioner)."""
     cfg: Dict[str, str] = {}
     if CONFIG_FILE.exists():
         for line in CONFIG_FILE.read_text(encoding="utf-8").splitlines():
             line = line.strip()
-            if not line or line.startswith("#"):
+            # Skip empty lines, comments, and section headers
+            if not line or line.startswith("#") or line.startswith("["):
                 continue
             if "=" in line:
                 k, v = line.split("=", 1)

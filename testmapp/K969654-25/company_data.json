@@ -1,0 +1,135 @@
+{
+  "folder": "K969654-25",
+  "extracted_at": "2025-12-19T16:05:00.949085",
+  "company_name": "And Exp AB",
+  "orgnr": "559563-4311",
+  "verksamhet": "Bolaget ska bedriva konsultverksamhet inom ledarskap, utbildning, projektledning, verksamhetsstyrning, ingenjörstjänster och teknikutveckling. Verksamheten omfattar även teknisk konsultation inom fordons-, industri-, energi- och digitaliseringssektorn, med fokus på helhetslösningar inom AI-utveckling, systemintegration och energieffektiv teknik. Bolaget ska bedriva kreativ produktion inom video, reportage, storytelling, branded content och marknadsföring i sociala medier, samt försäljning av ann",
+  "sate": "Eskilstuna",
+  "address": "Noachsgatan 11, 633 42 ESKILSTUNA,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-18",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Ande Hana",
+      "role": "Styrelsesuppleant",
+      "personnr": "199001-XXXX"
+    },
+    {
+      "name": "Aseel Hana",
+      "role": "Styrelsesuppleant",
+      "personnr": "198408-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "exp.com",
+    "confidence": 1.0,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "andexp.com",
+        "source": "generated"
+      },
+      {
+        "domain": "andexp.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "andexpab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "And Exp AB",
+    "searches": [
+      {
+        "query": "And Exp AB hemsida website",
+        "summary": "Här är information om ”Exp AB” eller ”Exp AB:s hemsida”. Jag hittade två relevanta yrity (företag) med namnet Exp:\n\n1. EXP (en internationell ingenjörs‑ och konsultfirma): hemsida är https://www.exp.com/([exp.com](https://www.exp.com/?utm_source=openai))  \n2. EXP Group (svenskt industriellt företag med flera specialiserade bolag): hemsida är https://expgroup.se/([expgroup.se](https://expgroup.se/?utm_source=openai))\n\nOm du syftar på ett annat ”Exp AB” (t.ex. ventur‑ eller fastighetsbolag), vänli",
+        "sources": [
+          {
+            "url": "https://www.exp.com/?utm_source=openai",
+            "title": "Engineering, Architecture, Design and Consulting | EXP"
+          },
+          {
+            "url": "https://expgroup.se/?utm_source=openai",
+            "title": "EXPGROUP – EXPGROUP"
+          }
+        ]
+      },
+      {
+        "query": "And Exp AB Bolaget ska bedriva konsultverksamhet inom ledarsk kontakt",
+        "summary": "Jag hittade ingen direkt information om ett företag som heter “Exp AB” med ändamål att “bedriva konsultverksamhet inom ledarsk kontakt” (ledarskapskontakt). Det är möjligt att företaget är nystartat eller att beskrivningen är något felaktig eller ofullständig i formulerandet. Vänligen kontrollera att företagsnamnet och verksamhetsbeskrivningen är korrekt eller ge fler detaljer så jag kan söka vidare.",
+        "sources": []
+      },
+      {
+        "query": "\"And Exp AB\" site:se",
+        "summary": "Här är kort information om “And Exp AB”:\n\n• And Exp AB är ett svenskt aktiebolag med organisationsnummer 559563‑4311. Det är registrerat i Eskilstuna (postadress Noachsgatan 11, 633 42 Eskilstuna) ([bolagsfakta.se](https://www.bolagsfakta.se/5595634311-And_Exp_AB?utm_source=openai)).  \n• Bolaget bildades den 18 november 2025 och registrerades den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634311-And_Exp_AB?utm_source=openai)).  \n• Verksamheten omfattar konsultverksamhet in",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634311-And_Exp_AB?utm_source=openai",
+            "title": "And Exp AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "exp.com",
+        "confidence": 0.85
+      },
+      {
+        "domain": "expgroup.se",
+        "confidence": 0.85
+      },
+      {
+        "domain": "andexp.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "exp.com",
+        "url": "https://www.exp.com/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 1.0,
+        "title": "Engineering, Architecture, Design and Consulting | EXP",
+        "description": "We provide engineering and design services to change the world's built and natural environments. Learn more about our services, projects and careers.",
+        "text_sample": "Engineering, Architecture, Design and Consulting | EXP Search | | Contact Us Locations English | French | Data centers are power-hungry and growing exponentially. Learn how we’re positioning to adapt to and meet energy needs. VIEW THE INSIGHT VIEW DATA CENTERS PAGE Transforming projects through alternative delivery methods. We support major alternative delivery projects with multidisciplinary solutions. VIEW DIGITAL DELIVERY VIEW ALL SERVICES Enhancing the guest experience. Innovative solutions ",
+        "ai_verified": false,
+        "ai_confidence": 0.9,
+        "ai_reason": "The website 'exp.com' belongs to a company providing engineering and design services, which does not match the business activities of And Exp AB. Additionally, there is no mention of Eskilstuna, and the focus is on global engineering and architecture services, not consulting within the specified sectors."
+      },
+      {
+        "domain": "expgroup.se",
+        "url": "https://expgroup.se/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 1.0,
+        "title": "EXPGROUP – EXPGROUP",
+        "description": "",
+        "text_sample": "EXPGROUP – EXPGROUP SPECIALISERADE INDUSTRIFÖRETAG INOM KONSTRUKTION, TILLVERKNING OCH BEARBETNING SPECIALISERADE INDUSTRIFÖRETAG INOM KONSTRUKTION, TILLVERKNING OCH BEARBETNING OM OSS EXP. Group består av industriföretag som samverkar. Vi ser oss som länkar i en kedja där vi tillsammans erbjuder dig som kund en komplett lösning. Vårt erbjudande inkluderar allt från skärande bearbetning som fräsning, svarvning till lackering, pressning, verktygstillverkning, svetsning, kapning, rörbearbetning sa",
+        "ai_verified": false,
+        "ai_confidence": 0.9,
+        "ai_reason": "Hemsidan expgroup.se beskriver ett företag som är specialiserat på konstruktion, tillverkning och bearbetning, vilket inte stämmer överens med And Exp AB:s verksamhet inom konsultverksamhet och teknikutveckling. Dessutom nämns ingen koppling till Eskilstuna, vilket är staden där And Exp AB är baserat."
+      },
+      {
+        "domain": "andexp.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:16:46.147736"
+  }
+}

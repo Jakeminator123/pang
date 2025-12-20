@@ -1,0 +1,100 @@
+{
+  "folder": "K969711-25",
+  "extracted_at": "2025-12-19T16:05:00.965743",
+  "company_name": "IO RÖR I NORR AB",
+  "orgnr": "559563-5185",
+  "verksamhet": "Kommer verksamma inom rörmokeri/vvs arbeten mot företag och privatpersoner.",
+  "sate": "Piteå",
+  "address": "c/o Robin Eriksson, Grundviksvägen 45, 944 91 HORTLAX,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-01",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Robin Olof Eriksson",
+      "role": "Styrelseledamot",
+      "personnr": "199104-XXXX"
+    },
+    {
+      "name": "Desiré Ellinor Lindberg",
+      "role": "Styrelsesuppleant",
+      "personnr": "199309-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "iororinorr.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "iororinorr.com",
+        "source": "generated"
+      },
+      {
+        "domain": "iororinorr.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "iororinorrab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "IO RÖR I NORR AB",
+    "searches": [
+      {
+        "query": "IO RÖR I NORR AB hemsida website",
+        "summary": "Jag hittade ingen officiell webbplats (hemsida) för IO Rör i Norr AB. Följande information är tillgänglig via registerdatabaser:\n\n• IO Rör i Norr AB är ett aktiebolag med organisationsnummer 559563‑5185 och har sitt säte i Piteå, Norrbottens län. Adress: c/o Robin Eriksson, Grundviksvägen 45, 944 91 Hortlax ([bolagsfakta.se](https://www.bolagsfakta.se/5595635185-IO_ROR_I_NORR_AB?utm_source=openai)).\n\n• Bolaget registrerades hos Bolagsverket den 17 december 2025 (bolagsbildat den 1 december 2025)",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635185-IO_ROR_I_NORR_AB?utm_source=openai",
+            "title": "IO RÖR I NORR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "IO RÖR I NORR AB Kommer verksamma inom rörmokeri/vvs arbeten mot fö kontakt",
+        "summary": "Här är en kortfattad information om IO RÖR I NORR AB:\n\n- IO RÖR I NORR AB är ett aktivt aktiebolag med säte i Piteå (Hortlax), registrerat den 17 december 2025 med bildande den 1 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635185-IO_ROR_I_NORR_AB?utm_source=openai)).  \n- Bolaget uppger att det \"kommer verksamma inom rörmokeri/VVS arbeten mot företag och privatpersoner\" ([bolagsfakta.se](https://www.bolagsfakta.se/5595635185-IO_ROR_I_NORR_AB?utm_source=openai)).\n\nSammanfattning",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635185-IO_ROR_I_NORR_AB?utm_source=openai",
+            "title": "IO RÖR I NORR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"IO RÖR I NORR AB\" site:se",
+        "summary": "Här är en kort sammanfattning om företaget *IO RÖR I NORR AB*, baserat på information från Bolagsfakta:\n\n- IO RÖR I NORR AB är ett aktivt aktiebolag med organisationsnummer 559563‑5185. Företaget har sitt säte i Piteå, Norrbottens län, och är registrerat till adressen Grundviksvägen 45, 944 91 Hortlax ([bolagsfakta.se](https://www.bolagsfakta.se/5595635185-IO_ROR_I_NORR_AB?utm_source=openai)).\n\n- Bolaget bildades den 1 december 2025 och registrerades hos Bolagsverket den 17 december 2025. Firman",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635185-IO_ROR_I_NORR_AB?utm_source=openai",
+            "title": "IO RÖR I NORR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "iororinorr.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "iororinorr.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:20:10.713695"
+  }
+}

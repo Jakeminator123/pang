@@ -1,0 +1,100 @@
+{
+  "folder": "K969751-25",
+  "extracted_at": "2025-12-19T16:05:00.976429",
+  "company_name": "Rao Restaurang AB",
+  "orgnr": "559563-5250",
+  "verksamhet": "Bolaget ska bedriva restaurangverksamhet. Bolaget ska äga och förvalta fast och lös egendom samt därmed förenlig verksamhet.",
+  "sate": "Katrineholm",
+  "address": "Strångsjövägen 1, 641 92 KATRINEHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-03",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Raoan Hussein",
+      "role": "Styrelsesuppleant",
+      "personnr": "200309-XXXX"
+    },
+    {
+      "name": "Berfin Hussein",
+      "role": "Styrelsesuppleant",
+      "personnr": "199903-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "raorestaurang.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "raorestaurang.com",
+        "source": "generated"
+      },
+      {
+        "domain": "raorestaurang.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "raorestaurangab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Rao Restaurang AB",
+    "searches": [
+      {
+        "query": "Rao Restaurang AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell hemsida för Rao Restaurang AB. Företaget är registrerat med organisationsnummer 559563‑5250 och har säte i Katrineholm (adress: Strångsjövägen 1, 641 92 Katrineholm) ([bolagsfakta.se](https://www.bolagsfakta.se/5595635250-Rao_Restaurang_AB?utm_source=openai)). Det finns inga angivna kontaktuppgifter eller länk till någon hemsida i tillgängliga företagsregister.\n\nSammanfattningsvis:\n- Hemsida för Rao Restaurang AB hittades inte via sökningar.\n- Företage",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635250-Rao_Restaurang_AB?utm_source=openai",
+            "title": "Rao Restaurang AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Rao Restaurang AB Bolaget ska bedriva restaurangverksamhet. Bolaget  kontakt",
+        "summary": "Här är en kortfattad sammanställning av företagsinformation för Rao Restaurang AB:\n\n- Rao Restaurang AB är ett aktiebolag med organisationsnummer 559563‑5250. Bolaget ska bedriva restaurangverksamhet samt äga och förvalta fast och lös egendom samt därmed förenlig verksamhet. Bolaget bildades den 3 november 2025 och registrerades den 17 december 2025. Firmatecknas av styrelsen. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635250-Rao_Restaurang_AB?utm_source=openai))\n\n- Adress är Strångsjöväge",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635250-Rao_Restaurang_AB?utm_source=openai",
+            "title": "Rao Restaurang AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Rao Restaurang AB\" site:se",
+        "summary": "Här är en kort sammanfattning om Rao Restaurang AB (enligt svensk källa):\n\n- Rao Restaurang AB har organisationsnummer 559563‑5250. Företaget är registrerat i Katrineholm, Södermanlands län med adress Strångsjövägen 1, 641 92 Katrineholm.([bolagsfakta.se](https://www.bolagsfakta.se/5595635250-Rao_Restaurang_AB?utm_source=openai))  \n- Bolaget bildades den 3 november 2025 och registrerades hos Bolagsverket den 17 december 2025. Namnet registrerades även detta datum.([bolagsfakta.se](https://www.bo",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635250-Rao_Restaurang_AB?utm_source=openai",
+            "title": "Rao Restaurang AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "raorestaurang.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "raorestaurang.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:22:41.320485"
+  }
+}

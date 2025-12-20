@@ -1,0 +1,15 @@
+Till: gunillapriv@gmail.com
+Ämne: Förfrågan om konsulttjänster
+============================================================
+
+Hej Gunilla,
+
+Vi har noterat ert nyregistrerade bolag, Kielim Konsult AB, och den spännande inriktningen inom lön och HR-tjänster samt applikation och systemhantering. Det verkar som ni ännu inte har en officiell hemsida, och vi på SajtStudio.se skulle gärna vilja hjälpa er komma igång online.
+
+Genom att kombinera AI med design kan vi snabbt skapa en kostnadsfri demo-sida för er, vilket ger er en konkret bild av hur er framtida webbplats kan se ut. Med moderna React-sidor byggda med Next.js och Tailwind, ser vi till att skapa en plattform som reflekterar er verksamhets kompetens och professionalitet.
+
+Om ni är intresserade av att diskutera mer om hur vi kan assistera er i detta, tveka inte att höra av er. Vi ser fram emot möjligheten att stötta er med en lösning som passar just era behov.
+
+Mvh,  
+[Ditt namn]  
+SajtStudio.se

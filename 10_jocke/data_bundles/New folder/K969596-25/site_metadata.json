@@ -1,0 +1,21 @@
+{
+  "company_name": "A.Westerlund AB",
+  "orgnr": "559563-4006",
+  "folder_name": "K969596-25",
+  "preview_url": "https://demo-kzmqexpaukvzht598u2w.vusercontent.net",
+  "chat_id": "uDhQhetsWKz",
+  "version_id": "b_vuTUzERNX7H",
+  "cost": {
+    "estimated": {
+      "estimated_prompt_tokens": 1013,
+      "estimated_completion_tokens": 3500,
+      "estimated_total_tokens": 4513,
+      "estimated_cost_usd": 0.027769,
+      "model": "v0-1.5-md",
+      "timestamp": "2025-12-19T16:51:01.936827"
+    },
+    "actual": null,
+    "generated_at": "2025-12-19T16:53:44.570836"
+  },
+  "generated_at": "2025-12-19T16:53:44.570843"
+}

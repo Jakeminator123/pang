@@ -1,0 +1,120 @@
+{
+  "folder": "K969530-25",
+  "extracted_at": "2025-12-19T16:05:00.921753",
+  "company_name": "AKK Solutions AB",
+  "orgnr": "559563-5177",
+  "verksamhet": "Detta bolag ska köpa aktier i ett annat bolag som bedriver streaming av racketsport.",
+  "sate": "Göteborg",
+  "address": "c/o Andreas Karlsson, Karlfeldtsgatan 2 lgh 1402, 412 68 GÖTEBORG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-26",
+  "emails": [
+    "andreasknutkarlsson@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Andreas Thomas Knut Karlsson",
+      "role": "Styrelsesuppleant",
+      "personnr": "199303-XXXX"
+    },
+    {
+      "name": "Sollaleh Khorramshahi",
+      "role": "Styrelsesuppleant",
+      "personnr": "198901-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "akksolution.com",
+    "confidence": 1.0,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "akksolutions.com",
+        "source": "generated"
+      },
+      {
+        "domain": "akksolutions.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "akksolutionsab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "AKK Solutions AB",
+    "searches": [
+      {
+        "query": "AKK Solutions AB hemsida website",
+        "summary": "Här är AKK Solutions AB:s officiella hemsida:\n\n- Namn: AKK Solutions  \n- Webbplats: akksolution.com ([akksolution.com](https://akksolution.com/?utm_source=openai))\n\nKort översikt från sajten:\n- Företaget erbjuder energirelaterade lösningar med fokus på energihandel, handel med råolja och raffinerade oljeprodukter, petrokemikalier samt mellanhandsförmedling av fartygsuthyrning ([akksolution.com](https://akksolution.com/?utm_source=openai)).\n- Huvudkontoret är beläget i Ras Al Khaimah, Förenade Ar",
+        "sources": [
+          {
+            "url": "https://akksolution.com/?utm_source=openai",
+            "title": "AKK Solutions"
+          }
+        ]
+      },
+      {
+        "query": "AKK Solutions AB Detta bolag ska köpa aktier i ett annat bolag som  kontakt",
+        "summary": "Här är en kort och tydlig beskrivning av AKK Solutions AB, inklusive kontaktinformation och avsikten att köpa aktier i ett annat bolag:\n\n- AKK Solutions AB är ett nyregistrerat aktiebolag (organisationsnummer 559563‑5177) med säte i Göteborg, bildat den 26 november 2025 och registrerat den 17 december 2025.([bolagsfakta.se](https://www.bolagsfakta.se/5595635177-AKK_Solutions_AB?utm_source=openai))  \n- Bolagets verksamhetsbeskrivning anger att \"detta bolag ska köpa aktier i ett annat bolag som be",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635177-AKK_Solutions_AB?utm_source=openai",
+            "title": "AKK Solutions AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"AKK Solutions AB\" site:se",
+        "summary": "Här är information om AKK Solutions AB i Sverige:\n\n- AKK Solutions AB har organisationsnummer 559563‑5177 och är ett aktivt aktiebolag med säte i Göteborg, Västra Götalands län ([bolagsfakta.se](https://www.bolagsfakta.se/5595635177-AKK_Solutions_AB?utm_source=openai)). Adressen är Karlfeldtsgatan 2 lgh 1402, 412 68 Göteborg ([bolagsfakta.se](https://www.bolagsfakta.se/5595635177-AKK_Solutions_AB?utm_source=openai)).\n\n- Bolaget bildades den 26 november 2025 och registrerades hos Bolagsverket den",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635177-AKK_Solutions_AB?utm_source=openai",
+            "title": "AKK Solutions AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "akksolution.com",
+        "confidence": 0.85
+      },
+      {
+        "domain": "akksolutions.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "akksolution.com",
+        "url": "https://akksolution.com/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 1.0,
+        "title": "AKK Solutions",
+        "description": "",
+        "text_sample": "AKK Solutions CONTACT US OUR MISSION We strive to provide exceptional value and service to our customers, ensuring smooth operation and strengthening long-term partnerships. To be the world's leading provider of energy solutions. NAVIGATING EXCELLENCE IN ENERGY SOLUTIONS This website uses cookies to ensure you get the best experience OK COMPANY'S VALUES Integrity We conduct our business with the highest ethical standards, ensuring transparency and honesty in all our operations Excellence We are ",
+        "ai_verified": false,
+        "ai_confidence": 0.9,
+        "ai_reason": "Hemsidan akksolution.com beskriver ett företag som fokuserar på energilösningar, vilket inte stämmer överens med AKK Solutions AB:s verksamhet inom streaming av racketsport. Dessutom nämns ingen koppling till Göteborg. Därför är det osannolikt att hemsidan tillhör det specificerade företaget."
+      },
+      {
+        "domain": "akksolutions.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:10:54.420657"
+  }
+}

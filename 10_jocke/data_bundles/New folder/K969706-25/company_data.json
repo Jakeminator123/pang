@@ -1,0 +1,92 @@
+{
+  "folder": "K969706-25",
+  "extracted_at": "2025-12-19T16:05:00.963306",
+  "company_name": "Udells Entertainment AB",
+  "orgnr": "559563-4626",
+  "verksamhet": "Föremålet för bolagets verksamhet är är att bedriva konsultverksamhet och eventverksamhet inom nattklubbsbranschen och därmed förenlig verksamhet.",
+  "sate": "Tranås",
+  "address": "Villängsvägen 6, 573 61 SOMMEN,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-08",
+  "emails": [
+    "theoudell@icloud.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Anders Theo Udell",
+      "role": "Styrelsesuppleant",
+      "personnr": "200310-XXXX"
+    },
+    {
+      "name": "Tilde Diana Eriksson",
+      "role": "Styrelsesuppleant",
+      "personnr": "200305-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "udellsentertainment.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "udellsentertainment.com",
+        "source": "generated"
+      },
+      {
+        "domain": "udellsentertainment.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "udellsentertainmentab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Udells Entertainment AB",
+    "searches": [
+      {
+        "query": "Udells Entertainment AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon information om någon officiell hemsida för \"Udells Entertainment AB\". Det verkar inte finnas någon väletablerad närvaro online under det namnet.\n\nOm du har mer detaljer – till exempel en stad, bransch eller annan specifikation – så hjälper jag gärna att leta vidare!",
+        "sources": []
+      },
+      {
+        "query": "Udells Entertainment AB Föremålet för bolagets verksamhet är är att bedriv kontakt",
+        "summary": "Här är en kortfattad version av verksamhetsbeskrivningen för Udells Entertainment AB:\n\n\"Föremålet för bolagets verksamhet är att bedriva konsultverksamhet och eventverksamhet inom nattklubbsbranschen samt därmed förenlig verksamhet.\" ([bolagsfakta.se](https://www.bolagsfakta.se/5595634626-Udells_Entertainment_AB?utm_source=openai))",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634626-Udells_Entertainment_AB?utm_source=openai",
+            "title": "Udells Entertainment AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"Udells Entertainment AB\" site:se",
+        "summary": "Jag kunde tyvärr inte hitta någon information om \"Udells Entertainment AB\" via svenska webbplatser (ändelse .se) eller via internationella källor under det svenska domänsuffixet. Det finns inga tydliga träffar eller offentliga uppgifter som bekräftar att ett företag med det namnet existerar på en .se-adress eller inom svenska registern.",
+        "sources": []
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "udellsentertainment.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "udellsentertainment.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:19:42.803745"
+  }
+}

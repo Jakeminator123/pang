@@ -1,0 +1,15 @@
+Till: lejansgard1288@gmail.com
+Ämne: Förfrågan om fastighetsinformation
+============================================================
+
+Hej Tord,
+
+Jag har sett att ni nyligen har registrerat ett nytt bolag, Lejans Bostäder AB, med fokus på att äga och förvalta fastigheter och värdepapper. Det verkar som att ni för närvarande inte har en officiell hemsida kopplad till verksamheten. 
+
+Vi på SajtStudio.se kan hjälpa er att komma igång online genom att ta fram en kostnadsfri demo-sida. Detta kan ge er en bild av hur en framtida hemsida kan se ut och vilka möjligheter som finns. 
+
+Vi bygger moderna och responsiva sidor med React, Next.js och Tailwind och kan även finjustera designen för att passa era specifika behov. Om ni är intresserade av att se vad vi kan göra för er, tveka inte att höra av er så kan vi diskutera vidare.
+
+Mvh,  
+[Ditt namn]  
+SajtStudio.se

@@ -237,6 +237,11 @@ def launch_chrome_with_profile(start_url: str) -> subprocess.Popen:
             f"--user-data-dir={PROFILE_DIR}",
             "--profile-directory=Default",
             f"--load-extension={ext_path}",
+            # Förhindra att Chrome throttlar bakgrundstabbar
+            "--disable-background-timer-throttling",      # Timers (setTimeout) körs normalt i bakgrund
+            "--disable-backgrounding-occluded-windows",   # Rendera även dolda fönster
+            "--disable-renderer-backgrounding",           # Renderer-processer throttlas inte
+            "--disable-features=IntensiveWakeUpThrottling",  # Ingen intensiv throttling
             start_url,
         ],
         shell=False,

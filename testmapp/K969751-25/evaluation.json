@@ -1,0 +1,10 @@
+{
+  "folder": "K969751-25",
+  "company_name": "Rao Restaurang AB",
+  "date_folder": "20251219",
+  "evaluated_at": "2025-12-19T16:39:14.288844",
+  "should_get_site": false,
+  "confidence": 0.2,
+  "reasoning": "Rao Restaurang AB verkar vara en nyregistrerad restaurangverksamhet, vilket inte ligger inom IT, tech eller finans. Restaurangbranschen har inte samma behov av framåtlutade webbdesignlösningar som de angivna målgrupperna.",
+  "error": null
+}

@@ -1,0 +1,106 @@
+{
+  "folder": "K969190-25",
+  "extracted_at": "2025-12-19T16:05:00.906885",
+  "company_name": "WEFIND Consulting AB",
+  "orgnr": "559563-5946",
+  "verksamhet": "Företaget bedriver verksamhet inom sociala medier och digital kommunikation med fokus på IT- och techbranschen. Tjänsterna omfattar strategi, innehållsproduktion, annonsering och kontohantering i sociala medier. Med syfte att stärka varumärken, öka synlighet och skapa affärsnytta för teknikdrivna företag.",
+  "sate": "Göteborg",
+  "address": "Snörmakaregatan 12, 415 73 GÖTEBORG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-10-08",
+  "emails": [
+    "patrik.gyllhamn@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Patrik Darioush Gyllhamn",
+      "role": "Styrelseledamot",
+      "personnr": "197403-XXXX"
+    },
+    {
+      "name": "Majvor Gyllhamn",
+      "role": "Styrelsesuppleant",
+      "personnr": "195005-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "wefindconsulting.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "wefindconsulting.com",
+        "source": "generated"
+      },
+      {
+        "domain": "wefindconsulting.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "wefindconsultingab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "WEFIND Consulting AB",
+    "searches": [
+      {
+        "query": "WEFIND Consulting AB hemsida website",
+        "summary": "Här är information om WEFIND Consulting AB, inklusive företagsuppgifter från officiella svenska källor:\n\n- WEFIND Consulting AB är ett aktivt aktiebolag med organisationsnummer 559563‑5946, registrerat i Göteborg på adressen Snörmakaregatan 12, 415 73 Göteborg. VD och styrelseledamot är Patrik Gyllhamn, och verklig huvudman är Patrik Gyllhamn med 100 % kontroll.([bolagsfakta.se](https://www.bolagsfakta.se/5595635946-WEFIND_Consulting_AB?utm_source=openai))\n- Företaget bildades den 8 oktober 2025",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635946-WEFIND_Consulting_AB?utm_source=openai",
+            "title": "WEFIND Consulting AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "WEFIND Consulting AB Företaget bedriver verksamhet inom sociala medier  kontakt",
+        "summary": "Här är kort information om WEFIND Consulting AB och hur du kan kontakta dem:\n\n– WEFIND Consulting AB grundades den 17 december 2025 och har verksamhet inom sociala medier och digital kommunikation med fokus på IT- och techbranschen. Tjänster inkluderar strategi, innehållsproduktion, annonsering och kontohantering i sociala medier ([kreditrapporten.se](https://kreditrapporten.se/kreditupplysning/5595635946/wefind-consulting-ab?utm_source=openai)).\n\n– Företaget har sitt säte i Göteborg på följande",
+        "sources": [
+          {
+            "url": "https://kreditrapporten.se/kreditupplysning/5595635946/wefind-consulting-ab?utm_source=openai",
+            "title": "WEFIND Consulting AB - se information och ta kreditupplysning | Kreditrapporten.se"
+          },
+          {
+            "url": "https://www.bolagsfakta.se/5595635946-WEFIND_Consulting_AB?utm_source=openai",
+            "title": "WEFIND Consulting AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"WEFIND Consulting AB\" site:se",
+        "summary": "Här är kort information om **WEFIND Consulting AB** i Sverige:\n\n• Organisationsnummer: **559563‑5946**, företagets status är **aktivt**. Det bildades den **8 oktober 2025** och registrerades den **17 december 2025** ([bolagsfakta.se](https://www.bolagsfakta.se/5595635946-WEFIND_Consulting_AB?utm_source=openai)).  \n• Säte och adress: **Göteborg**, gatuadress **Snörmakaregatan 12, 415 73 Göteborg** ([bolagsfakta.se](https://www.bolagsfakta.se/5595635946-WEFIND_Consulting_AB?utm_source=openai)).  \n",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635946-WEFIND_Consulting_AB?utm_source=openai",
+            "title": "WEFIND Consulting AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "wefindconsulting.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "wefindconsulting.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:08:06.277818"
+  }
+}

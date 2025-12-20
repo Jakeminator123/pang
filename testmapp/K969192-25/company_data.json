@@ -1,0 +1,90 @@
+{
+  "folder": "K969192-25",
+  "extracted_at": "2025-12-19T16:05:00.908056",
+  "company_name": "POLARAIL AB",
+  "orgnr": "559563-4212",
+  "verksamhet": "Bolaget ska bedriva konsultverksamhet inom teknik, digitalisering, AI, management och projektledning samt utveckla tillhandahålla och sälja digitala och AI-baserade mjukvaru- lösningar och programvara samt därmed förenlig verksamhet.",
+  "sate": "Stockholm",
+  "address": "Sjövikstorget 11, 117 58 STOCKHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-20",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Khaled Hamzaoui",
+      "role": "Styrelsesuppleant",
+      "personnr": "199001-XXXX"
+    },
+    {
+      "name": "Mirela Jovanovic",
+      "role": "Styrelsesuppleant",
+      "personnr": "199111-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "polarail.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "polarail.com",
+        "source": "generated"
+      },
+      {
+        "domain": "polarail.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "polarailab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "POLARAIL AB",
+    "searches": [
+      {
+        "query": "POLARAIL AB hemsida website",
+        "summary": "Här är information om \"Polarail AB\" (som jag tolkar som företaget Polarail AB):\n\nJag kunde tyvärr inte hitta någon officiell webbplats till ett företag som heter exakt \"Polarail AB\". Det finns inga uppenbara träffar på en sådan hemsida med det namnet i sökresultaten. Det är möjligt att företaget:\n\n• använder ett annat namn online,  \n• är nytt eller har begränsat digitalt fotavtryck,  \n• eller att namnet kanske är felstavat eller avser ett annat företag.\n\nFör att kunna hjälpa dig bättre, skulle d",
+        "sources": []
+      },
+      {
+        "query": "POLARAIL AB Bolaget ska bedriva konsultverksamhet inom teknik, kontakt",
+        "summary": "Jag hittade inga uppgifter om ett företag vid namn **\"Polarail AB\"** med angivet ändamål om \"konsultverksamhet inom teknik\". Det finns ingen träff på detta namn i relevanta sökningar via offentliga register eller företagsinformation.\n\nMöjligen kan det vara en felstavning eller förväxling med ett annat företag, till exempel:\n\n- **Polar Transport Holding AB**, som verkar inom teknikkonsult-verksamhet inom energi-, miljö- och VVS‑teknik. Bolaget är registrerat och ingår i koncernen Polar Structure ",
+        "sources": [
+          {
+            "url": "https://www.allabolag.se/foretag/polar-transport-holding-ab/stockholm/teknikkonsulter/2KIQO5VI5YHXW?utm_source=openai",
+            "title": "Polar Transport Holding AB - Org.nr 559436-5651 - Stockholm - Se Nyckeltal, Befattningar med mera."
+          }
+        ]
+      },
+      {
+        "query": "\"POLARAIL AB\" site:se",
+        "summary": "Jag hittade inga resultat för \"POLARAIL AB\" med domänen `.se`. Det verkar alltså inte finnas någon aktör eller webbplats med det namnet i Sverige.",
+        "sources": []
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "polarail.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "polarail.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:08:20.047611"
+  }
+}

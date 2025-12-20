@@ -1,0 +1,100 @@
+{
+  "folder": "K969557-25",
+  "extracted_at": "2025-12-19T16:05:00.928845",
+  "company_name": "HN RESTAURANG JKPG AB",
+  "orgnr": "559563-4857",
+  "verksamhet": "Bolaget skall bedriva restaurangverksamhet samt därmed förenlig verksamhet.",
+  "sate": "Jönköping",
+  "address": "Martins Redovisningsbyrå, Resedastigen 26, 554 56 JÖNKÖPING,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-20",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Ewan Isho Shamshoon",
+      "role": "Styrelsesuppleant",
+      "personnr": "199101-XXXX"
+    },
+    {
+      "name": "Anna Rebecka Wipén",
+      "role": "Styrelsesuppleant",
+      "personnr": "199108-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "hnrestaurangjkpg.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "hnrestaurangjkpg.com",
+        "source": "generated"
+      },
+      {
+        "domain": "hnrestaurangjkpg.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "hnrestaurangjkpgab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "HN RESTAURANG JKPG AB",
+    "searches": [
+      {
+        "query": "HN RESTAURANG JKPG AB hemsida website",
+        "summary": "Jag hittade ingen officiell eller publik hemsida för **HN RESTAURANG JKPG AB**. Bolaget är registrerat under organisationsnummer 559563‑4857 med säte i Jönköping, men det finns inget angivet telefonnummer eller webbadress i tillgängliga företagsregister ([bolagsfakta.se](https://www.bolagsfakta.se/5595634857-HN_RESTAURANG_JKPG_AB?utm_source=openai)).\n\nKortfattat:\n• Företaget är aktivt och registrerat i Jönköping sedan november–december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634857",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634857-HN_RESTAURANG_JKPG_AB?utm_source=openai",
+            "title": "HN RESTAURANG JKPG AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "HN RESTAURANG JKPG AB Bolaget skall bedriva restaurangverksamhet samt dä kontakt",
+        "summary": "Här är kort information om HN RESTAURANG JKPG AB:\n\n• Organisationsnummer: 559563‑4857 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634857-HN_RESTAURANG_JKPG_AB?utm_source=openai))  \n• Adress: c/o Martins Redovisningsbyrå, Resedastigen 26, 554 56 Jönköping ([bolagsfakta.se](https://www.bolagsfakta.se/5595634857-HN_RESTAURANG_JKPG_AB?utm_source=openai))  \n• Verksamhetsbeskrivning: ”Bolaget skall bedriva restaurangverksamhet samt därmed förenlig verksamhet.” ([bolagsfakta.se](https://www.bolags",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634857-HN_RESTAURANG_JKPG_AB?utm_source=openai",
+            "title": "HN RESTAURANG JKPG AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"HN RESTAURANG JKPG AB\" site:se",
+        "summary": "Här är en kort sammanfattning av “HN RESTAURANG JKPG AB” baserad på officiella uppgifter:\n\n- HN RESTAURANG JKPG AB är ett aktiebolag med organisationsnummer 559563–4857. Företaget har sitt säte i Jönköping och är registrerat på adressen c/o Martins Redovisningsbyrå, Resedastigen 26, 554 56 Jönköping ([bolagsfakta.se](https://www.bolagsfakta.se/5595634857-HN_RESTAURANG_JKPG_AB?utm_source=openai)).\n\n- Bolaget bildades den 20 november 2025 och registrerades den 17 december 2025. Namn och bolagsordn",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634857-HN_RESTAURANG_JKPG_AB?utm_source=openai",
+            "title": "HN RESTAURANG JKPG AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "hnrestaurangjkpg.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "hnrestaurangjkpg.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:12:23.851593"
+  }
+}

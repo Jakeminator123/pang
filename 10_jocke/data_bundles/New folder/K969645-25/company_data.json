@@ -1,0 +1,96 @@
+{
+  "folder": "K969645-25",
+  "extracted_at": "2025-12-19T16:05:00.946014",
+  "company_name": "Söderköpings Maskinuthyrning AB",
+  "orgnr": "559563-5540",
+  "verksamhet": "Bolaget ska bedriva uthyrning av maskiner, verktyg, fordon och utrustning till företag och privatpersoner samt därmed förenlig verksamhet. Bolaget ska även tillhandahålla leverans, transport, service, reparation och underhåll av uthyrd utrustning samt försäljning av tillhörande produkter och tillbehör. Verksamheten ska bedrivas både via internet och från fysisk lokal.",
+  "sate": "Söderköping",
+  "address": "Braunsthal & Lundström AB, Mekanikusvägen 20, 605 96 NORRKÖPING,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-07",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Ken Robin Bror Lundström",
+      "role": "Styrelsesuppleant",
+      "personnr": "198909-XXXX"
+    },
+    {
+      "name": "Bengt Christian Håkansson",
+      "role": "Styrelsesuppleant",
+      "personnr": "199101-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "soderkopingsmaskinuthyrning.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "soderkopingsmaskinuthyrning.com",
+        "source": "generated"
+      },
+      {
+        "domain": "soderkopingsmaskinuthyrning.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Söderköpings Maskinuthyrning AB",
+    "searches": [
+      {
+        "query": "Söderköpings Maskinuthyrning AB hemsida website",
+        "summary": "Jag har sökt efter en officiell webbplats för Söderköpings Maskinuthyrning AB men kunde inte hitta någon sådan.\n\nHär är vad jag däremot hittade:\n\n- En profilsida på Bolagsfakta, som visar att bolaget är registrerat med organisationsnummer 559563‑5540 och har adress Mekanikusvägen 20, 605 96 Norrköping. Det står även att bolaget ingår i uthyrning av maskiner, verktyg, fordon och utrustning via internet och fysisk lokal ([bolagsfakta.se](https://www.bolagsfakta.se/5595635540-Soderkopings_Maskinuth",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635540-Soderkopings_Maskinuthyrning_AB?utm_source=openai",
+            "title": "Söderköpings Maskinuthyrning AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "Söderköpings Maskinuthyrning AB Bolaget ska bedriva uthyrning av maskiner, verktyg kontakt",
+        "summary": "Här är kort svar med kontaktuppgifter för Söderköpings Maskinuthyrning AB:\n\n- Företagsnamn: Söderköpings Maskinuthyrning AB  \n- Organisationsnummer: 559563‑5540 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635540-Soderkopings_Maskinuthyrning_AB?utm_source=openai))  \n- Adress: c/o Braunsthal & Lundström AB, Mekanikusvägen 20, 605 96 Norrköping (säte: Söderköping, Östergötlands län) ([bolagsfakta.se](https://www.bolagsfakta.se/5595635540-Soderkopings_Maskinuthyrning_AB?utm_source=openai))  \n- ",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635540-Soderkopings_Maskinuthyrning_AB?utm_source=openai",
+            "title": "Söderköpings Maskinuthyrning AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"Söderköpings Maskinuthyrning AB\" site:se",
+        "summary": "Här är en kort översikt av Söderköpings Maskinuthyrning AB (information från svenska källor):\n\n- Namn: Söderköpings Maskinuthyrning AB  \n- Organisationsnummer: 559563‑5540 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635540-Soderkopings_Maskinuthyrning_AB?utm_source=openai))  \n- Bolaget är ett aktivt aktiebolag med säte i Söderköping, Östergötlands län. Postadress: Mekanikusvägen 20, 605 96 Norrköping ([bolagsfakta.se](https://www.bolagsfakta.se/5595635540-Soderkopings_Maskinuthyrning_AB?utm",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635540-Soderkopings_Maskinuthyrning_AB?utm_source=openai",
+            "title": "Söderköpings Maskinuthyrning AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "soderkopingsmaskinuthyrning.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "soderkopingsmaskinuthyrning.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:16:15.350534"
+  }
+}

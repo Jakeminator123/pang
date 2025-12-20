@@ -1,0 +1,104 @@
+{
+  "folder": "K969113-25",
+  "extracted_at": "2025-12-19T16:05:00.904233",
+  "company_name": "Seidora Group AB",
+  "orgnr": "559563-5771",
+  "verksamhet": "Bolaget erbjuder hårdvara, mjukvara och professionella tjänster för additiv tillverkning och tillverkningsindustrin. Företaget stödjer kunder i varje steg av produktionsprocessen- från design och prototypframtagning till slutlig produktion- med innovativa lösningar för 3D-utskrift och teknisk expertis.",
+  "sate": "Malmö",
+  "address": "Stenyxegatan 29, 213 76 MALMÖ,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-10-29",
+  "emails": [
+    "mieke@seido-systems.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Jens Petrus Ödlund",
+      "role": "Styrelsesuppleant",
+      "personnr": "197609-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "seido-systems.com",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "seidoragroup.se",
+        "source": "generated"
+      },
+      {
+        "domain": "seidoragroup.com",
+        "source": "generated"
+      },
+      {
+        "domain": "seidoragroup.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "direct",
+  "research": {
+    "company": "Seidora Group AB",
+    "searches": [
+      {
+        "query": "Seidora Group AB hemsida website",
+        "summary": "Här är information om Seidora Group AB och deras hemsida (website):\n\n- Enligt Bolagsfakta har Seidora Group AB organisationsnummer 559563‑5771 och har registrerats med säte i Malmö på adress Stenyxegatan 29, 213 76 Malmö. Företaget registrerades den 17 december 2025 och grundades via stiftande bolagsstämma den 29 oktober 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635771-Seidora_Group_AB?utm_source=openai)).\n\n- I Bolagsfakta anges dock ingen webbplats eller hemsida för Seidora Group AB",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635771-Seidora_Group_AB?utm_source=openai",
+            "title": "Seidora Group AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Seidora Group AB Bolaget erbjuder hårdvara, mjukvara och profession kontakt",
+        "summary": "Seidora Group AB (organisationsnummer 559563‑5771), med säte i Malmö, erbjuder hårdvara, mjukvara och professionella tjänster inom additiv tillverkning och tillverkningsindustrin. De stödjer kunder genom hela produktionsprocessen – från design och prototypframtagning till slutlig produktion med innovativa 3D-utskriftlösningar och teknisk expertis ([bolagsfakta.se](https://www.bolagsfakta.se/5595635771-Seidora_Group_AB?utm_source=openai)).\n\nFöretaget registrerades den 17 december 2025 och är akti",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635771-Seidora_Group_AB?utm_source=openai",
+            "title": "Seidora Group AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Seidora Group AB\" site:se",
+        "summary": "Här är en kort sammanfattning av Seidora Group AB, med referenser:\n\n- Seidora Group AB är ett svenskt aktiebolag registrerat med organisationsnummer 559563‑5771. Företaget är verksamt i Malmö och har sitt säte på Stenyxegatan 29, 213 76 Malmö.([bolagsfakta.se](https://www.bolagsfakta.se/5595635771-Seidora_Group_AB?utm_source=openai))  \n- Enligt Bolagsfakta saknas uppgifter om företagets omsättning, resultat och EBITDA, samt detaljerade bokslut.([bolagsfakta.se](https://www.bolagsfakta.se/5595635",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635771-Seidora_Group_AB?utm_source=openai",
+            "title": "Seidora Group AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "seido-systems.com",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "seido-systems.com",
+        "url": "https://www.seido-systems.com/nl",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Stratasys 3D printers | SEIDO systems",
+        "description": "Uw Benelux-partner voor Stratasys 3D printers: SEIDO Systems biedt al meer dan 20 jaar betrouwbare 3D printing oplossingen.",
+        "text_sample": "Stratasys 3D printers | SEIDO systems 3D Printers FDM technologie Hoogwaardige thermoplasten voor kantoor en productie. Poederbed technologie Volume productie DLP technologie Volautomatische productie P3 technologie (DLP) Origin, productie met hoogwaardige materialen Polyjet technologie Multi materiaal, full color, voor hoogwaardige realistische modellen. Stereolithography Functionele modellen, prototypes, snelle tooling en molds Medisch & Dentaal SLM technologie Metaal 3D printers Post-processi"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:07:13.380853"
+  }
+}

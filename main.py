@@ -757,6 +757,183 @@ async def generate_sites_for_worthy_companies(
         return 0, 0
 
 
+def load_sajt_config() -> Dict[str, Any]:
+    """
+    Läs audit/site-config från 3_sajt/config_ny.txt.
+    
+    Returns:
+        Dict med config-värden
+    """
+    config = {
+        "audit_enabled": False,
+        "audit_threshold": 0.60,
+        "audit_max_antal": 10,
+        "audit_depth": "LOW",
+        "site_enabled": True,
+        "site_threshold": 0.80,
+        "site_max_antal": 30,
+    }
+    
+    config_path = SAJT_DIR / "config_ny.txt"
+    if not config_path.exists():
+        log_warn(f"Config-fil saknas: {config_path}")
+        return config
+    
+    try:
+        for line in config_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            # Skip empty lines, comments, and section headers
+            if not line or line.startswith("#") or line.startswith("["):
+                continue
+            if "=" in line:
+                key, value = line.split("=", 1)
+                key = key.strip().lower()
+                value = value.strip()
+                
+                if key == "audit_enabled":
+                    config["audit_enabled"] = value.lower() in ("y", "yes", "true", "1")
+                elif key == "audit_threshold":
+                    config["audit_threshold"] = float(value)
+                elif key == "audit_max_antal":
+                    config["audit_max_antal"] = int(value)
+                elif key == "audit_depth":
+                    config["audit_depth"] = value.upper()
+                elif key == "site_enabled":
+                    config["site_enabled"] = value.lower() in ("y", "yes", "true", "1")
+                elif key == "site_threshold":
+                    config["site_threshold"] = float(value)
+                elif key == "site_max_antal":
+                    config["site_max_antal"] = int(value)
+    except Exception as e:
+        log_warn(f"Kunde inte läsa sajt-config: {e}")
+    
+    return config
+
+
+async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
+    """
+    Kör audits för företag med verifierad domän och tillräcklig confidence.
+    
+    Audits analyserar företagets BEFINTLIGA hemsida och genererar:
+    - audit_report.json - Detaljerad analys med scores
+    - audit_report.pdf - Snygg PDF-rapport (om reportlab är installerat)
+    - company_analysis.json - Strukturerad företagsdata
+    - company_profile.txt - Läsbar profil
+    
+    Returns:
+        (qualified_count, audited_count) - Antal kvalificerade och antal auditade
+    """
+    sajt_config = load_sajt_config()
+    
+    if not sajt_config["audit_enabled"]:
+        log_info("Audits är inaktiverade i config (audit_enabled = n i 3_sajt/config_ny.txt)")
+        return 0, 0
+    
+    threshold = sajt_config["audit_threshold"]
+    max_antal = sajt_config["audit_max_antal"]
+    
+    log_info(f"Audit-inställningar: threshold={threshold:.0%}, max={max_antal}")
+    
+    try:
+        # Importera audit-funktion
+        sys.path.insert(0, str(SAJT_DIR / "all_the_scripts"))
+        from standalone_audit import run_audit_to_folder  # type: ignore[import-not-found]
+        
+        # Hitta alla K-mappar
+        company_dirs = [d for d in date_folder.iterdir() if d.is_dir() and d.name.startswith("K")]
+        
+        qualified_companies = []
+        
+        for company_dir in company_dirs:
+            # Läs company_data.json
+            company_data_file = company_dir / "company_data.json"
+            if not company_data_file.exists():
+                continue
+            
+            try:
+                data = json.loads(company_data_file.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                continue
+            
+            # Kontrollera domän
+            domain_info = data.get("domain", {})
+            domain_url = domain_info.get("guess", "")
+            confidence = domain_info.get("confidence", 0)
+            status = domain_info.get("status", "unknown")
+            
+            # Kräv domän med tillräcklig confidence
+            if not domain_url:
+                continue
+            # Acceptera verified, ai_verified, eller match status
+            if status not in ("verified", "ai_verified", "match"):
+                continue
+            if confidence < threshold:
+                continue
+            
+            # Skippa om audit redan finns
+            if (company_dir / "audit_report.json").exists():
+                continue
+            
+            qualified_companies.append({
+                "dir": company_dir,
+                "domain": domain_url,
+                "confidence": confidence,
+                "company_name": data.get("company_name", company_dir.name),
+            })
+        
+        if not qualified_companies:
+            log_info("Inga företag kvalificerade för audit")
+            return 0, 0
+        
+        # Begränsa till max_antal
+        to_audit = qualified_companies[:max_antal]
+        
+        log_info(f"Kör audits för {len(to_audit)} av {len(qualified_companies)} kvalificerade företag")
+        
+        audited_count = 0
+        for idx, company in enumerate(to_audit, 1):
+            company_dir = company["dir"]
+            domain_url = company["domain"]
+            company_name = company["company_name"]
+            confidence = company["confidence"]
+            
+            # Säkerställ https://
+            if not domain_url.startswith("http"):
+                domain_url = f"https://{domain_url}"
+            
+            log_info(f"  [{idx}/{len(to_audit)}] Audit: {company_name} ({domain_url}, {confidence:.0%})")
+            
+            try:
+                result = run_audit_to_folder(domain_url, company_dir)
+                
+                if result.get("audit_pdf"):
+                    log_info(f"    ✅ PDF skapad: audit_report.pdf")
+                else:
+                    log_info(f"    ✅ Audit klar (ingen PDF - reportlab saknas?)")
+                
+                audited_count += 1
+                
+                # Kort paus mellan audits
+                if idx < len(to_audit):
+                    await asyncio.sleep(1)
+                    
+            except Exception as e:
+                log_error(f"    ❌ Audit misslyckades: {e}")
+                continue
+        
+        log_info(f"Audits klara: {audited_count} av {len(to_audit)} lyckades")
+        return len(qualified_companies), audited_count
+        
+    except ImportError as e:
+        log_error(f"Kunde inte importera standalone_audit: {e}")
+        return 0, 0
+    except Exception as e:
+        log_error(f"Fel vid audits: {e}")
+        import traceback
+        traceback.print_exc()
+        return 0, 0
+
+
 MAIL_GREETING_KEYWORDS = ("hej", "hejsan", "tjena", "tjabba", "hallå", "god ")
 
 
@@ -1009,6 +1186,167 @@ def sync_preview_and_audit_links(date_folder: Path) -> None:
         f"{len(entries)} företag (mail_ready={mail_ready_rows}, "
         f"kungorelser={kungorelser_rows}, mail.txt={mail_files})"
     )
+
+
+def _collect_audit_data(date_folder: Path) -> List[Dict[str, Any]]:
+    """
+    Samla audit-data från alla företagsmappar.
+    
+    Returns:
+        Lista med audit-data för varje företag som har audit_report.json
+    """
+    audit_entries = []
+    
+    for folder in date_folder.iterdir():
+        if not folder.is_dir() or not folder.name.startswith("K") or "-" not in folder.name:
+            continue
+        
+        audit_file = folder / "audit_report.json"
+        if not audit_file.exists():
+            continue
+        
+        try:
+            audit_data = json.loads(audit_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        
+        # Hämta företagsnamn
+        company_name = folder.name
+        company_data_file = folder / "company_data.json"
+        if company_data_file.exists():
+            try:
+                company_data = json.loads(company_data_file.read_text(encoding="utf-8"))
+                company_name = company_data.get("company_name", folder.name)
+            except (json.JSONDecodeError, OSError):
+                pass
+        
+        # Extrahera relevant data
+        company_info = audit_data.get("company", {})
+        scores = audit_data.get("scores", {})
+        meta = audit_data.get("_meta", {})
+        strengths = audit_data.get("strengths", [])
+        weaknesses = audit_data.get("weaknesses", [])
+        recommendations = audit_data.get("recommendations", [])
+        
+        entry = {
+            "folder": folder.name,
+            "company_name": company_name,
+            "url": meta.get("url", ""),
+            "audit_date": meta.get("audit_date", "")[:10] if meta.get("audit_date") else "",
+            "industry": company_info.get("industry", ""),
+            "design_score": scores.get("design", ""),
+            "content_score": scores.get("content", ""),
+            "usability_score": scores.get("usability", ""),
+            "mobile_score": scores.get("mobile", ""),
+            "seo_score": scores.get("seo", ""),
+            "overall_score": scores.get("overall", ""),
+            "strengths": "; ".join(strengths[:3]) if strengths else "",
+            "weaknesses": "; ".join(weaknesses[:3]) if weaknesses else "",
+            "recommendations": "; ".join(recommendations[:3]) if recommendations else "",
+        }
+        audit_entries.append(entry)
+    
+    return audit_entries
+
+
+def create_audits_excel_sheet(date_folder: Path) -> int:
+    """
+    Skapa ett nytt blad 'Audits' i Excel-filerna med audit-data.
+    
+    Lägger till bladet i:
+    - mail_ready.xlsx
+    - kungorelser_*.xlsx
+    
+    Returns:
+        Antal filer som uppdaterades
+    """
+    audit_entries = _collect_audit_data(date_folder)
+    
+    if not audit_entries:
+        log_info("[AUDIT EXCEL] Inga audit-rapporter att lägga till i Excel")
+        return 0
+    
+    # Skapa DataFrame
+    df_audits = pd.DataFrame(audit_entries)
+    
+    # Kolumnordning för bättre läsbarhet
+    column_order = [
+        "folder", "company_name", "url", "audit_date", "industry",
+        "overall_score", "design_score", "content_score", "usability_score",
+        "mobile_score", "seo_score", "strengths", "weaknesses", "recommendations"
+    ]
+    df_audits = df_audits[[c for c in column_order if c in df_audits.columns]]
+    
+    # Byt namn på kolumner för tydlighet
+    column_names = {
+        "folder": "Mapp",
+        "company_name": "Företag",
+        "url": "Hemsida",
+        "audit_date": "Audit-datum",
+        "industry": "Bransch",
+        "overall_score": "Helhet",
+        "design_score": "Design",
+        "content_score": "Innehåll",
+        "usability_score": "Användbarhet",
+        "mobile_score": "Mobil",
+        "seo_score": "SEO",
+        "strengths": "Styrkor",
+        "weaknesses": "Svagheter",
+        "recommendations": "Rekommendationer",
+    }
+    df_audits = df_audits.rename(columns=column_names)
+    
+    updated_files = 0
+    
+    # Uppdatera mail_ready.xlsx
+    mail_ready_xlsx = date_folder / "mail_ready.xlsx"
+    if mail_ready_xlsx.exists():
+        try:
+            # Läs befintliga blad
+            with pd.ExcelFile(mail_ready_xlsx) as xls:
+                sheets = {sheet: pd.read_excel(xls, sheet_name=sheet) for sheet in xls.sheet_names}
+            
+            # Lägg till/ersätt Audits-bladet
+            sheets["Audits"] = df_audits
+            
+            # Skriv tillbaka
+            with pd.ExcelWriter(mail_ready_xlsx, engine="openpyxl") as writer:
+                for sheet_name, sheet_df in sheets.items():
+                    sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
+            
+            log_info(f"[AUDIT EXCEL] Lade till 'Audits'-blad i mail_ready.xlsx ({len(audit_entries)} rader)")
+            updated_files += 1
+        except Exception as e:
+            log_warn(f"[AUDIT EXCEL] Kunde inte uppdatera mail_ready.xlsx: {e}")
+    
+    # Uppdatera kungorelser_*.xlsx
+    date_str = date_folder.name
+    kungorelser_xlsx = date_folder / f"kungorelser_{date_str}.xlsx"
+    if not kungorelser_xlsx.exists():
+        matches = list(date_folder.glob("kungorelser_*.xlsx"))
+        if matches:
+            kungorelser_xlsx = matches[0]
+    
+    if kungorelser_xlsx.exists():
+        try:
+            # Läs befintliga blad
+            with pd.ExcelFile(kungorelser_xlsx) as xls:
+                sheets = {sheet: pd.read_excel(xls, sheet_name=sheet) for sheet in xls.sheet_names}
+            
+            # Lägg till/ersätt Audits-bladet
+            sheets["Audits"] = df_audits
+            
+            # Skriv tillbaka
+            with pd.ExcelWriter(kungorelser_xlsx, engine="openpyxl") as writer:
+                for sheet_name, sheet_df in sheets.items():
+                    sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
+            
+            log_info(f"[AUDIT EXCEL] Lade till 'Audits'-blad i {kungorelser_xlsx.name} ({len(audit_entries)} rader)")
+            updated_files += 1
+        except Exception as e:
+            log_warn(f"[AUDIT EXCEL] Kunde inte uppdatera {kungorelser_xlsx.name}: {e}")
+    
+    return updated_files
 
 
 def copy_to_dropbox(date_folder: Path) -> bool:
@@ -1612,6 +1950,18 @@ Argument:
                         log_warn(
                             "Inga värda företag hittades - hoppar över site generation"
                         )
+                    
+                    # Kör audits för företag med befintlig hemsida
+                    log_info("")
+                    log_info("Kör audits för företag med befintlig hemsida...")
+                    qualified_count, audited_count = asyncio.run(
+                        run_audits_for_companies(latest_date_dir)
+                    )
+                    
+                    if audited_count > 0:
+                        log_info("Audit sammanfattning:")
+                        log_info(f"  - Kvalificerade företag: {qualified_count}")
+                        log_info(f"  - Genomförda audits: {audited_count}")
                 else:
                     log_warn(
                         "Hittade ingen datum-mapp i djupanalys/ - hoppar över evaluation"
@@ -1622,6 +1972,8 @@ Argument:
             if evaluation_ran:
                 if latest_date_dir:
                     sync_preview_and_audit_links(latest_date_dir)
+                    # Skapa Audits-blad i Excel-filer
+                    create_audits_excel_sheet(latest_date_dir)
                 mark_step_done(target_date_str, status, "evaluation")
         print()
 

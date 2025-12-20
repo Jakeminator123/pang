@@ -1,0 +1,21 @@
+{
+  "company_name": "Elit Estetik Nordica AB",
+  "orgnr": "559563-7314",
+  "folder_name": "K969323-25",
+  "preview_url": "https://demo-kzmin362r4yqmsz91jll.vusercontent.net",
+  "chat_id": "svx7sUprSkA",
+  "version_id": "b_CHtmFa79mny",
+  "cost": {
+    "estimated": {
+      "estimated_prompt_tokens": 817,
+      "estimated_completion_tokens": 3500,
+      "estimated_total_tokens": 4317,
+      "estimated_cost_usd": 0.027475,
+      "model": "v0-1.5-md",
+      "timestamp": "2025-12-19T17:06:04.470537"
+    },
+    "actual": null,
+    "generated_at": "2025-12-19T17:09:37.093991"
+  },
+  "generated_at": "2025-12-19T17:09:37.093998"
+}

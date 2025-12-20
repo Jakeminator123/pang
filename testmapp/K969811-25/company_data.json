@@ -1,0 +1,97 @@
+{
+  "folder": "K969811-25",
+  "extracted_at": "2025-12-19T16:05:01.002410",
+  "company_name": "CMC by Sophie AB",
+  "orgnr": "559563-7405",
+  "verksamhet": "Företaget kommer erbjuda strategisk och operationell support inom området kemisk och farmaceutisk läkemedelsutveckling samt därtillhörande verksamhet. Företaget kommer göra detta på konsultbasis.",
+  "sate": "Uppsala",
+  "address": "c/o Sophie Bertilsson, Döbelnsgatan 21, 752 37 UPPSALA,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-05",
+  "emails": [
+    "sophie.bertilsson@telia.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Kerstin Sophie Bertilsson",
+      "role": "Styrelseledamot",
+      "personnr": "197311-XXXX"
+    },
+    {
+      "name": "Stefan Andreas Berlin",
+      "role": "Styrelsesuppleant",
+      "personnr": "197305-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "cmcbysophie.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "cmcbysophie.com",
+        "source": "generated"
+      },
+      {
+        "domain": "cmcbysophie.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "cmcbysophieab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "CMC by Sophie AB",
+    "searches": [
+      {
+        "query": "CMC by Sophie AB hemsida website",
+        "summary": "Jag hittade tyvärr ingen webbplats direkt kopplad till \"CMC by Sophie AB\". Det finns ingen tillgänglig online-närvaro eller hemsida för detta namn som går att verifiera via öppna källor. Ingen relevant träff kunde bekräfta sådant företag eller motsvarande webbplats.",
+        "sources": []
+      },
+      {
+        "query": "CMC by Sophie AB Företaget kommer erbjuda strategisk och operatione kontakt",
+        "summary": "Här är en kort sammanfattning av företaget CMC by Sophie AB (organisationsnummer 559563‑7405):\n\n- Företaget är ett aktivt aktiebolag med säte i Uppsala, som bildades den 5 december 2025 och registrerades hos Bolagsverket den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595637405-CMC_by_Sophie_AB?utm_source=openai)).  \n- Verksamheten beskrivs som strategisk och operationell support inom kemisk och farmaceutisk läkemedelsutveckling, erbjudad på konsultbasis ([bolagsfakta.se](http",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595637405-CMC_by_Sophie_AB?utm_source=openai",
+            "title": "CMC by Sophie AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"CMC by Sophie AB\" site:se",
+        "summary": "Här är kort information om företaget CMC by Sophie AB baserat på uppgifter från en svensk företagsdatabas:\n\n- CMC by Sophie AB är ett aktiebolag med organisationsnummer 559563‑7405. Företaget har säte i Uppsala på adressen Döbelnsgatan 21, 752 37 Uppsala. ([bolagsfakta.se](https://www.bolagsfakta.se/5595637405-CMC_by_Sophie_AB?utm_source=openai))  \n- Bolaget registrerades den 17 december 2025, med bildande och bolagsordning fastställda den 5 december 2025. ([bolagsfakta.se](https://www.bolagsfak",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595637405-CMC_by_Sophie_AB?utm_source=openai",
+            "title": "CMC by Sophie AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "cmcbysophie.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "cmcbysophie.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:28:10.983537"
+  }
+}

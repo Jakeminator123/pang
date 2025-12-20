@@ -53,8 +53,8 @@ BASE_DJUPANALYS_DIR = (
     Path(__file__).parent.parent / "2_segment_info" / "djupanalys"
 )
 
-# Config file - consolidated config shared with headless_main.py
-CONFIG_FILE = Path(__file__).parent.parent / "2_segment_info" / "config_ny.txt"
+# Config file - local config for 3_sajt scripts
+CONFIG_FILE = Path(__file__).parent / "config_ny.txt"
 
 
 def load_config() -> dict:
@@ -89,6 +89,8 @@ def load_config() -> dict:
                         "audit_enabled": "audit_enabled",
                         "audit_threshold": "audit_threshold",
                         "audit_max_antal": "max_audits",
+                        "evaluate_enabled": "evaluate",
+                        "evaluate_threshold": "threshold",
                     }
                     
                     mapped_key = key_mapping.get(key, key)
@@ -388,7 +390,7 @@ async def generate_with_progress(
                 print(f"  ⚠️  Företaget är INTE bedömt som värdigt för hemsida!")
                 print(f"     Säkerhet: {confidence}%")
                 print(f"     Motivering: {reasoning}")
-                print(f"  ❌ Hoppar över generering (evaluate=y i 2_segment_info/config_ny.txt)")
+                print(f"  ❌ Hoppar över generering (evaluate=y i 3_sajt/config_ny.txt)")
                 return None
             else:
                 confidence = int(evaluation.get("confidence", 0) * 100)
@@ -396,7 +398,7 @@ async def generate_with_progress(
         else:
             print(f"  ⚠️  Ingen bedömning hittades för detta företag.")
             print(f"     Kör evaluate_companies.py först för att bedöma företaget.")
-            print(f"     Eller sätt evaluate=n i 2_segment_info/config_ny.txt för att tillåta alla företag.")
+            print(f"     Eller sätt evaluate=n i 3_sajt/config_ny.txt för att tillåta alla företag.")
             print(f"  ❌ Hoppar över generering (evaluate=y kräver bedömning)")
             return None
     
@@ -475,11 +477,11 @@ async def main():
     if filter_worthy:
         threshold_pct = int(min_confidence * 100) if min_confidence > 0 else 0
         if threshold_pct > 0:
-            print(f"🔍 Filtrering: Endast 'värdiga' företag visas (evaluate=y, threshold={threshold_pct}% i 2_segment_info/config_ny.txt)")
+            print(f"🔍 Filtrering: Endast 'värdiga' företag visas (evaluate=y, threshold={threshold_pct}% i 3_sajt/config_ny.txt)")
         else:
-            print("🔍 Filtrering: Endast 'värdiga' företag visas (evaluate=y i 2_segment_info/config_ny.txt)")
+            print("🔍 Filtrering: Endast 'värdiga' företag visas (evaluate=y i 3_sajt/config_ny.txt)")
     else:
-        print("📋 Filtrering: Alla företag visas (evaluate=n i 2_segment_info/config_ny.txt)")
+        print("📋 Filtrering: Alla företag visas (evaluate=n i 3_sajt/config_ny.txt)")
     
     base_dir = BASE_DJUPANALYS_DIR
     
@@ -558,7 +560,7 @@ async def main():
         if companies_without_evaluation:
             print(f"   {len(companies_without_evaluation)} företag saknar bedömning.")
         print("   Kör evaluate_companies.py först för att bedöma företag.")
-        print("   Eller sätt evaluate=n i 2_segment_info/config_ny.txt för att visa alla företag.")
+        print("   Eller sätt evaluate=n i 3_sajt/config_ny.txt för att visa alla företag.")
         return
     
     # Visa varning om några företag saknar bedömning när filtrering är aktiv

@@ -1,0 +1,100 @@
+{
+  "folder": "K969775-25",
+  "extracted_at": "2025-12-19T16:05:00.990647",
+  "company_name": "Lilian Taxi AB",
+  "orgnr": "559563-5987",
+  "verksamhet": "Taxiverksamhet.",
+  "sate": "Karlstad",
+  "address": "MOSSGATAN 13 LGH 1202, 654 66 KARLSTAD,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-10-29",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Esmaeel Alaboud",
+      "role": "Styrelsesuppleant",
+      "personnr": "199401-XXXX"
+    },
+    {
+      "name": "Hadel Aboud",
+      "role": "Styrelsesuppleant",
+      "personnr": "200001-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "liliantaxi.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "liliantaxi.com",
+        "source": "generated"
+      },
+      {
+        "domain": "liliantaxi.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "liliantaxiab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Lilian Taxi AB",
+    "searches": [
+      {
+        "query": "Lilian Taxi AB hemsida website",
+        "summary": "Jag har inte kunnat hitta någon officiell hemsida (\"hemsida\") för Lilian Taxi AB. Däremot finns företaget registrerat och offentlig information om det:\n\n- Lilian Taxi AB har organisationsnummer 559563-5987 och är registrerat i Karlstad, med adress Mossgatan 13 lgh 1202, 654 66 Karlstad. Bolaget registrerades nyligen: bolaget bildades den 29 oktober 2025 och registrerades den 17 december 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635987-Lilian_Taxi_AB?utm_source=openai))\n\n- Bolaget sa",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635987-Lilian_Taxi_AB?utm_source=openai",
+            "title": "Lilian Taxi AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Lilian Taxi AB Taxiverksamhet. kontakt",
+        "summary": "Här är kontaktinformationen för Lilian Taxi AB, som är registrerat i Karlstad och bedriver taxiverksamhet:\n\n- Adress: Mossgatan 13, lgh 1202, 654 66 Karlstad ([bolagsfakta.se](https://www.bolagsfakta.se/5595635987-Lilian_Taxi_AB?utm_source=openai))  \n- Företaget har inget angivet telefonnummer eller e-postadress i Bolagsfakta-uppgifterna ([bolagsfakta.se](https://www.bolagsfakta.se/5595635987-Lilian_Taxi_AB?utm_source=openai))  \n\nKortfattat:\n\nLilian Taxi AB  \nMossgatan 13, lgh 1202,  \n654 66 Kar",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635987-Lilian_Taxi_AB?utm_source=openai",
+            "title": "Lilian Taxi AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Lilian Taxi AB\" site:se",
+        "summary": "Här är kort information om Lilian Taxi AB från bolagsregistret, med källhänvisningar:\n\n• Organisationsnummer: 559563‑5987; företagsform: aktiebolag, status: aktiv. Säte: Karlstad, Värmlands län; adress: Mossgatan 13 lgh 1202, 654 66 Karlstad. Bolaget registrerades den 17 december 2025 (firmanamn och registrering), och bolagsordning fastställdes den 29 oktober 2025. Verksamhet: taxiverksamhet. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635987-Lilian_Taxi_AB?utm_source=openai))  \n\n• Firmatec",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635987-Lilian_Taxi_AB?utm_source=openai",
+            "title": "Lilian Taxi AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "liliantaxi.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "liliantaxi.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:25:34.532346"
+  }
+}

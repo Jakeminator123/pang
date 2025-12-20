@@ -1,0 +1,100 @@
+{
+  "folder": "K969787-25",
+  "extracted_at": "2025-12-19T16:05:00.992954",
+  "company_name": "NORDEATOR AB",
+  "orgnr": "559563-6308",
+  "verksamhet": "Bolaget bedriver verksamhet inom redovisning och ekonomisk rådgivning samt därmed förenlig verksamhet.",
+  "sate": "Uppsala",
+  "address": "Geijersgatan 42 C Lgh 1201, 752 26 UPPSALA,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-12",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Erik Nord",
+      "role": "Styrelsesuppleant",
+      "personnr": "197404-XXXX"
+    },
+    {
+      "name": "Anna Margareta Nanna Nord",
+      "role": "Styrelsesuppleant",
+      "personnr": "197708-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "nordeator.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "nordeator.com",
+        "source": "generated"
+      },
+      {
+        "domain": "nordeator.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "nordeatorab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "NORDEATOR AB",
+    "searches": [
+      {
+        "query": "NORDEATOR AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell hemsida för **NORDEATOR AB**. Det finns däremot en företagsprofil på Bolagsfakta som innehåller följande information:\n\n- Organisationsnummer: 559563‑6308 ([bolagsfakta.se](https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?utm_source=openai))  \n- Adress: Geijersgatan 42 C, lägenhet 1201, 752 26 Uppsala ([bolagsfakta.se](https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?utm_source=openai))  \n- Företaget är aktivt, bildat den 12 november 2025 och regist",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?utm_source=openai",
+            "title": "NORDEATOR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "NORDEATOR AB Bolaget bedriver verksamhet inom redovisning och e kontakt",
+        "summary": "Här är en kortfattad beskrivning av NORDEATOR AB:\n\n• NORDEATOR AB har organisationsnummer 559563‑6308 och har säte i Uppsala. Bolaget registrerades hos Bolagsverket den 17 december 2025, med bolagsordningen daterad 12 november 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?utm_source=openai)).\n\n• Företaget bedriver verksamhet inom redovisning och ekonomisk rådgivning samt därmed förenlig verksamhet ([bolagsfakta.se](https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?ut",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?utm_source=openai",
+            "title": "NORDEATOR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"NORDEATOR AB\" site:se",
+        "summary": "Här är en kort sammanställning av information om NORDEATOR AB från svenska webbkällor:\n\n- NORDEATOR AB är ett aktiebolag med organisationsnummer 559563‑6308, registrerat i Uppsala på adressen Geijersgatan 42 C, lägenhet 1201, 752 26 Uppsala ([bolagsfakta.se](https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?utm_source=openai)).\n\n- Företaget bildades den 12 november 2025 och registrerades officiellt den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?utm_sou",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636308-NORDEATOR_AB?utm_source=openai",
+            "title": "NORDEATOR AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "nordeator.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "nordeator.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:26:04.076809"
+  }
+}

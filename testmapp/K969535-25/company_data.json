@@ -1,0 +1,136 @@
+{
+  "folder": "K969535-25",
+  "extracted_at": "2025-12-19T16:05:00.924156",
+  "company_name": "J Liljeström Consulting AB",
+  "orgnr": "559563-4246",
+  "verksamhet": "Bolaget ska äga och förvalta aktier och andra värdepapper samt tillhandahålla administrativa tjänster till koncernbolag och därmed förenlig verksamhet.",
+  "sate": "Göteborg",
+  "address": "c/o Jesper Liljeström, Danska vägen 65D, 416 59 GÖTEBORG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-01",
+  "emails": [
+    "jesper@oteria.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Max Jesper Anton Liljeström",
+      "role": "Styrelsesuppleant",
+      "personnr": "199510-XXXX"
+    },
+    {
+      "name": "Ella Katarina Alba Dahlgren",
+      "role": "Styrelsesuppleant",
+      "personnr": "200112-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "oteria.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "jliljestromconsulting.se",
+        "source": "generated"
+      },
+      {
+        "domain": "jliljestromconsulting.com",
+        "source": "generated"
+      },
+      {
+        "domain": "jliljestromconsulting.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "direct",
+  "research": {
+    "company": "J Liljeström Consulting AB",
+    "searches": [
+      {
+        "query": "J Liljeström Consulting AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon webbplats (hemsida) för \"J Liljeström Consulting AB\". Företaget finns registrerat med organisationsnummer (via LEI) och är aktivt med adress i Stockholm (Erik Dahlbergsgatan 36, 115 32 Stockholm) ([lei.bloomberg.com](https://lei.bloomberg.com/leis/view/894500B4XY7ECSSRCJ20?utm_source=openai)), men ingen officiell hemsida kunde hittas.\n\nSammanfattning:\n\n- J Liljeström Consulting AB är en aktiv aktiebolag i Sverige med registrerad adress ([lei.bloomberg.com](https",
+        "sources": [
+          {
+            "url": "https://lei.bloomberg.com/leis/view/894500B4XY7ECSSRCJ20?utm_source=openai",
+            "title": "J Lidström Consulting AB - LEI: 894500B4XY7ECSSRCJ20"
+          }
+        ]
+      },
+      {
+        "query": "J Liljeström Consulting AB Bolaget ska äga och förvalta aktier och andra värd kontakt",
+        "summary": "Här är en kortfattad och tydlig presentation av *J Liljeström Consulting AB*, med verksamhetsinriktning och kontaktuppgifter (baserat på antagningen att du syftar på **J Lidström Consulting AB**; om det är felaktigt, vänligen uppge korrekt namn eller organisationsnummer):\n\n– **Verksamhet:** Bolagets tillstånd att bedriva verksamhet är enligt Bolagsverket att \"bedriva administrativ och ekonomisk konsultingverksamhet samt därmed förenlig verksamhet\" ([ratsit.se](https://www.ratsit.se/5569958928-J_",
+        "sources": [
+          {
+            "url": "https://www.ratsit.se/5569958928-J_Lidstrom_Consulting_AB?utm_source=openai",
+            "title": "J Lidström Consulting AB i Stockholm | Köp bolagsdata"
+          },
+          {
+            "url": "https://www.bolagsfakta.se/5569958928-J_Lidstrom_Consulting_AB?utm_source=openai",
+            "title": "J Lidström Consulting AB | Aktiebolag | Info & Löner"
+          },
+          {
+            "url": "https://www.allabolag.se/foretag/johan-lidstr%C3%B6m-consulting-ab/lerum/arkitekter/2K2UAZII5YCJ5?utm_source=openai",
+            "title": "Johan Lidström Consulting AB - Org.nr 556766-1342 - Lerum - Se Nyckeltal, Befattningar med mera."
+          }
+        ]
+      },
+      {
+        "query": "\"J Liljeström Consulting AB\" site:se",
+        "summary": "Jag hittade inget resultat på svenska webbplatser som matchar exakt \"J Liljeström Consulting AB\". Däremot finns ett liknande namn:\n\n• \"J Lidström Consulting AB\" – ett aktivt svenskt aktiebolag med adress Erik Dahlbergsgatan 36, Stockholm. Det är registrerat 2014 och har giltig LEI (Legal Entity Identifier) ([lei.bloomberg.com](https://lei.bloomberg.com/leis/view/894500B4XY7ECSSRCJ20?utm_source=openai)).\n\nDet finns även andra liknande bolag med namn som innehåller Liljeström, t.ex. Lilium Consult",
+        "sources": [
+          {
+            "url": "https://lei.bloomberg.com/leis/view/894500B4XY7ECSSRCJ20?utm_source=openai",
+            "title": "J Lidström Consulting AB - LEI: 894500B4XY7ECSSRCJ20"
+          },
+          {
+            "url": "https://upplysningar.syna.se/foretag/5595085977/lilium-consulting-ab?utm_source=openai",
+            "title": "Lilium Consulting AB (559508-5977) - Företagsinformation | SYNA"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "oteria.se",
+        "confidence": 0.85
+      },
+      {
+        "domain": "lei.bloomberg.com",
+        "confidence": 0.5
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "oteria.se",
+        "url": "https://oteria.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Oteria - IT-konsulter inom e-handel och retail",
+        "description": "Oteria är experter inom e-handel och retail och har själva drivit snabbväxande e-handelsbolag. Vi löser era behov!",
+        "text_sample": "Oteria - IT-konsulter inom e-handel och retail Hoppa till innehåll SÄG HEJ SÄG HEJ Main Menu DIGITALISERINGSPARTNER FÖR DETALJHANDEL Din vision. Vårt fokus. Konsulter med mångårig erfarenhet av e-handel och retail. Läs mer Mer kontroll - mindre handpåläggning Vi möjliggör en enkel datahantering med minimal manuell hantering för våra kunder. Affärssystem Vi hjälper ditt bolag att kunna stå på en stabil grund genom ett affärssystem som är skalbart och anpassat efter just din verksamhet. BI-system "
+      },
+      {
+        "domain": "lei.bloomberg.com",
+        "url": "https://lei.bloomberg.com/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Bloomberg LEI",
+        "description": "Bloomberg provides clients with Legal Entity Identifier (LEI) services and solutions. Register, renew, transfer, search, and download LEIs with Bloomberg today.",
+        "text_sample": "Bloomberg LEI Please enable JavaScript in your browser See enable-javascript.com for help. Please use a modern browser We use modern web technologies to provide many fluid, powerful and user-friendly features. It seems your browser does not support all of these technologies. Please use a modern browser to start using lei.bloomberg.com. Legal Entity Identifier (LEI)"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:11:26.380374"
+  }
+}

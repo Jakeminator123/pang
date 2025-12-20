@@ -1,0 +1,100 @@
+{
+  "folder": "K969676-25",
+  "extracted_at": "2025-12-19T16:05:00.955932",
+  "company_name": "Paborito AB",
+  "orgnr": "559563-4642",
+  "verksamhet": "Aktiebolaget skall bedriva restaurangverksamhet, avhämtning och catering av filippinsk mat.",
+  "sate": "Ängelholm",
+  "address": "c/o Viktor Herbst, Kronotorpsgatan 14, 262 62 ÄNGELHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-04",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Krystel Valle Asuncion",
+      "role": "Styrelsesuppleant",
+      "personnr": "199301-XXXX"
+    },
+    {
+      "name": "Viktor Hwa Jung Herbst",
+      "role": "Styrelsesuppleant",
+      "personnr": "198507-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "paborito.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "paborito.com",
+        "source": "generated"
+      },
+      {
+        "domain": "paborito.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "paboritoab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Paborito AB",
+    "searches": [
+      {
+        "query": "Paborito AB hemsida website",
+        "summary": "Jag hittade ingen officiell hemsida för Paborito AB (Ängelholm), vilket tyder på att företaget ännu inte har någon registrerad webbadress. Informationen från Bolagsfakta visar att Paborito AB är ett nyregistrerat aktiebolag (bildat 4 december 2025 och registrerat 17 december 2025), med säte i Ängelholm och adresserat till Kronotorpsgatan 14, 262 62 Ängelholm ([bolagsfakta.se](https://www.bolagsfakta.se/5595634642-Paborito_AB?utm_source=openai)).\n\nSammanfattningsvis: Paborito AB har för närvarand",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634642-Paborito_AB?utm_source=openai",
+            "title": "Paborito AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "Paborito AB Aktiebolaget skall bedriva restaurangverksamhet, a kontakt",
+        "summary": "Här är några korta kontaktuppgifter för Paborito AB:\n\n• Organisationsnummer: 559563‑4642. Paborito AB har säte i Ängelholm. Adress: Kronotorpsgatan 14, 262 62 Ängelholm. Verksamheten enligt registrering: restaurangverksamhet, avhämtning och catering av filippinsk mat. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634642-Paborito_AB?utm_source=openai))  \n• Firman tecknas av styrelsen, men specifika telefonnummer eller e‑post är inte tillgängliga i sökningen. ([bolagsfakta.se](https://www.bolag",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634642-Paborito_AB?utm_source=openai",
+            "title": "Paborito AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Paborito AB\" site:se",
+        "summary": "Här är kort information om \"Paborito AB\" enligt uppgifter på webben:\n\n• Namn: Paborito AB  \n• Organisationsnummer: 559563‑4642 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634642-Paborito_AB?utm_source=openai))  \n• Adress: c/o Viktor Herbst, Kronotorpsgatan 14, 262 62 Ängelholm, Skåne län ([bolagsfakta.se](https://www.bolagsfakta.se/5595634642-Paborito_AB?utm_source=openai))  \n• Verksamhet: Restaurangverksamhet, avhämtning och catering av filippinsk mat ([bolagsfakta.se](https://www.bolagsfa",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634642-Paborito_AB?utm_source=openai",
+            "title": "Paborito AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "paborito.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "paborito.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:18:04.454371"
+  }
+}

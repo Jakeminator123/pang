@@ -1,0 +1,96 @@
+{
+  "folder": "K969791-25",
+  "extracted_at": "2025-12-19T16:05:00.995316",
+  "company_name": "Nybergs Skogsentreprenad AB",
+  "orgnr": "559563-6381",
+  "verksamhet": "Bolaget ska försälja tjänster inom skogsentreprenad och därmed förenlig verksamhet samt äga och förvalta fast och lös egendom.",
+  "sate": "Ödeshög",
+  "address": "Gräsberg 3, 599 91 ÖDESHÖG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-24",
+  "emails": [],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Niclas Reinhold Nyberg",
+      "role": "Styrelsesuppleant",
+      "personnr": "196611-XXXX"
+    },
+    {
+      "name": "Susanne Marita Nyberg",
+      "role": "Styrelsesuppleant",
+      "personnr": "196902-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "nybergsskogsentreprenad.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "nybergsskogsentreprenad.com",
+        "source": "generated"
+      },
+      {
+        "domain": "nybergsskogsentreprenad.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "unknown",
+  "research": {
+    "company": "Nybergs Skogsentreprenad AB",
+    "searches": [
+      {
+        "query": "Nybergs Skogsentreprenad AB hemsida website",
+        "summary": "Jag har inte kunnat hitta någon officiell hemsida för **Nybergs Skogsentreprenad AB**. Företaget är dock registrerat som:\n\n- Organisationsnummer: 559563‑6381  \n- Adress: Gräsberg 3, 599 91 Ödeshög  \n- Som styrelseledamot figurerar Niclas Nyberg, och Susanne Nyberg är styrelsesuppleant ([bolagsfakta.se](https://www.bolagsfakta.se/5595636381-Nybergs_Skogsentreprenad_AB?utm_source=openai)).\n\nDet verkar alltså inte finnas någon publik webbplats i dagsläget.",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636381-Nybergs_Skogsentreprenad_AB?utm_source=openai",
+            "title": "Nybergs Skogsentreprenad AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "Nybergs Skogsentreprenad AB Bolaget ska försälja tjänster inom skogsentreprena kontakt",
+        "summary": "Här är en kort och tydlig presentation av Nybergs Skogsentreprenad AB baserat på tillgänglig information:\n\n- Nybergs Skogsentreprenad AB är ett aktiebolag som är registrerat hos Bolagsverket sedan den 17 december 2025. Verksamhetsbeskrivningen anger att bolaget “ska försälja tjänster inom skogsentreprenad och därmed förenlig verksamhet samt äga och förvalta fast och lös egendom” ([bolagsfakta.se](https://www.bolagsfakta.se/5595636381-Nybergs_Skogsentreprenad_AB?utm_source=openai)).\n\n- Företaget ",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636381-Nybergs_Skogsentreprenad_AB?utm_source=openai",
+            "title": "Nybergs Skogsentreprenad AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"Nybergs Skogsentreprenad AB\" site:se",
+        "summary": "Här är en kort sammanfattning av \"Nybergs Skogsentreprenad AB\" enligt information från svenska källor:\n\n- Nybergs Skogsentreprenad AB är ett aktiebolag registrerat med organisationsnummer 559563‑6381. Företaget har sitt säte i Ödeshög och har adressen Gräsberg 3, 599 91 Ödeshög ([bolagsfakta.se](https://www.bolagsfakta.se/5595636381-Nybergs_Skogsentreprenad_AB?utm_source=openai)).\n\n- Företaget bildades den 24 november 2025 och registrerades officiellt hos Bolagsverket den 17 december 2025 ([bola",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595636381-Nybergs_Skogsentreprenad_AB?utm_source=openai",
+            "title": "Nybergs Skogsentreprenad AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "nybergsskogsentreprenad.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "nybergsskogsentreprenad.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:26:37.691822"
+  }
+}

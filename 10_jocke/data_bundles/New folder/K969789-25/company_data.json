@@ -1,0 +1,128 @@
+{
+  "folder": "K969789-25",
+  "extracted_at": "2025-12-19T16:05:00.994155",
+  "company_name": "DanDotter aktiebolag",
+  "orgnr": "559563-5649",
+  "verksamhet": "Företagets huvudsyfte är att äga och förvalta aktier eller andelar i andra företag.",
+  "sate": "Stockholm",
+  "address": "c/o Anna Ekberg, Lilla sällskapets väg 77, 127 61 SKÄRHOLMEN,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-01",
+  "emails": [
+    "anna@palomadesignstudio.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Anna Elisabet Ekberg",
+      "role": "Styrelseledamot",
+      "personnr": "198507-XXXX"
+    },
+    {
+      "name": "Emil Alexander Toft Eklund",
+      "role": "Styrelsesuppleant",
+      "personnr": "198802-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "palomadesignstudio.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "dandotter.se",
+        "source": "generated"
+      },
+      {
+        "domain": "dandotter.com",
+        "source": "generated"
+      },
+      {
+        "domain": "dandotter.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "direct",
+  "research": {
+    "company": "DanDotter aktiebolag",
+    "searches": [
+      {
+        "query": "DanDotter aktiebolag hemsida website",
+        "summary": "Här är en kort översikt:\n\n• Det finns **ingen offentlig hemsida** eller webbplats som tydligt är kopplad till \"DanDotter aktiebolag\". Inga aktiva webbsidor med företagsnamnet kunde hittas vid sökning. ([daydotter.com](https://daydotter.com/?utm_source=openai))  \n• Företaget är registrerat i Stockholm med organisationsnummer **559563‑5649** och har adress **Lilla sällskapets väg 77, 127 61 Skärholmen**. VD är **Anna Ekberg**. Bolaget bildades den **1 december 2025** och registrerades den **17 dec",
+        "sources": [
+          {
+            "url": "https://daydotter.com/?utm_source=openai",
+            "title": "daydotter.com"
+          },
+          {
+            "url": "https://www.bolagsfakta.se/5595635649-DanDotter_aktiebolag?utm_source=openai",
+            "title": "DanDotter aktiebolag | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "DanDotter aktiebolag Företagets huvudsyfte är att äga och förvalta akti kontakt",
+        "summary": "Här är en kort sammanfattning av DanDotter aktiebolag enligt tillgängliga offentliga uppgifter:\n\n- Organisationsnummer: 559563‑5649 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635649-DanDotter_aktiebolag?utm_source=openai))  \n- Företagets huvudsyfte är att äga och förvalta aktier eller andelar i andra företag ([bolagsfakta.se](https://www.bolagsfakta.se/5595635649-DanDotter_aktiebolag?utm_source=openai))  \n- Säte: Stockholm (adress: c/o Anna Ekberg, Lilla sällskapets väg 77, 127 61 Skärholm",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635649-DanDotter_aktiebolag?utm_source=openai",
+            "title": "DanDotter aktiebolag | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"DanDotter aktiebolag\" site:se",
+        "summary": "Här är en kortfattad sammanställning om DanDotter aktiebolag, baserat på information från en svensk webbkatalog (Bolagsfakta):\n\n- **Organisationsnummer**: 559563‑5649 ([bolagsfakta.se](https://www.bolagsfakta.se/5595635649-DanDotter_aktiebolag?utm_source=openai))  \n- **Säte / adress**: Lilla sällskapets väg 77, 127 61 Skärholmen, i Stockholm ([bolagsfakta.se](https://www.bolagsfakta.se/5595635649-DanDotter_aktiebolag?utm_source=openai))  \n- **Status**: Aktivt bolag ([bolagsfakta.se](https://www.",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635649-DanDotter_aktiebolag?utm_source=openai",
+            "title": "DanDotter aktiebolag | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "palomadesignstudio.se",
+        "confidence": 0.85
+      },
+      {
+        "domain": "daydotter.com",
+        "confidence": 0.5
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "palomadesignstudio.se",
+        "url": "https://www.palomadesignstudio.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Paloma Design Studio",
+        "description": "",
+        "text_sample": "Paloma Design Studio top of page projects custom talks & events the studio contact 1/4 WE DARE TO PUSH THE LImITS OF LIGHT IN ARCHITECTURE AND ART. mODERNA mUSEET FOYER AB SEGULAH GJENSIDIGE PRECIS DIGITAL ANNEX SPACE STOCKHOLm FAT CAT BRASSERIE BOTáNICO BRASSERIE ASTORIA REFLEKTION SEE COLOUR HASSELBACKEN THE LIGHT ACT PRIVATE HEALTH CLUB FRANTZÉN mICROSOFT KUST YASURAGI HAUS PRECIS DIGITAL SAFIRA EI GT30 KYRKBACKEN VÄSTERÅS ENTERSPACE ENERGI-mYNDIGHETEN FOllOw US Palomadesignstudio ​ ​ Läs in "
+      },
+      {
+        "domain": "daydotter.com",
+        "url": "https://daydotter.com/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "daydotter.com",
+        "description": "",
+        "text_sample": "daydotter.com Launching Soon Launching Soon Launching Soon Launching Soon Launching Soon Launching Soon Launching Soon Launching Soon Contact Us Drop us a line! Name Email* Sign up for our email list for updates, promotions, and more. Send This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply. Copyright © 2025 daydotter.com - All Rights Reserved. Powered by This website uses cookies. We use cookies to analyze website traffic and optimize your website experi"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:26:18.459437"
+  }
+}

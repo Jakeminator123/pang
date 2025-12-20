@@ -1,0 +1,109 @@
+{
+  "folder": "K969768-25",
+  "extracted_at": "2025-12-19T16:05:00.988315",
+  "company_name": "Nordic Stålhandel AB",
+  "orgnr": "559563-5896",
+  "verksamhet": "Bolaget skall bedriva inköp, försäljning och uppdragsverksamhet avseende stål och metaller samt äga och förvalta fast och lös egendom, äga, förvalta och bedriva handel med värdepapper samt därmed förenlig verksamhet.",
+  "sate": "Uppsala",
+  "address": "Alexander Roes, Glimmervägen 11A, 752 41 UPPSALA,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-04",
+  "emails": [
+    "info@stalhandel.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Erik Alexander Roes",
+      "role": "Styrelseledamot",
+      "personnr": "199603-XXXX"
+    },
+    {
+      "name": "Lucas Jonny Krister Eklund",
+      "role": "Styrelseledamot",
+      "personnr": "199510-XXXX"
+    },
+    {
+      "name": "Robert Johan Krister Eklund",
+      "role": "Styrelseledamot",
+      "personnr": "198105-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "stalhandel.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "nordicstalhandel.se",
+        "source": "generated"
+      },
+      {
+        "domain": "nordicstalhandel.com",
+        "source": "generated"
+      },
+      {
+        "domain": "nordicstalhandel.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "direct",
+  "research": {
+    "company": "Nordic Stålhandel AB",
+    "searches": [
+      {
+        "query": "Nordic Stålhandel AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon webbsida med namnet “Nordic Stålhandel AB”. Det finns inga uppgifter eller officiella webbadresser som refererar till detta namn i sökresultaten.([stalhandel.se](https://stalhandel.se/?utm_source=openai))\n\nDet är möjligt att det finns en annan korrekt företagsbeteckning eller ett felstavat namn. Kontrollera gärna stavning eller försök med alternativa namn som till exempel “Nordic Steel AB”, “Stålhandel AB”, eller liknande, så kan jag hjälpa dig bättre.",
+        "sources": [
+          {
+            "url": "https://stalhandel.se/?utm_source=openai",
+            "title": "Hem - Stålhandel"
+          }
+        ]
+      },
+      {
+        "query": "Nordic Stålhandel AB Bolaget skall bedriva inköp, försäljning och uppdr kontakt",
+        "summary": "Här är en kortfattad sammanställning av Nordic Stålhandel AB enligt din angivna verksamhetsbeskrivning:\n\n• Nordic Stålhandel AB (organisationsnummer 559563‑5896) har säte i Uppsala och adressen är Glimmervägen 11A, 752 41 Uppsala ([bolagsfakta.se](https://www.bolagsfakta.se/5595635896-Nordic_Stalhandel_AB?utm_source=openai)).  \n• Företaget är registrerat under december 2025 – bolaget bildades den 4 december 2025 och registrerades den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635896-Nordic_Stalhandel_AB?utm_source=openai",
+            "title": "Nordic Stålhandel AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Nordic Stålhandel AB\" site:se",
+        "summary": "Jag hittade tyvärr ingen offentlig information om ett företag vid namn \"Nordic Stålhandel AB\" på svenska webbsajter (‑ .se‑domän). Det verkar inte finnas någon välkänd hemsida eller kontaktuppgifter under detta namn.\n\nFör att hjälpa dig vidare föreslår jag att du:\n\n• Kontrollerar att namnet är korrekt stavat eller om företaget kan finnas under ett liknande namn (t.ex. \"Nordic Steel\", \"Nordic Stål AB\" etc.).  \n• Vänder dig till offentliga register som Bolagsverket (svensk företagsinformation) ell",
+        "sources": []
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "stalhandel.se",
+        "confidence": 0.5
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "stalhandel.se",
+        "url": "https://stalhandel.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "",
+        "description": "",
+        "text_sample": ""
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:25:03.822811"
+  }
+}

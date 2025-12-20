@@ -1,0 +1,21 @@
+{
+  "company_name": "PeNo Consulting AB",
+  "orgnr": "559563-5219",
+  "folder_name": "K969540-25",
+  "preview_url": "https://demo-kzml3imt1f11oxtgx0f9.vusercontent.net",
+  "chat_id": "d0JHmw0G7Vc",
+  "version_id": "b_St7zPA6xB4e",
+  "cost": {
+    "estimated": {
+      "estimated_prompt_tokens": 1054,
+      "estimated_completion_tokens": 3500,
+      "estimated_total_tokens": 4554,
+      "estimated_cost_usd": 0.027831,
+      "model": "v0-1.5-md",
+      "timestamp": "2025-12-19T17:21:29.416557"
+    },
+    "actual": null,
+    "generated_at": "2025-12-19T17:24:16.759187"
+  },
+  "generated_at": "2025-12-19T17:24:16.759194"
+}

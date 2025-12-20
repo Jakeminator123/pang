@@ -1,0 +1,102 @@
+{
+  "folder": "K968851-25",
+  "extracted_at": "2025-12-19T16:05:00.894967",
+  "company_name": "NSWE AB",
+  "orgnr": "559563-5748",
+  "verksamhet": "Bolaget ska bedriva verksamhet inom IT, teknik, digital utveckling, underhållning, scenkonst, showproduktion, event och artistverksamhet, rådgivning och konsultation inom affärs- utveckling, kommunikation, marknadsföring och organisation, utbildning, förmedling av tjänster samt handel med varor och tjänster inom dessa områden. Bolaget ska även bedriva verksamhet inom friskvård, hälsa, träning, välmående, coaching och relaterade tjänster samt därmed förenlig verksamhet.",
+  "sate": "Stockholm",
+  "address": "Box 4413, 102 69 STOCKHOLM,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-10-08",
+  "emails": [
+    "nswe2025@hotmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Eléne Lindström",
+      "role": "Styrelsesuppleant",
+      "personnr": "199003-XXXX"
+    },
+    {
+      "name": "Peter Lindström",
+      "role": "Styrelsesuppleant",
+      "personnr": "199001-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "nswe.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "nswe.com",
+        "source": "generated"
+      },
+      {
+        "domain": "nswe.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "nsweab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "NSWE AB",
+    "searches": [
+      {
+        "query": "NSWE AB hemsida website",
+        "summary": "Jag kunde inte hitta någon officiell hemsida för \"NSWE AB\". Bolagsfakta listar företaget med organisationsnummer 559563‑5748, registrerat i Stockholm, och ger information om adress, verksamhetsbeskrivning, men anger inget webbplats‑adress ([bolagsfakta.se](https://www.bolagsfakta.se/5595635748-NSWE_AB?utm_source=openai)).\n\nSammanfattningsvis:  \n• Inga spår av en webbsida hittades i offentliga register eller via sökmotorer.  \n• Om du söker mer information, kan en möjlig nästa steg vara att kontak",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635748-NSWE_AB?utm_source=openai",
+            "title": "NSWE AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "NSWE AB Bolaget ska bedriva verksamhet inom IT, teknik, di kontakt",
+        "summary": "Här är en kort sammanfattning inklusive källhänvisningar:\n\nNSWE AB (organisationsnummer 559563‑5748) är ett aktiebolag med säte i Stockholm, på adress Box 4413, 102 69 Stockholm. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635748-NSWE_AB?utm_source=openai))\n\nBolaget registrerades den 17 december 2025 och är aktivt. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635748-NSWE_AB?utm_source=openai))\n\nEnligt verksamhetsbeskrivningen ska NSWE AB bedriva verksamhet inom följande områden:\n- IT, t",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635748-NSWE_AB?utm_source=openai",
+            "title": "NSWE AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"NSWE AB\" site:se",
+        "summary": "Här är en kort sammanfattning om **NSWE AB** enligt tillgängliga uppgifter:\n\n• NSWE AB är ett svenskt aktiebolag med organisationsnummer 559563‑5748 och har säte i Stockholm. Företagets registrerade adress är Box 4413, 102 69 Stockholm. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635748-NSWE_AB?utm_source=openai))  \n• Det finns inga tillgängliga bokslut eller årsredovisningar publicerade för bolaget på Bolagsfakta. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635748-NSWE_AB?utm_source=o",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635748-NSWE_AB?utm_source=openai",
+            "title": "NSWE AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "nswe.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "nswe.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:05:03.793176"
+  }
+}

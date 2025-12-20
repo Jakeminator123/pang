@@ -1,0 +1,147 @@
+{
+  "folder": "K969525-25",
+  "extracted_at": "2025-12-19T16:05:00.920569",
+  "company_name": "MTS Måleriteknik Specialister AB",
+  "orgnr": "559563-4139",
+  "verksamhet": "Företaget ska bedriva måleriverksamhet innefattande invändig och utvändig målning, tapetsering, spackling, färgsättning, renoveringsarbeten samt därmed förenlig verksamhet. Företaget kan också utföra mindre bygg- och reparationsarbeten samt utföra tjänster inom ytskiktsbehandling för både privatpersoner och företag.",
+  "sate": "Göteborg",
+  "address": "köldgatan 6, köldgatan 6, 418 32 GÖTEBORG,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-28",
+  "emails": [
+    "mariahuseen9985@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Maria Hamudi",
+      "role": "Styrelseledamot",
+      "personnr": "199510-XXXX"
+    },
+    {
+      "name": "Natalae Chikh Aldaya",
+      "role": "Styrelsesuppleant",
+      "personnr": "200108-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "mtsnorge.no",
+    "confidence": 0.33,
+    "source": "ai_crawled",
+    "status": "no_match",
+    "alternatives": [
+      {
+        "domain": "mtsmaleriteknikspecialister.com",
+        "source": "generated"
+      },
+      {
+        "domain": "mtsmaleriteknikspecialister.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "MTS Måleriteknik Specialister AB",
+    "searches": [
+      {
+        "query": "MTS Måleriteknik Specialister AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell hemsida för \"MTS Måleriteknik Specialister AB\". Det verkar inte finnas någon webbnärvaro under exakt detta namn som är tillgänglig via sökmotorer.\n\nDet finns däremot ett norskt företag som heter **Measurement Technology Services AS (MTS AS)** som erbjuder laser­uppmätning och teknisk service – men det verkar vara ett helt annat bolag och inte verksam i Sverige ([mtsnorge.no](https://www.mtsnorge.no/?utm_source=openai)).\n\nOm du har mer information, såso",
+        "sources": [
+          {
+            "url": "https://www.mtsnorge.no/?utm_source=openai",
+            "title": "Oppmåling og retting av maskiner | Measurement Technology Services AS"
+          }
+        ]
+      },
+      {
+        "query": "MTS Måleriteknik Specialister AB Företaget ska bedriva måleriverksamhet innefattand kontakt",
+        "summary": "Här är en kort beskrivning av MTS Måleriteknik Specialister AB med källhänvisningar:\n\n- Företaget är ett svenskt aktiebolag med organisationsnummer 559563‑4139. Det har säte i Göteborg och är registrerat på adressen Köldgatan 6, 418 32 Göteborg ([bolagsfakta.se](https://www.bolagsfakta.se/5595634139-MTS_Maleriteknik_Specialister_AB?utm_source=openai)).\n\n- Bolaget bildades den 28 november 2025 och registrerades officiellt den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/559563413",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634139-MTS_Maleriteknik_Specialister_AB?utm_source=openai",
+            "title": "MTS Måleriteknik Specialister AB | Aktiebolag | Info & Löner"
+          }
+        ]
+      },
+      {
+        "query": "\"MTS Måleriteknik Specialister AB\" site:se",
+        "summary": "Jag hittade inga träffar för \"MTS Måleriteknik Specialister AB\" på svenska webbplatser (.se). Det finns inga tydliga referenser till ett företag som exakt matchar det namnet.\n\nDet finns dock liknande företag med liknande namn, till exempel:\n\n- **Måleriteknik i Stockholm AB** – ett måleriföretag verksamt i Stockholm, grundat år 2000, med cirka 27 anställda och inriktat på fasadmålning, industrimålning och dekorationsmåleri ([maleriteknik.se](https://www.maleriteknik.se/?utm_source=openai)).\n\n- **",
+        "sources": [
+          {
+            "url": "https://www.maleriteknik.se/?utm_source=openai",
+            "title": "Måleriteknik i Stockholm AB | Målerifirma Stockholm"
+          },
+          {
+            "url": "https://www.hmtmaleri.se/?utm_source=openai",
+            "title": "Herrängens Måleriteknik AB – Ett måleriföretag i Stockholm och Mälardalen"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "mtsnorge.no",
+        "confidence": 0.5
+      },
+      {
+        "domain": "maleriteknik.se",
+        "confidence": 0.5
+      },
+      {
+        "domain": "hmtmaleri.se",
+        "confidence": 0.5
+      },
+      {
+        "domain": "mtsmaleriteknikspecialister.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "mtsnorge.no",
+        "url": "https://www.mtsnorge.no",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.33,
+        "title": "Oppmåling og retting av maskiner | Measurement Technology Services AS",
+        "description": "Velkommen til Measurement Technology Services AS. Din samarbeidspartner innen laseroppretting, teknisk service, kurs og opplæring.",
+        "text_sample": "Oppmåling og retting av maskiner | Measurement Technology Services AS Velkommen til MTS AS Din samarbeidspartner innen laseroppretting, teknisk service, kurs og opplæring Kontakt oss Kjenn din maskin! Measurement Technology Services AS (MTS AS) er spesialister på oppmåling og retting av maskiner. Vi er importør og distributør av avanserte laser- måleinstrumenter som er utviklet med den nyeste teknologien og gir innsikt i maskinens tilstand. Vi har mer enn 20 års erfaring med laseroppretting og t"
+      },
+      {
+        "domain": "maleriteknik.se",
+        "url": "https://www.maleriteknik.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.33,
+        "title": "Måleriteknik i Stockholm AB | Målerifirma Stockholm",
+        "description": "Måleriteknik i Stockholm AB är en professionell målerifirma med över 20 års erfarenhet. Vi erbjuder allt från ombyggnation, nyproduktion, servicemålning till totalentreprenad",
+        "text_sample": "Måleriteknik i Stockholm AB | Målerifirma Stockholm top of page DIN VISION. VÅRT UPPDRAG. Utforska oss och våra referenser. Våra expertområden. våra nöjda kunder och mycket mer 1000 + Nöjda Kunder 350+ Lyckade projekt 27+ Anställda 1000+ Nöjda kunder 100% Nöjd kund garanti Projekt portfölj Referenser Add Våra tjänster Se alla Add Vad våra kunder säger Läs mer Add Kontakta oss Få en kostnadsfri offert Add Om oss Måleriteknik i Stockholm AB – Professionella Måleritjänster sedan 2000 Vi är ett erfa"
+      },
+      {
+        "domain": "hmtmaleri.se",
+        "url": "https://www.hmtmaleri.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.33,
+        "title": "Herrängens Måleriteknik AB – Ett måleriföretag i Stockholm och Mälardalen",
+        "description": "Måleriföretag i Stockholm och Mälardalen",
+        "text_sample": "Herrängens Måleriteknik AB – Ett måleriföretag i Stockholm och Mälardalen Skip to content Herrängens Måleriteknik AB Ett måleriföretag i Stockholm och Mälardalen Vi arbetar med bostadsrättsföreningar, byggföretag och privatkunder Stockholm Mälardalen Hyresgästanpassning Vi utför målningsarbeten vid anpassning av lokaler för nya hyresgäster och samarbetar med både stora byggföretag och mindre entreprenörer. Trapphusmålning Trapphusmålning är en av våra vanligaste uppdrag. I nära samarbete med vår"
+      },
+      {
+        "domain": "mtsmaleriteknikspecialister.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:10:36.684643"
+  }
+}

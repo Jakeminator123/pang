@@ -1,0 +1,112 @@
+{
+  "folder": "K969632-25",
+  "extracted_at": "2025-12-19T16:05:00.942185",
+  "company_name": "By Charlotte AB",
+  "orgnr": "559563-4998",
+  "verksamhet": "Företaget ska bedriva verksamhet inom coaching, personlig utveckling, hälsa samt konsulttjänster inom HR/lön, ledarskap och organisationsutveckling. Riktat till både privatpersoner och företag.",
+  "sate": "Kungsbacka",
+  "address": "Annabovägen 33, 439 72 FJÄRÅS,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-10",
+  "emails": [
+    "charlotte@bycharlotte.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Eva Karin Charlotte Andersson",
+      "role": "Styrelsesuppleant",
+      "personnr": "198605-XXXX"
+    },
+    {
+      "name": "David Erik Robert Fredberg",
+      "role": "Styrelsesuppleant",
+      "personnr": "198503-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "bycharlotte.se",
+    "confidence": 1.0,
+    "source": "ai_crawled",
+    "status": "wrong_company",
+    "alternatives": [
+      {
+        "domain": "bycharlotte.com",
+        "source": "generated"
+      },
+      {
+        "domain": "bycharlotte.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "bycharlotteab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "direct",
+  "research": {
+    "company": "By Charlotte AB",
+    "searches": [
+      {
+        "query": "By Charlotte AB hemsida website",
+        "summary": "Jag kunde inte hitta någon officiell hemsida för ett verksamhetsnamn exakt som \"By Charlotte AB hemsida\". Däremot finns ett svenskt företag **By Charlotte AB** registrerat som aktiebolag med följande information:\n\n- Organisationsnummer: 559563‑4998  \n- Säte: Kungsbacka, Hallands län  \n- Gatuadress: Annabovägen 33, 439 72 Fjärås  \n- Verksamhet: coaching, personlig utveckling, hälsa samt konsulttjänster inom HR, lön, ledarskap och organisationsutveckling riktat till både privatpersoner och företag",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634998-By_Charlotte_AB?utm_source=openai",
+            "title": "By Charlotte AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "By Charlotte AB Företaget ska bedriva verksamhet inom coaching, pe kontakt",
+        "summary": "Här är en kort och informativ sammanställning av By Charlotte AB:\n\n- By Charlotte AB är ett svenskt aktiebolag, registrerat med organisationsnummer 559563‑4998 och har sitt säte i Kungsbacka (Fjärås), Hallands län. Adressen är Annabovägen 33, 439 72 Fjärås. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634998-By_Charlotte_AB?utm_source=openai))  \n- Bolaget registrerades den 17 december 2025 efter att ha bildats den 10 november 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595634998-By_C",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634998-By_Charlotte_AB?utm_source=openai",
+            "title": "By Charlotte AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"By Charlotte AB\" site:se",
+        "summary": "Här är ett kort svar:\n\nDet finns inget uppenbart resultat när man söker efter exakt frasen “By Charlotte AB” på svenska webbplatser (site: se). Det finns däremot ett företag som heter **BY CHARLOTTE ASPLUND Aktiebolag** — med organisationsnummer 559262‑9389, hemmahörande i Danderyd. Bolaget hade enligt senaste bokslut omsättning på cirka 664 000 SEK, ett rörelseresultat på –109 000 SEK, och en medarbetare. Styrelsen består av Charlotte Asplund (ordförande) samt Caroline Asplund Sjunnesson (suppl",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5592629389-BY_CHARLOTTE_ASPLUND_Aktiebolag?utm_source=openai",
+            "title": "BY CHARLOTTE ASPLUND Aktiebolag | Aktiebolag | Info & Löner"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "bycharlotte.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "bycharlotte.se",
+        "url": "https://bycharlotte.se/",
+        "status": "wrong_company",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 1.0,
+        "title": "Charlotte – Coach & Konsult",
+        "description": "",
+        "text_sample": "Charlotte – Coach & Konsult Hoppa till innehåll Min drivkraft är att hjälpa människor att växa och upptäcka det som är viktigt för dem. Jag ser fram emot att få vara en del av din resa. Välkommen att kontakta mig Mitt fokus Coaching privat Som coach finns jag där att hjälpa dig att hitta nya lösningar så att du hittar kraften och energin att börja ta första stegen mot just det du drömmer om och vill ha mer av i ditt liv. Ibland behövs det nya perspektiv, mod och inspiration för att komma igång m",
+        "ai_verified": false,
+        "ai_confidence": 0.7,
+        "ai_reason": "Hemsidan bycharlotte.se nämner coaching och personlig utveckling, vilket stämmer överens med By Charlotte AB:s verksamhet. Dock saknas specifik information om företagsnamn, organisationsnummer eller stad på hemsidan för att bekräfta att det är samma företag. Därför kan vi inte med säkerhet verifiera att hemsidan tillhör By Charlotte AB."
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:15:18.579194"
+  }
+}

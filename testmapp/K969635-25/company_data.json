@@ -1,0 +1,103 @@
+{
+  "folder": "K969635-25",
+  "extracted_at": "2025-12-19T16:05:00.943348",
+  "company_name": "100flow AB",
+  "orgnr": "559563-5029",
+  "verksamhet": "Bolaget ska bedriva utveckling och försäljning av mjukvara för arbetsflödes- och verksamhetsstyrning, samt därmed förenlig verksamhet.",
+  "sate": "Stockholm",
+  "address": "Snöripsvägen 22, Snöripsvägen 22, 125 56 ÄLVSJÖ,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-04",
+  "emails": [
+    "info@wisebear.se"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Björn Olov Wismén",
+      "role": "Styrelseledamot",
+      "personnr": "197205-XXXX"
+    },
+    {
+      "name": "Sandra Mari Modig",
+      "role": "Styrelsesuppleant",
+      "personnr": "198012-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "wisebear.se",
+    "confidence": 0.85,
+    "source": "email",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "100flow.se",
+        "source": "generated"
+      },
+      {
+        "domain": "100flow.com",
+        "source": "generated"
+      },
+      {
+        "domain": "100flow.nu",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "direct",
+  "research": {
+    "company": "100flow AB",
+    "searches": [
+      {
+        "query": "100flow AB hemsida website",
+        "summary": "Här är en kort sammanfattning av 100flow AB och dess hemsida:\n\n- 100flow AB är ett nyregistrerat svenskt aktiebolag (organisationsnummer 559563‑5029) med säte i Stockholm (Älvsjö). Bolaget registrerades den 17 december 2025 och bildades vid en stämma den 4 december 2025. ([bolagsfakta.se](https://www.bolagsfakta.se/5595635029-100flow_AB?utm_source=openai))  \n- Verksamheten beskrivs som utveckling och försäljning av mjukvara för arbetsflödes- och verksamhetsstyrning. ([bolagsfakta.se](https://www",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635029-100flow_AB?utm_source=openai",
+            "title": "100flow AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "100flow AB Bolaget ska bedriva utveckling och försäljning av  kontakt",
+        "summary": "Här är en kortfattad svar på din fråga (på svenska), inklusive relevant källhänvisning:\n\n100flow AB är ett aktiebolag (organisationsnummer 559563‑5029) med säte i Stockholm (Snöripsvägen 22, 125 56 Älvsjö). Bolaget registrerades den 17 december 2025 och har verksamhetsbeskrivningen: \"Bolaget ska bedriva utveckling och försäljning av mjukvara för arbetsflödes‑ och verksamhetsstyrning, samt därmed förenlig verksamhet.\" ([bolagsfakta.se](https://www.bolagsfakta.se/5595635029-100flow_AB?utm_source=o",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635029-100flow_AB?utm_source=openai",
+            "title": "100flow AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"100flow AB\" site:se",
+        "summary": "Här är kort information om 100flow AB:\n\n- 100flow AB är ett **svenskt aktiebolag** med organisationsnummer **559563‑5029** och är registrerat med säte i **Älvsjö, Stockholm**. Adressen är **Snöripsvägen 22, 125 56 Älvsjö** ([bolagsfakta.se](https://www.bolagsfakta.se/5595635029-100flow_AB?utm_source=openai)).\n- Bolaget är **aktivt** och bildades och registrerades under december 2025 – bildat den 4 december och registrerat den 17 december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/55956350",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635029-100flow_AB?utm_source=openai",
+            "title": "100flow AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "wisebear.se",
+        "confidence": 0.85
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "wisebear.se",
+        "status": "error",
+        "http_code": 403
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:15:41.780100"
+  }
+}

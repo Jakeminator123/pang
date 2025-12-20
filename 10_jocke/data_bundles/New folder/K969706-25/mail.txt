@@ -1,0 +1,15 @@
+Till: theoudell@icloud.com
+Ämne: Fråga angående eventtjänster
+============================================================
+
+Hej Theo,
+
+Jag har noterat att ni har startat ett nytt bolag, Udells Entertainment AB, som fokuserar på konsult- och eventverksamhet inom nattklubbsbranschen. För att hjälpa er komma igång online kan vi på SajtStudio ta fram en kostnadsfri demo-sida. Denna kan ge er en konkret bild av hur en framtida hemsida skulle kunna se ut.
+
+Vi kombinerar AI med design för att snabbt generera idéer och utkast, och vi bygger moderna React-sidor med Next.js och Tailwind. Om ni är intresserade kan vi även hjälpa till med att finslipa och utveckla hela projektet för hand.
+
+Om ni vill ta nästa steg och utforska era digitala möjligheter, tveka inte att höra av er.
+
+Mvh,  
+[Ditt namn]  
+SajtStudio.se

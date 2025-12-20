@@ -1,0 +1,15 @@
+Till: andreasknutkarlsson@gmail.com
+Ämne: Angående aktieköp i streamingbolag
+============================================================
+
+Hej Andreas,
+
+Jag har noterat ert nya bolag, AKK Solutions AB, och förstår att ni planerar att investera i ett företag inom streaming av racketsport. Det låter som en intressant nisch.
+
+Vi på SajtStudio.se kan hjälpa er att komma igång online genom att skapa en kostnadsfri demo-sida så ni kan få en bild av hur er webbnärvaro skulle kunna se ut. Vi kombinerar AI med modern designteknik som React och Next.js för att snabbt ta fram förslag och idéer.
+
+Om ni är intresserade av att utveckla en komplett hemsida eller bara vill ha hjälp med att komma igång, tveka inte att höra av er. Vi finns här för att assistera er med att bygga en stark online-plattform.
+
+Mvh,  
+[Ditt namn]  
+SajtStudio.se

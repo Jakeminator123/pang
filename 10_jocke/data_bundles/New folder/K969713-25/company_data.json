@@ -1,0 +1,126 @@
+{
+  "folder": "K969713-25",
+  "extracted_at": "2025-12-19T16:05:00.966941",
+  "company_name": "Lejans Bostäder AB",
+  "orgnr": "559563-4840",
+  "verksamhet": "Företaget ska äga och förvalta fastigheter och värdepapper.",
+  "sate": "Luleå",
+  "address": "Storholmsvägen 16, 975 98 LULEÅ,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-11-13",
+  "emails": [
+    "lejansgard1288@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Tord Mikael Johansson",
+      "role": "Styrelsesuppleant",
+      "personnr": "198303-XXXX"
+    },
+    {
+      "name": "Sofia Margareta Ekström",
+      "role": "Styrelsesuppleant",
+      "personnr": "198508-XXXX"
+    },
+    {
+      "name": "Sofia Marie Johansson",
+      "role": "Styrelsesuppleant",
+      "personnr": "198609-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "lejansbostader.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "lejansbostader.com",
+        "source": "generated"
+      },
+      {
+        "domain": "lejansbostader.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "lejansbostaderab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Lejans Bostäder AB",
+    "searches": [
+      {
+        "query": "Lejans Bostäder AB hemsida website",
+        "summary": "Jag hittar ingen officiell hemsida för **Lejans Bostäder AB** kopplad till bolaget i Luleå. Enligt Bolagsfakta finns företaget registrerat med organisationsnummer **559563‑4840**, med säte på Storholmsvägen 16, 975 98 Luleå, och registrerat i december 2025 ([bolagsfakta.se](https://www.bolagsfakta.se/5595634840-Lejans_Bostader_AB?utm_source=openai)).\n\nDet finns däremot flera andra webbplatser med liknande namn som verkar tillhöra andra verksamheter – till exempel *Lejons Mäkleri* (mäklarfirma) (",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634840-Lejans_Bostader_AB?utm_source=openai",
+            "title": "Lejans Bostäder AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          },
+          {
+            "url": "https://lejons.se/?utm_source=openai",
+            "title": "LEJONS MÄKLERI – FÖR ATT LIVET TILL STOR DEL HANDLAR OM FÖRTROENDE."
+          }
+        ]
+      },
+      {
+        "query": "Lejans Bostäder AB Företaget ska äga och förvalta fastigheter och vär kontakt",
+        "summary": "Här är en kortfattad presentation av Lejans Bostäder AB:\n\n• Lejans Bostäder AB är ett aktiebolag, registrerat den 17 december 2025 med organisationsnummer 559563‑4840. Verksamheten ska enligt registrering omfatta att äga och förvalta fastigheter samt värdepapper ([bolagsfakta.se](https://www.bolagsfakta.se/5595634840-Lejans_Bostader_AB?utm_source=openai)).  \n• Företagets säte är i Luleå, med gatuadress Storholmsvägen 16, 975 98 Luleå ([bolagsfakta.se](https://www.bolagsfakta.se/5595634840-Lejans",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634840-Lejans_Bostader_AB?utm_source=openai",
+            "title": "Lejans Bostäder AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Lejans Bostäder AB\" site:se",
+        "summary": "Här är några korta, bekräftade fakta om \"Lejans Bostäder AB\", med källhänvisningar:\n\n- Lejans Bostäder AB är ett aktivt svenskt aktiebolag med organisationsnummer 559563‑4840. Bolaget har sitt säte i Luleå och är registrerat på adressen Storholmsvägen 16, 975 98 Luleå ([bolagsfakta.se](https://www.bolagsfakta.se/5595634840-Lejans_Bostader_AB?utm_source=openai)).\n\n- Bolaget bildades enligt konstituerande stämma den 13 november 2025 och registrerades hos Bolagsverket den 17 december 2025 ([bolagsf",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595634840-Lejans_Bostader_AB?utm_source=openai",
+            "title": "Lejans Bostäder AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "lejons.se",
+        "confidence": 0.5
+      },
+      {
+        "domain": "lejansbostader.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "lejons.se",
+        "url": "https://lejons.se/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "LEJONS MÄKLERI – FÖR ATT LIVET TILL STOR DEL HANDLAR OM FÖRTROENDE.",
+        "description": "",
+        "text_sample": "LEJONS MÄKLERI – FÖR ATT LIVET TILL STOR DEL HANDLAR OM FÖRTROENDE. Början på en lång och stark affärsrelation. Sälj med oss Underhand Vi är en helt fristående mäklarfirma välförankrad i den lokala marknaden. Vi finns i Örebro, Kumla, Karlskoga och övriga Örebro län. Som fastighetsmäklare jobbar vi med alla typer av objekt. Allt från bostadsrätter, till villor, radhus och andra fastigheter. Fri värdering när du ska sälja. VISNING MÅNDAG 27 MAJ! Välkommen till denna exklus VISNING LÖRDAG 25 MAJ! "
+      },
+      {
+        "domain": "lejansbostader.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:20:24.716896"
+  }
+}

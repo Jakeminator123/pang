@@ -1,0 +1,121 @@
+{
+  "folder": "K969760-25",
+  "extracted_at": "2025-12-19T16:05:00.983627",
+  "company_name": "Roos Invest AB",
+  "orgnr": "559563-5680",
+  "verksamhet": "Bolaget ska äga och förvalta aktier och andelar i dotterbolag samt bedriva därmed förenlig verksamhet",
+  "sate": "Lomma",
+  "address": "c/o Rikard Roos, Olivias väg 4, 237 42 BJÄRRED,",
+  "typ": "Privat aktiebolag",
+  "bildat": "2025-12-04",
+  "emails": [
+    "rikardroos@gmail.com"
+  ],
+  "phones": [
+    "0771-670 670"
+  ],
+  "people": [
+    {
+      "name": "Rikard Anders Roos",
+      "role": "Styrelsesuppleant",
+      "personnr": "197405-XXXX"
+    },
+    {
+      "name": "Eva Charlotte Roos",
+      "role": "Styrelsesuppleant",
+      "personnr": "198002-XXXX"
+    }
+  ],
+  "domain": {
+    "guess": "roosinvest.se",
+    "confidence": 0.4,
+    "source": "company_name",
+    "status": "unknown",
+    "alternatives": [
+      {
+        "domain": "roosinvest.com",
+        "source": "generated"
+      },
+      {
+        "domain": "roosinvest.nu",
+        "source": "generated"
+      },
+      {
+        "domain": "roosinvestab.se",
+        "source": "generated"
+      }
+    ]
+  },
+  "skip_company": false,
+  "skip_reason": "",
+  "email_category": "generic",
+  "research": {
+    "company": "Roos Invest AB",
+    "searches": [
+      {
+        "query": "Roos Invest AB hemsida website",
+        "summary": "Jag kunde tyvärr inte hitta någon officiell webbplats (hemsida) för \"Roos Invest AB\". Företaget verkar finnas registrerat i Sverige och är aktivt enligt Bloomberg/LEI-uppgifter, men inga webbadresser eller hemsidor anges i dessa offentliga källor ([lei.bloomberg.com](https://lei.bloomberg.com/leis/view/5493005FTMTV4BT6J894?utm_source=openai)).\n\nSammanfattning:\n• Roos Invest AB är registrerat som ett aktivt svenskt aktiebolag (med LEI-nummer 5493005FTMTV4BT6J894) ([lei.bloomberg.com](https://lei.",
+        "sources": [
+          {
+            "url": "https://lei.bloomberg.com/leis/view/5493005FTMTV4BT6J894?utm_source=openai",
+            "title": "Ros Invest AB - LEI: 5493005FTMTV4BT6J894"
+          }
+        ]
+      },
+      {
+        "query": "Roos Invest AB Bolaget ska äga och förvalta aktier och andelar i  kontakt",
+        "summary": "Här är en kortfattad formulering baserad på bolagsordningen för Roos Invest AB:\n\n\"Bolaget ska äga och förvalta aktier och andelar i dotterbolag samt bedriva därmed förenlig verksamhet.\" ([bolagsfakta.se](https://www.bolagsfakta.se/5595635680-Roos_Invest_AB?utm_source=openai))",
+        "sources": [
+          {
+            "url": "https://www.bolagsfakta.se/5595635680-Roos_Invest_AB?utm_source=openai",
+            "title": "Roos Invest AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      },
+      {
+        "query": "\"Roos Invest AB\" site:se",
+        "summary": "Här är kort information om \"Roos Invest AB\" från svenska webbplatser:\n\nH.A Roos Invest AB (organisationsnummer 559283‑7776) är ett aktivt aktiebolag med säte i Jönköping, och registrerades den 17 november 2020 ([ratsit.se](https://www.ratsit.se/5592837776-H.A_Roos_Invest_AB?utm_source=openai)). Bolaget verkar ha till ändamål att äga och förvalta aktier och värdepapper, men visar ingen moms‑ eller F‑skattsregistrering ([ratsit.se](https://www.ratsit.se/5592837776-H.A_Roos_Invest_AB?utm_source=ope",
+        "sources": [
+          {
+            "url": "https://www.ratsit.se/5592837776-H.A_Roos_Invest_AB?utm_source=openai",
+            "title": "H.A Roos Invest AB i Jönköping | Köp bolagsdata"
+          },
+          {
+            "url": "https://www.bolagsfakta.se/5592837776-H.A_Roos_Invest_AB?utm_source=openai",
+            "title": "H.A Roos Invest AB | Aktiebolag | Info & Löner - Bolagsfakta"
+          }
+        ]
+      }
+    ],
+    "domain_candidates": [
+      {
+        "domain": "lei.bloomberg.com",
+        "confidence": 0.5
+      },
+      {
+        "domain": "roosinvest.se",
+        "confidence": 0.4
+      }
+    ],
+    "crawl_results": [
+      {
+        "domain": "lei.bloomberg.com",
+        "url": "https://lei.bloomberg.com/",
+        "status": "no_match",
+        "is_parked": false,
+        "is_match": false,
+        "match_ratio": 0.0,
+        "title": "Bloomberg LEI",
+        "description": "Bloomberg provides clients with Legal Entity Identifier (LEI) services and solutions. Register, renew, transfer, search, and download LEIs with Bloomberg today.",
+        "text_sample": "Bloomberg LEI Please enable JavaScript in your browser See enable-javascript.com for help. Please use a modern browser We use modern web technologies to provide many fluid, powerful and user-friendly features. It seems your browser does not support all of these technologies. Please use a modern browser to start using lei.bloomberg.com. Legal Entity Identifier (LEI)"
+      },
+      {
+        "domain": "roosinvest.se",
+        "status": "connection_error"
+      }
+    ],
+    "best_domain": null,
+    "best_confidence": 0.0,
+    "researched_at": "2025-12-19T16:23:58.738967"
+  }
+}
