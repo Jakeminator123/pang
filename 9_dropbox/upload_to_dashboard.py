@@ -33,6 +33,7 @@ DATA_BUNDLES_DIR = JOCKE_DIR / "data_bundles"
 # Dashboard config
 DEFAULT_DASHBOARD_URL = "https://jocke-dashboard.onrender.com"
 UPLOAD_ENDPOINT = "/api/upload/bundle"
+DATES_ENDPOINT = "/api/data/dates"
 
 # Timeout for upload (5 minutes for large files)
 UPLOAD_TIMEOUT = 300
@@ -160,6 +161,42 @@ def upload_bundle(zip_path: Path, dashboard_url: str, secret: str) -> Tuple[bool
         return False, str(e)
 
 
+def get_existing_dates_on_server(dashboard_url: str, secret: str) -> List[str]:
+    """
+    Get list of dates that already exist on the server.
+    
+    Returns:
+        List of date strings (YYYYMMDD) that already exist on the server
+    """
+    dates_url = f"{dashboard_url}{DATES_ENDPOINT}"
+    
+    try:
+        request = urllib.request.Request(
+            dates_url,
+            method="GET",
+            headers={"Authorization": f"Bearer {secret}"}
+        )
+        
+        with urllib.request.urlopen(request, timeout=30) as response:
+            if response.status == 200:
+                data = json.loads(response.read().decode("utf-8"))
+                dates = data.get("dates", [])
+                # Extract just the date strings
+                return [d.get("date", d) if isinstance(d, dict) else d for d in dates]
+            return []
+            
+    except urllib.error.HTTPError as e:
+        if e.code == 401:
+            print("[WARN] Cannot check existing dates - unauthorized")
+        else:
+            print(f"[WARN] Cannot check existing dates - HTTP {e.code}")
+        return []
+        
+    except Exception as e:
+        print(f"[WARN] Cannot check existing dates: {e}")
+        return []
+
+
 def check_dashboard_status(dashboard_url: str, secret: str) -> bool:
     """
     Check if the dashboard is accessible and the API key is valid.
@@ -224,20 +261,27 @@ def main():
     
     # Parse arguments
     upload_all = False
+    force_upload = False
     specific_date = None
     
-    if len(sys.argv) > 1:
-        arg = sys.argv[1]
+    args = sys.argv[1:]
+    for arg in args:
         if arg == "--all":
             upload_all = True
+        elif arg == "--force" or arg == "-f":
+            force_upload = True
         elif arg == "--help" or arg == "-h":
             print(__doc__)
+            print("\nOptions:")
+            print("  --all      Upload all bundles (skip existing)")
+            print("  --force    Force upload even if date exists on server")
+            print("  -h, --help Show this help")
             return 0
         elif len(arg) == 8 and arg.isdigit():
             specific_date = arg
         else:
             print(f"[ERROR] Unknown argument: {arg}")
-            print("Usage: python upload_to_dashboard.py [YYYYMMDD | --all]")
+            print("Usage: python upload_to_dashboard.py [YYYYMMDD | --all] [--force]")
             return 1
     
     # Check dashboard status
@@ -245,23 +289,57 @@ def main():
     if not check_dashboard_status(dashboard_url, secret):
         print("[WARN] Dashboard check failed - attempting upload anyway...")
     
+    # Get existing dates on server (to skip already uploaded)
+    existing_dates: List[str] = []
+    if not force_upload:
+        print("[INFO] Checking existing dates on server...")
+        existing_dates = get_existing_dates_on_server(dashboard_url, secret)
+        if existing_dates:
+            print(f"[INFO] Found {len(existing_dates)} dates already on server: {', '.join(existing_dates[:5])}{'...' if len(existing_dates) > 5 else ''}")
+        else:
+            print("[INFO] No existing dates found (or could not check)")
+    else:
+        print("[INFO] Force mode - skipping existence check")
+    
     # Find bundles to upload
     if upload_all:
-        bundles = find_bundles()
-        print(f"\n[INFO] Found {len(bundles)} bundles to upload")
+        all_bundles = find_bundles()
+        if force_upload:
+            bundles = all_bundles
+            print(f"\n[INFO] Found {len(bundles)} bundles (force mode - uploading all)")
+        else:
+            # Filter out already existing dates
+            bundles = [b for b in all_bundles if b.stem not in existing_dates]
+            skipped = len(all_bundles) - len(bundles)
+            print(f"\n[INFO] Found {len(all_bundles)} bundles total, {skipped} already on server, {len(bundles)} to upload")
     elif specific_date:
         bundles = find_bundles(specific_date)
         if not bundles:
             print(f"\n[ERROR] No bundle found for date: {specific_date}")
             return 1
+        # Check if already exists
+        if specific_date in existing_dates and not force_upload:
+            print(f"\n[INFO] Date {specific_date} already exists on server")
+            print("  Use --force to upload anyway")
+            return 0
     else:
         # Upload only the latest bundle
         bundles = find_bundles()
         if bundles:
-            bundles = [bundles[0]]  # Just the newest
+            if force_upload:
+                bundles = [bundles[0]]
+            else:
+                # Filter out already existing
+                new_bundles = [b for b in bundles if b.stem not in existing_dates]
+                if new_bundles:
+                    bundles = [new_bundles[0]]  # Just the newest that doesn't exist
+                else:
+                    print(f"\n[INFO] Latest bundle ({bundles[0].stem}) already on server")
+                    print("  Use --force to upload anyway")
+                    return 0
     
     if not bundles:
-        print("\n[INFO] No bundles found to upload")
+        print("\n[INFO] No new bundles to upload")
         print(f"  Looking in: {DATA_BUNDLES_DIR}")
         return 0
     

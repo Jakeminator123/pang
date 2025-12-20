@@ -45,8 +45,8 @@ log/
 old/
 RENSADE/
 
-10_jocke/**
-!10_jocke/.gitkeep
+# 10_jocke is a separate git repo (https://github.com/Jakeminator123/jocke)
+10_jocke/
 preprompt_history.json
 
 docker_main.py
