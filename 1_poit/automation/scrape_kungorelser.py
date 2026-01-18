@@ -13,10 +13,14 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
-# Fixa encoding för Windows-terminal
+# Fixa encoding och buffering för Windows-terminal
+# VIKTIGT: line_buffering=True för att se output i realtid
 if sys.platform == "win32":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+
+# Sätt PYTHONUNBUFFERED för att säkerställa ingen buffring
+os.environ["PYTHONUNBUFFERED"] = "1"
 
 import cv2 as cv
 import numpy as np
@@ -27,6 +31,16 @@ pg.FAILSAFE = True
 
 import mss
 import pygetwindow as gw
+
+# --- DPI awareness (Windows) ---
+if sys.platform == "win32":
+    try:
+        ctypes.windll.shcore.SetProcessDpiAwareness(2)
+    except Exception:
+        try:
+            ctypes.windll.user32.SetProcessDPIAware()
+        except Exception:
+            pass
 
 # ===========================
 # Konfiguration
@@ -43,8 +57,29 @@ Path(SCREENSHOT_LOG_DIR).mkdir(parents=True, exist_ok=True)
 # ===========================
 # Periodiska screenshots & Pause/Resume
 # ===========================
-MAX_SCREENSHOT_LOG_FILES = 200  # Max antal loggbilder att behålla
-SCREENSHOT_INTERVAL_SEC = 20  # Ta screenshot var 20:e sekund
+# Env overrides (valfria):
+# - DEBUG_IMAGE_MAX_FILES
+# - DEBUG_SCREENSHOT_MAX_FILES
+# - DEBUG_SCREENSHOT_INTERVAL_SEC
+def _get_env_int(name: str, default: int) -> int:
+    val = os.environ.get(name, "").strip()
+    if not val:
+        return default
+    try:
+        return int(val)
+    except ValueError:
+        return default
+
+
+MAX_SCREENSHOT_LOG_FILES = _get_env_int(
+    "DEBUG_SCREENSHOT_MAX_FILES", 40
+)  # Max antal loggbilder att behålla
+SCREENSHOT_INTERVAL_SEC = _get_env_int(
+    "DEBUG_SCREENSHOT_INTERVAL_SEC", 180
+)  # Ta screenshot var 3:e minut
+MAX_DEBUG_IMAGE_FILES = _get_env_int(
+    "DEBUG_IMAGE_MAX_FILES", 40
+)  # Max antal debug-bilder i debug/
 _screenshot_thread = None
 _screenshot_stop_event = threading.Event()
 _automation_paused = threading.Event()  # Satt = pausad
@@ -139,25 +174,49 @@ IMG_POPUP = str((COOKIE_DIR / "popup.jpg").resolve())
 IMG_OK = str((COOKIE_DIR / "ok.jpg").resolve())
 
 SOK_DIR = BASE_DIR / "bilder" / "2_sok_kunngorelse"
-IMG_LANK = str((SOK_DIR / "lank.jpg").resolve())  # kräver ≥ 0.88
-IMG_LANK_ALT = str((SOK_DIR / "alternativ_lank.jpg").resolve())  # hoppa klick om redan på söksidan
+IMG_LANK = str((SOK_DIR / "lank.jpg").resolve())  # Huvudlänk-bild
+IMG_LANK_ALT = str((SOK_DIR / "alternativ_lank.jpg").resolve())  # Hoppa om redan på söksidan
+IMG_LANK_LAPTOP = str((SOK_DIR / "laptop_sok_kungorelse.jpg").resolve())  # Laptop-specifik bild
+
+OVRIGT_DIR = BASE_DIR / "bilder" / "4_ovrigt"
+IMG_OK_FORTSATT = str((OVRIGT_DIR / "ok_fortsatt.jpg").resolve())  # Banner "ok, fortsätt" efter länk-klick
 
 MENY_DIR = BASE_DIR / "bilder" / "3_menyer"
 MENY_GLOB = "*.*"  # jpg/png/jpeg
 
-# Trösklar
-# Sänkta trösklar för bättre matchning vid olika skärminställningar
-CONF_POPUP = 0.78
-CONF_OK = 0.80
-CONF_LANK = 0.82
-CONF_MENY_GRAY = 0.72  # Sänkt från 0.86 - hanterar DPI-skalning/ljusskillnader bättre
-CONF_MENY_EDGE = 0.75  # Sänkt från 0.82
-CONF_MENY_ORB = 0.50  # inlier-ratio, sänkt för mer flexibilitet
+# UI elements that can scale with DPI/zoom
+# BRETT intervall för olika skärmar (1/6 storlek = ca 0.16 skala)
+SCALES_UI = [round(x, 2) for x in np.arange(0.15, 2.05, 0.05)]
+
+# ===========================
+# KONTROLLERA COOKIE-HANTERING
+# ===========================
+# Cookie-banner kommer ibland men orsakar falska matchningar vid skala 0.15
+# Inaktiveras tills vidare - popup dyker upp så sällan att det inte är värt
+SKIP_COOKIE_CHECK = True   # INAKTIVERAD - orsakar falska matchningar
+SKIP_OK_FORTSATT = True    # INAKTIVERAD - orsakar problem
+
+# Trösklar - baserat på test_match.py resultat:
+# - laptop_sok_kungorelse.jpg: score 1.000
+# - lank.jpg: score 0.937
+# Använder säkra trösklar under dessa värden
+
+CONF_POPUP = 0.80  # Cookie-popup (om den finns ska den vara tydlig)
+CONF_OK = 0.80     # OK-knapp i cookie-popup
+
+# LÄNK: Test visade 0.937-1.000, så 0.70 är säker marginal
+CONF_LANK = 0.70   # Länk till "Sök kungörelse"
+
+# ÖVRIGA
+CONF_OK_FORTSATT = 0.85  # Banner efter länk-klick
+CONF_MENY_GRAY = 0.60    # Meny-element
+CONF_MENY_EDGE = 0.60
+CONF_MENY_ORB = 0.40
 
 # Tidsouts & beteenden
 WINDOW_FIND_TIMEOUT = 8.0
-POPUP_TIMEOUT_SEC = 12.0  # <= 12s
-STEP_TIMEOUT = 12.0
+POPUP_TIMEOUT_SEC = 15.0  # 15 sekunder för cookie-banner (som användaren önskade)
+STEP_TIMEOUT = 15.0       # Timeout för meny-steg
 POST_CLICK_WAIT = (1.2, 1.4)  # Halverat från (1.0, 2.0)
 STRICT_SEQUENCE = True
 
@@ -179,12 +238,24 @@ WAIT_MOUSE_SHORT = 0.25  # Kort väntan vid musrörelse
 WAIT_SCROLL_SHORT = 0.25  # Kort väntan vid scroll
 
 # Multiskala
-SCALES_LANK = [0.95, 1.00, 1.05]
+SCALES_LANK = SCALES_UI
 SAMPLES_LANK = 5
 LANK_TIMEOUT = 6.0
 
 # Utökat skalintervall för bättre matchning vid olika DPI-inställningar
-SCALES_MENY = [round(x, 2) for x in np.arange(0.70, 1.35, 0.03)]
+# Använd samma breda intervall som SCALES_UI för konsistens
+SCALES_MENY = SCALES_UI
+
+# ===========================
+# Sökområden - begränsa var vi letar efter element
+# ===========================
+# Länk-element (lank.jpg, alternativ_lank.jpg) finns alltid i:
+# X: 10% till 45% av fönsterbredden
+# Y: topp 40% av fönsterhöjden
+LANK_REGION_X_START = 0.10  # 10% från vänster
+LANK_REGION_X_END = 0.45    # 45% från vänster
+LANK_REGION_Y_START = 0.0   # Från toppen
+LANK_REGION_Y_END = 0.40    # 40% från toppen
 
 # Klick-skydd
 TITLEBAR_GUARD = 40
@@ -609,6 +680,20 @@ def cleanup_old_screenshots():
         print(f"[SCREENSHOT] Kunde inte städa: {e}")
 
 
+def cleanup_old_debug_images():
+    """Ta bort gamla debug-bilder om det finns fler än MAX_DEBUG_IMAGE_FILES"""
+    try:
+        files = sorted(
+            Path(DEBUG_DIR).glob("*.png"), key=lambda p: p.stat().st_mtime
+        )
+        while len(files) > MAX_DEBUG_IMAGE_FILES:
+            oldest = files.pop(0)
+            oldest.unlink()
+            print(f"[DEBUG] Raderade gammal: {oldest.name}")
+    except Exception as e:
+        print(f"[DEBUG] Kunde inte städa: {e}")
+
+
 def screenshot_logger():
     """Bakgrundstråd som tar screenshots med jämna mellanrum"""
     cleanup_old_screenshots()  # Städa vid start
@@ -685,7 +770,7 @@ def show_mouse_warning():
     print("=" * 60)
     print("    📌 Musen blockeras under alla klick (500ms)")
     print("    📌 Chrome-fönstret är satt som 'alltid överst'")
-    print("    📌 Loggbilder sparas automatiskt var 20:e sekund")
+    print(f"    📌 Loggbilder sparas automatiskt var {SCREENSHOT_INTERVAL_SEC} sekund")
     print()
     print("    ⌨️  KONTROLLER:")
     print("    • ESC  = Avbryt scraping helt")
@@ -812,6 +897,36 @@ def refresh_region(win):
         return None
 
 
+def get_link_search_region(full_region):
+    """
+    Beräkna sökregion för länk-element (lank.jpg, alternativ_lank.jpg).
+    Länken finns alltid i:
+    - X: 10% till 45% av fönsterbredden
+    - Y: topp 40% av fönsterhöjden
+    
+    Args:
+        full_region: (left, top, width, height) av hela fönstret
+    
+    Returns:
+        (left, top, width, height) för sökregionen
+    """
+    if full_region is None:
+        return None
+    
+    win_left, win_top, win_width, win_height = full_region
+    
+    # Beräkna sub-region
+    sub_left = int(win_left + win_width * LANK_REGION_X_START)
+    sub_top = int(win_top + win_height * LANK_REGION_Y_START)
+    sub_width = int(win_width * (LANK_REGION_X_END - LANK_REGION_X_START))
+    sub_height = int(win_height * (LANK_REGION_Y_END - LANK_REGION_Y_START))
+    
+    print(f"[REGION] Länk-sökområde: x={sub_left}, y={sub_top}, w={sub_width}, h={sub_height}")
+    print(f"[REGION] (Fönster: x={win_left}, y={win_top}, w={win_width}, h={win_height})")
+    
+    return (sub_left, sub_top, sub_width, sub_height)
+
+
 def goto_url(url: str, win=None):
     """Navigera till en URL med förbättrad adressfältshantering"""
     check_pause()  # Kolla om pausad
@@ -903,31 +1018,38 @@ def read_template_gray(path_str):
     return cv.imread(path_str, cv.IMREAD_GRAYSCALE)
 
 
-def match_best(screen_gray, templ_gray, scale=1.0, normalize=True):
+def match_best(screen_gray, templ_gray, scale=1.0, normalize=True, blur_ksize=5):
     """
-    Template matching med histogram equalization för bättre robusthet
-    mot olika skärminställningar (ljusstyrka, kontrast, DPI).
+    Template matching robust mot DPI/antialias/kontrast.
     """
     t = templ_gray
     s = screen_gray
 
-    # Normalisera ljusstyrka med histogram equalization (CLAHE)
     if normalize:
         clahe = cv.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
         s = clahe.apply(s)
         t = clahe.apply(t)
 
+    if blur_ksize and blur_ksize >= 3:
+        if blur_ksize % 2 == 0:
+            blur_ksize += 1
+        s = cv.GaussianBlur(s, (blur_ksize, blur_ksize), 0)
+        t = cv.GaussianBlur(t, (blur_ksize, blur_ksize), 0)
+
     if scale != 1.0:
         h, w = t.shape[:2]
+        new_w = max(1, int(w * scale))
+        new_h = max(1, int(h * scale))
         t = cv.resize(
             t,
-            (int(w * scale), int(h * scale)),
+            (new_w, new_h),
             interpolation=cv.INTER_AREA if scale < 1 else cv.INTER_CUBIC,
         )
+
     if s.shape[0] < t.shape[0] or s.shape[1] < t.shape[1]:
         return None, None, None
     res = cv.matchTemplate(s, t, cv.TM_CCOEFF_NORMED)
-    min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+    _, max_val, _, max_loc = cv.minMaxLoc(res)
     th, tw = t.shape[:2]
     return max_val, max_loc, (tw, th)
 
@@ -936,52 +1058,120 @@ def ensure_saved(path, img_bgr):
     ok = cv.imwrite(path, img_bgr)
     if ok and os.path.exists(path):
         print(f"[DEBUG] Sparad: {path}")
+        try:
+            if Path(path).parent.resolve() == Path(DEBUG_DIR).resolve():
+                cleanup_old_debug_images()
+        except Exception:
+            pass
     else:
         print(f"[DEBUG] Misslyckades spara: {path}")
 
 
 # ===========================
-# Länk (≥ 0.88, bästa-av-flera, 1s mellan frames)
+# Länk (bästa-av-flera samples)
 # ===========================
 def locate_best_over_samples(
     img_path, window_region, threshold, timeout_sec, scales, samples
 ):
+    """
+    Sök efter en bild i window_region och returnera den BÄSTA matchningen.
+    
+    VIKTIGT: Tar alltid den HÖGSTA poängen, inte första som passerar threshold.
+    
+    Args:
+        img_path: Sökväg till template-bild
+        window_region: (left, top, width, height) - SKÄRMKOORDINATER att söka i
+        threshold: Minsta poäng för godkänd matchning
+        timeout_sec: Max tid att söka
+        scales: Lista av skalor att prova
+        samples: Antal frames att ta
+    
+    Returns:
+        (box, score) eller (None, None) om ingen matchning över threshold
+    """
+    img_name = Path(img_path).name
     templ = read_template_gray(img_path)
     if templ is None:
-        print(f"[FEL] Kan inte läsa: {img_path}")
+        print(f"[FEL] Kan inte läsa mall: {img_path}")
         return None, None
-    t_end = time.time() + timeout_sec
-    best_score, best_box, best_frame = -1.0, None, None
-    frames = 0
-    while frames < samples and time.time() < t_end:
-        bgr = grab_region_bgr_any(window_region)  # throttlad
-        gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
-        for sc in scales:
-            score, loc, (tw, th) = match_best(gray, templ, scale=sc)
-            if score is None:
-                continue
-            if score > best_score:
-                L, T, W, H = window_region
-                x, y = loc
-                best_score, best_box, best_frame = score, (L + x, T + y, tw, th), bgr
-        frames += 1
-        time.sleep(max(0.0, FRAME_GAP_SEC))  # 1s fri innan nästa frame
-    if best_score >= threshold:
-        return best_box, best_score
-    # debug om miss
+    
+    templ_h, templ_w = templ.shape[:2]
+    L, T, W, H = window_region
+    
+    print(f"")
+    print(f"[MATCH] ========================================")
+    print(f"[MATCH] Söker: '{img_name}'")
+    print(f"[MATCH] Template: {templ_w}x{templ_h} pixlar")
+    print(f"[MATCH] Sökområde: x={L}, y={T}, w={W}, h={H}")
+    print(f"[MATCH] Skala: {min(scales):.2f} - {max(scales):.2f} ({len(scales)} steg)")
+    print(f"[MATCH] Threshold: {threshold:.2f}")
+    print(f"[MATCH] ========================================")
+    
+    # SPARA debug-bild av sökområdet INNAN sökning
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    if best_frame is None:
-        best_frame = grab_region_bgr_any(window_region)
-    ensure_saved(str(Path(DEBUG_DIR) / f"lank_window_{ts}.png"), best_frame)
-    if best_box:
-        L, T, W, H = best_box
-        x = L - window_region[0]
-        y = T - window_region[1]
+    
+    t_end = time.time() + timeout_sec
+    best_score, best_box, best_frame, best_scale, best_loc_in_frame = -1.0, None, None, None, None
+    frames = 0
+    
+    while frames < samples and time.time() < t_end:
+        bgr = grab_region_bgr_any(window_region)
+        gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
+        
+        # Spara första frame som debug
+        if frames == 0:
+            debug_path = str(Path(DEBUG_DIR) / f"search_area_{img_name.replace('.', '_')}_{ts}.png")
+            ensure_saved(debug_path, bgr)
+            print(f"[MATCH] Debug-bild sparad: {debug_path}")
+        
+        for sc in scales:
+            score, loc, dims = match_best(gray, templ, scale=sc)
+            if score is None or dims is None:
+                continue
+            tw, th = dims
+            
+            # ALLTID spara den bästa matchningen
+            if score > best_score:
+                x, y = loc
+                # Box i SKÄRMKOORDINATER
+                best_score = score
+                best_box = (L + x, T + y, tw, th)
+                best_frame = bgr.copy()
+                best_scale = sc
+                best_loc_in_frame = (x, y, tw, th)
+                
+        frames += 1
+        if frames < samples:
+            time.sleep(max(0.0, FRAME_GAP_SEC))
+    
+    # Logga resultat
+    print(f"[MATCH] ----------------------------------------")
+    if best_scale is not None:
+        print(f"[MATCH] Bästa score: {best_score:.3f} (skala={best_scale:.2f})")
+        print(f"[MATCH] Position i frame: x={best_loc_in_frame[0]}, y={best_loc_in_frame[1]}")
+        print(f"[MATCH] Position på skärm: x={best_box[0]}, y={best_box[1]}")
+    else:
+        print(f"[MATCH] Ingen matchning hittad för '{img_name}'")
+    
+    # SPARA alltid debug-bild med markering av var bästa matchningen är
+    if best_frame is not None and best_loc_in_frame is not None:
+        x, y, tw, th = best_loc_in_frame
         out = best_frame.copy()
-        cv.rectangle(out, (x, y), (x + W, y + H), (0, 0, 255), 2)
-        ensure_saved(
-            str(Path(DEBUG_DIR) / f"lank_best_below_{best_score:.3f}_{ts}.png"), out
-        )
+        # Rita rektangel runt matchningen
+        color = (0, 255, 0) if best_score >= threshold else (0, 0, 255)  # Grön=OK, Röd=Under threshold
+        cv.rectangle(out, (x, y), (x + tw, y + th), color, 2)
+        # Skriv score på bilden
+        cv.putText(out, f"score={best_score:.3f}", (x, y - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+        debug_match_path = str(Path(DEBUG_DIR) / f"match_{img_name.replace('.', '_')}_{best_score:.3f}_{ts}.png")
+        ensure_saved(debug_match_path, out)
+    
+    if best_score >= threshold:
+        print(f"[MATCH] ✓ GODKÄND (score {best_score:.3f} >= threshold {threshold:.2f})")
+        print(f"[MATCH] ========================================")
+        return best_box, best_score
+    
+    print(f"[MATCH] ✗ UNDERKÄND (score {best_score:.3f} < threshold {threshold:.2f})")
+    print(f"[MATCH] ========================================")
     return None, None
 
 
@@ -989,20 +1179,30 @@ def locate_best_over_samples(
 # Meny-matchning (grå+edge+ev. ORB), 1s mellan frames
 # ===========================
 def locate_menu_robust(img_path: str, window_region, timeout_sec: float):
+    img_name = Path(img_path).name
     templ = read_template_gray(img_path)
     if templ is None:
+        print(f"[MENY] Kan inte läsa template: {img_path}")
         return None, None, None, None
+    
+    templ_h, templ_w = templ.shape[:2]
+    print(f"[MENY] Söker '{img_name}' (template {templ_w}x{templ_h}px)")
+    print(f"[MENY] Skalintervall: {min(SCALES_MENY):.2f} - {max(SCALES_MENY):.2f} ({len(SCALES_MENY)} steg)")
+    
     t_end = time.time() + timeout_sec
     best = (-1.0, None, None, None, None)  # score, box, scale, mode, frame
+    iteration = 0
     while time.time() < t_end:
+        iteration += 1
         bgr = grab_region_bgr_any(window_region)  # throttlad
         gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
 
         # Gråskala
         for sc in SCALES_MENY:
-            score, loc, (tw, th) = match_best(gray, templ, scale=sc)
-            if score is None:
+            score, loc, dims = match_best(gray, templ, scale=sc)
+            if score is None or dims is None:
                 continue
+            tw, th = dims
             if score > best[0]:
                 L, T, W, H = window_region
                 x, y = loc
@@ -1012,9 +1212,10 @@ def locate_menu_robust(img_path: str, window_region, timeout_sec: float):
         edges_scr = cv.Canny(gray, 50, 150)
         edges_tpl = cv.Canny(templ, 50, 150)
         for sc in SCALES_MENY:
-            score, loc, (tw, th) = match_best(edges_scr, edges_tpl, scale=sc)
-            if score is None:
+            score, loc, dims = match_best(edges_scr, edges_tpl, scale=sc, normalize=False, blur_ksize=0)
+            if score is None or dims is None:
                 continue
+            tw, th = dims
             if score > best[0]:
                 L, T, W, H = window_region
                 x, y = loc
@@ -1022,9 +1223,13 @@ def locate_menu_robust(img_path: str, window_region, timeout_sec: float):
 
         time.sleep(max(0.0, FRAME_GAP_SEC))  # 1s fri till nästa frame
         if best[0] >= 0.97:
+            print(f"[MENY] Tidig exit vid iteration {iteration} med score {best[0]:.3f}")
             break
 
     score, box, sc, mode, frame = best
+    
+    if sc is not None:
+        print(f"[MENY] Bästa matchning för '{img_name}': score={score:.3f} skala={sc:.2f} mode={mode}")
 
     # ORB-fallback om under tröskel
     def orb_try():
@@ -1083,12 +1288,25 @@ def safe_click_center(box, win_region, win=None):
     wL, wT, wW, wH = win_region
     L, T, W, H = box
     cx, cy = L + W // 2, T + H // 2
+    
+    # Logga klick-koordinater och guards
+    print(f"[KLICK] Försöker klicka på ({cx}, {cy})")
+    print(f"[KLICK] Fönster: x={wL}, y={wT}, w={wW}, h={wH}")
+    
     if cy < (wT + TITLEBAR_GUARD):
+        print(f"[KLICK] ✗ Blockerad: cy={cy} < wT+TITLEBAR_GUARD={wT + TITLEBAR_GUARD}")
         return False
     if cx > (wL + wW - RIGHT_GUARD):
+        print(f"[KLICK] ✗ Blockerad: cx={cx} > wL+wW-RIGHT_GUARD={wL + wW - RIGHT_GUARD}")
         return False
-    if cx < (wL + LEFT_GUARD) or cy > (wT + wH - BOTTOM_GUARD):
+    if cx < (wL + LEFT_GUARD):
+        print(f"[KLICK] ✗ Blockerad: cx={cx} < wL+LEFT_GUARD={wL + LEFT_GUARD}")
         return False
+    if cy > (wT + wH - BOTTOM_GUARD):
+        print(f"[KLICK] ✗ Blockerad: cy={cy} > wT+wH-BOTTOM_GUARD={wT + wH - BOTTOM_GUARD}")
+        return False
+    
+    print(f"[KLICK] ✓ Position godkänd, klickar...")
 
     pg.moveTo(cx, cy, duration=random.uniform(0.12, 0.24))
     time.sleep(0.06)
@@ -1159,7 +1377,203 @@ def last_business_friday(d: datetime) -> datetime:
     return d
 
 
-def type_date_mmddyyyy():
+def type_text_via_clipboard(text: str, select_all_first: bool = True):
+    """
+    Skriver text via clipboard för att undvika tangentbordslayout-problem.
+    Svenskt tangentbord har - på annan plats, så typewrite funkar inte.
+    
+    Args:
+        text: Texten att skriva
+        select_all_first: Om True, kör Ctrl+A först för att markera och ersätta befintlig text
+    """
+    # Försök med vår egna set_clipboard_text() först (samma som write_url_via_clipboard använder)
+    # Den är testad och fungerar bättre än den inbyggda varianten
+    clipboard_success = False
+    
+    try:
+        if set_clipboard_text(text):
+            # Markera allt i fältet först (så vi ersätter istället för lägger till)
+            if select_all_first:
+                pg.hotkey("ctrl", "a")
+                time.sleep(0.08)
+            
+            # Klistra in
+            pg.hotkey("ctrl", "v")
+            time.sleep(0.15)
+            clipboard_success = True
+            print(f"[DATE] Clipboard lyckades: '{text}'")
+        else:
+            print(f"[DATE] set_clipboard_text returnerade False")
+    except Exception as e:
+        print(f"[DATE] Clipboard misslyckades: {e}")
+    
+    if not clipboard_success:
+        # Fallback: Försök med alternativ clipboard-metod via ctypes direkt
+        print(f"[DATE] Primär clipboard misslyckades, försöker alternativ metod för: '{text}'")
+        try:
+            import ctypes
+            CF_UNICODETEXT = 13
+            GMEM_MOVEABLE = 0x0002
+            
+            user32 = ctypes.windll.user32
+            kernel32 = ctypes.windll.kernel32
+            
+            # Öppna clipboard
+            if user32.OpenClipboard(0):
+                try:
+                    user32.EmptyClipboard()
+                    data = text.encode("utf-16-le") + b"\x00\x00"
+                    h_mem = kernel32.GlobalAlloc(GMEM_MOVEABLE, len(data))
+                    if h_mem:
+                        p_mem = kernel32.GlobalLock(h_mem)
+                        ctypes.memmove(p_mem, data, len(data))
+                        kernel32.GlobalUnlock(h_mem)
+                        user32.SetClipboardData(CF_UNICODETEXT, h_mem)
+                        clipboard_success = True
+                finally:
+                    user32.CloseClipboard()
+                
+                if clipboard_success:
+                    if select_all_first:
+                        pg.hotkey("ctrl", "a")
+                        time.sleep(0.08)
+                    pg.hotkey("ctrl", "v")
+                    time.sleep(0.15)
+                    print(f"[DATE] Alternativ clipboard lyckades: '{text}'")
+        except Exception as e2:
+            print(f"[DATE] Alternativ clipboard också misslyckades: {e2}")
+        
+        # Om fortfarande inte lyckats, använd sista utvägen: SendKeys via ctypes
+        if not clipboard_success:
+            print(f"[DATE] Sista utväg: SendInput för '{text}'")
+            if select_all_first:
+                pg.hotkey("ctrl", "a")
+                time.sleep(0.08)
+                pg.press("delete")
+                time.sleep(0.05)
+            
+            # Skriv varje tecken via SendInput (fungerar med alla tangentbordslayouter)
+            try:
+                import ctypes
+                from ctypes import wintypes
+                
+                user32 = ctypes.windll.user32
+                
+                # Definiera strukturer för SendInput
+                INPUT_KEYBOARD = 1
+                KEYEVENTF_UNICODE = 0x0004
+                KEYEVENTF_KEYUP = 0x0002
+                
+                class KEYBDINPUT(ctypes.Structure):
+                    _fields_ = [
+                        ("wVk", wintypes.WORD),
+                        ("wScan", wintypes.WORD),
+                        ("dwFlags", wintypes.DWORD),
+                        ("time", wintypes.DWORD),
+                        ("dwExtraInfo", ctypes.POINTER(ctypes.c_ulong))
+                    ]
+                
+                class INPUT(ctypes.Structure):
+                    class _INPUT(ctypes.Union):
+                        _fields_ = [("ki", KEYBDINPUT)]
+                    _fields_ = [
+                        ("type", wintypes.DWORD),
+                        ("_input", _INPUT)
+                    ]
+                
+                def send_unicode_char(char):
+                    inputs = (INPUT * 2)()
+                    
+                    # Key down
+                    inputs[0].type = INPUT_KEYBOARD
+                    inputs[0]._input.ki.wVk = 0
+                    inputs[0]._input.ki.wScan = ord(char)
+                    inputs[0]._input.ki.dwFlags = KEYEVENTF_UNICODE
+                    
+                    # Key up
+                    inputs[1].type = INPUT_KEYBOARD
+                    inputs[1]._input.ki.wVk = 0
+                    inputs[1]._input.ki.wScan = ord(char)
+                    inputs[1]._input.ki.dwFlags = KEYEVENTF_UNICODE | KEYEVENTF_KEYUP
+                    
+                    user32.SendInput(2, ctypes.byref(inputs), ctypes.sizeof(INPUT))
+                
+                for char in text:
+                    send_unicode_char(char)
+                    time.sleep(0.02)
+                
+                print(f"[DATE] SendInput lyckades för '{text}'")
+            except Exception as e3:
+                print(f"[DATE] KRITISKT: Kunde inte skriva datum! {e3}")
+                print(f"[DATE] Datum som skulle skrivas: '{text}'")
+
+
+def type_date_first_field(year: str, month: str, day: str):
+    """
+    Skriver datum i FÖRSTA fältet (Från och med).
+    
+    Sekvens som funkar på Bolagsverket:
+    1. Skriv år (4 siffror)
+    2. Höger-pil
+    3. Skriv månad+dag (4 siffror i följd)
+    
+    Args:
+        year: År (4 siffror, t.ex. "2026")
+        month: Månad (2 siffror, t.ex. "01")
+        day: Dag (2 siffror, t.ex. "09")
+    """
+    print(f"[DATE] FÖRSTA FÄLTET: {year}-{month}-{day}")
+    
+    # Skriv år (4 siffror) med paus mellan varje
+    print(f"[DATE]   År: {year}")
+    for digit in year:
+        pg.press(digit)
+        rsleep(0.7, 1.2)
+    
+    # Höger-pil för att komma till månad
+    print(f"[DATE]   -> Höger-pil")
+    pg.press("right")
+    rsleep(0.7, 1.2)
+    
+    # Skriv månad+dag (4 siffror i följd, utan pil mellan)
+    month_day = month + day  # "0109"
+    print(f"[DATE]   Månad+Dag: {month_day}")
+    for digit in month_day:
+        pg.press(digit)
+        rsleep(0.7, 1.2)
+    
+    print(f"[DATE] Första fältet klart: {year}-{month}-{day}")
+
+
+def type_date_second_field(year: str, month: str, day: str):
+    """
+    Skriver datum i ANDRA fältet (Till och med).
+    
+    Sekvens som funkar på Bolagsverket:
+    - Skriv år+månad+dag (8 siffror i följd, utan pil eller tab)
+    
+    Args:
+        year: År (4 siffror, t.ex. "2026")
+        month: Månad (2 siffror, t.ex. "01")
+        day: Dag (2 siffror, t.ex. "09")
+    """
+    print(f"[DATE] ANDRA FÄLTET: {year}-{month}-{day}")
+    
+    # Skriv alla 8 siffror i följd
+    full_date = year + month + day  # "20260109"
+    print(f"[DATE]   År+Månad+Dag: {full_date}")
+    for digit in full_date:
+        pg.press(digit)
+        rsleep(0.7, 1.2)
+    
+    print(f"[DATE] Andra fältet klart: {year}-{month}-{day}")
+
+
+def type_date_yyyymmdd():
+    """
+    Skriver datum i ett HTML5 date-fält.
+    Dessa fält har separata delar för År/Månad/Dag.
+    """
     # Använd TARGET_DATE om den är satt, annars använd senaste arbetsdagen
     target_date_str = os.environ.get("TARGET_DATE")
 
@@ -1170,47 +1584,107 @@ def type_date_mmddyyyy():
         print("[DATE] Ingen TARGET_DATE satt, använder fallback")
 
     if target_date_str and len(target_date_str) == 8 and target_date_str.isdigit():
-        # TARGET_DATE är i formatet YYYYMMDD, konvertera till mm/dd/yyyy
+        # TARGET_DATE är i formatet YYYYMMDD
         try:
-            year = int(target_date_str[:4])
-            month = int(target_date_str[4:6])
-            day = int(target_date_str[6:8])
-            target_date = datetime(year, month, day)
-            formatted_date = target_date.strftime("%m/%d/%Y")
-            print(
-                f"[DATE] Skriver datum i formulär: {formatted_date} (från {target_date_str})"
-            )
-            pg.typewrite(formatted_date)
+            year = target_date_str[:4]
+            month = target_date_str[4:6]
+            day = target_date_str[6:8]
+            print(f"[DATE] Skriver datum i formulär: {year}-{month}-{day} (från {target_date_str})")
+            type_date_parts(year, month, day)
             return
         except (ValueError, IndexError) as e:
-            # Om konvertering misslyckas, fallback till standard
-            print(
-                f"[DATE] TARGET_DATE konvertering misslyckades: {e}, använder fallback"
-            )
+            print(f"[DATE] TARGET_DATE konvertering misslyckades: {e}, använder fallback")
             pass
 
     # Standard: använd senaste arbetsdagen
     today = datetime.now()
     biz = last_business_friday(today)
-    fallback_date = biz.strftime("%m/%d/%Y")
-    fallback_date_str = biz.strftime("%Y%m%d")
-    print(
-        f"[DATE] Använder fallback (senaste arbetsdag): {fallback_date} ({fallback_date_str})"
-    )
-    pg.typewrite(fallback_date)
+    year = biz.strftime("%Y")
+    month = biz.strftime("%m")
+    day = biz.strftime("%d")
+    print(f"[DATE] Använder fallback (senaste arbetsdag): {year}-{month}-{day}")
+    type_date_parts(year, month, day)
+
+
+def take_date_debug_screenshot(label: str):
+    """Ta en debug-screenshot för att se datumfälten."""
+    try:
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"date_debug_{label}_{ts}.png"
+        filepath = Path(DEBUG_DIR) / filename
+        with mss.mss() as sct:
+            img = sct.grab(sct.monitors[1])
+            mss.tools.to_png(img.rgb, img.size, output=str(filepath))
+        print(f"[DATE-DEBUG] Screenshot sparad: {filepath}")
+    except Exception as e:
+        print(f"[DATE-DEBUG] Kunde inte ta screenshot: {e}")
 
 
 def special_after_3_bol():
-    for _ in range(10):
-        pg.click()
-        time.sleep(0.04)
-    type_date_mmddyyyy()
-    rsleep(0.25, 0.50)  # Halverat från (0.50, 1.00)
+    """
+    Fyller i datumfälten för "Från och med" och "Till och med".
+    
+    Sekvens som funkar på Bolagsverket:
+    
+    FÖRSTA FÄLTET:
+    1. Skriv år (4 siffror)
+    2. Höger-pil
+    3. Skriv månad+dag (4 siffror i följd)
+    
+    TAB två gånger
+    
+    ANDRA FÄLTET:
+    1. Skriv år+månad+dag (8 siffror i följd)
+    
+    Med 0.7-1.2 sek mellan varje knapptryck.
+    """
+    # Hämta datum att använda
+    target_date_str = os.environ.get("TARGET_DATE")
+    
+    if target_date_str and len(target_date_str) == 8 and target_date_str.isdigit():
+        year = target_date_str[:4]
+        month = target_date_str[4:6]
+        day = target_date_str[6:8]
+        print(f"[DATE] Använder TARGET_DATE: {year}-{month}-{day}")
+    else:
+        today = datetime.now()
+        biz = last_business_friday(today)
+        year = biz.strftime("%Y")
+        month = biz.strftime("%m")
+        day = biz.strftime("%d")
+        print(f"[DATE] Använder fallback (senaste arbetsdag): {year}-{month}-{day}")
+    
+    # Ta screenshot INNAN vi börjar
+    take_date_debug_screenshot("1_before")
+    
+    # Klicka för att fokusera första datumfältet
+    pg.click()
+    rsleep(0.7, 1.2)
+    pg.click()  # Extra klick för att säkerställa fokus
+    rsleep(0.7, 1.2)
+    
+    # === FÖRSTA FÄLTET (Från och med) ===
+    print("[DATE] === FYLLER I 'FRÅN OCH MED' ===")
+    type_date_first_field(year, month, day)
+    
+    # Ta screenshot efter första fältet
+    take_date_debug_screenshot("2_after_first")
+    
+    # TAB två gånger för att komma till andra datumfältet
+    print("[DATE] Tab -> Tab för att komma till 'Till och med'...")
     pg.press("tab")
-    rsleep(0.25, 0.50)  # Halverat
+    rsleep(0.7, 1.2)
     pg.press("tab")
-    rsleep(0.25, 0.50)  # Halverat
-    type_date_mmddyyyy()
+    rsleep(0.7, 1.2)
+    
+    # === ANDRA FÄLTET (Till och med) ===
+    print("[DATE] === FYLLER I 'TILL OCH MED' ===")
+    type_date_second_field(year, month, day)
+    
+    # Ta screenshot efter andra fältet
+    take_date_debug_screenshot("3_after_second")
+    
+    print("[DATE] === DATUMFÄLT KLARA ===")
 
 
 def after_step_1_down_enter():
@@ -1242,65 +1716,205 @@ def after_step_select_one():
 # Orkestrering
 # ===========================
 def handle_cookie_then_proceed(win):
+    """
+    Hantera cookie-popup om den dyker upp.
+    
+    VIKTIGT: Cookie-popup ska bara matchas om den faktiskt finns.
+    Vi söker endast i den centrala delen av skärmen där popup dyker upp.
+    """
+    # KONTROLLERA OM VI SKA HOPPA ÖVER COOKIE-CHECK
+    if SKIP_COOKIE_CHECK:
+        print("[COOKIE] ⏭️ HOPPAS ÖVER (SKIP_COOKIE_CHECK=True)")
+        return
+    
     # Säkerställ att Chrome är i foreground innan vi klickar
+    ensure_chrome_foreground(win)
+    
+    full_region = refresh_region(win)
+    if not full_region:
+        return
+    
+    # Cookie-popup dyker upp i MITTEN av skärmen
+    # Sök bara i den centrala regionen (20-80% X, 20-80% Y)
+    win_left, win_top, win_width, win_height = full_region
+    popup_region = (
+        int(win_left + win_width * 0.20),
+        int(win_top + win_height * 0.20),
+        int(win_width * 0.60),
+        int(win_height * 0.60),
+    )
+    
+    print(f"[COOKIE] Letar efter popup.jpg i centrum (threshold={CONF_POPUP:.2f}, timeout={POPUP_TIMEOUT_SEC}s)")
+    print(f"[COOKIE] Sökområde: x={popup_region[0]}, y={popup_region[1]}, w={popup_region[2]}, h={popup_region[3]}")
+    
+    templ = read_template_gray(IMG_POPUP)
+    if templ is None:
+        print("[COOKIE] Kunde inte läsa popup.jpg - hoppar över cookie-hantering")
+        return
+    
+    templ_h, templ_w = templ.shape[:2]
+    print(f"[COOKIE] Template: {templ_w}x{templ_h}px")
+    
+    end = time.time() + POPUP_TIMEOUT_SEC
+    found = False
+    best_score = 0.0
+    best_scale = None
+    best_loc = None
+    
+    while time.time() < end and not found:
+        bgr = grab_region_bgr_any(popup_region)
+        gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
+        for sc in SCALES_UI:
+            score, loc, dims = match_best(gray, templ, scale=sc)
+            if score is None or dims is None:
+                continue
+            if score > best_score:
+                best_score = score
+                best_scale = sc
+                best_loc = loc
+            if score >= CONF_POPUP:
+                found = True
+                print(f"[COOKIE] ✓ Popup hittad! score={score:.3f} skala={sc:.2f}")
+                break
+        if not found:
+            time.sleep(FRAME_GAP_SEC)
+    
+    if not found:
+        print(f"[COOKIE] Ingen popup hittad inom {POPUP_TIMEOUT_SEC}s (bästa score={best_score:.3f})")
+        print("[COOKIE] Fortsätter utan cookie-hantering")
+        return
+    
+    rsleep(0.5, 1.0)
+    
+    # Hitta och klicka på OK-knappen (i samma popup-region)
+    print(f"[COOKIE] Letar efter ok.jpg (threshold={CONF_OK:.2f})")
+    templ_ok = read_template_gray(IMG_OK)
+    if templ_ok is None:
+        print("[COOKIE] Kunde inte läsa ok.jpg - kan inte klicka")
+        return
+    
+    bgr = grab_region_bgr_any(popup_region)
+    gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
+    
+    best_ok_score = 0.0
+    best_ok_scale = None
+    
+    for sc in SCALES_UI:
+        score, loc, dims = match_best(gray, templ_ok, scale=sc)
+        if score is None or dims is None:
+            continue
+        if score > best_ok_score:
+            best_ok_score = score
+            best_ok_scale = sc
+        if score >= CONF_OK:
+            tw, th = dims
+            x, y = loc
+            # Koordinaterna är relativa till popup_region, inte full_region
+            box = (popup_region[0] + x, popup_region[1] + y, tw, th)
+            click_x = box[0] + tw // 2
+            click_y = box[1] + th // 2
+            print(f"[COOKIE] ✓ OK-knapp hittad! score={score:.3f} skala={sc:.2f}")
+            print(f"[COOKIE] Klickar på ({click_x}, {click_y})")
+            if safe_click_center(box, full_region, win=win):
+                print("[COOKIE] ✓ OK klickad!")
+            return
+    
+    print(f"[COOKIE] OK-knapp ej hittad (bästa score={best_ok_score:.3f} vid skala={best_ok_scale})")
+
+
+def handle_ok_fortsatt_banner(win):
+    """Hantera 'ok, fortsätt' banner som kan dyka upp efter länk-klick"""
+    # KONTROLLERA OM VI SKA HOPPA ÖVER
+    if SKIP_OK_FORTSATT:
+        print("[BANNER] ⏭️ HOPPAS ÖVER (SKIP_OK_FORTSATT=True)")
+        return False
+    
+    # Säkerställ att Chrome är i foreground
     ensure_chrome_foreground(win)
     
     region = refresh_region(win)
     if not region:
-        return
-    templ = read_template_gray(IMG_POPUP)
+        return False
+    
+    # Kontrollera om bildfilen finns
+    if not os.path.exists(IMG_OK_FORTSATT):
+        # Om bildfilen saknas, försök använda samma OK-bild som cookie-popup
+        img_path = IMG_OK
+        if not os.path.exists(img_path):
+            print("[BANNER] Ingen bildfil för 'ok, fortsätt' hittades")
+            return False
+        print("[BANNER] Använder ok.jpg som fallback för 'ok, fortsätt'")
+    else:
+        img_path = IMG_OK_FORTSATT
+    
+    print(f"[BANNER] Letar efter {Path(img_path).name} (threshold={CONF_OK_FORTSATT:.2f})")
+    
+    templ = read_template_gray(img_path)
     if templ is None:
-        return
-    end = time.time() + POPUP_TIMEOUT_SEC
-    found = False
-    while time.time() < end and not found:
+        print(f"[BANNER] Kunde inte läsa {img_path}")
+        return False
+    
+    templ_h, templ_w = templ.shape[:2]
+    print(f"[BANNER] Template: {templ_w}x{templ_h}px, skalor: {min(SCALES_UI):.2f}-{max(SCALES_UI):.2f}")
+    
+    # Leta efter banner med kort timeout (banner dyker upp snabbt)
+    timeout = 5.0  # Ökat från 3.0
+    end = time.time() + timeout
+    best_score = 0.0
+    best_scale = None
+    
+    while time.time() < end:
         bgr = grab_region_bgr_any(region)
         gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
-        for sc in [0.95, 1.00, 1.05]:
-            score, loc, (tw, th) = match_best(gray, templ, scale=sc)
-            if score and score >= CONF_POPUP:
-                found = True
-                break
-        time.sleep(FRAME_GAP_SEC)
-    if found:
-        rsleep(0.5, 1.0)  # Halverat från (1.0, 2.0)
-        templ_ok = read_template_gray(IMG_OK)
-        if templ_ok is not None:
-            bgr = grab_region_bgr_any(region)
-            gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
-            for sc in [0.95, 1.00, 1.05]:
-                score, loc, (tw, th) = match_best(gray, templ_ok, scale=sc)
-                if score and score >= CONF_OK:
-                    x, y = loc
-                    box = (region[0] + x, region[1] + y, tw, th)
-                    if safe_click_center(box, region, win=win):
-                        print("[+] OK klickad.")
-                    break
+        for sc in SCALES_UI:
+            score, loc, dims = match_best(gray, templ, scale=sc)
+            if score is None or dims is None:
+                continue
+            if score > best_score:
+                best_score = score
+                best_scale = sc
+            if score >= CONF_OK_FORTSATT:
+                tw, th = dims
+                x, y = loc
+                box = (region[0] + x, region[1] + y, tw, th)
+                print(f"[BANNER] ✓ Banner hittad! score={score:.3f} skala={sc:.2f}")
+                if safe_click_center(box, region, win=win):
+                    print("[BANNER] ✓ 'Ok, fortsätt' banner klickad!")
+                    rsleep(0.5, 1.0)
+                    return True
+        time.sleep(0.3)
+    
+    print(f"[BANNER] Ingen banner hittad (bästa score={best_score:.3f} vid skala={best_scale})")
+    return False
 
 
 def locate_menu_and_click(img_path: str, win, timeout: float):
+    """Hitta menyelem och klicka på det."""
     # Säkerställ att Chrome är i foreground innan vi letar/klickar
     ensure_chrome_foreground(win)
     
     region = refresh_region(win)
-    print(f"[*] Matchar {Path(img_path).name} ...", end="")
+    img_name = Path(img_path).name
+    
     box, score, sc, mode = locate_menu_robust(img_path, region, timeout_sec=timeout)
+    
     if box is None:
-        print(" miss (ingen kandidat).")
+        print(f"[MENY-KLICK] ✗ '{img_name}' - ingen matchning hittad")
         bgr = grab_region_bgr_any(region)
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
         ensure_saved(
-            str(Path(DEBUG_DIR) / f"{Path(img_path).stem}_window_{ts}.png"), bgr
+            str(Path(DEBUG_DIR) / f"{img_name.replace('.', '_')}_window_{ts}.png"), bgr
         )
         return False, None
+    
     th = (
         CONF_MENY_GRAY
         if mode == "gray"
         else (CONF_MENY_EDGE if mode == "edge" else CONF_MENY_ORB)
     )
-    print(f" score={score:.3f} scale={sc if sc else 1.0:.2f} mode={mode}", end="")
+    
     if score < th:
-        print(" (under tröskel).")
+        print(f"[MENY-KLICK] ✗ '{img_name}' - score={score:.3f} < threshold={th:.2f} (skala={sc:.2f}, mode={mode})")
         bgr = grab_region_bgr_any(region)
         L, T, W, H = box
         x = L - region[0]
@@ -1311,13 +1925,18 @@ def locate_menu_and_click(img_path: str, win, timeout: float):
         ensure_saved(
             str(
                 Path(DEBUG_DIR)
-                / f"{Path(img_path).stem}_best_below_{score:.3f}_{ts}.png"
+                / f"{img_name.replace('.', '_')}_below_{score:.3f}_scale{sc:.2f}_{ts}.png"
             ),
             out,
         )
         return False, None
-    print(" ✓")
+    
+    print(f"[MENY-KLICK] ✓ '{img_name}' - score={score:.3f} >= threshold={th:.2f} (skala={sc:.2f}, mode={mode})")
     ok = safe_click_center(box, region, win=win)
+    if ok:
+        print(f"[MENY-KLICK] ✓ Klickade på '{img_name}'")
+    else:
+        print(f"[MENY-KLICK] ✗ Klick blockerat för '{img_name}'")
     return ok, box
 
 
@@ -1704,47 +2323,87 @@ def main():
         if not check_chrome_alive():
             return 1
 
-        # Kontrollera om vi redan är på söksidan (autocomplete har tagit oss dit)
-        region = refresh_region(win)
-        print("[*] Letar efter 'alternativ_lank.jpg' (≥ 0.82)...")
-        alt_best, alt_score = locate_best_over_samples(
-            IMG_LANK_ALT,
-            region,
-            threshold=CONF_LANK,
-            timeout_sec=LANK_TIMEOUT,
-            scales=SCALES_LANK,
-            samples=SAMPLES_LANK,
-        )
-
-        if alt_best:
-            print(f"[✓] Redan på söksidan (alternativ_lank) score={alt_score:.3f} – hoppar över klick.")
-        else:
-            # Länk (≥ 0.82)
-            print("[*] Letar efter 'lank.jpg' (≥ 0.82)...")
-            best, best_score = locate_best_over_samples(
-                IMG_LANK,
-                region,
+        # Hämta fönsterregion
+        full_region = refresh_region(win)
+        
+        # Begränsa sökning till rätt område (X: 10-45%, Y: topp 40%)
+        link_region = get_link_search_region(full_region)
+        if link_region is None:
+            print("[FEL] Kunde inte beräkna länk-sökområde")
+            return 1
+        
+        # ===========================================
+        # SÖK EFTER LÄNK - PRIORITERA laptop_sok_kungorelse.jpg
+        # ===========================================
+        # Testar i ordning och tar BÄSTA totala matchning
+        link_images = [
+            (IMG_LANK_LAPTOP, "laptop_sok_kungorelse.jpg"),  # Laptop-specifik FÖRST (score 1.0 i test)
+            (IMG_LANK, "lank.jpg"),                          # Original (score 0.937 i test)
+        ]
+        
+        best = None
+        best_score = 0.0
+        matched_image = None
+        
+        for img_path, img_name in link_images:
+            if not os.path.exists(img_path):
+                print(f"[*] Hoppar över '{img_name}' (fil saknas)")
+                continue
+            
+            print(f"[*] Letar efter '{img_name}' i begränsat område...")
+            candidate, score = locate_best_over_samples(
+                img_path,
+                link_region,
                 threshold=CONF_LANK,
                 timeout_sec=LANK_TIMEOUT,
                 scales=SCALES_LANK,
                 samples=SAMPLES_LANK,
             )
-            if not best:
-                print("[FEL] Hittade inte 'lank.jpg' över tröskeln. Se debug i 'debug\\'.")
-                if not check_chrome_alive():
-                    return 1
-                return 1
-            print(f"[+] Hittade länk: score={best_score:.3f}")
-            if not safe_click_center(best, region, win=win):
-                print("[VARN] Klick blockerat (kant/header) – avbryter.")
-                if not check_chrome_alive():
-                    return 1
-                return 1
-
+            
+            if candidate and score > best_score:
+                best = candidate
+                best_score = score
+                matched_image = img_name
+                print(f"[+] Ny bästa matchning: '{img_name}' score={score:.3f}")
+            
+            # Early exit ENDAST om vi har score >= 0.95 (nästan perfekt match)
+            if best and best_score >= 0.95:
+                print(f"[+] Perfekt matchning ({best_score:.3f}) - avslutar sökning")
+                break
+        
+        if not best:
+            print("[FEL] Hittade ingen länk-bild över tröskeln. Se debug i 'debug\\'.")
+            print("[FEL] Provade bilderna: " + ", ".join(name for _, name in link_images))
             if not check_chrome_alive():
                 return 1
+            return 1
+        
+        # Logga klick-position
+        click_x = best[0] + best[2] // 2
+        click_y = best[1] + best[3] // 2
+        print(f"[+] KLICK PÅ LÄNK:")
+        print(f"[+]   Bild: '{matched_image}'")
+        print(f"[+]   Score: {best_score:.3f}")
+        print(f"[+]   Position: ({click_x}, {click_y})")
+        print(f"[+]   Box: x={best[0]}, y={best[1]}, w={best[2]}, h={best[3]}")
+        
+        # Använd full_region för klick-validering (guards är relativa till hela fönstret)
+        if not safe_click_center(best, full_region, win=win):
+            print("[VARN] Klick blockerat (kant/header) – avbryter.")
+            if not check_chrome_alive():
+                return 1
+            return 1
 
-            rsleep(*WAIT_AFTER_LINK)
+        if not check_chrome_alive():
+            return 1
+
+        rsleep(*WAIT_AFTER_LINK)
+        
+        # Hantera eventuell "ok, fortsätt" banner efter länk-klick
+        if not check_chrome_alive():
+            return 1
+        handle_ok_fortsatt_banner(win)
+            
         run_menu_sequence(win)
         print("[✓] Sökformulär klar.")
 

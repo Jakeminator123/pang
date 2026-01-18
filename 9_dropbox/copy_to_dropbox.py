@@ -291,7 +291,7 @@ def copy_date_folder_to_dropbox(date_folder: Path, dropbox_base: Path) -> bool:
             return False
 
         # Kopiera zip-fil till önskad Dropbox-mapp (direkt till leads)
-        dropbox_target_dir = Path(r"C:/Users/Propietario/Dropbox/leads")
+        dropbox_target_dir = Path(r"C:/Users/jakem/Dropbox/leads")
         dropbox_target_dir.mkdir(parents=True, exist_ok=True)
 
         dropbox_zip = dropbox_target_dir / zip_filename

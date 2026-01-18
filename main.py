@@ -34,6 +34,7 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
 import time
 from datetime import datetime
 from pathlib import Path
@@ -80,9 +81,104 @@ RUN_LOG_FILE: Optional[Path] = None
 RUN_TS: str = ""
 
 
+def _get_env_int(name: str, default: int) -> int:
+    val = os.environ.get(name, "").strip()
+    if not val:
+        return default
+    try:
+        return int(val)
+    except ValueError:
+        return default
+
+
+# Max runtime (sekunder) innan vi stänger ner allt
+PIPELINE_MAX_RUNTIME_SEC = _get_env_int("PIPELINE_MAX_RUNTIME_SEC", 9000)  # 2.5h
+
+
 def ensure_log_dirs():
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     STEP_LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+
+# Lock-fil för att förhindra dubbelkörning
+LOCK_FILE = LOG_DIR / "pipeline.lock"
+_lock_handle = None
+
+
+def acquire_pipeline_lock() -> bool:
+    """
+    Försök att ta en exklusiv lås på pipelinen.
+    Returnerar True om låsen togs, False om en annan instans körs.
+    """
+    global _lock_handle
+    ensure_log_dirs()
+    
+    try:
+        # Kolla om lock-fil finns och om processen fortfarande körs
+        if LOCK_FILE.exists():
+            try:
+                lock_data = LOCK_FILE.read_text(encoding="utf-8").strip()
+                if lock_data:
+                    pid = int(lock_data.split(":")[0])
+                    # Kolla om processen fortfarande körs
+                    if sys.platform == "win32":
+                        import ctypes
+                        kernel32 = ctypes.windll.kernel32
+                        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+                        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+                        if handle:
+                            kernel32.CloseHandle(handle)
+                            # Processen finns - kolla om det är en gammal lock
+                            lock_time = lock_data.split(":")[1] if ":" in lock_data else ""
+                            if lock_time:
+                                from datetime import datetime
+                                lock_dt = datetime.fromisoformat(lock_time)
+                                age_hours = (datetime.now() - lock_dt).total_seconds() / 3600
+                                if age_hours > 4:  # Om låsen är över 4 timmar gammal, ignorera den
+                                    log_warn(f"Gammal lock-fil (>4h) från PID {pid} - tar över")
+                                else:
+                                    log_error(f"Pipeline körs redan (PID {pid}, startad {lock_time})")
+                                    return False
+                            else:
+                                log_error(f"Pipeline körs redan (PID {pid})")
+                                return False
+                    else:
+                        # Linux/Mac: kolla med os.kill(pid, 0)
+                        try:
+                            os.kill(pid, 0)
+                            log_error(f"Pipeline körs redan (PID {pid})")
+                            return False
+                        except OSError:
+                            pass  # Processen finns inte - gammal lock
+            except (ValueError, IndexError, OSError):
+                pass  # Korrupt lock-fil - ta över
+        
+        # Skapa ny lock-fil
+        lock_content = f"{os.getpid()}:{datetime.now().isoformat()}"
+        LOCK_FILE.write_text(lock_content, encoding="utf-8")
+        log_info(f"Pipeline-lås skapad (PID {os.getpid()})")
+        return True
+        
+    except Exception as e:
+        log_warn(f"Kunde inte hantera pipeline-lås: {e}")
+        return True  # Fortsätt ändå vid fel
+
+
+def release_pipeline_lock():
+    """Släpp pipeline-låsen."""
+    global _lock_handle
+    try:
+        if LOCK_FILE.exists():
+            # Verifiera att det är vår lock
+            try:
+                lock_data = LOCK_FILE.read_text(encoding="utf-8").strip()
+                if lock_data.startswith(f"{os.getpid()}:"):
+                    LOCK_FILE.unlink()
+                    log_info("Pipeline-lås frigjord")
+            except Exception:
+                pass
+    except Exception as e:
+        log_warn(f"Kunde inte frigöra pipeline-lås: {e}")
 
 
 def setup_run_logging() -> Path:
@@ -141,6 +237,26 @@ def check_server_running() -> bool:
     except Exception:
         return False
 
+def get_powershell_exe() -> str:
+    """
+    Returnerar en PowerShell-exe som funkar:
+    1) PowerShell 7 (pwsh.exe) om den finns i PATH
+    2) Windows PowerShell (powershell.exe) om den finns i PATH
+    3) Fallback till standard-sökvägen i Windows
+    """
+    for exe in ("pwsh.exe", "powershell.exe"):
+        p = shutil.which(exe)
+        if p:
+            return p
+
+    windir = os.environ.get("WINDIR", r"C:\Windows")
+    fallback = os.path.join(
+        windir, "System32", "WindowsPowerShell", "v1.0", "powershell.exe"
+    )
+    if os.path.exists(fallback):
+        return fallback
+
+    raise FileNotFoundError("Hittar varken pwsh.exe eller powershell.exe")
 
 def start_server() -> Optional[subprocess.Popen]:
     """Starta Flask-server i ett separat PowerShell-fönster."""
@@ -228,11 +344,17 @@ $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
         ps_script_path = ps_script_file.name
 
         # Starta PowerShell i nytt fönster med skriptfilen
+        try:
+            ps_exe = get_powershell_exe()
+        except Exception as e:
+            log_error(f"Kunde inte hitta PowerShell att starta servern med: {e}")
+            return None
+
         ps_args = [
-            "powershell.exe",
+            ps_exe,
             "-NoExit",
             "-ExecutionPolicy",
-            "Bypass",  # Tillåt körning av skript
+            "Bypass",
             "-File",
             ps_script_path,
         ]
@@ -240,13 +362,19 @@ $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
         log_info("Öppnar nytt PowerShell-fönster för servern...")
         log_info(f"PowerShell-skript: {ps_script_path}")
         try:
-            process = subprocess.Popen(
-                ps_args,
-                cwd=str(POIT_DIR),
-                creationflags=subprocess.CREATE_NEW_CONSOLE
-                if sys.platform == "win32"
-                else 0,
-            )
+            if sys.platform == "win32":
+                # Använd 'start' för att öppna i nytt fönster utan elevation-krav
+                cmd = f'start "Flask Server" /D "{POIT_DIR}" "{ps_exe}" -NoExit -ExecutionPolicy Bypass -File "{ps_script_path}"'
+                process = subprocess.Popen(
+                    cmd,
+                    shell=True,
+                    cwd=str(POIT_DIR),
+                )
+            else:
+                process = subprocess.Popen(
+                    ps_args,
+                    cwd=str(POIT_DIR),
+                )
         except Exception as e:
             log_error(f"Kunde inte starta PowerShell: {e}")
             # Rensa temporär fil
@@ -346,6 +474,27 @@ def stop_server(process: Optional[subprocess.Popen]):
     log_info("(Vi stänger inte fönstret automatiskt så du kan se serverns output)")
 
 
+def schedule_pipeline_timeout(seconds: int) -> Optional[threading.Timer]:
+    if seconds <= 0:
+        return None
+
+    def _timeout():
+        log_warn(
+            f"Maximal körtid nådd ({seconds // 60} min) - stänger ner processer"
+        )
+        try:
+            from utils.kill_all import kill_pipeline_processes
+
+            kill_pipeline_processes()
+        finally:
+            os._exit(1)
+
+    timer = threading.Timer(seconds, _timeout)
+    timer.daemon = True
+    timer.start()
+    return timer
+
+
 def run_script(
     step_name: str, script_path: Path, cwd: Path = None
 ) -> Tuple[int, float, Path, List[str]]:
@@ -365,13 +514,16 @@ def run_script(
 
     try:
         env = os.environ.copy()
+        # VIKTIGT: Sätt PYTHONUNBUFFERED för att se output i realtid
+        env["PYTHONUNBUFFERED"] = "1"
+        
         with step_log.open("w", encoding="utf-8") as lf:
             lf.write(f"[INFO {ts()}] Running {script_path} (cwd={cwd})\n")
             lf.write(f"[INFO {ts()}] TARGET_DATE={target_date}\n")
             lf.flush()
 
             process = subprocess.Popen(
-                [sys.executable, str(script_path)],
+                [sys.executable, "-u", str(script_path)],  # -u = unbuffered
                 cwd=str(cwd),
                 env=env,
                 stdout=subprocess.PIPE,
@@ -1564,6 +1716,46 @@ def main():
     # Initiera loggfil direkt
     setup_run_logging()
     log_info(f"Run-logg: {RUN_LOG_FILE}")
+    
+    # Kontrollera att ingen annan pipeline-instans körs
+    if not acquire_pipeline_lock():
+        log_error("AVBRYTER: En annan pipeline-instans körs redan!")
+        log_error("Om detta är fel, ta bort: " + str(LOCK_FILE))
+        return 1
+
+    # Sätt watchdog som stänger allt efter max-tid
+    schedule_pipeline_timeout(PIPELINE_MAX_RUNTIME_SEC)
+
+    # ==========================================================================
+    # EXTERNAL CONFIG: Ladda konfiguration från extern Dropbox-fil om aktiverat
+    # ==========================================================================
+    if os.getenv("EXTERNAL_VALUES", "N").upper() in ("Y", "YES", "TRUE", "1"):
+        log_info("=" * 60)
+        log_info("EXTERN KONFIGURATION AKTIVERAD")
+        log_info("=" * 60)
+        try:
+            from utils.load_external_config import (
+                get_external_config_sources,
+                load_and_apply_external_config,
+            )
+
+            sources = get_external_config_sources()
+            if sources:
+                log_info("Laddar extern config från:")
+                for src in sources:
+                    log_info(f"  - {src}")
+                if load_and_apply_external_config(sources):
+                    log_info("✅ Extern konfiguration applicerad - lokala config-filer uppdaterade")
+                else:
+                    log_warn("⚠️  Kunde inte applicera extern config - använder lokala filer")
+            else:
+                log_warn("⚠️  Inga externa configfiler hittades")
+                log_warn("    Sätt EXTERNAL_CONFIG_PATH i .env till en fil eller Dropbox-mapp")
+        except ImportError as e:
+            log_error(f"Kunde inte importera external config loader: {e}")
+        except Exception as e:
+            log_error(f"Fel vid laddning av extern config: {e}")
+        print()
 
     # Parse arguments - hantera både master_number och datumargument
     raw_args = sys.argv[1:]
@@ -1628,8 +1820,8 @@ Argument:
     for cfg_path in [
         PROJECT_ROOT / ".env",
         POIT_DIR / "config.txt",
-        SEGMENT_DIR / "config_ny.txt",
-        SAJT_DIR / "config.txt",
+        SEGMENT_DIR / "config_simple.txt",
+        SAJT_DIR / "config_ny.txt",
     ]:
         exists = "OK" if cfg_path.exists() else "SAKNAS"
         log_info(f"  - {cfg_path.relative_to(PROJECT_ROOT)}: {exists}")
@@ -2086,6 +2278,7 @@ Argument:
 
     except KeyboardInterrupt:
         log_warn("Avbruten av användaren (Ctrl+C)")
+        release_pipeline_lock()
     except Exception as e:
         log_error(f"Oväntat fel: {e}")
         import traceback
@@ -2093,9 +2286,23 @@ Argument:
         traceback.print_exc()
         if "status" in locals():
             mark_failed_step(target_date_str, status, "unexpected", str(e))
+        release_pipeline_lock()
     finally:
         # Stäng server
         stop_server(server_process)
+        # Säkerställ att låsen är frigjord (om inte redan gjort)
+        try:
+            release_pipeline_lock()
+        except Exception:
+            pass
+
+        # Säkerhetsstängning av kvarvarande pipeline-processer
+        try:
+            from utils.kill_all import kill_pipeline_processes
+
+            kill_pipeline_processes(exclude_pids={os.getpid()})
+        except Exception:
+            pass
 
     # Sammanfattning
     log_info("=" * 60)
@@ -2111,10 +2318,12 @@ Argument:
             if len(failure) > 2 and failure[2]:
                 log_error(f"    Logg: {failure[2]}")
         log_info(f"Run-logg: {RUN_LOG_FILE}")
+        release_pipeline_lock()
         return 1
     else:
         log_info("✅ Alla steg kördes utan fel!")
         log_info(f"Run-logg: {RUN_LOG_FILE}")
+        release_pipeline_lock()
         return 0
 
 

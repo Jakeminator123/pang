@@ -3,68 +3,33 @@
 # =============================================================================
 # Run with: python ALLA_simple.py
 
+# Grundläggande pipeline-inställningar
 [PIPELINE]
-# Source directory for date folders (relative to pang root or absolute)
 source_dir = 1_poit/info_server
-
-# Max companies to process (0 = all)
-max_companies = 150
-
-# Delete CSV after converting to XLSX
+max_companies = 151
 delete_csv = y
 
+# AI-research inställningar
 [RESEARCH]
-# Enable AI web search for company/person info
 enabled = y
-
-# AI model for web search (gpt-4o = better quality, gpt-4o-mini = cheaper)
 model = gpt-4o
-
-# Max web search queries per company (3-5 recommended)
 max_searches = 3
-
-# Search for person contact info
 search_persons = y
-
-# Max persons to search per company
 max_persons = 2
 
+# Domänverifiering
 [DOMAIN]
-# HTTP timeout for domain checks (seconds)
+parallel_checks = 5
+max_crawl = 5
 timeout_seconds = 5
 
-# Max domains to crawl/verify per company
-max_crawl = 5
-
-# Parallel domain checks
-parallel_checks = 5
-
+# Mail-generering och ton
 [MAIL]
-# Enable mail generation
 enabled = y
-
-# AI model for mail generation
 model = gpt-4o
-
-# Minimum domain confidence to generate mail (0-100)
-min_confidence = 40
-
-# Max mails to generate (0 = all matching criteria)
-max_mails = 150
-
-# ============================================================================
-# TON OCH STIL (skala 1-10)
-# ============================================================================
-
-# Formalitet: 1 = casual/kompis, 10 = formellt/stelt
+min_confidence = 41
+max_mails = 110
 formality = 4
-
-# Säljighet: 1 = bara info, 10 = aggressiv sälj
 salesiness = 3
-
-# Smicker/rövslickeri: 1 = rakt på sak, 10 = "ni är fantastiska!"
 flattery = 2
-
-# Längd: 1 = ultrakort (80 ord), 10 = längre (200 ord)
 length = 5
-

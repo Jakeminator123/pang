@@ -21,7 +21,7 @@ import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import List, Tuple
+from typing import Iterable, List, Tuple
 
 # Fix encoding for Windows terminal
 # Only modify when running as standalone script (not when imported)
@@ -373,7 +373,9 @@ def remove_path(path: Path, description: str = "") -> bool:
     return False
 
 
-def remove_pycache_dirs(root: Path, label: str = "") -> int:
+def remove_pycache_dirs(
+    root: Path, label: str = "", ignore_dirs: Iterable[str] = ()
+) -> int:
     """
     Remove all __pycache__ directories under a root path.
 
@@ -387,10 +389,24 @@ def remove_pycache_dirs(root: Path, label: str = "") -> int:
     if not root.exists():
         return 0
 
+    ignore_set = {name.lower() for name in ignore_dirs}
     removed = 0
     for pycache_dir in root.rglob("__pycache__"):
         if pycache_dir.is_dir():
+            if ignore_set and any(part.lower() in ignore_set for part in pycache_dir.parts):
+                continue
             if remove_path(pycache_dir, f"(pycache {label})"):
+                removed += 1
+    return removed
+
+
+def clean_image_dir(dir_path: Path, label: str) -> int:
+    if not dir_path.exists():
+        return 0
+    removed = 0
+    for pattern in ("*.png", "*.jpg", "*.jpeg"):
+        for file_path in dir_path.glob(pattern):
+            if remove_path(file_path, f"({label})"):
                 removed += 1
     return removed
 
@@ -560,10 +576,13 @@ def clean_today_metadata_dir(segment_dir: Path, date_str: str) -> int:
     return 0
 
 
-def clean_all_pipeline_data() -> Tuple[int, List[str]]:
+def clean_all_pipeline_data(skip_info_server: bool = False) -> Tuple[int, List[str]]:
     """
     Rensar ALLT i pipeline-mapparna för en helt ren start.
     Anropas före varje körning för att garantera ingen duplicering.
+
+    Args:
+        skip_info_server: Om True, hoppa över rensning av info_server/ (default: False)
     """
     log_info("=" * 60)
     log_info("TOTAL PIPELINE CLEANUP - Rensar ALLT!")
@@ -574,19 +593,20 @@ def clean_all_pipeline_data() -> Tuple[int, List[str]]:
 
     try:
         # 1. Rensa HELA info_server mappen
-        info_server_dir = POIT_DIR / "info_server"
-        if info_server_dir.exists():
-            # Ta bort alla datummappar
-            for item in info_server_dir.iterdir():
-                if item.is_dir() and re.fullmatch(r"\d{8}", item.name):
-                    if remove_path(item, f"(date dir: {item.name})"):
-                        total_removed += 1
-            # Ta bort alla JSON/CSV filer i root
-            for pattern in ["*.json", "*.csv", "*.db", "*.xlsx"]:
-                for file in info_server_dir.glob(pattern):
-                    if remove_path(file, f"({pattern})"):
-                        total_removed += 1
-            log_info("Rensade info_server/")
+        if not skip_info_server:
+            info_server_dir = POIT_DIR / "info_server"
+            if info_server_dir.exists():
+                # Ta bort alla datummappar
+                for item in info_server_dir.iterdir():
+                    if item.is_dir() and re.fullmatch(r"\d{8}", item.name):
+                        if remove_path(item, f"(date dir: {item.name})"):
+                            total_removed += 1
+                # Ta bort alla JSON/CSV filer i root
+                for pattern in ["*.json", "*.csv", "*.db", "*.xlsx"]:
+                    for file in info_server_dir.glob(pattern):
+                        if remove_path(file, f"({pattern})"):
+                            total_removed += 1
+                log_info("Rensade info_server/")
 
         # 2. Rensa HELA djupanalys mappen
         djupanalys_dir = SEGMENT_DIR / "djupanalys"
@@ -634,6 +654,14 @@ def clean_all_pipeline_data() -> Tuple[int, List[str]]:
                         total_removed += 1
             log_info("Rensade screenshot_logs/")
 
+        # 5b. Rensa debug-bilder i 1_poit/debug och debug/screenshots
+        debug_dir = POIT_DIR / "debug"
+        debug_screenshots_dir = debug_dir / "screenshots"
+        total_removed += clean_image_dir(debug_dir, "debug image")
+        total_removed += clean_image_dir(debug_screenshots_dir, "debug screenshot")
+        if debug_dir.exists():
+            log_info("Rensade debug/")
+
         # 6. Rensa huvudlogg-mappen (logs/steps/*.log och logs/main_*.log)
         logs_dir = PROJECT_ROOT / "logs"
         if logs_dir.exists():
@@ -672,10 +700,8 @@ def clean_all_pipeline_data() -> Tuple[int, List[str]]:
         log_info("Rensade root-loggfiler")
 
         # 9. Rensa __pycache__-mappar (förhindrar gamla bytecode-filer)
-        total_removed += remove_pycache_dirs(POIT_DIR, "1_poit")
-        total_removed += remove_pycache_dirs(SEGMENT_DIR, "2_segment_info")
-        total_removed += remove_pycache_dirs(PROJECT_ROOT / "3_sajt", "3_sajt")
-        total_removed += remove_pycache_dirs(PROJECT_ROOT / "utils", "utils")
+        ignore_dirs = {".venv", "venv", "env", ".git", ".cursor", "node_modules"}
+        total_removed += remove_pycache_dirs(PROJECT_ROOT, "project", ignore_dirs)
 
     except Exception as e:
         error_msg = f"Error during total cleanup: {e}"

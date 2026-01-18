@@ -1,2 +1,0 @@
-#Använd MAX_KUN_DAG=ALL
-MAX_KUN_DAG=100

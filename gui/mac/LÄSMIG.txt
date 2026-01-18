@@ -1,0 +1,41 @@
+================================================================================
+  🎯 PANG Konfiguration - Mac Edition
+================================================================================
+
+  SÅ HÄR STARTAR DU PROGRAMMET:
+
+  1. Dubbelklicka på "start_gui.command"
+  
+  Det är allt! ✨
+
+================================================================================
+
+
+FÖRSTA GÅNGEN?
+--------------
+Första gången du kör programmet installeras allt automatiskt.
+Det kan ta upp till 30 sekunder.
+
+
+OM DET INTE FUNGERAR:
+--------------------
+1. Högerklicka på "start_gui.command"
+2. Välj "Öppna"
+3. Klicka "Öppna" igen om macOS varnar
+
+Eller öppna Terminal och skriv:
+   cd /sökväg/till/mac-mappen
+   python3 mac_config_gui.py
+
+
+BEHÖVER DU PYTHON?
+-----------------
+Ladda ner från: https://www.python.org/downloads/
+Välj senaste versionen för macOS.
+
+
+FRÅGOR?
+-------
+Kontakta Jakob: jakob.olof.eberg@gmail.com
+
+================================================================================

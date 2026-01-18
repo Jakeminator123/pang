@@ -1,0 +1,54 @@
+{
+  "_comment": "PANG Standardkonfiguration - Mac Edition",
+  "_version": "1.0",
+  "_updated": "2026-01-13",
+  
+  "poit": {
+    "MAX_KUN_DAG": 150
+  },
+  
+  "segment": {
+    "PIPELINE": {
+      "source_dir": "1_poit/info_server",
+      "max_companies": 150,
+      "delete_csv": "y"
+    },
+    "RESEARCH": {
+      "enabled": "y",
+      "model": "gpt-4o",
+      "max_searches": 3,
+      "search_persons": "y",
+      "max_persons": 2
+    },
+    "DOMAIN": {
+      "timeout_seconds": 5,
+      "max_crawl": 5,
+      "parallel_checks": 5
+    },
+    "MAIL": {
+      "enabled": "y",
+      "model": "gpt-4o",
+      "min_confidence": 40,
+      "max_mails": 110
+    }
+  },
+  
+  "mail_tone": {
+    "formality": 4,
+    "salesiness": 3,
+    "flattery": 2,
+    "length": 5
+  },
+  
+  "sajt": {
+    "evaluate": "y",
+    "threshold": 0.80,
+    "max_total_judgement_approvals": 4,
+    "re_input_website_link": "y",
+    "max_sites": 4,
+    "audit_enabled": "y",
+    "audit_threshold": 0.85,
+    "re_input_audit": "y",
+    "max_audits": 10
+  }
+}

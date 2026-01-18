@@ -7,11 +7,19 @@ Användning:
     python utils/kill_all.py
 """
 
+import json
 import os
 import sys
 import subprocess
 import signal
 import time
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+CHROME_PROFILES = [
+    PROJECT_ROOT / "1_poit" / "chrome_profile",
+    PROJECT_ROOT / "headless_1_poit" / "chrome_profile",
+]
 
 def kill_processes_by_name(name_patterns):
     """Döda processer som matchar namn-mönster."""
@@ -122,6 +130,85 @@ def kill_processes_by_port(port):
         print(f"⚠️  Fel vid dödning av processer på port {port}: {e}")
     
     return killed
+
+
+def _list_processes() -> list[tuple[int, str]]:
+    processes: list[tuple[int, str]] = []
+    if sys.platform == "win32":
+        cmd = [
+            "powershell",
+            "-NoProfile",
+            "-Command",
+            "Get-CimInstance Win32_Process | Select-Object ProcessId,CommandLine | ConvertTo-Json -Compress",
+        ]
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
+            if result.stdout:
+                data = json.loads(result.stdout)
+                if isinstance(data, dict):
+                    data = [data]
+                for item in data:
+                    pid = item.get("ProcessId")
+                    cmdline = item.get("CommandLine") or ""
+                    if pid:
+                        processes.append((int(pid), cmdline))
+        except Exception:
+            pass
+    else:
+        try:
+            result = subprocess.run(
+                ["ps", "-eo", "pid=,command="], capture_output=True, text=True
+            )
+            for line in result.stdout.splitlines():
+                parts = line.strip().split(None, 1)
+                if not parts:
+                    continue
+                pid = int(parts[0])
+                cmdline = parts[1] if len(parts) > 1 else ""
+                processes.append((pid, cmdline))
+        except Exception:
+            pass
+    return processes
+
+
+def _kill_pids(pids: set[int], exclude: set[int] | None = None) -> list[int]:
+    exclude = exclude or set()
+    killed: list[int] = []
+    for pid in pids:
+        if pid in exclude:
+            continue
+        try:
+            if sys.platform == "win32":
+                subprocess.run(
+                    ["taskkill", "/F", "/PID", str(pid)],
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="ignore",
+                )
+            else:
+                os.kill(pid, signal.SIGKILL)
+            killed.append(pid)
+        except Exception:
+            continue
+    return killed
+
+
+def kill_pipeline_processes(exclude_pids: set[int] | None = None) -> list[int]:
+    patterns = [str(PROJECT_ROOT)]
+    patterns.extend(str(p) for p in CHROME_PROFILES)
+    patterns = [p.lower() for p in patterns]
+
+    pids: set[int] = set()
+    for pid, cmdline in _list_processes():
+        cmd_lower = (cmdline or "").lower()
+        if any(pat in cmd_lower for pat in patterns):
+            pids.add(pid)
+
+    # Kill server by port as well
+    kill_processes_by_port(51234)
+
+    return _kill_pids(pids, exclude=exclude_pids)
 
 def main():
     print("=" * 60)

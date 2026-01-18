@@ -1,3 +1,0 @@
-# Minimal requirements for Flask server only
-flask>=3.0.0
-

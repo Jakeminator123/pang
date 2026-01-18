@@ -3,6 +3,14 @@
 
 # Cursor / IDE
 .preprompt_history.json
+.cursor/
+.vscode/
+
+# GUI user settings
+gui/gui_settings.json
+gui/local_config.json
+gui/mac/gui_settings.json
+gui/mac/local_config.json
 
 # Python
 __pycache__/
@@ -40,6 +48,8 @@ log/
 **/output/
 **/8_ready/
 **/testning/output/
+2_segment_info/in/
+generated_site/
 
 # Old/archive folders
 old/

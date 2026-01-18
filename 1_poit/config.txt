@@ -1,2 +1,2 @@
-#Använd MAX_KUN_DAG=ALL
-MAX_KUN_DAG=100
+#Använd MAX_KUN_DAG=ALL för obegränsat
+MAX_KUN_DAG=151
