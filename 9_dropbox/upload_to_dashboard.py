@@ -30,8 +30,25 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 JOCKE_DIR = PROJECT_ROOT / "10_jocke"
 DATA_BUNDLES_DIR = JOCKE_DIR / "data_bundles"
 
+# Load .env file from project root
+def load_env_file():
+    """Load environment variables from .env file."""
+    env_file = PROJECT_ROOT / ".env"
+    if env_file.exists():
+        with open(env_file, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, _, value = line.partition("=")
+                    key = key.strip()
+                    value = value.strip().strip('"').strip("'")
+                    if key and key not in os.environ:
+                        os.environ[key] = value
+
+load_env_file()
+
 # Dashboard config
-DEFAULT_DASHBOARD_URL = "https://jocke-dashboard.onrender.com"
+DEFAULT_DASHBOARD_URL = "https://jocke.onrender.com"
 UPLOAD_ENDPOINT = "/api/upload/bundle"
 DATES_ENDPOINT = "/api/data/dates"
 
@@ -130,11 +147,11 @@ def upload_bundle(zip_path: Path, dashboard_url: str, secret: str) -> Tuple[bool
             
             if response.status == 200:
                 files_count = result.get("filesExtracted", "?")
-                print(f"  ✅ Success! Extracted {files_count} files in {duration:.1f}s")
+                print(f"  [OK] Success! Extracted {files_count} files in {duration:.1f}s")
                 return True, result.get("message", "Upload successful")
             else:
                 error = result.get("error", response_data)
-                print(f"  ❌ Server returned status {response.status}: {error}")
+                print(f"  [ERROR] Server returned status {response.status}: {error}")
                 return False, error
                 
     except urllib.error.HTTPError as e:
@@ -145,19 +162,19 @@ def upload_bundle(zip_path: Path, dashboard_url: str, secret: str) -> Tuple[bool
             error_body = error_json.get("error", error_body)
         except Exception:
             pass
-        print(f"  ❌ HTTP Error {e.code}: {error_body or e.reason}")
+        print(f"  [ERROR] HTTP Error {e.code}: {error_body or e.reason}")
         return False, f"HTTP {e.code}: {error_body or e.reason}"
         
     except urllib.error.URLError as e:
-        print(f"  ❌ Connection error: {e.reason}")
+        print(f"  [ERROR] Connection error: {e.reason}")
         return False, f"Connection error: {e.reason}"
         
     except TimeoutError:
-        print(f"  ❌ Upload timed out after {UPLOAD_TIMEOUT}s")
+        print(f"  [ERROR] Upload timed out after {UPLOAD_TIMEOUT}s")
         return False, "Upload timed out"
         
     except Exception as e:
-        print(f"  ❌ Unexpected error: {e}")
+        print(f"  [ERROR] Unexpected error: {e}")
         return False, str(e)
 
 
@@ -195,6 +212,109 @@ def get_existing_dates_on_server(dashboard_url: str, secret: str) -> List[str]:
     except Exception as e:
         print(f"[WARN] Cannot check existing dates: {e}")
         return []
+
+
+def interactive_select(bundles: List[Path], existing_dates: List[str]) -> List[Path]:
+    """
+    Interactive selection of bundles to upload.
+    
+    Args:
+        bundles: All available bundles
+        existing_dates: Dates that already exist on server
+        
+    Returns:
+        List of selected bundles to upload
+    """
+    if not bundles:
+        print("\n[INFO] No bundles available")
+        return []
+    
+    print("\n" + "=" * 60)
+    print("AVAILABLE BUNDLES")
+    print("=" * 60)
+    print("\n  #  Date        Size      Status")
+    print("  " + "-" * 45)
+    
+    for i, bundle in enumerate(bundles, 1):
+        date_str = bundle.stem
+        size_mb = bundle.stat().st_size / 1024 / 1024
+        exists = date_str in existing_dates
+        status = "[EXISTS]" if exists else "[NEW]"
+        status_color = status
+        print(f"  {i:2}. {date_str}    {size_mb:6.2f} MB  {status_color}")
+    
+    print("\n  " + "-" * 45)
+    print("  Options:")
+    print("    - Enter numbers (e.g., 1,2,3 or 1-3)")
+    print("    - 'all' or 'a' = Upload all")
+    print("    - 'new' or 'n' = Upload only NEW (not on server)")
+    print("    - 'q' or Enter = Cancel")
+    print()
+    
+    try:
+        choice = input("  Select bundles to upload: ").strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        print("\n  Cancelled.")
+        return []
+    
+    if not choice or choice in ("q", "quit", "exit"):
+        print("  Cancelled.")
+        return []
+    
+    selected: List[Path] = []
+    
+    if choice in ("all", "a"):
+        selected = bundles
+        print(f"\n  Selected ALL ({len(selected)} bundles)")
+    elif choice in ("new", "n"):
+        selected = [b for b in bundles if b.stem not in existing_dates]
+        print(f"\n  Selected NEW only ({len(selected)} bundles)")
+    else:
+        # Parse number selections (e.g., "1,2,3" or "1-3" or "1,3-5")
+        indices = set()
+        parts = choice.replace(" ", "").split(",")
+        for part in parts:
+            if "-" in part:
+                try:
+                    start, end = part.split("-", 1)
+                    for i in range(int(start), int(end) + 1):
+                        indices.add(i)
+                except ValueError:
+                    pass
+            else:
+                try:
+                    indices.add(int(part))
+                except ValueError:
+                    pass
+        
+        for i in sorted(indices):
+            if 1 <= i <= len(bundles):
+                selected.append(bundles[i - 1])
+        
+        if selected:
+            print(f"\n  Selected {len(selected)} bundle(s): {', '.join(b.stem for b in selected)}")
+        else:
+            print("  No valid selection.")
+            return []
+    
+    # Confirm if any already exist
+    existing_selected = [b for b in selected if b.stem in existing_dates]
+    if existing_selected:
+        print(f"\n  WARNING: {len(existing_selected)} bundle(s) already exist on server:")
+        for b in existing_selected:
+            print(f"    - {b.stem}")
+        try:
+            confirm = input("  Overwrite? (y/N): ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            print("\n  Cancelled.")
+            return []
+        
+        if confirm not in ("y", "yes"):
+            # Remove existing from selection
+            selected = [b for b in selected if b.stem not in existing_dates]
+            print(f"  Removed existing. {len(selected)} bundle(s) remaining.")
+    
+    return selected
 
 
 def check_dashboard_status(dashboard_url: str, secret: str) -> bool:
@@ -262,26 +382,37 @@ def main():
     # Parse arguments
     upload_all = False
     force_upload = False
+    interactive_mode = False
     specific_date = None
     
     args = sys.argv[1:]
+    
+    # Default to interactive mode if no arguments
+    if not args:
+        interactive_mode = True
+    
     for arg in args:
         if arg == "--all":
             upload_all = True
         elif arg == "--force" or arg == "-f":
             force_upload = True
+        elif arg in ("--interactive", "-i"):
+            interactive_mode = True
         elif arg == "--help" or arg == "-h":
             print(__doc__)
             print("\nOptions:")
-            print("  --all      Upload all bundles (skip existing)")
+            print("  (no args)  Interactive mode - select which bundles to upload")
+            print("  -i         Interactive mode")
+            print("  --all      Upload all new bundles (skip existing)")
             print("  --force    Force upload even if date exists on server")
+            print("  YYYYMMDD   Upload specific date")
             print("  -h, --help Show this help")
             return 0
         elif len(arg) == 8 and arg.isdigit():
             specific_date = arg
         else:
             print(f"[ERROR] Unknown argument: {arg}")
-            print("Usage: python upload_to_dashboard.py [YYYYMMDD | --all] [--force]")
+            print("Usage: python upload_to_dashboard.py [YYYYMMDD | --all | -i] [--force]")
             return 1
     
     # Check dashboard status
@@ -289,21 +420,24 @@ def main():
     if not check_dashboard_status(dashboard_url, secret):
         print("[WARN] Dashboard check failed - attempting upload anyway...")
     
-    # Get existing dates on server (to skip already uploaded)
-    existing_dates: List[str] = []
-    if not force_upload:
-        print("[INFO] Checking existing dates on server...")
-        existing_dates = get_existing_dates_on_server(dashboard_url, secret)
-        if existing_dates:
-            print(f"[INFO] Found {len(existing_dates)} dates already on server: {', '.join(existing_dates[:5])}{'...' if len(existing_dates) > 5 else ''}")
-        else:
-            print("[INFO] No existing dates found (or could not check)")
+    # Get existing dates on server
+    print("[INFO] Checking existing dates on server...")
+    existing_dates = get_existing_dates_on_server(dashboard_url, secret)
+    if existing_dates:
+        print(f"[INFO] Found {len(existing_dates)} dates on server: {', '.join(sorted(existing_dates, reverse=True)[:5])}{'...' if len(existing_dates) > 5 else ''}")
     else:
-        print("[INFO] Force mode - skipping existence check")
+        print("[INFO] No existing dates found (or could not check)")
     
-    # Find bundles to upload
-    if upload_all:
-        all_bundles = find_bundles()
+    # Find all bundles first
+    all_bundles = find_bundles()
+    
+    # Interactive mode
+    if interactive_mode:
+        bundles = interactive_select(all_bundles, existing_dates)
+        if not bundles:
+            return 0
+    # Find bundles to upload based on mode
+    elif upload_all:
         if force_upload:
             bundles = all_bundles
             print(f"\n[INFO] Found {len(bundles)} bundles (force mode - uploading all)")
@@ -324,19 +458,20 @@ def main():
             return 0
     else:
         # Upload only the latest bundle
-        bundles = find_bundles()
-        if bundles:
+        if all_bundles:
             if force_upload:
-                bundles = [bundles[0]]
+                bundles = [all_bundles[0]]
             else:
                 # Filter out already existing
-                new_bundles = [b for b in bundles if b.stem not in existing_dates]
+                new_bundles = [b for b in all_bundles if b.stem not in existing_dates]
                 if new_bundles:
                     bundles = [new_bundles[0]]  # Just the newest that doesn't exist
                 else:
-                    print(f"\n[INFO] Latest bundle ({bundles[0].stem}) already on server")
+                    print(f"\n[INFO] Latest bundle ({all_bundles[0].stem}) already on server")
                     print("  Use --force to upload anyway")
                     return 0
+        else:
+            bundles = []
     
     if not bundles:
         print("\n[INFO] No new bundles to upload")
