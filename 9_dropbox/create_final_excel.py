@@ -17,13 +17,33 @@ Usage:
 
 import io
 import json
+import random
 import re
+import string
 import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 
 import pandas as pd
+
+
+def generate_synthetic_token(company_name: str = "") -> str:
+    """Generate a synthetic token from the company name.
+
+    Takes the company name, lowercases it, and strips all non-alphanumeric
+    characters (spaces, dashes, slashes, ampersands, dots, underscores, etc.).
+    Used as a placeholder for companies that did not receive a real site.
+
+    Example: "Bygg & Co AB" -> "byggcoab"
+    """
+    cleaned = company_name.lower()
+    cleaned = re.sub(r"[^a-z0-9åäö]", "", cleaned)
+    if not cleaned:
+        # Fallback to random if name is empty or entirely special chars
+        chars = string.ascii_lowercase + string.digits
+        cleaned = "".join(random.choices(chars, k=20))
+    return cleaned
 
 # Fix encoding for Windows terminal
 if sys.platform == "win32":
@@ -247,13 +267,19 @@ def create_huvuddata_sheet(
             folder = str(row[folder_col]).replace("/", "-").strip()
 
             # Add evaluation data
+            company_name = str(row.get("Företagsnamn", ""))
+
             if folder in evaluations:
                 eval_data = evaluations[folder]
                 df.at[idx, "Ska få sajt"] = (
                     "Ja" if eval_data.get("should_get_site", False) else "Nej"
                 )
                 df.at[idx, "Konfidens"] = f"{eval_data.get('confidence', 0):.0%}"
-                df.at[idx, "Preview URL"] = eval_data.get("preview_url", "")
+                real_url = eval_data.get("preview_url", "")
+                df.at[idx, "Preview URL"] = real_url if real_url else generate_synthetic_token(company_name)
+            else:
+                # No evaluation at all – still assign a synthetic token
+                df.at[idx, "Preview URL"] = generate_synthetic_token(company_name)
 
     # Reorder columns - put important ones first
     priority_cols = [
@@ -371,6 +397,7 @@ def create_evaluation_sheet(
         if folder in company_data:
             company_name = company_data[folder].get("company_name", "")
 
+        real_url = eval_data.get("preview_url", "")
         rows.append(
             {
                 "Kungörelse-id": folder,
@@ -380,7 +407,7 @@ def create_evaluation_sheet(
                 else "Nej",
                 "Konfidens": f"{eval_data.get('confidence', 0):.0%}",
                 "Motivering": eval_data.get("reasoning", ""),
-                "Preview URL": eval_data.get("preview_url", ""),
+                "Preview URL": real_url if real_url else generate_synthetic_token(company_name),
             }
         )
 
