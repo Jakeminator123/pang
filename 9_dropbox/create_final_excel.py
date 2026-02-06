@@ -282,6 +282,37 @@ def create_huvuddata_sheet(
     return df[ordered_cols]
 
 
+def normalize_company_name_for_column(name: str) -> str:
+    """
+    Normalize company name for column: remove special characters,
+    replace whitespaces with dashes, lowercase.
+    """
+    if not name:
+        return ""
+    
+    # Convert to lowercase
+    name = name.lower()
+    
+    # Replace Swedish characters
+    replacements = {"å": "a", "ä": "a", "ö": "o", "Å": "a", "Ä": "a", "Ö": "o"}
+    for old, new in replacements.items():
+        name = name.replace(old, new)
+    
+    # Remove special characters, keep alphanumeric, spaces, and dashes
+    name = re.sub(r"[^\w\s-]", "", name)
+    
+    # Replace whitespaces with dashes
+    name = re.sub(r"\s+", "-", name)
+    
+    # Remove multiple consecutive dashes
+    name = re.sub(r"-+", "-", name)
+    
+    # Remove leading/trailing dashes
+    name = name.strip("-")
+    
+    return name
+
+
 def create_personer_sheet(main_df: pd.DataFrame) -> pd.DataFrame:
     """Create persons sheet with parsed board members."""
     persons_rows = []
@@ -306,6 +337,9 @@ def create_personer_sheet(main_df: pd.DataFrame) -> pd.DataFrame:
         )
         company_name = str(row.get("Företagsnamn", ""))
         org_nr = str(row.get("Org.nr", ""))
+        
+        # Create normalized company name (whitespaces -> dashes, no special chars)
+        normalized_company_name = normalize_company_name_for_column(company_name)
 
         for col_name, role in board_columns:
             if col_name in main_df.columns:
@@ -317,6 +351,7 @@ def create_personer_sheet(main_df: pd.DataFrame) -> pd.DataFrame:
                         {
                             "Kungörelse-id": folder,
                             "Företagsnamn": company_name,
+                            "Företagsnamn (normaliserat)": normalized_company_name,
                             "Org.nr": org_nr,
                             "Roll": person.get("titel", role),
                             "Personnummer": person.get("personnummer", ""),
@@ -335,6 +370,7 @@ def create_personer_sheet(main_df: pd.DataFrame) -> pd.DataFrame:
             columns=[
                 "Kungörelse-id",
                 "Företagsnamn",
+                "Företagsnamn (normaliserat)",
                 "Org.nr",
                 "Roll",
                 "Personnummer",

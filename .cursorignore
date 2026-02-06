@@ -3,7 +3,7 @@ chrome_profile
 User Data
 RENSADE
 
-node_modules
+**/node_modules/
 .next
 
 
@@ -20,4 +20,38 @@ testmapp
 old
 steps/
 
-10_jocke/
+node_modules/
+next.
+
+!10_jocke/dashboard/**
+!10_jocke/data_bundles/
+!10_jocke/data_bundles/visningsmapp/
+!10_jocke/data_bundles/visningsmapp/**
+
+# ZIP files
+*.zip
+**/*.zip
+
+# Large data directories
+**/data_input/
+**/data_bundles/
+**/cursor_exports_*/
+**/K*/
+**/K*-*/
+**/info_server/
+**/djupanalys/
+**/output/
+**/8_ready/
+**/generated_site/
+
+# Cache and temp folders
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.coverage
+**/htmlcov/
+**/.tox/
+**/venv/
+**/env/
+**/.venv/
