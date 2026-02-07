@@ -90,5 +90,7 @@ api
 **/env/
 **/.venv/
 
+.fallback
+
 node_modules
 old
