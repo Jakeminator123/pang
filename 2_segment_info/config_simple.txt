@@ -11,20 +11,20 @@ source_dir = 1_poit/info_server
 max_companies = 150
 
 # Delete CSV after converting to XLSX
-delete_csv = y
+delete_csv = n
 
 [RESEARCH]
 # Enable AI web search for company/person info
-enabled = y
+enabled = n
 
 # AI model for web search (gpt-4o = better quality, gpt-4o-mini = cheaper)
 model = gpt-4o
 
 # Max web search queries per company (3-5 recommended)
-max_searches = 3
+max_searches = 2
 
 # Search for person contact info
-search_persons = y
+search_persons = n
 
 # Max persons to search per company
 max_persons = 2
@@ -34,11 +34,10 @@ max_persons = 2
 timeout_seconds = 5
 
 # Max domains to crawl/verify per company
-max_crawl = 5
+max_crawl = 3
 
 # Parallel domain checks
-parallel_checks = 5
-
+parallel_checks = 3
 [MAIL]
 # Enable mail generation
 enabled = y
@@ -50,7 +49,7 @@ model = gpt-4o
 min_confidence = 40
 
 # Max mails to generate (0 = all matching criteria)
-max_mails = 150
+max_mails = 3
 
 # ============================================================================
 # TON OCH STIL (skala 1-10)

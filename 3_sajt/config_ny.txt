@@ -20,7 +20,7 @@ max_total_judgement_approvals = 4
 re_input_website_link = y
 
 # max_sites: Max antal sajter per körning (0 = obegränsat)
-max_sites = 30
+max_sites = 2
 
 # --- AUDIT (analys av befintlig hemsida) ---
 # audit_enabled: y/n - Ska audit köras?
@@ -33,4 +33,4 @@ audit_threshold = 0.85
 re_input_audit = y
 
 # max_audits: Max antal audits per körning (0 = obegränsat)
-max_audits = 30
+max_audits = 4

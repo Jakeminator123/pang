@@ -134,11 +134,19 @@ $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
             "-File", ps_script_path,
         ]
 
-        process = subprocess.Popen(
-            ps_args,
-            cwd=str(POIT_DIR),
-            creationflags=subprocess.CREATE_NEW_CONSOLE if sys.platform == "win32" else 0,
-        )
+        if sys.platform == "win32":
+            # Använd 'start' för att öppna i nytt fönster utan elevation-krav
+            cmd = f'start "Flask Server" /D "{POIT_DIR}" "{ps_exe}" -NoExit -ExecutionPolicy Bypass -File "{ps_script_path}"'
+            process = subprocess.Popen(
+                cmd,
+                shell=True,
+                cwd=str(POIT_DIR),
+            )
+        else:
+            process = subprocess.Popen(
+                ps_args,
+                cwd=str(POIT_DIR),
+            )
 
         log_info("Väntar på server startup (5 sekunder)...")
         time.sleep(5)

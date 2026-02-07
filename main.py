@@ -85,6 +85,116 @@ def ensure_log_dirs():
     STEP_LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 
+# Lock-fil för att förhindra dubbelkörning
+LOCK_FILE = LOG_DIR / "pipeline.lock"
+_lock_handle = None
+
+
+def _is_pid_alive(pid: int) -> bool:
+    """Check if a process with given PID is still running (Windows)."""
+    if sys.platform == "win32":
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+        if handle:
+            kernel32.CloseHandle(handle)
+            return True
+        return False
+    else:
+        try:
+            os.kill(pid, 0)
+            return True
+        except OSError:
+            return False
+
+
+# Max age for lock file before it is considered stale (minutes)
+LOCK_MAX_AGE_MINUTES = 30
+
+
+def acquire_pipeline_lock() -> bool:
+    """
+    Försök att ta en exklusiv lås på pipelinen.
+    Returnerar True om låsen togs, False om en annan instans körs.
+
+    Lock-filen innehåller: PID|ISO_TIMESTAMP (pipe-separerad för att undvika
+    kollision med kolon i ISO-timestamps).
+    Bakåtkompatibel med äldre format PID:TIMESTAMP.
+    """
+    global _lock_handle
+    ensure_log_dirs()
+
+    try:
+        if LOCK_FILE.exists():
+            try:
+                lock_data = LOCK_FILE.read_text(encoding="utf-8").strip()
+                if lock_data:
+                    # Parse lock: new format uses '|', old format uses ':'
+                    if "|" in lock_data:
+                        pid_str, lock_time = lock_data.split("|", 1)
+                    elif ":" in lock_data:
+                        pid_str, lock_time = lock_data.split(":", 1)
+                    else:
+                        pid_str, lock_time = lock_data, ""
+
+                    pid = int(pid_str)
+                    pid_alive = _is_pid_alive(pid)
+
+                    if not pid_alive:
+                        # Process is dead - stale lock, safe to take over
+                        log_warn(f"Gammal lock-fil från död process PID {pid} - tar över")
+                    elif lock_time:
+                        lock_dt = datetime.fromisoformat(lock_time)
+                        age_min = (datetime.now() - lock_dt).total_seconds() / 60
+                        if age_min > LOCK_MAX_AGE_MINUTES:
+                            log_warn(
+                                f"Lock-fil från PID {pid} är {age_min:.0f} min gammal "
+                                f"(>{LOCK_MAX_AGE_MINUTES} min) - tar över"
+                            )
+                        else:
+                            log_error(
+                                f"Pipeline körs redan (PID {pid}, startad {lock_time}, "
+                                f"ålder {age_min:.0f} min)"
+                            )
+                            return False
+                    else:
+                        # PID alive but no timestamp - block
+                        log_error(f"Pipeline körs redan (PID {pid}, ingen tidsstämpel)")
+                        return False
+            except (ValueError, IndexError, OSError) as e:
+                log_warn(f"Korrupt lock-fil ({e}) - tar över")
+
+        # Create new lock (pipe-separated to avoid ISO-timestamp colon clash)
+        lock_content = f"{os.getpid()}|{datetime.now().isoformat()}"
+        LOCK_FILE.write_text(lock_content, encoding="utf-8")
+        log_info(f"Pipeline-lås skapad (PID {os.getpid()})")
+        return True
+
+    except Exception as e:
+        log_warn(f"Kunde inte hantera pipeline-lås: {e}")
+        return True  # Fortsätt ändå vid fel
+
+
+def release_pipeline_lock():
+    """Släpp pipeline-låsen."""
+    global _lock_handle
+    try:
+        if LOCK_FILE.exists():
+            # Verifiera att det är vår lock (supports both '|' and ':' separator)
+            try:
+                lock_data = LOCK_FILE.read_text(encoding="utf-8").strip()
+                our_prefix = f"{os.getpid()}|"
+                old_prefix = f"{os.getpid()}:"
+                if lock_data.startswith(our_prefix) or lock_data.startswith(old_prefix):
+                    LOCK_FILE.unlink()
+                    log_info("Pipeline-lås frigjord")
+            except Exception:
+                pass
+    except Exception as e:
+        log_warn(f"Kunde inte frigöra pipeline-lås: {e}")
+
+
 def setup_run_logging() -> Path:
     """Prepare per-run logging and return path to main log file."""
     global RUN_LOG_FILE, RUN_TS
@@ -141,6 +251,26 @@ def check_server_running() -> bool:
     except Exception:
         return False
 
+def get_powershell_exe() -> str:
+    """
+    Returnerar en PowerShell-exe som funkar:
+    1) PowerShell 7 (pwsh.exe) om den finns i PATH
+    2) Windows PowerShell (powershell.exe) om den finns i PATH
+    3) Fallback till standard-sökvägen i Windows
+    """
+    for exe in ("pwsh.exe", "powershell.exe"):
+        p = shutil.which(exe)
+        if p:
+            return p
+
+    windir = os.environ.get("WINDIR", r"C:\Windows")
+    fallback = os.path.join(
+        windir, "System32", "WindowsPowerShell", "v1.0", "powershell.exe"
+    )
+    if os.path.exists(fallback):
+        return fallback
+
+    raise FileNotFoundError("Hittar varken pwsh.exe eller powershell.exe")
 
 def start_server() -> Optional[subprocess.Popen]:
     """Starta Flask-server i ett separat PowerShell-fönster."""
@@ -228,11 +358,17 @@ $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
         ps_script_path = ps_script_file.name
 
         # Starta PowerShell i nytt fönster med skriptfilen
+        try:
+            ps_exe = get_powershell_exe()
+        except Exception as e:
+            log_error(f"Kunde inte hitta PowerShell att starta servern med: {e}")
+            return None
+
         ps_args = [
-            "powershell.exe",
+            ps_exe,
             "-NoExit",
             "-ExecutionPolicy",
-            "Bypass",  # Tillåt körning av skript
+            "Bypass",
             "-File",
             ps_script_path,
         ]
@@ -240,13 +376,19 @@ $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
         log_info("Öppnar nytt PowerShell-fönster för servern...")
         log_info(f"PowerShell-skript: {ps_script_path}")
         try:
-            process = subprocess.Popen(
-                ps_args,
-                cwd=str(POIT_DIR),
-                creationflags=subprocess.CREATE_NEW_CONSOLE
-                if sys.platform == "win32"
-                else 0,
-            )
+            if sys.platform == "win32":
+                # Använd 'start' för att öppna i nytt fönster utan elevation-krav
+                cmd = f'start "Flask Server" /D "{POIT_DIR}" "{ps_exe}" -NoExit -ExecutionPolicy Bypass -File "{ps_script_path}"'
+                process = subprocess.Popen(
+                    cmd,
+                    shell=True,
+                    cwd=str(POIT_DIR),
+                )
+            else:
+                process = subprocess.Popen(
+                    ps_args,
+                    cwd=str(POIT_DIR),
+                )
         except Exception as e:
             log_error(f"Kunde inte starta PowerShell: {e}")
             # Rensa temporär fil
@@ -329,21 +471,91 @@ $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
         return None
 
 
-def stop_server(process: Optional[subprocess.Popen]):
-    """Stäng Flask-server (endast om vi startade den)."""
-    if process is None:
-        # Om process är None kan det betyda att servern redan körde när vi startade
-        # eller att servern inte startades av oss. Kontrollera om servern fortfarande körs.
-        if check_server_running():
-            log_info(
-                "Servern körs fortfarande (startades inte av oss) - låter den vara"
-            )
-            log_info("Stäng PowerShell-fönstret manuellt om du vill stoppa servern")
-        return
+def _find_server_pids() -> list:
+    """Find PIDs listening on the server port via netstat."""
+    pids = []
+    try:
+        result = subprocess.run(
+            ["netstat", "-aon"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if result.returncode == 0:
+            for line in result.stdout.splitlines():
+                if f":{POIT_SERVER_PORT}" in line and "LISTENING" in line:
+                    parts = line.strip().split()
+                    if parts:
+                        pids.append(parts[-1])
+    except Exception as e:
+        log_warn(f"Kunde inte söka serverprocesser via netstat: {e}")
+    return pids
 
-    log_info("Servern körs i separat PowerShell-fönster")
-    log_info("Stäng PowerShell-fönstret manuellt för att stoppa servern")
-    log_info("(Vi stänger inte fönstret automatiskt så du kan se serverns output)")
+
+def stop_server(process: Optional[subprocess.Popen]):
+    """Gracefully stop the Flask server, escalating from polite to forceful."""
+    log_info("Stänger Flask-server...")
+
+    # Step 1: Ask politely via /shutdown endpoint (if server supports it)
+    try:
+        import urllib.request
+        req = urllib.request.Request(
+            f"{POIT_SERVER_BASE_URL}/shutdown", method="POST"
+        )
+        urllib.request.urlopen(req, timeout=3)
+        log_info("Skickade /shutdown till servern")
+        time.sleep(2)
+        if not check_server_running():
+            log_info("Flask-server stängdes snyggt via /shutdown")
+            return
+    except Exception:
+        pass  # Endpoint kanske inte finns - fortsätt med kill
+
+    # Step 2: Graceful taskkill (without /F) on server port PIDs
+    pids = _find_server_pids()
+    if pids:
+        for pid in pids:
+            try:
+                subprocess.run(
+                    ["taskkill", "/PID", pid, "/T"],
+                    capture_output=True, timeout=5,
+                )
+                log_info(f"Skickade stängningssignal till PID {pid}")
+            except Exception:
+                pass
+        # Give the process a moment to shut down gracefully
+        time.sleep(3)
+        if not check_server_running():
+            log_info("Flask-server stängdes efter snäll taskkill")
+            return
+
+    # Step 3: Force kill on server port PIDs
+    pids = _find_server_pids()
+    if pids:
+        for pid in pids:
+            try:
+                subprocess.run(
+                    ["taskkill", "/PID", pid, "/T", "/F"],
+                    capture_output=True, timeout=5,
+                )
+                log_info(f"Force-dödade serverprocess PID {pid}")
+            except Exception:
+                pass
+
+    # Step 4: Kill any window titled "Flask Server" (PowerShell/CMD)
+    for title_pattern in ["Flask Server*", "Flask Server - *"]:
+        try:
+            subprocess.run(
+                ["taskkill", "/FI", f"WINDOWTITLE eq {title_pattern}", "/F"],
+                capture_output=True, timeout=5,
+            )
+        except Exception:
+            pass
+
+    # Verify
+    time.sleep(1)
+    if check_server_running():
+        log_warn("Servern körs fortfarande efter alla cleanup-försök!")
+    else:
+        log_info("Flask-server stoppad")
 
 
 def run_script(
@@ -365,13 +577,16 @@ def run_script(
 
     try:
         env = os.environ.copy()
+        # VIKTIGT: Sätt PYTHONUNBUFFERED för att se output i realtid
+        env["PYTHONUNBUFFERED"] = "1"
+        
         with step_log.open("w", encoding="utf-8") as lf:
             lf.write(f"[INFO {ts()}] Running {script_path} (cwd={cwd})\n")
             lf.write(f"[INFO {ts()}] TARGET_DATE={target_date}\n")
             lf.flush()
 
             process = subprocess.Popen(
-                [sys.executable, str(script_path)],
+                [sys.executable, "-u", str(script_path)],  # -u = unbuffered
                 cwd=str(cwd),
                 env=env,
                 stdout=subprocess.PIPE,
@@ -1564,6 +1779,12 @@ def main():
     # Initiera loggfil direkt
     setup_run_logging()
     log_info(f"Run-logg: {RUN_LOG_FILE}")
+    
+    # Kontrollera att ingen annan pipeline-instans körs
+    if not acquire_pipeline_lock():
+        log_error("AVBRYTER: En annan pipeline-instans körs redan!")
+        log_error("Om detta är fel, ta bort: " + str(LOCK_FILE))
+        return 1
 
     # Parse arguments - hantera både master_number och datumargument
     raw_args = sys.argv[1:]
@@ -2086,6 +2307,7 @@ Argument:
 
     except KeyboardInterrupt:
         log_warn("Avbruten av användaren (Ctrl+C)")
+        release_pipeline_lock()
     except Exception as e:
         log_error(f"Oväntat fel: {e}")
         import traceback
@@ -2093,9 +2315,15 @@ Argument:
         traceback.print_exc()
         if "status" in locals():
             mark_failed_step(target_date_str, status, "unexpected", str(e))
+        release_pipeline_lock()
     finally:
         # Stäng server
         stop_server(server_process)
+        # Säkerställ att låsen är frigjord (om inte redan gjort)
+        try:
+            release_pipeline_lock()
+        except Exception:
+            pass
 
     # Sammanfattning
     log_info("=" * 60)
@@ -2111,10 +2339,12 @@ Argument:
             if len(failure) > 2 and failure[2]:
                 log_error(f"    Logg: {failure[2]}")
         log_info(f"Run-logg: {RUN_LOG_FILE}")
+        release_pipeline_lock()
         return 1
     else:
         log_info("✅ Alla steg kördes utan fel!")
         log_info(f"Run-logg: {RUN_LOG_FILE}")
+        release_pipeline_lock()
         return 0
 
 

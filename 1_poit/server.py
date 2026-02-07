@@ -709,7 +709,7 @@ def get_file(name: str):
 def save_kungorelse():
     """
     Save kungorelse page content to a dedicated folder.
-    Creates a folder named after the kungorelseId (e.g., K739821-25).
+    Creates a folder named after the kungorelseId (e.g., K739821-YY).
     """
     print(f"\n[KUNGORELSE] POST /save_kungorelse från {request.remote_addr}")
     try:

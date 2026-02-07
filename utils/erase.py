@@ -560,10 +560,13 @@ def clean_today_metadata_dir(segment_dir: Path, date_str: str) -> int:
     return 0
 
 
-def clean_all_pipeline_data() -> Tuple[int, List[str]]:
+def clean_all_pipeline_data(skip_info_server: bool = False) -> Tuple[int, List[str]]:
     """
     Rensar ALLT i pipeline-mapparna för en helt ren start.
     Anropas före varje körning för att garantera ingen duplicering.
+
+    Args:
+        skip_info_server: Om True, hoppa över rensning av info_server/ (default: False)
     """
     log_info("=" * 60)
     log_info("TOTAL PIPELINE CLEANUP - Rensar ALLT!")
@@ -574,19 +577,20 @@ def clean_all_pipeline_data() -> Tuple[int, List[str]]:
 
     try:
         # 1. Rensa HELA info_server mappen
-        info_server_dir = POIT_DIR / "info_server"
-        if info_server_dir.exists():
-            # Ta bort alla datummappar
-            for item in info_server_dir.iterdir():
-                if item.is_dir() and re.fullmatch(r"\d{8}", item.name):
-                    if remove_path(item, f"(date dir: {item.name})"):
-                        total_removed += 1
-            # Ta bort alla JSON/CSV filer i root
-            for pattern in ["*.json", "*.csv", "*.db", "*.xlsx"]:
-                for file in info_server_dir.glob(pattern):
-                    if remove_path(file, f"({pattern})"):
-                        total_removed += 1
-            log_info("Rensade info_server/")
+        if not skip_info_server:
+            info_server_dir = POIT_DIR / "info_server"
+            if info_server_dir.exists():
+                # Ta bort alla datummappar
+                for item in info_server_dir.iterdir():
+                    if item.is_dir() and re.fullmatch(r"\d{8}", item.name):
+                        if remove_path(item, f"(date dir: {item.name})"):
+                            total_removed += 1
+                # Ta bort alla JSON/CSV filer i root
+                for pattern in ["*.json", "*.csv", "*.db", "*.xlsx"]:
+                    for file in info_server_dir.glob(pattern):
+                        if remove_path(file, f"({pattern})"):
+                            total_removed += 1
+                log_info("Rensade info_server/")
 
         # 2. Rensa HELA djupanalys mappen
         djupanalys_dir = SEGMENT_DIR / "djupanalys"

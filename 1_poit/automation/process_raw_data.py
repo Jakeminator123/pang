@@ -4,7 +4,7 @@ process_raw_data.py
 
 Bearbetar bolagsdata från info_server:
 - Hittar dagmapp (t.ex. info_server/20251012) och registerfilen kungorelser_YYYYMMDD.json
-- Läser undermappar (Kxxxxxx-25) och parsar content.txt
+- Läser undermappar (Kxxxxxx-YY) och parsar content.txt
 - Skapar CSV + SQLite
 
 ZIP skapas av copy_to_dropbox.py i slutet av pipelinen.
@@ -460,6 +460,16 @@ def main():
     # 2) Läs in register
     reg = read_json(json_path)
     companies = reg.get("data", [])
+
+    # Handle "INGA_TRAFFAR" or other non-list data (no results from search)
+    if not isinstance(companies, list):
+        raw_text = companies.get("raw_text", "") if isinstance(companies, dict) else ""
+        if raw_text == "INGA_TRAFFAR":
+            print("Inga träffar från sökning – avslutar.")
+        else:
+            print(f"Oväntat format på 'data' (typ: {type(companies).__name__}) – avslutar.")
+        return
+
     companies, dedup_stats = deduplicate_companies(companies)
     if dedup_stats["removed"] or dedup_stats["filtered_keywords"]:
         print(

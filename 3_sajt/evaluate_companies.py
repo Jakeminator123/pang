@@ -7,6 +7,7 @@ import asyncio
 import sys
 import os
 import json
+import re
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 from datetime import datetime
@@ -31,6 +32,7 @@ except ImportError:
 BASE_DJUPANALYS_DIR = (
     Path(__file__).parent.parent / "2_segment_info" / "djupanalys"
 )
+COMPANY_FOLDER_PATTERN = re.compile(r"K\d+-\d{2}$")
 
 # Läs konfiguration från config_ny.txt (INI-format)
 CONFIG_FILE = Path(__file__).parent / "config_ny.txt"
@@ -94,7 +96,7 @@ def find_company_folders(date_dir: Path, filter_worthy: bool = False, min_confid
     folders = [
         d
         for d in date_dir.iterdir()
-        if d.is_dir() and d.name.startswith("K") and d.name.endswith("-25")
+        if d.is_dir() and COMPANY_FOLDER_PATTERN.match(d.name)
     ]
     
     # Filtrera bort icke-värdiga företag om begärt

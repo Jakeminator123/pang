@@ -7,12 +7,15 @@ import json
 import os
 import sys
 import asyncio
+import re
 from pathlib import Path
 from typing import Dict, Any, Optional
 from datetime import datetime
 
 # Add current directory (all_the_scripts) to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
+
+COMPANY_FOLDER_PATTERN = re.compile(r"K\d+-\d{2}$")
 
 try:
     from generator import (
@@ -240,11 +243,11 @@ async def batch_generate_sites(
     if not companies_dir.exists():
         raise FileNotFoundError(f"Companies directory not found: {companies_dir}")
     
-    # Find all company folders (folders starting with K and containing numbers)
+    # Find all company folders (K + digits + "-YY")
     company_folders = [
         d
         for d in companies_dir.iterdir()
-        if d.is_dir() and d.name.startswith("K") and d.name.endswith("-25")
+        if d.is_dir() and COMPANY_FOLDER_PATTERN.match(d.name)
     ]
     
     if not company_folders:
