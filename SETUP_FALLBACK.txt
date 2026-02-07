@@ -1,0 +1,86 @@
+===============================================================================
+FALLBACK CONFIG - CHEAT SHEET
+===============================================================================
+
+When the dashboard (jocke.onrender.com) is unreachable, the pipeline uses
+a local .fallback file for settings. This file is NOT on GitHub - you need
+to create it on each computer.
+
+-------------------------------------------------------------------------------
+SETUP (one time per computer)
+-------------------------------------------------------------------------------
+
+1. In the project root (pang/), create a file called:  .fallback
+
+2. Paste this template and adjust the numbers:
+
+    # --- SCRAPING ---
+    MAX_KUN_DAG = 150
+
+    # --- PIPELINE ---
+    max_companies = 150
+    delete_csv = y
+
+    # --- RESEARCH ---
+    research_enabled = y
+    research_model = gpt-4o
+    max_searches = 3
+    search_persons = y
+    max_persons = 2
+
+    # --- DOMAIN ---
+    timeout_seconds = 5
+    max_crawl = 5
+    parallel_checks = 5
+
+    # --- MAIL ---
+    mail_enabled = y
+    mail_model = gpt-4o
+    min_confidence = 40
+    max_mails = 110
+
+    # --- MAIL TONE (1-10) ---
+    formality = 4
+    salesiness = 3
+    flattery = 2
+    length = 5
+
+    # --- EVALUATION ---
+    evaluate = y
+    threshold = 0.80
+    max_total_judgement_approvals = 4
+
+    # --- SITE GENERATION ---
+    re_input_website_link = y
+    max_sites = 4
+
+    # --- AUDIT ---
+    audit_enabled = y
+    audit_threshold = 0.85
+    re_input_audit = y
+    max_audits = 10
+
+-------------------------------------------------------------------------------
+HOW IT WORKS
+-------------------------------------------------------------------------------
+
+Priority order when main.py starts:
+
+  1. Dashboard API  -->  if reachable, overwrites local config files
+  2. .fallback file -->  if dashboard fails, uses these values instead
+  3. Local configs  -->  if no .fallback, keeps existing config files as-is
+
+Note: master-nummer (py main.py 33) overrides max_companies AFTER config load.
+
+-------------------------------------------------------------------------------
+COMMANDS CHEAT SHEET
+-------------------------------------------------------------------------------
+
+  py main.py                    Run with config from dashboard/.fallback
+  py main.py 33                 Limit to 33 companies (all steps)
+  py main.py 33 -0207           33 companies, date = Feb 7
+  py main.py 33 -20260207       33 companies, date = Feb 7 2026
+  py main.py -4                 Limit to 4 companies (quick test)
+  py main.py --help             Show all options
+
+===============================================================================

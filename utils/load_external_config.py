@@ -98,16 +98,106 @@ def push_config_to_dashboard(
         return False
 
 
+FALLBACK_FILE = PROJECT_ROOT / ".fallback"
+
+
+def load_fallback_config() -> Optional[Dict[str, Any]]:
+    """
+    Load fallback config from .fallback file and convert to the same
+    dict structure as the dashboard API response.
+
+    Returns:
+        Config dict with poit/segment/sajt keys, or None if file missing
+    """
+    if not FALLBACK_FILE.exists():
+        print(f"[FALLBACK] No .fallback file found at {FALLBACK_FILE}")
+        return None
+
+    print(f"[FALLBACK] Loading fallback config from {FALLBACK_FILE.name}")
+    raw: Dict[str, str] = {}
+    try:
+        for line in FALLBACK_FILE.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "=" in line:
+                key, value = line.split("=", 1)
+                raw[key.strip()] = value.strip()
+    except Exception as e:
+        print(f"[FALLBACK] Error reading .fallback: {e}")
+        return None
+
+    def g(key: str, default: Any = "") -> Any:
+        val = raw.get(key, default)
+        return convert_value(str(val)) if isinstance(val, str) else val
+
+    config: Dict[str, Any] = {
+        "poit": {
+            "MAX_KUN_DAG": g("MAX_KUN_DAG", 150),
+        },
+        "segment": {
+            "PIPELINE": {
+                "source_dir": "1_poit/info_server",
+                "max_companies": g("max_companies", 150),
+                "delete_csv": g("delete_csv", "y"),
+            },
+            "RESEARCH": {
+                "enabled": g("research_enabled", "y"),
+                "model": g("research_model", "gpt-4o"),
+                "max_searches": g("max_searches", 3),
+                "search_persons": g("search_persons", "y"),
+                "max_persons": g("max_persons", 2),
+            },
+            "DOMAIN": {
+                "timeout_seconds": g("timeout_seconds", 5),
+                "max_crawl": g("max_crawl", 5),
+                "parallel_checks": g("parallel_checks", 5),
+            },
+            "MAIL": {
+                "enabled": g("mail_enabled", "y"),
+                "model": g("mail_model", "gpt-4o"),
+                "min_confidence": g("min_confidence", 40),
+                "max_mails": g("max_mails", 110),
+            },
+        },
+        "mail_tone": {
+            "formality": g("formality", 4),
+            "salesiness": g("salesiness", 3),
+            "flattery": g("flattery", 2),
+            "length": g("length", 5),
+        },
+        "sajt": {
+            "evaluate": g("evaluate", "y"),
+            "threshold": g("threshold", 0.80),
+            "max_total_judgement_approvals": g("max_total_judgement_approvals", 4),
+            "re_input_website_link": g("re_input_website_link", "y"),
+            "max_sites": g("max_sites", 4),
+            "audit_enabled": g("audit_enabled", "y"),
+            "audit_threshold": g("audit_threshold", 0.85),
+            "re_input_audit": g("re_input_audit", "y"),
+            "max_audits": g("max_audits", 10),
+        },
+    }
+
+    return config
+
+
 def fetch_and_apply_dashboard_config(dashboard_url: str, api_key: str) -> bool:
     """
     Fetch config from dashboard and apply to local config files.
+    Falls back to .fallback file if dashboard is unreachable.
 
     Returns:
-        True if config was successfully fetched and applied
+        True if config was successfully fetched/loaded and applied
     """
     config = fetch_config_from_dashboard(dashboard_url, api_key)
+
     if config is None:
-        return False
+        print("[DASHBOARD CONFIG] Dashboard unreachable - trying .fallback file")
+        config = load_fallback_config()
+        if config is None:
+            print("[DASHBOARD CONFIG] No fallback available - keeping local config files as-is")
+            return False
 
     # Backup before overwriting
     try:
