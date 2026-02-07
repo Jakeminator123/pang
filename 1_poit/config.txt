@@ -1,2 +1,4 @@
+# Config updated from external source
+# Updated: 2026-01-21 19:39:23
 #Använd MAX_KUN_DAG=ALL för obegränsat
-MAX_KUN_DAG=151
+MAX_KUN_DAG=152

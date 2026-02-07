@@ -18,6 +18,8 @@ import json
 import hashlib
 import threading
 import re
+import socket
+import sys
 
 app = Flask(__name__)
 
@@ -709,7 +711,7 @@ def get_file(name: str):
 def save_kungorelse():
     """
     Save kungorelse page content to a dedicated folder.
-    Creates a folder named after the kungorelseId (e.g., K739821-25).
+    Creates a folder named after the kungorelseId (e.g., K739821-xx).
     """
     print(f"\n[KUNGORELSE] POST /save_kungorelse från {request.remote_addr}")
     try:
@@ -872,4 +874,10 @@ def save():
 if __name__ == "__main__":
     # Kör i dev-läge. För produktion: kör via waitress/uvicorn etc.
     # Windows 11-vänligt.
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(0.5)
+    if sock.connect_ex(("127.0.0.1", 51234)) == 0:
+        print("[SERVER] Server redan igång på 127.0.0.1:51234 - avslutar")
+        sys.exit(0)
+    sock.close()
     app.run(host="127.0.0.1", port=51234, debug=False)

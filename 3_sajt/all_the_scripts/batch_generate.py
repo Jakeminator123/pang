@@ -2,7 +2,7 @@
 Batch generator for creating preview sites for multiple companies.
 Generates sites using v0 Platform API and saves preview URLs and cost metadata.
 """
-
+import re
 import json
 import os
 import sys
@@ -240,11 +240,13 @@ async def batch_generate_sites(
     if not companies_dir.exists():
         raise FileNotFoundError(f"Companies directory not found: {companies_dir}")
     
-    # Find all company folders (folders starting with K and containing numbers)
+    # Find all company folders (K + digits + dash + 2-digit year, e.g. K34931-26)
+    import re
+    pattern = re.compile(r"^K\d+-\d{2}$")
     company_folders = [
         d
         for d in companies_dir.iterdir()
-        if d.is_dir() and d.name.startswith("K") and d.name.endswith("-25")
+        if d.is_dir() and pattern.match(d.name)
     ]
     
     if not company_folders:

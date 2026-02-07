@@ -1,7 +1,8 @@
 # =============================================================================
 # SIMPLIFIED PIPELINE CONFIGURATION (with AI research)
 # =============================================================================
-# Run with: python ALLA_simple.py
+# Updated from external source: 2026-01-21 19:39:23
+# Run with: python ALLA.py
 
 # Grundläggande pipeline-inställningar
 [PIPELINE]
@@ -19,9 +20,9 @@ max_persons = 2
 
 # Domänverifiering
 [DOMAIN]
-parallel_checks = 5
-max_crawl = 5
 timeout_seconds = 5
+max_crawl = 5
+parallel_checks = 5
 
 # Mail-generering och ton
 [MAIL]

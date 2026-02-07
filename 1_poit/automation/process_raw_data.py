@@ -470,7 +470,7 @@ def main():
             f"keyword filtered: {dedup_stats['filtered_keywords']})"
         )
 
-    # 3) Bygg lookup för undermappar: "Kxxxxxx/25" -> "Kxxxxxx-25"
+    # 3) Bygg lookup för undermappar: "Kxxxxxx/YY" -> "Kxxxxxx-YY"
     def id_to_folder(kid: str) -> str:
         return kid.replace("/", "-")
 

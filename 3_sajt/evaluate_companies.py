@@ -80,7 +80,7 @@ def find_date_folders(base_dir: Path) -> List[Path]:
 
 
 def find_company_folders(date_dir: Path, filter_worthy: bool = False, min_confidence: float = 0.0) -> List[Path]:
-    """Hitta alla företagsmappar i en datum-mapp (K + siffror + '-25').
+    """Hitta alla företagsmappar i en datum-mapp (K + siffror + '-YY' där YY är årsslut).
     
     Args:
         date_dir: Datum-mapp att söka i
@@ -88,13 +88,16 @@ def find_company_folders(date_dir: Path, filter_worthy: bool = False, min_confid
                        (kräver att evaluation.json finns och should_get_site=True)
         min_confidence: Minsta confidence-nivå (0.0-1.0) för att anses värdigt
     """
+    import re
     if not date_dir.exists():
         raise FileNotFoundError(f"Katalogen finns inte: {date_dir}")
     
+    # Match K followed by digits, then dash, then 2 digits (e.g. K34931-26, K12345-25)
+    pattern = re.compile(r"^K\d+-\d{2}$")
     folders = [
         d
         for d in date_dir.iterdir()
-        if d.is_dir() and d.name.startswith("K") and d.name.endswith("-25")
+        if d.is_dir() and pattern.match(d.name)
     ]
     
     # Filtrera bort icke-värdiga företag om begärt

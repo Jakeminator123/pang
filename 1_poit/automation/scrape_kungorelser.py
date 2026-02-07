@@ -54,6 +54,8 @@ SCREENSHOT_LOG_DIR = str(
 Path(DEBUG_DIR).mkdir(parents=True, exist_ok=True)
 Path(SCREENSHOT_LOG_DIR).mkdir(parents=True, exist_ok=True)
 
+SCRAPE_LOCK_PATH = Path(__file__).with_suffix(".lock")
+
 # ===========================
 # Periodiska screenshots & Pause/Resume
 # ===========================
@@ -167,6 +169,7 @@ MAX_KUN_DAG = read_config()
 
 URL_FIRST = "https://www.aftonbladet.se"
 URL_SECOND = "https://poit.bolagsverket.se/poit-app/"
+SERVER_HEALTH_URL = "http://127.0.0.1:51234/health"
 
 # Bildvägar
 COOKIE_DIR = BASE_DIR / "bilder" / "1_cookie"
@@ -196,22 +199,24 @@ SCALES_UI = [round(x, 2) for x in np.arange(0.15, 2.05, 0.05)]
 SKIP_COOKIE_CHECK = True   # INAKTIVERAD - orsakar falska matchningar
 SKIP_OK_FORTSATT = True    # INAKTIVERAD - orsakar problem
 
-# Trösklar - baserat på test_match.py resultat:
-# - laptop_sok_kungorelse.jpg: score 1.000
-# - lank.jpg: score 0.937
-# Använder säkra trösklar under dessa värden
+# Trösklar - baserat på empiriska matchningar
 
 CONF_POPUP = 0.80  # Cookie-popup (om den finns ska den vara tydlig)
 CONF_OK = 0.80     # OK-knapp i cookie-popup
 
 # LÄNK: Test visade 0.937-1.000, så 0.70 är säker marginal
 CONF_LANK = 0.70   # Länk till "Sök kungörelse"
+CONF_LANK_EDGE = max(0.60, CONF_LANK - 0.08)
+CONF_LANK_BINARY = max(0.62, CONF_LANK - 0.05)
 
 # ÖVRIGA
 CONF_OK_FORTSATT = 0.85  # Banner efter länk-klick
 CONF_MENY_GRAY = 0.60    # Meny-element
 CONF_MENY_EDGE = 0.60
 CONF_MENY_ORB = 0.40
+
+# Matching modes for link
+LINK_MATCH_MODES = ("gray", "edge", "binary")
 
 # Tidsouts & beteenden
 WINDOW_FIND_TIMEOUT = 8.0
@@ -257,6 +262,12 @@ LANK_REGION_X_END = 0.45    # 45% från vänster
 LANK_REGION_Y_START = 0.0   # Från toppen
 LANK_REGION_Y_END = 0.40    # 40% från toppen
 
+# Fallback region if primary search misses
+LANK_FALLBACK_X_START = 0.05
+LANK_FALLBACK_X_END = 0.60
+LANK_FALLBACK_Y_START = 0.0
+LANK_FALLBACK_Y_END = 0.55
+
 # Klick-skydd
 TITLEBAR_GUARD = 40
 RIGHT_GUARD = 90
@@ -281,6 +292,77 @@ _last_capture_ts = 0.0
 # ===========================
 def rsleep(a: float, b: float) -> None:
     time.sleep(random.uniform(a, b))
+
+
+def _pid_running(pid: int) -> bool:
+    if pid <= 0:
+        return False
+    if sys.platform == "win32":
+        try:
+            kernel32 = ctypes.windll.kernel32
+            PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+            handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+            if handle:
+                kernel32.CloseHandle(handle)
+                return True
+        except Exception:
+            return False
+        return False
+    try:
+        os.kill(pid, 0)
+        return True
+    except Exception:
+        return False
+
+
+def acquire_scrape_lock() -> bool:
+    try:
+        if SCRAPE_LOCK_PATH.exists():
+            data = SCRAPE_LOCK_PATH.read_text(encoding="utf-8").strip()
+            if data:
+                pid_str = data.split(":")[0]
+                try:
+                    pid = int(pid_str)
+                except ValueError:
+                    pid = 0
+                if _pid_running(pid):
+                    print(f"[LOCK] En annan scraping kör redan (PID {pid})")
+                    return False
+        SCRAPE_LOCK_PATH.write_text(
+            f"{os.getpid()}:{datetime.now().isoformat()}",
+            encoding="utf-8",
+        )
+        return True
+    except Exception as e:
+        print(f"[LOCK] Kunde inte hantera lock-fil: {e}")
+        return True
+
+
+def release_scrape_lock():
+    try:
+        if SCRAPE_LOCK_PATH.exists():
+            data = SCRAPE_LOCK_PATH.read_text(encoding="utf-8").strip()
+            if data.startswith(f"{os.getpid()}:"):
+                SCRAPE_LOCK_PATH.unlink()
+    except Exception:
+        pass
+
+
+def check_server_health() -> bool:
+    try:
+        import urllib.request
+
+        resp = urllib.request.urlopen(SERVER_HEALTH_URL, timeout=2)
+        return resp.getcode() == 200
+    except Exception:
+        return False
+
+
+def has_existing_scrape_data() -> bool:
+    date_str = os.environ.get("TARGET_DATE", datetime.now().strftime("%Y%m%d"))
+    info_dir = BASE_DIR / "info_server" / date_str
+    json_path = info_dir / f"kungorelser_{date_str}.json"
+    return json_path.exists() and json_path.stat().st_size > 0
 
 
 def find_chrome_path() -> str:
@@ -927,6 +1009,23 @@ def get_link_search_region(full_region):
     return (sub_left, sub_top, sub_width, sub_height)
 
 
+def get_link_fallback_region(full_region):
+    """Larger search area if the primary region misses."""
+    if full_region is None:
+        return None
+    win_left, win_top, win_width, win_height = full_region
+
+    sub_left = int(win_left + win_width * LANK_FALLBACK_X_START)
+    sub_top = int(win_top + win_height * LANK_FALLBACK_Y_START)
+    sub_width = int(win_width * (LANK_FALLBACK_X_END - LANK_FALLBACK_X_START))
+    sub_height = int(win_height * (LANK_FALLBACK_Y_END - LANK_FALLBACK_Y_START))
+
+    print(
+        f"[REGION] Fallback länk-sökområde: x={sub_left}, y={sub_top}, w={sub_width}, h={sub_height}"
+    )
+    return (sub_left, sub_top, sub_width, sub_height)
+
+
 def goto_url(url: str, win=None):
     """Navigera till en URL med förbättrad adressfältshantering"""
     check_pause()  # Kolla om pausad
@@ -1067,6 +1166,27 @@ def ensure_saved(path, img_bgr):
         print(f"[DEBUG] Misslyckades spara: {path}")
 
 
+def adaptive_binarize(gray):
+    h, w = gray.shape[:2]
+    block = min(31, h, w)
+    if block % 2 == 0:
+        block -= 1
+    if block < 3:
+        _, binary = cv.threshold(gray, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
+        return binary
+    return cv.adaptiveThreshold(
+        gray, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, block, 2
+    )
+
+
+def get_link_mode_threshold(mode: str, base: float) -> float:
+    if mode == "edge":
+        return CONF_LANK_EDGE
+    if mode == "binary":
+        return CONF_LANK_BINARY
+    return base
+
+
 # ===========================
 # Länk (bästa-av-flera samples)
 # ===========================
@@ -1087,13 +1207,16 @@ def locate_best_over_samples(
         samples: Antal frames att ta
     
     Returns:
-        (box, score) eller (None, None) om ingen matchning över threshold
+        (box, score, scale, mode). box är None om matchning är under threshold.
     """
     img_name = Path(img_path).name
     templ = read_template_gray(img_path)
     if templ is None:
-        print(f"[FEL] Kan inte läsa mall: {img_path}")
-        return None, None
+        print(f"[MATCH] Kan inte läsa mall: {img_path}")
+        return None, None, None, None
+
+    templ_edge = cv.Canny(templ, 50, 150)
+    templ_bin = adaptive_binarize(templ)
     
     templ_h, templ_w = templ.shape[:2]
     L, T, W, H = window_region
@@ -1104,6 +1227,7 @@ def locate_best_over_samples(
     print(f"[MATCH] Template: {templ_w}x{templ_h} pixlar")
     print(f"[MATCH] Sökområde: x={L}, y={T}, w={W}, h={H}")
     print(f"[MATCH] Skala: {min(scales):.2f} - {max(scales):.2f} ({len(scales)} steg)")
+    print(f"[MATCH] Modes: {', '.join(LINK_MATCH_MODES)}")
     print(f"[MATCH] Threshold: {threshold:.2f}")
     print(f"[MATCH] ========================================")
     
@@ -1111,12 +1235,19 @@ def locate_best_over_samples(
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     
     t_end = time.time() + timeout_sec
-    best_score, best_box, best_frame, best_scale, best_loc_in_frame = -1.0, None, None, None, None
+    best_score = -1.0
+    best_box = None
+    best_frame = None
+    best_scale = None
+    best_loc_in_frame = None
+    best_mode = None
     frames = 0
     
     while frames < samples and time.time() < t_end:
         bgr = grab_region_bgr_any(window_region)
         gray = cv.cvtColor(bgr, cv.COLOR_BGR2GRAY)
+        edges = cv.Canny(gray, 50, 150)
+        binary = adaptive_binarize(gray)
         
         # Spara första frame som debug
         if frames == 0:
@@ -1125,20 +1256,32 @@ def locate_best_over_samples(
             print(f"[MATCH] Debug-bild sparad: {debug_path}")
         
         for sc in scales:
-            score, loc, dims = match_best(gray, templ, scale=sc)
-            if score is None or dims is None:
-                continue
-            tw, th = dims
-            
-            # ALLTID spara den bästa matchningen
-            if score > best_score:
-                x, y = loc
-                # Box i SKÄRMKOORDINATER
-                best_score = score
-                best_box = (L + x, T + y, tw, th)
-                best_frame = bgr.copy()
-                best_scale = sc
-                best_loc_in_frame = (x, y, tw, th)
+            for mode in LINK_MATCH_MODES:
+                if mode == "gray":
+                    score, loc, dims = match_best(gray, templ, scale=sc)
+                elif mode == "edge":
+                    score, loc, dims = match_best(
+                        edges, templ_edge, scale=sc, normalize=False, blur_ksize=0
+                    )
+                else:
+                    score, loc, dims = match_best(
+                        binary, templ_bin, scale=sc, normalize=False, blur_ksize=0
+                    )
+
+                if score is None or dims is None:
+                    continue
+                tw, th = dims
+                
+                # ALLTID spara den bästa matchningen
+                if score > best_score:
+                    x, y = loc
+                    # Box i SKÄRMKOORDINATER
+                    best_score = score
+                    best_box = (L + x, T + y, tw, th)
+                    best_frame = bgr.copy()
+                    best_scale = sc
+                    best_mode = mode
+                    best_loc_in_frame = (x, y, tw, th)
                 
         frames += 1
         if frames < samples:
@@ -1146,8 +1289,8 @@ def locate_best_over_samples(
     
     # Logga resultat
     print(f"[MATCH] ----------------------------------------")
-    if best_scale is not None:
-        print(f"[MATCH] Bästa score: {best_score:.3f} (skala={best_scale:.2f})")
+    if best_scale is not None and best_mode is not None:
+        print(f"[MATCH] Bästa score: {best_score:.3f} (skala={best_scale:.2f}, mode={best_mode})")
         print(f"[MATCH] Position i frame: x={best_loc_in_frame[0]}, y={best_loc_in_frame[1]}")
         print(f"[MATCH] Position på skärm: x={best_box[0]}, y={best_box[1]}")
     else:
@@ -1157,22 +1300,32 @@ def locate_best_over_samples(
     if best_frame is not None and best_loc_in_frame is not None:
         x, y, tw, th = best_loc_in_frame
         out = best_frame.copy()
+        mode_threshold = get_link_mode_threshold(best_mode or "gray", threshold)
         # Rita rektangel runt matchningen
-        color = (0, 255, 0) if best_score >= threshold else (0, 0, 255)  # Grön=OK, Röd=Under threshold
+        color = (0, 255, 0) if best_score >= mode_threshold else (0, 0, 255)  # Grön=OK, Röd=Under threshold
         cv.rectangle(out, (x, y), (x + tw, y + th), color, 2)
         # Skriv score på bilden
         cv.putText(out, f"score={best_score:.3f}", (x, y - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
         debug_match_path = str(Path(DEBUG_DIR) / f"match_{img_name.replace('.', '_')}_{best_score:.3f}_{ts}.png")
         ensure_saved(debug_match_path, out)
     
-    if best_score >= threshold:
-        print(f"[MATCH] ✓ GODKÄND (score {best_score:.3f} >= threshold {threshold:.2f})")
+    if best_mode is None:
         print(f"[MATCH] ========================================")
-        return best_box, best_score
+        return None, None, None, None
+
+    mode_threshold = get_link_mode_threshold(best_mode, threshold)
+    if best_score >= mode_threshold:
+        print(
+            f"[MATCH] ✓ GODKÄND (score {best_score:.3f} >= threshold {mode_threshold:.2f}, mode={best_mode})"
+        )
+        print(f"[MATCH] ========================================")
+        return best_box, best_score, best_scale, best_mode
     
-    print(f"[MATCH] ✗ UNDERKÄND (score {best_score:.3f} < threshold {threshold:.2f})")
+    print(
+        f"[MATCH] ✗ UNDERKÄND (score {best_score:.3f} < threshold {mode_threshold:.2f}, mode={best_mode})"
+    )
     print(f"[MATCH] ========================================")
-    return None, None
+    return None, best_score, best_scale, best_mode
 
 
 # ===========================
@@ -2217,9 +2370,24 @@ def main():
         f"[THRESHOLDS] POPUP={CONF_POPUP} OK={CONF_OK} LANK={CONF_LANK} MENY_GRAY={CONF_MENY_GRAY} MENY_EDGE={CONF_MENY_EDGE} MENY_ORB={CONF_MENY_ORB}"
     )
 
+    if not acquire_scrape_lock():
+        return 1
+
+    if not check_server_health():
+        print("[FEL] Servern svarar inte på /health.")
+        print("[FEL] Starta servern via main.py innan scraping.")
+        release_scrape_lock()
+        return 1
+
+    if has_existing_scrape_data():
+        print("[INFO] Dagens scraping-data finns redan - hoppar över scraping.")
+        release_scrape_lock()
+        return 0
+
     # Starta screenshot-logger för debugging
     start_screenshot_logger()
 
+    proc = None
     proc = launch_chrome_with_profile(URL_FIRST)
 
     # Vänta kort så Chrome hinner starta
@@ -2325,12 +2493,20 @@ def main():
 
         # Hämta fönsterregion
         full_region = refresh_region(win)
+        if full_region:
+            print(
+                f"[LINK] Fönsterregion: x={full_region[0]}, y={full_region[1]}, w={full_region[2]}, h={full_region[3]}"
+            )
         
         # Begränsa sökning till rätt område (X: 10-45%, Y: topp 40%)
         link_region = get_link_search_region(full_region)
         if link_region is None:
             print("[FEL] Kunde inte beräkna länk-sökområde")
             return 1
+        print(
+            f"[LINK] Länk-sökområde: x={link_region[0]}, y={link_region[1]}, w={link_region[2]}, h={link_region[3]}"
+        )
+        fallback_region = get_link_fallback_region(full_region)
         
         # ===========================================
         # SÖK EFTER LÄNK - PRIORITERA laptop_sok_kungorelse.jpg
@@ -2341,36 +2517,58 @@ def main():
             (IMG_LANK, "lank.jpg"),                          # Original (score 0.937 i test)
         ]
         
-        best = None
-        best_score = 0.0
-        matched_image = None
-        
-        for img_path, img_name in link_images:
-            if not os.path.exists(img_path):
-                print(f"[*] Hoppar över '{img_name}' (fil saknas)")
-                continue
-            
-            print(f"[*] Letar efter '{img_name}' i begränsat område...")
-            candidate, score = locate_best_over_samples(
-                img_path,
-                link_region,
-                threshold=CONF_LANK,
-                timeout_sec=LANK_TIMEOUT,
-                scales=SCALES_LANK,
-                samples=SAMPLES_LANK,
+        def search_link_in_region(region, label):
+            if region is None:
+                return None, 0.0, None, None, None
+
+            best = None
+            best_score = 0.0
+            best_scale = None
+            best_mode = None
+            matched_image = None
+
+            for img_path, img_name in link_images:
+                if not os.path.exists(img_path):
+                    print(f"[*] Hoppar över '{img_name}' (fil saknas)")
+                    continue
+
+                print(f"[*] Letar efter '{img_name}' i {label} område...")
+                candidate, score, scale, mode = locate_best_over_samples(
+                    img_path,
+                    region,
+                    threshold=CONF_LANK,
+                    timeout_sec=LANK_TIMEOUT,
+                    scales=SCALES_LANK,
+                    samples=SAMPLES_LANK,
+                )
+
+                if candidate and isinstance(score, (int, float)) and score > best_score:
+                    best = candidate
+                    best_score = score
+                    best_scale = scale
+                    best_mode = mode
+                    matched_image = img_name
+                    print(
+                        f"[+] Ny bästa matchning ({label}): '{img_name}' score={score:.3f} mode={mode}"
+                    )
+
+                # Early exit ENDAST om vi har score >= 0.95 (nästan perfekt match)
+                if best and best_score >= 0.95:
+                    print(f"[+] Perfekt matchning ({best_score:.3f}) - avslutar sökning")
+                    break
+
+            return best, best_score, best_scale, best_mode, matched_image
+
+        best, best_score, best_scale, best_mode, matched_image = search_link_in_region(
+            link_region, "primärt"
+        )
+
+        if not best and fallback_region:
+            print("[LINK] Ingen match i primärt område - provar fallback...")
+            best, best_score, best_scale, best_mode, matched_image = search_link_in_region(
+                fallback_region, "fallback"
             )
-            
-            if candidate and score > best_score:
-                best = candidate
-                best_score = score
-                matched_image = img_name
-                print(f"[+] Ny bästa matchning: '{img_name}' score={score:.3f}")
-            
-            # Early exit ENDAST om vi har score >= 0.95 (nästan perfekt match)
-            if best and best_score >= 0.95:
-                print(f"[+] Perfekt matchning ({best_score:.3f}) - avslutar sökning")
-                break
-        
+
         if not best:
             print("[FEL] Hittade ingen länk-bild över tröskeln. Se debug i 'debug\\'.")
             print("[FEL] Provade bilderna: " + ", ".join(name for _, name in link_images))
@@ -2384,6 +2582,10 @@ def main():
         print(f"[+] KLICK PÅ LÄNK:")
         print(f"[+]   Bild: '{matched_image}'")
         print(f"[+]   Score: {best_score:.3f}")
+        if best_mode:
+            print(f"[+]   Mode: {best_mode}")
+        if best_scale is not None:
+            print(f"[+]   Skala: {best_scale:.2f}")
         print(f"[+]   Position: ({click_x}, {click_y})")
         print(f"[+]   Box: x={best[0]}, y={best[1]}, w={best[2]}, h={best[3]}")
         
@@ -2430,6 +2632,8 @@ def main():
         traceback.print_exc()
         return 1
     finally:
+        # Release scraping lock
+        release_scrape_lock()
         # Rensa upp varningar
         try:
             if "mouse_stop_event" in locals():

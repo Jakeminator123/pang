@@ -1,7 +1,7 @@
 # =============================================================================
 # CONFIG FÖR 3_SAJT - Site Generation & Audit
 # =============================================================================
-# Används av: evaluate_companies.py, interactive_batch.py, standalone_audit.py
+# Updated from external source: 2026-01-21 19:39:23
 # =============================================================================
 
 # --- EVALUATION (bedömning av företag) ---

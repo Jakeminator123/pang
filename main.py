@@ -1879,6 +1879,7 @@ Argument:
         log_info("=" * 60)
         log_info("STEG 0: KOMPLETT CLEANUP (körs alltid)")
         log_info("=" * 60)
+        log_info("Cleanup rensar info_server/ (datummappar + root-filer) före ny körning")
 
         try:
             sys.path.insert(0, str(PROJECT_ROOT))

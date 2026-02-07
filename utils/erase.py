@@ -596,17 +596,23 @@ def clean_all_pipeline_data(skip_info_server: bool = False) -> Tuple[int, List[s
         if not skip_info_server:
             info_server_dir = POIT_DIR / "info_server"
             if info_server_dir.exists():
+                removed_date_dirs = 0
+                removed_root_files = 0
                 # Ta bort alla datummappar
                 for item in info_server_dir.iterdir():
                     if item.is_dir() and re.fullmatch(r"\d{8}", item.name):
                         if remove_path(item, f"(date dir: {item.name})"):
                             total_removed += 1
-                # Ta bort alla JSON/CSV filer i root
+                            removed_date_dirs += 1
+                # Ta bort alla JSON/CSV/DB/XLSX i root
                 for pattern in ["*.json", "*.csv", "*.db", "*.xlsx"]:
                     for file in info_server_dir.glob(pattern):
                         if remove_path(file, f"({pattern})"):
                             total_removed += 1
-                log_info("Rensade info_server/")
+                            removed_root_files += 1
+                log_info(
+                    f"Rensade info_server/: {removed_date_dirs} datummappar, {removed_root_files} root-filer"
+                )
 
         # 2. Rensa HELA djupanalys mappen
         djupanalys_dir = SEGMENT_DIR / "djupanalys"
