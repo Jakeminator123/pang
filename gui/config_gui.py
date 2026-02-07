@@ -136,8 +136,6 @@ BACKUP_DIR = PROJECT_ROOT / ".cursor" / "config_backups"
 DEFAULT_CONFIG = GUI_DIR / "default_config.json"  # Standardvärden för fabriksåterställning
 GUI_SETTINGS = GUI_DIR / "gui_settings.json"  # GUI-specifika inställningar
 
-DROPBOX_CANONICAL_FILENAME = "leads.enviroments.txt"
-
 # Plattformsdetektering
 IS_WINDOWS = platform.system() == "Windows"
 IS_MAC = platform.system() == "Darwin"
@@ -697,25 +695,23 @@ def load_sajt_config() -> Dict[str, Any]:
 
 
 def load_gui_settings() -> Dict[str, str]:
-    """Ladda GUI-specifika inställningar (email, dropbox-sökväg etc.)"""
+    """Ladda GUI-specifika inställningar (email, dashboard etc.)"""
     defaults = {
         "email": "jakob.olof.eberg@gmail.com",
-        "dropbox_path": "",
-        "dropbox_filename": DROPBOX_CANONICAL_FILENAME
+        "dashboard_url": os.environ.get("DASHBOARD_URL", "https://jocke.onrender.com/").rstrip("/"),
+        "jocke_api": os.environ.get("JOCKE_API", "12345"),
     }
     
     if GUI_SETTINGS.exists():
         try:
             with open(GUI_SETTINGS, "r", encoding="utf-8") as f:
                 saved = json.load(f)
-                # Merga med defaults
                 for key in defaults:
                     if key in saved:
                         defaults[key] = saved[key]
         except Exception:
             pass
 
-    defaults["dropbox_filename"] = DROPBOX_CANONICAL_FILENAME
     return defaults
 
 
@@ -728,133 +724,6 @@ def save_gui_settings(settings: Dict[str, str]):
         print(f"Kunde inte spara GUI-inställningar: {e}")
 
 
-def resolve_dropbox_path(preferred_path: Optional[str] = None) -> Optional[Path]:
-    if preferred_path:
-        candidate = Path(preferred_path)
-        if candidate.exists() and candidate.is_dir():
-            return candidate
-    return find_dropbox_folder()
-
-
-def find_dropbox_config_file(preferred_path: Optional[str] = None) -> Optional[Path]:
-    candidates: List[Path] = []
-    if preferred_path:
-        preferred = Path(preferred_path)
-        if preferred.exists():
-            if preferred.is_file():
-                return preferred
-            candidates.append(preferred)
-
-    dropbox_root = find_dropbox_folder()
-    if dropbox_root:
-        candidates.append(dropbox_root)
-
-    for base in candidates:
-        for folder in (base, base / "leads"):
-            candidate = folder / DROPBOX_CANONICAL_FILENAME
-            if candidate.exists():
-                return candidate
-
-    for base in candidates:
-        try:
-            for found in base.rglob(DROPBOX_CANONICAL_FILENAME):
-                if found.is_file():
-                    return found
-        except PermissionError:
-            continue
-
-    return None
-
-
-def apply_dropbox_overrides(
-    local_poit: Dict[str, Any],
-    local_segment: Dict[str, Any],
-    local_sajt: Dict[str, Any],
-    dropbox_path: Optional[str] = None,
-) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any], Optional[Path]]:
-    dropbox_file = find_dropbox_config_file(dropbox_path)
-    if not dropbox_file:
-        return local_poit, local_segment, local_sajt, None
-
-    try:
-        from utils.load_external_config import parse_external_config
-    except Exception:
-        return local_poit, local_segment, local_sajt, None
-
-    external = parse_external_config(dropbox_file)
-
-    mail_section = dict(external.get("segment", {}).get("MAIL", {}))
-    mail_section.update(external.get("mail_tone", {}))
-    external.setdefault("segment", {})["MAIL"] = mail_section
-
-    poit = dict(local_poit)
-    poit.update(external.get("poit", {}))
-
-    segment: Dict[str, Any] = {}
-    for section, values in (local_segment or {}).items():
-        segment[section] = dict(values) if isinstance(values, dict) else values
-    for section, values in external.get("segment", {}).items():
-        if section not in segment or not isinstance(segment.get(section), dict):
-            segment[section] = {}
-        segment[section].update(values)
-
-    sajt = dict(local_sajt)
-    sajt.update(external.get("sajt", {}))
-
-    return poit, segment, sajt, dropbox_file
-
-
-def format_env_config(values: Dict[str, Any], email: str) -> str:
-    platform_label = "Windows" if IS_WINDOWS else "macOS" if IS_MAC else "Linux"
-    lines = [
-        "# =============================================================================",
-        "# LEADS ENVIRONMENT CONFIGURATION",
-        "# =============================================================================",
-        f"# Email: {email}",
-        f"# Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-        f"# Platform: {platform_label}",
-        "# =============================================================================",
-        "",
-        f"EMAIL={email}",
-        "",
-        "# =============================================================================",
-        "# SCRAPING (1_poit)",
-        "# =============================================================================",
-    ]
-
-    if "poit" in values:
-        for key, val in values["poit"].items():
-            lines.append(f"{key}={val}")
-
-    lines.append("")
-    lines.append("# =============================================================================")
-    lines.append("# PIPELINE (2_segment_info)")
-    lines.append("# =============================================================================")
-
-    if "segment" in values:
-        for section, section_vals in values["segment"].items():
-            lines.append("")
-            lines.append(f"# [{section}]")
-            for key, val in section_vals.items():
-                env_key = f"{section}_{key}".upper()
-                lines.append(f"{env_key}={val}")
-
-    lines.append("")
-    lines.append("# =============================================================================")
-    lines.append("# SITES (3_sajt)")
-    lines.append("# =============================================================================")
-
-    if "sajt" in values:
-        for key, val in values["sajt"].items():
-            env_key = f"SAJT_{key}".upper()
-            lines.append(f"{env_key}={val}")
-
-    lines.append("")
-    lines.append("# =============================================================================")
-    lines.append("# END OF CONFIGURATION")
-    lines.append("# =============================================================================")
-
-    return "\n".join(lines)
 
 
 # =============================================================================
@@ -939,24 +808,21 @@ def save_poit_config(max_kun_dag: int):
 def save_segment_config(config: Dict[str, Any]):
     """Spara 2_segment_info/config_simple.txt"""
     lines = [
-        "# =============================================================================",
-        "# SIMPLIFIED PIPELINE CONFIGURATION (with AI research)",
-        "# =============================================================================",
-        "# Run with: python ALLA_simple.py",
+        "# Run with: python ALLA.py",
         "",
     ]
     
     section_comments = {
-        "PIPELINE": "# Grundläggande pipeline-inställningar",
-        "RESEARCH": "# AI-research inställningar",
-        "DOMAIN": "# Domänverifiering",
-        "MAIL": "# Mail-generering och ton",
+        "PIPELINE": "# --- PIPELINE ---",
+        "RESEARCH": "# --- AI-RESEARCH ---",
+        "DOMAIN": "# --- DOMÄNVERIFIERING ---",
+        "MAIL": "# --- MAIL ---",
     }
     
     for section, values in config.items():
         if section.startswith("_"):
             continue
-        lines.append(section_comments.get(section, f"# {section}"))
+        lines.append(section_comments.get(section, f"# --- {section} ---"))
         lines.append(f"[{section}]")
         for key, val in values.items():
             lines.append(f"{key} = {val}")
@@ -968,13 +834,8 @@ def save_segment_config(config: Dict[str, Any]):
 def save_sajt_config(config: Dict[str, Any]):
     """Spara 3_sajt/config_ny.txt"""
     lines = [
-        "# =============================================================================",
-        "# CONFIG FÖR 3_SAJT - Site Generation & Audit",
-        "# =============================================================================",
-        "# Används av: evaluate_companies.py, interactive_batch.py, standalone_audit.py",
-        "# =============================================================================",
         "",
-        "# --- EVALUATION (bedömning av företag) ---",
+        "# --- EVALUATION ---",
     ]
     
     eval_keys = ["evaluate", "threshold", "max_total_judgement_approvals"]
@@ -986,13 +847,13 @@ def save_sajt_config(config: Dict[str, Any]):
             lines.append(f"{key} = {config[key]}")
     
     lines.append("")
-    lines.append("# --- SITE GENERATION (preview-hemsidor) ---")
+    lines.append("# --- SITE GENERATION ---")
     for key in site_keys:
         if key in config:
             lines.append(f"{key} = {config[key]}")
     
     lines.append("")
-    lines.append("# --- AUDIT (analys av befintlig hemsida) ---")
+    lines.append("# --- AUDIT ---")
     for key in audit_keys:
         if key in config:
             lines.append(f"{key} = {config[key]}")
@@ -1031,104 +892,6 @@ def find_dropbox_folder() -> Optional[Path]:
     return None
 
 
-def save_config_to_dropbox(
-    values: Dict[str, Any],
-    dropbox_path: Optional[str] = None,
-    email: str = "",
-) -> Tuple[bool, str]:
-    """
-    Spara alla config-värden till en textfil i Dropbox.
-    
-    Returns:
-        (success: bool, message: str)
-    """
-    try:
-        dropbox_folder = resolve_dropbox_path(dropbox_path)
-        if not dropbox_folder:
-            return False, "Hittade ingen Dropbox-mapp"
-        
-        # Skapa config-fil i Dropbox
-        config_file = dropbox_folder / DROPBOX_CANONICAL_FILENAME
-        
-        # Formatera alla värden som env-konfiguration
-        content = format_env_config(values, email)
-
-        # Skriv filen (skriver över helt)
-        config_file.write_text(content, encoding="utf-8")
-        
-        return True, f"Sparad till: {config_file}"
-        
-    except Exception as e:
-        return False, f"Fel vid Dropbox-sparning: {e}"
-
-
-def find_dropbox_shared_file(filename: str = DROPBOX_CANONICAL_FILENAME) -> Optional[Path]:
-    """
-    Hitta en specifik Dropbox-fil (t.ex. shared file som synkas lokalt).
-    Letar efter filen i Dropbox-mappen och undermappar.
-    
-    Args:
-        filename: Filnamnet att söka efter
-        
-    Returns:
-        Path till filen om hittad, annars None
-    """
-    try:
-        dropbox_folder = find_dropbox_folder()
-        if not dropbox_folder:
-            return None
-        
-        # FÖRST: Kolla i leads-undermappen (där filen faktiskt ligger)
-        leads_path = dropbox_folder / "leads" / filename
-        if leads_path.exists():
-            return leads_path
-
-        # Direkt i root
-        direct = dropbox_folder / filename
-        if direct.exists():
-            return direct
-
-        # Sök rekursivt efter filen
-        for path in dropbox_folder.rglob(filename):
-            if path.is_file():
-                return path
-        
-        return None
-        
-    except Exception:
-        return None
-
-
-def save_to_dropbox_shared_file(values: Dict[str, Any], email: str) -> Tuple[bool, str]:
-    """
-    Spara alla config-värden till den specifika Dropbox-filen (leads.environments.txt).
-    
-    Args:
-        values: Config-värden att spara
-        email: Email-adress att inkludera
-        
-    Returns:
-        (success: bool, message: str)
-    """
-    try:
-        # Hitta filen
-        target_file = find_dropbox_shared_file()
-
-        if not target_file:
-            return False, "Hittade inte leads.enviroments.txt i Dropbox. Kontrollera att filen synkas lokalt."
-        
-        # Formatera innehåll med email
-        content = format_env_config(values, email)
-
-        # Skriv filen (skriver över helt)
-        target_file.write_text(content, encoding="utf-8")
-        
-        return True, f"Sparad till: {target_file}"
-        
-    except PermissionError:
-        return False, "Ingen skrivbehörighet. Kontrollera att filen inte är öppen i annat program."
-    except Exception as e:
-        return False, f"Fel vid sparning: {e}"
 
 
 # =============================================================================
@@ -1523,21 +1286,10 @@ class ConfigGUI(ctk.CTk):
         # Ladda GUI-inställningar först (för Dropbox-sökväg)
         self.gui_settings = load_gui_settings()
 
-        # Ladda nuvarande config (Dropbox > lokal)
-        local_poit = load_poit_config()
-        local_segment = load_segment_config()
-        local_sajt = load_sajt_config()
-        (
-            self.poit_config,
-            self.segment_config,
-            self.sajt_config,
-            self.dropbox_config_file,
-        ) = apply_dropbox_overrides(
-            local_poit,
-            local_segment,
-            local_sajt,
-            self.gui_settings.get("dropbox_path"),
-        )
+        # Ladda nuvarande config (lokala filer)
+        self.poit_config = load_poit_config()
+        self.segment_config = load_segment_config()
+        self.sajt_config = load_sajt_config()
         
         self.sections: Dict[str, SectionCard] = {}
         
@@ -1600,16 +1352,16 @@ class ConfigGUI(ctk.CTk):
                                        border_width=0)
         self.save_btn.pack(side="left", padx=SPACING["xs"])
         
-        # Spara till Dropbox-knapp (orange/warning färg)
-        self.save_dropbox_btn = ctk.CTkButton(btn_frame, text="☁️ Spara till Dropbox", width=150, height=50,
-                                               command=self.save_to_dropbox_file,
+        # Synka till Dashboard-knapp (orange/warning färg)
+        self.sync_dashboard_btn = ctk.CTkButton(btn_frame, text="☁️ Synka Dashboard", width=150, height=50,
+                                               command=self.push_to_dashboard,
                                                fg_color=COLORS["warning"],
                                                hover_color=COLORS["warning_hover"],
                                                corner_radius=10,
                                                font=FONTS["button"],
                                                text_color="#ffffff",
                                                border_width=0)
-        self.save_dropbox_btn.pack(side="left", padx=SPACING["xs"])
+        self.sync_dashboard_btn.pack(side="left", padx=SPACING["xs"])
         
         # Master-nummer input (kompakt)
         self.master_entry = ctk.CTkEntry(btn_frame, width=70, height=44,
@@ -1655,27 +1407,26 @@ class ConfigGUI(ctk.CTk):
                                         border_width=0)
         self.reset_btn.pack(side="left", padx=SPACING["xs"])
         
-        # ===== EMAIL & DROPBOX INSTÄLLNINGAR =====
-        # Ladda sparade inställningar (redan laddat i __init__)
+        # ===== DASHBOARD INSTÄLLNINGAR =====
         
-        dropbox_settings_frame = ctk.CTkFrame(self.main_frame, fg_color=COLORS["bg_card"],
-                                              corner_radius=0, height=130, border_width=0)
-        dropbox_settings_frame.pack(fill="x", pady=(0, 0))
-        dropbox_settings_frame.pack_propagate(False)
+        dashboard_settings_frame = ctk.CTkFrame(self.main_frame, fg_color=COLORS["bg_card"],
+                                              corner_radius=0, height=100, border_width=0)
+        dashboard_settings_frame.pack(fill="x", pady=(0, 0))
+        dashboard_settings_frame.pack_propagate(False)
         
-        dropbox_content = ctk.CTkFrame(dropbox_settings_frame, fg_color="transparent")
-        dropbox_content.pack(fill="both", expand=True, padx=SPACING["xxl"], pady=SPACING["sm"])
+        dashboard_content = ctk.CTkFrame(dashboard_settings_frame, fg_color="transparent")
+        dashboard_content.pack(fill="both", expand=True, padx=SPACING["xxl"], pady=SPACING["sm"])
         
-        # Rad 1: Email
-        row1 = ctk.CTkFrame(dropbox_content, fg_color="transparent")
+        # Rad 1: Email + Dashboard URL
+        row1 = ctk.CTkFrame(dashboard_content, fg_color="transparent")
         row1.pack(fill="x", pady=(0, SPACING["xs"]))
         
         email_label = ctk.CTkLabel(row1, text="📧 Email:",
                                    font=FONTS["body"],
-                                   text_color=COLORS["text"], width=120, anchor="w")
+                                   text_color=COLORS["text"], width=80, anchor="w")
         email_label.pack(side="left", padx=(0, SPACING["sm"]))
         
-        self.email_entry = ctk.CTkEntry(row1, width=300, height=32,
+        self.email_entry = ctk.CTkEntry(row1, width=250, height=32,
                                          placeholder_text="din@email.com",
                                          fg_color=COLORS["bg_input"],
                                          border_color=COLORS["border"],
@@ -1684,38 +1435,48 @@ class ConfigGUI(ctk.CTk):
                                          font=FONTS["body_small"],
                                          text_color=COLORS["text_bright"])
         self.email_entry.insert(0, self.gui_settings.get("email", ""))
-        self.email_entry.pack(side="left", padx=(0, SPACING["md"]))
+        self.email_entry.pack(side="left", padx=(0, SPACING["lg"]))
         
-        email_info = ctk.CTkLabel(row1, text="(Inkluderas i Dropbox-fil)",
-                                  font=FONTS["caption"],
-                                  text_color=COLORS["text_muted"])
-        email_info.pack(side="left")
+        url_label = ctk.CTkLabel(row1, text="🌐 Dashboard:",
+                                   font=FONTS["body"],
+                                   text_color=COLORS["text"], width=100, anchor="w")
+        url_label.pack(side="left", padx=(0, SPACING["sm"]))
         
-        # Rad 2: Dropbox-sökväg
-        row2 = ctk.CTkFrame(dropbox_content, fg_color="transparent")
+        self.dashboard_url_entry = ctk.CTkEntry(row1, width=280, height=32,
+                                         placeholder_text="https://jocke.onrender.com",
+                                         fg_color=COLORS["bg_input"],
+                                         border_color=COLORS["border"],
+                                         border_width=1,
+                                         corner_radius=8,
+                                         font=FONTS["body_small"],
+                                         text_color=COLORS["text_bright"])
+        self.dashboard_url_entry.insert(0, self.gui_settings.get("dashboard_url", ""))
+        self.dashboard_url_entry.pack(side="left")
+        
+        # Rad 2: JOCKE_API nyckel + hämta-knapp
+        row2 = ctk.CTkFrame(dashboard_content, fg_color="transparent")
         row2.pack(fill="x", pady=(SPACING["xs"], 0))
         
-        dropbox_label = ctk.CTkLabel(row2, text="📁 Dropbox-mapp:",
+        api_label = ctk.CTkLabel(row2, text="🔑 API-nyckel:",
                                      font=FONTS["body"],
-                                     text_color=COLORS["text"], width=120, anchor="w")
-        dropbox_label.pack(side="left", padx=(0, SPACING["sm"]))
+                                     text_color=COLORS["text"], width=100, anchor="w")
+        api_label.pack(side="left", padx=(0, SPACING["sm"]))
         
-        self.dropbox_path_entry = ctk.CTkEntry(row2, width=400, height=32,
-                                                placeholder_text="C:\\Users\\...\\Dropbox eller /Users/.../Dropbox",
+        self.api_key_entry = ctk.CTkEntry(row2, width=200, height=32,
+                                                placeholder_text="JOCKE_API",
                                                 fg_color=COLORS["bg_input"],
                                                 border_color=COLORS["border"],
                                                 border_width=1,
                                                 corner_radius=8,
                                                 font=FONTS["body_small"],
-                                                text_color=COLORS["text_bright"])
-        saved_path = self.gui_settings.get("dropbox_path", "")
-        if saved_path:
-            self.dropbox_path_entry.insert(0, saved_path)
-        self.dropbox_path_entry.pack(side="left", padx=(0, SPACING["sm"]))
+                                                text_color=COLORS["text_bright"],
+                                                show="*")
+        self.api_key_entry.insert(0, self.gui_settings.get("jocke_api", "12345"))
+        self.api_key_entry.pack(side="left", padx=(0, SPACING["md"]))
         
-        # Bläddra-knapp
-        browse_btn = ctk.CTkButton(row2, text="📂 Bläddra", width=100, height=32,
-                                    command=self.browse_dropbox_folder,
+        # Hämta från dashboard-knapp
+        pull_btn = ctk.CTkButton(row2, text="⬇ Hämta från Dashboard", width=180, height=32,
+                                    command=self.pull_from_dashboard,
                                     fg_color=COLORS["bg_elevated"],
                                     hover_color=COLORS["bg_card_hover"],
                                     corner_radius=8,
@@ -1723,46 +1484,13 @@ class ConfigGUI(ctk.CTk):
                                     text_color=COLORS["text"],
                                     border_width=1,
                                     border_color=COLORS["border"])
-        browse_btn.pack(side="left", padx=(0, SPACING["sm"]))
+        pull_btn.pack(side="left", padx=(0, SPACING["sm"]))
         
-        # Auto-detect knapp
-        auto_btn = ctk.CTkButton(row2, text="🔍 Auto", width=80, height=32,
-                                  command=self.auto_detect_dropbox,
-                                  fg_color=COLORS["bg_elevated"],
-                                  hover_color=COLORS["bg_card_hover"],
-                                  corner_radius=8,
-                                  font=FONTS["body_small"],
-                                  text_color=COLORS["text"],
-                                  border_width=1,
-                                  border_color=COLORS["border"])
-        auto_btn.pack(side="left")
-        
-        # Rad 3: Spara till delad Dropbox-fil (leads.enviroments.txt)
-        row3 = ctk.CTkFrame(dropbox_content, fg_color="transparent")
-        row3.pack(fill="x", pady=(SPACING["sm"], 0))
-        
-        shared_label = ctk.CTkLabel(row3, text="🔗 Delad fil:",
-                                    font=FONTS["body"],
-                                    text_color=COLORS["text"], width=120, anchor="w")
-        shared_label.pack(side="left", padx=(0, SPACING["sm"]))
-        
-        # Knapp för att spara till den delade filen
-        self.save_shared_btn = ctk.CTkButton(row3, text="💾 Spara till leads.enviroments.txt", 
-                                              width=220, height=32,
-                                              command=self.save_to_shared_dropbox_file,
-                                              fg_color=COLORS["accent"],
-                                              hover_color=COLORS["accent_hover"],
-                                              corner_radius=8,
-                                              font=FONTS["body_small"],
-                                              text_color="#ffffff",
-                                              border_width=0)
-        self.save_shared_btn.pack(side="left", padx=(0, SPACING["sm"]))
-        
-        shared_info = ctk.CTkLabel(row3, 
-                                   text="(Hittas automatiskt i Dropbox-mappen)",
+        dash_info = ctk.CTkLabel(row2, 
+                                   text="(Config synkas med dashboard-sajten)",
                                    font=FONTS["caption"],
                                    text_color=COLORS["text_muted"])
-        shared_info.pack(side="left")
+        dash_info.pack(side="left")
         
         # ===== FLIKAR - Förbättrad design =====
         self.tabview = ctk.CTkTabview(self.main_frame, fg_color=COLORS["bg_main"],
@@ -1994,8 +1722,26 @@ class ConfigGUI(ctk.CTk):
         
         return result
     
+    @staticmethod
+    def _sync_env_key(key: str, value: str):
+        """Update or append a KEY=value pair in .env without touching other lines."""
+        if not ENV_FILE.exists():
+            ENV_FILE.write_text(f"{key}={value}\n", encoding="utf-8")
+            return
+        lines = ENV_FILE.read_text(encoding="utf-8").splitlines()
+        found = False
+        for i, line in enumerate(lines):
+            stripped = line.strip()
+            if stripped.startswith(f"{key}=") or stripped.startswith(f"#{key}="):
+                lines[i] = f"{key}={value}"
+                found = True
+                break
+        if not found:
+            lines.append(f"{key}={value}")
+        ENV_FILE.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
     def save_all(self):
-        """Spara alla konfigurationer till config-filer OCH Dropbox"""
+        """Spara alla konfigurationer till lokala filer + dashboard"""
         try:
             # Backup först
             backup_path = backup_configs()
@@ -2003,27 +1749,46 @@ class ConfigGUI(ctk.CTk):
             # Samla värden
             values = self.collect_all_values()
             
-            # Spara till config-filer
+            # Spara till lokala config-filer
             save_poit_config(values["poit"].get("MAX_KUN_DAG", 150))
             save_segment_config(values["segment"])
             save_sajt_config(values["sajt"])
             
-            # Spara till Dropbox
-            dropbox_success, dropbox_msg = save_config_to_dropbox(
-                values,
-                self.gui_settings.get("dropbox_path"),
-                self.email_entry.get().strip(),
-            )
+            # Synka gui_settings
+            email = self.email_entry.get().strip()
+            dashboard_url = self.dashboard_url_entry.get().strip().rstrip("/")
+            api_key = self.api_key_entry.get().strip()
+            self.gui_settings["email"] = email
+            self.gui_settings["dashboard_url"] = dashboard_url
+            self.gui_settings["jocke_api"] = api_key
+            save_gui_settings(self.gui_settings)
+            
+            # Synka DASHBOARD_URL + JOCKE_API till .env
+            if dashboard_url:
+                self._sync_env_key("DASHBOARD_URL", dashboard_url)
+            if api_key:
+                self._sync_env_key("JOCKE_API", api_key)
+            
+            # Pusha till dashboard
+            dashboard_msg = ""
+            if dashboard_url and api_key:
+                try:
+                    from utils.load_external_config import push_config_to_dashboard
+                    if push_config_to_dashboard(dashboard_url, api_key, values):
+                        dashboard_msg = "Synkad med dashboard!"
+                    else:
+                        dashboard_msg = "Kunde inte synka med dashboard"
+                except Exception as e:
+                    dashboard_msg = f"Dashboard-fel: {e}"
             
             # Status-meddelande
             status_msg = "✓ Alla inställningar sparade!"
             info_msg = f"Alla konfigurationer sparade!\n\nBackup skapad i:\n{BACKUP_DIR}"
             
-            if dropbox_success:
-                status_msg += " + Dropbox"
-                info_msg += f"\n\nDropbox:\n{dropbox_msg}"
-            else:
-                info_msg += f"\n\n⚠ Dropbox-sparning misslyckades:\n{dropbox_msg}"
+            if dashboard_msg:
+                if "Synkad" in dashboard_msg:
+                    status_msg += " + Dashboard"
+                info_msg += f"\n\nDashboard: {dashboard_msg}"
             
             self.status.configure(text=status_msg, text_color=COLORS["success"])
             
@@ -2033,227 +1798,76 @@ class ConfigGUI(ctk.CTk):
             self.status.configure(text=f"✗ Fel: {e}", text_color=COLORS["error"])
             messagebox.showerror("Fel", f"Kunde inte spara:\n{e}")
     
-    def browse_dropbox_folder(self):
-        """Öppna filväljare för att välja Dropbox-mapp"""
-        from tkinter import filedialog
+    def push_to_dashboard(self):
+        """Pusha aktuell config till dashboard-API:t"""
+        dashboard_url = self.dashboard_url_entry.get().strip().rstrip("/")
+        api_key = self.api_key_entry.get().strip()
         
-        # Bestäm startmapp
-        current_path = self.dropbox_path_entry.get().strip()
-        if current_path and Path(current_path).exists():
-            initial_dir = current_path
-        elif IS_WINDOWS:
-            initial_dir = str(Path.home())
-        else:
-            initial_dir = str(Path.home())
+        if not dashboard_url:
+            messagebox.showerror("Fel", "Ange Dashboard-URL!")
+            return
+        if not api_key:
+            messagebox.showerror("Fel", "Ange API-nyckel (JOCKE_API)!")
+            return
         
-        folder = filedialog.askdirectory(
-            title="Välj Dropbox-mapp",
-            initialdir=initial_dir
-        )
-        
-        if folder:
-            # Uppdatera fältet
-            self.dropbox_path_entry.delete(0, "end")
-            self.dropbox_path_entry.insert(0, folder)
-            
-            # Spara till gui_settings
-            self.gui_settings["dropbox_path"] = folder
-            save_gui_settings(self.gui_settings)
-            
-            self.status.configure(text=f"✓ Dropbox-mapp: {folder}", 
-                                  text_color=COLORS["success"])
-    
-    def auto_detect_dropbox(self):
-        """Försök automatiskt hitta Dropbox-mappen (prioriterar leads-undermappen)"""
-        detected = find_dropbox_folder()
-        
-        if detected:
-            # Prioritera leads-undermappen om den finns
-            leads_subdir = detected / "leads"
-            if leads_subdir.exists() and leads_subdir.is_dir():
-                detected = leads_subdir
-            
-            self.dropbox_path_entry.delete(0, "end")
-            self.dropbox_path_entry.insert(0, str(detected))
-            
-            # Spara till gui_settings
-            self.gui_settings["dropbox_path"] = str(detected)
-            save_gui_settings(self.gui_settings)
-            
-            self.status.configure(text=f"✓ Hittade Dropbox: {detected}", 
-                                  text_color=COLORS["success"])
-        else:
-            self.status.configure(text="✗ Kunde inte hitta Dropbox-mapp automatiskt", 
-                                  text_color=COLORS["error"])
-            messagebox.showwarning(
-                "Dropbox ej hittad",
-                "Kunde inte hitta Dropbox-mappen automatiskt.\n\n"
-                "Vanliga platser som kontrollerades:\n"
-                "• ~/Dropbox\n"
-                "• ~/Library/CloudStorage/Dropbox (macOS)\n"
-                "• C:/Users/<user>/Dropbox (Windows)\n\n"
-                "Använd 'Bläddra' för att välja manuellt."
-            )
-    
-    def save_to_dropbox_file(self):
-        """Spara till Dropbox-mapp (konfigurerad eller automatiskt hittad)"""
         try:
-            # Hämta email
-            email = self.email_entry.get().strip()
-            if not email or "@" not in email:
-                messagebox.showerror("Fel", "Ange en giltig email-adress!")
-                return
-            
-            # Spara email till gui_settings
-            self.gui_settings["email"] = email
-            save_gui_settings(self.gui_settings)
-            
-            # Hämta Dropbox-sökväg
-            dropbox_path = self.dropbox_path_entry.get().strip()
-            
-            if not dropbox_path:
-                # Försök auto-detect
-                detected = find_dropbox_folder()
-                if detected:
-                    dropbox_path = str(detected)
-                    self.dropbox_path_entry.delete(0, "end")
-                    self.dropbox_path_entry.insert(0, dropbox_path)
-                else:
-                    messagebox.showerror(
-                        "Dropbox-mapp saknas",
-                        "Ingen Dropbox-mapp angiven!\n\n"
-                        "Ange sökvägen manuellt eller klicka 'Auto' för att hitta automatiskt."
-                    )
-                    return
-            
-            # Verifiera att sökvägen finns
-            dropbox_folder = Path(dropbox_path)
-            if not dropbox_folder.exists():
-                messagebox.showerror(
-                    "Mapp finns ej",
-                    f"Dropbox-mappen finns inte:\n{dropbox_path}\n\n"
-                    "Kontrollera sökvägen och försök igen."
-                )
-                return
-            
-            # Samla värden
             values = self.collect_all_values()
             
-            # Skapa filnamn
-            target_file = dropbox_folder / DROPBOX_CANONICAL_FILENAME
-
-            # Formatera innehåll
-            content = format_env_config(values, email)
-
-            # Skriv filen
-            target_file.write_text(content, encoding="utf-8")
+            from utils.load_external_config import push_config_to_dashboard
+            if push_config_to_dashboard(dashboard_url, api_key, values):
+                self.status.configure(text="✓ Config pushad till dashboard!",
+                                      text_color=COLORS["success"])
+                messagebox.showinfo("Synkat!", f"Konfiguration pushad till:\n{dashboard_url}")
+            else:
+                self.status.configure(text="✗ Kunde inte pusha till dashboard",
+                                      text_color=COLORS["error"])
+                messagebox.showerror("Fel", "Dashboard svarade inte korrekt.\nKontrollera URL och API-nyckel.")
+        except Exception as e:
+            self.status.configure(text=f"✗ Fel: {e}", text_color=COLORS["error"])
+            messagebox.showerror("Fel", f"Kunde inte synka:\n{e}")
+    
+    def pull_from_dashboard(self):
+        """Hämta config från dashboard och uppdatera GUI-fälten"""
+        dashboard_url = self.dashboard_url_entry.get().strip().rstrip("/")
+        api_key = self.api_key_entry.get().strip()
+        
+        if not dashboard_url:
+            messagebox.showerror("Fel", "Ange Dashboard-URL!")
+            return
+        if not api_key:
+            messagebox.showerror("Fel", "Ange API-nyckel (JOCKE_API)!")
+            return
+        
+        try:
+            from utils.load_external_config import fetch_config_from_dashboard
+            config = fetch_config_from_dashboard(dashboard_url, api_key)
             
-            # Spara sökvägen till gui_settings
-            self.gui_settings["dropbox_path"] = dropbox_path
-            self.gui_settings["dropbox_filename"] = DROPBOX_CANONICAL_FILENAME
-            save_gui_settings(self.gui_settings)
+            if config is None:
+                self.status.configure(text="✗ Kunde inte hämta från dashboard",
+                                      text_color=COLORS["error"])
+                messagebox.showerror("Fel", "Kunde inte hämta config från dashboard.\nKontrollera URL och API-nyckel.")
+                return
             
-            self.status.configure(text=f"✓ Sparad: {target_file.name}", 
+            # Uppdatera lokala config-objekt
+            self.poit_config = config.get("poit", {})
+            self.segment_config = config.get("segment", {})
+            self.sajt_config = config.get("sajt", {})
+            
+            # Spara till lokala filer
+            save_poit_config(self.poit_config.get("MAX_KUN_DAG", 150))
+            save_segment_config(self.segment_config)
+            save_sajt_config(self.sajt_config)
+            
+            self.status.configure(text="✓ Config hämtad från dashboard! Starta om GUI:t för att se nya värden.",
                                   text_color=COLORS["success"])
             messagebox.showinfo(
-                "Sparat till Dropbox!",
-                f"Konfiguration sparad!\n\n"
-                f"Fil: {target_file}\n\n"
-                f"Filen synkas automatiskt via Dropbox."
-            )
-            
-        except PermissionError:
-            self.status.configure(text="✗ Ingen skrivbehörighet", text_color=COLORS["error"])
-            messagebox.showerror(
-                "Fel",
-                "Kunde inte skriva till Dropbox-mappen.\n\n"
-                "Kontrollera att filen inte är öppen i annat program."
+                "Hämtat!",
+                "Konfiguration hämtad från dashboard och sparad lokalt.\n\n"
+                "Stäng och öppna GUI:t för att se de nya värdena."
             )
         except Exception as e:
             self.status.configure(text=f"✗ Fel: {e}", text_color=COLORS["error"])
-            messagebox.showerror("Fel", f"Kunde inte spara:\n{e}")
-    
-    def save_to_shared_dropbox_file(self):
-        """
-        Spara till den delade Dropbox-filen (leads.enviroments.txt).
-        Söker efter filen i Dropbox-mappen och skriver över den.
-        
-        Länk: https://www.dropbox.com/scl/fi/n0c4dgib1g9a2f5itvnzw/leads.enviroments.txt
-        """
-        try:
-            # Hämta email
-            email = self.email_entry.get().strip()
-            if not email or "@" not in email:
-                messagebox.showerror("Fel", "Ange en giltig email-adress!")
-                return
-            
-            # Spara email till gui_settings
-            self.gui_settings["email"] = email
-            save_gui_settings(self.gui_settings)
-            
-            # Hämta Dropbox-sökväg (använd angiven eller auto-detect)
-            dropbox_path = self.dropbox_path_entry.get().strip()
-            
-            if not dropbox_path:
-                detected = find_dropbox_folder()
-                if detected:
-                    dropbox_path = str(detected)
-                else:
-                    messagebox.showerror(
-                        "Dropbox-mapp saknas",
-                        "Ingen Dropbox-mapp hittades!\n\n"
-                        "Ange sökvägen manuellt eller klicka 'Auto' för att hitta automatiskt."
-                    )
-                    return
-            
-            dropbox_folder = Path(dropbox_path)
-            if not dropbox_folder.exists():
-                messagebox.showerror(
-                    "Mapp finns ej",
-                    f"Dropbox-mappen finns inte:\n{dropbox_path}"
-                )
-                return
-            
-            target_file = dropbox_folder / DROPBOX_CANONICAL_FILENAME
-            if not target_file.exists():
-                messagebox.showinfo(
-                    "Skapar ny fil",
-                    f"Filen '{DROPBOX_CANONICAL_FILENAME}' hittades inte.\n\n"
-                    f"Skapar ny fil i:\n{target_file}"
-                )
-            
-            # Samla värden
-            values = self.collect_all_values()
-            
-            # Formatera innehåll som environment-variabler
-            content = format_env_config(values, email)
-
-            # Skriv filen
-            target_file.write_text(content, encoding="utf-8")
-
-            self.gui_settings["dropbox_path"] = dropbox_path
-            self.gui_settings["dropbox_filename"] = DROPBOX_CANONICAL_FILENAME
-            save_gui_settings(self.gui_settings)
-            
-            self.status.configure(text=f"✓ Sparad: {target_file.name}", 
-                                  text_color=COLORS["success"])
-            messagebox.showinfo(
-                "Sparat till delad fil!",
-                f"Konfiguration sparad till:\n\n"
-                f"{target_file}\n\n"
-                f"Filen synkas automatiskt via Dropbox till den delade länken."
-            )
-            
-        except PermissionError:
-            self.status.configure(text="✗ Ingen skrivbehörighet", text_color=COLORS["error"])
-            messagebox.showerror(
-                "Fel",
-                "Kunde inte skriva till filen.\n\n"
-                "Kontrollera att filen inte är öppen i annat program."
-            )
-        except Exception as e:
-            self.status.configure(text=f"✗ Fel: {e}", text_color=COLORS["error"])
-            messagebox.showerror("Fel", f"Kunde inte spara:\n{e}")
+            messagebox.showerror("Fel", f"Kunde inte hämta:\n{e}")
     
     def reset_to_defaults(self):
         """Återställ alla inställningar till standardvärden (fabriksåterställning)"""

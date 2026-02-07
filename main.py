@@ -105,60 +105,87 @@ LOCK_FILE = LOG_DIR / "pipeline.lock"
 _lock_handle = None
 
 
+def _is_pid_alive(pid: int) -> bool:
+    """Check if a process with given PID is still running (Windows + Linux/Mac)."""
+    if sys.platform == "win32":
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+        if handle:
+            kernel32.CloseHandle(handle)
+            return True
+        return False
+    else:
+        try:
+            os.kill(pid, 0)
+            return True
+        except OSError:
+            return False
+
+
+# Max age for lock file before it is considered stale (minutes)
+LOCK_MAX_AGE_MINUTES = 30
+
+
 def acquire_pipeline_lock() -> bool:
     """
     Försök att ta en exklusiv lås på pipelinen.
     Returnerar True om låsen togs, False om en annan instans körs.
+
+    Lock-filen innehåller: PID|ISO_TIMESTAMP (pipe-separerad för att undvika
+    kollision med kolon i ISO-timestamps).
+    Bakåtkompatibel med äldre format PID:TIMESTAMP.
     """
     global _lock_handle
     ensure_log_dirs()
-    
+
     try:
-        # Kolla om lock-fil finns och om processen fortfarande körs
         if LOCK_FILE.exists():
             try:
                 lock_data = LOCK_FILE.read_text(encoding="utf-8").strip()
                 if lock_data:
-                    pid = int(lock_data.split(":")[0])
-                    # Kolla om processen fortfarande körs
-                    if sys.platform == "win32":
-                        import ctypes
-                        kernel32 = ctypes.windll.kernel32
-                        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
-                        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
-                        if handle:
-                            kernel32.CloseHandle(handle)
-                            # Processen finns - kolla om det är en gammal lock
-                            lock_time = lock_data.split(":")[1] if ":" in lock_data else ""
-                            if lock_time:
-                                from datetime import datetime
-                                lock_dt = datetime.fromisoformat(lock_time)
-                                age_hours = (datetime.now() - lock_dt).total_seconds() / 3600
-                                if age_hours > 4:  # Om låsen är över 4 timmar gammal, ignorera den
-                                    log_warn(f"Gammal lock-fil (>4h) från PID {pid} - tar över")
-                                else:
-                                    log_error(f"Pipeline körs redan (PID {pid}, startad {lock_time})")
-                                    return False
-                            else:
-                                log_error(f"Pipeline körs redan (PID {pid})")
-                                return False
+                    # Parse lock: new format uses '|', old format uses ':'
+                    if "|" in lock_data:
+                        pid_str, lock_time = lock_data.split("|", 1)
+                    elif ":" in lock_data:
+                        pid_str, lock_time = lock_data.split(":", 1)
                     else:
-                        # Linux/Mac: kolla med os.kill(pid, 0)
-                        try:
-                            os.kill(pid, 0)
-                            log_error(f"Pipeline körs redan (PID {pid})")
+                        pid_str, lock_time = lock_data, ""
+
+                    pid = int(pid_str)
+                    pid_alive = _is_pid_alive(pid)
+
+                    if not pid_alive:
+                        # Process is dead - stale lock, safe to take over
+                        log_warn(f"Gammal lock-fil från död process PID {pid} - tar över")
+                    elif lock_time:
+                        lock_dt = datetime.fromisoformat(lock_time)
+                        age_min = (datetime.now() - lock_dt).total_seconds() / 60
+                        if age_min > LOCK_MAX_AGE_MINUTES:
+                            log_warn(
+                                f"Lock-fil från PID {pid} är {age_min:.0f} min gammal "
+                                f"(>{LOCK_MAX_AGE_MINUTES} min) - tar över"
+                            )
+                        else:
+                            log_error(
+                                f"Pipeline körs redan (PID {pid}, startad {lock_time}, "
+                                f"ålder {age_min:.0f} min)"
+                            )
                             return False
-                        except OSError:
-                            pass  # Processen finns inte - gammal lock
-            except (ValueError, IndexError, OSError):
-                pass  # Korrupt lock-fil - ta över
-        
-        # Skapa ny lock-fil
-        lock_content = f"{os.getpid()}:{datetime.now().isoformat()}"
+                    else:
+                        # PID alive but no timestamp - block
+                        log_error(f"Pipeline körs redan (PID {pid}, ingen tidsstämpel)")
+                        return False
+            except (ValueError, IndexError, OSError) as e:
+                log_warn(f"Korrupt lock-fil ({e}) - tar över")
+
+        # Create new lock (pipe-separated to avoid ISO-timestamp colon clash)
+        lock_content = f"{os.getpid()}|{datetime.now().isoformat()}"
         LOCK_FILE.write_text(lock_content, encoding="utf-8")
         log_info(f"Pipeline-lås skapad (PID {os.getpid()})")
         return True
-        
+
     except Exception as e:
         log_warn(f"Kunde inte hantera pipeline-lås: {e}")
         return True  # Fortsätt ändå vid fel
@@ -169,10 +196,12 @@ def release_pipeline_lock():
     global _lock_handle
     try:
         if LOCK_FILE.exists():
-            # Verifiera att det är vår lock
+            # Verifiera att det är vår lock (supports both '|' and ':' separator)
             try:
                 lock_data = LOCK_FILE.read_text(encoding="utf-8").strip()
-                if lock_data.startswith(f"{os.getpid()}:"):
+                our_prefix = f"{os.getpid()}|"
+                old_prefix = f"{os.getpid()}:"
+                if lock_data.startswith(our_prefix) or lock_data.startswith(old_prefix):
                     LOCK_FILE.unlink()
                     log_info("Pipeline-lås frigjord")
             except Exception:
@@ -457,21 +486,90 @@ $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
         return None
 
 
-def stop_server(process: Optional[subprocess.Popen]):
-    """Stäng Flask-server (endast om vi startade den)."""
-    if process is None:
-        # Om process är None kan det betyda att servern redan körde när vi startade
-        # eller att servern inte startades av oss. Kontrollera om servern fortfarande körs.
-        if check_server_running():
-            log_info(
-                "Servern körs fortfarande (startades inte av oss) - låter den vara"
-            )
-            log_info("Stäng PowerShell-fönstret manuellt om du vill stoppa servern")
-        return
+def _find_server_pids() -> list:
+    """Find PIDs listening on the server port via netstat."""
+    pids = []
+    try:
+        result = subprocess.run(
+            ["netstat", "-aon"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if result.returncode == 0:
+            for line in result.stdout.splitlines():
+                if f":{POIT_SERVER_PORT}" in line and "LISTENING" in line:
+                    parts = line.strip().split()
+                    if parts:
+                        pids.append(parts[-1])
+    except Exception as e:
+        log_warn(f"Kunde inte söka serverprocesser via netstat: {e}")
+    return pids
 
-    log_info("Servern körs i separat PowerShell-fönster")
-    log_info("Stäng PowerShell-fönstret manuellt för att stoppa servern")
-    log_info("(Vi stänger inte fönstret automatiskt så du kan se serverns output)")
+
+def stop_server(process: Optional[subprocess.Popen]):
+    """Gracefully stop the Flask server, escalating from polite to forceful."""
+    log_info("Stänger Flask-server...")
+
+    # Step 1: Ask politely via /shutdown endpoint (if server supports it)
+    try:
+        import urllib.request
+        req = urllib.request.Request(
+            f"{POIT_SERVER_BASE_URL}/shutdown", method="POST"
+        )
+        urllib.request.urlopen(req, timeout=3)
+        log_info("Skickade /shutdown till servern")
+        time.sleep(2)
+        if not check_server_running():
+            log_info("Flask-server stängdes snyggt via /shutdown")
+            return
+    except Exception:
+        pass  # Endpoint kanske inte finns - fortsätt med kill
+
+    # Step 2: Graceful taskkill (without /F) on server port PIDs
+    pids = _find_server_pids()
+    if pids:
+        for pid in pids:
+            try:
+                subprocess.run(
+                    ["taskkill", "/PID", pid, "/T"],
+                    capture_output=True, timeout=5,
+                )
+                log_info(f"Skickade stängningssignal till PID {pid}")
+            except Exception:
+                pass
+        time.sleep(3)
+        if not check_server_running():
+            log_info("Flask-server stängdes efter snäll taskkill")
+            return
+
+    # Step 3: Force kill on server port PIDs
+    pids = _find_server_pids()
+    if pids:
+        for pid in pids:
+            try:
+                subprocess.run(
+                    ["taskkill", "/PID", pid, "/T", "/F"],
+                    capture_output=True, timeout=5,
+                )
+                log_info(f"Force-dödade serverprocess PID {pid}")
+            except Exception:
+                pass
+
+    # Step 4: Kill any window titled "Flask Server" (PowerShell/CMD)
+    for title_pattern in ["Flask Server*", "Flask Server - *"]:
+        try:
+            subprocess.run(
+                ["taskkill", "/FI", f"WINDOWTITLE eq {title_pattern}", "/F"],
+                capture_output=True, timeout=5,
+            )
+        except Exception:
+            pass
+
+    # Verify
+    time.sleep(1)
+    if check_server_running():
+        log_warn("Servern körs fortfarande efter alla cleanup-försök!")
+    else:
+        log_info("Flask-server stoppad")
 
 
 def schedule_pipeline_timeout(seconds: int) -> Optional[threading.Timer]:
@@ -1727,35 +1825,32 @@ def main():
     schedule_pipeline_timeout(PIPELINE_MAX_RUNTIME_SEC)
 
     # ==========================================================================
-    # EXTERNAL CONFIG: Ladda konfiguration från extern Dropbox-fil om aktiverat
+    # DASHBOARD CONFIG: Hämta pipeline-konfiguration från dashboard-API:t
     # ==========================================================================
-    if os.getenv("EXTERNAL_VALUES", "N").upper() in ("Y", "YES", "TRUE", "1"):
+    dashboard_url = os.getenv("DASHBOARD_URL", "").rstrip("/")
+    jocke_api = os.getenv("JOCKE_API", "")
+
+    if dashboard_url and jocke_api:
         log_info("=" * 60)
-        log_info("EXTERN KONFIGURATION AKTIVERAD")
+        log_info("HÄMTAR KONFIGURATION FRÅN DASHBOARD")
         log_info("=" * 60)
         try:
-            from utils.load_external_config import (
-                get_external_config_sources,
-                load_and_apply_external_config,
-            )
+            from utils.load_external_config import fetch_and_apply_dashboard_config
 
-            sources = get_external_config_sources()
-            if sources:
-                log_info("Laddar extern config från:")
-                for src in sources:
-                    log_info(f"  - {src}")
-                if load_and_apply_external_config(sources):
-                    log_info("✅ Extern konfiguration applicerad - lokala config-filer uppdaterade")
-                else:
-                    log_warn("⚠️  Kunde inte applicera extern config - använder lokala filer")
+            if fetch_and_apply_dashboard_config(dashboard_url, jocke_api):
+                log_info("✅ Dashboard-konfiguration applicerad")
             else:
-                log_warn("⚠️  Inga externa configfiler hittades")
-                log_warn("    Sätt EXTERNAL_CONFIG_PATH i .env till en fil eller Dropbox-mapp")
+                log_warn("⚠️  Kunde inte hämta config från dashboard - använder lokala filer")
         except ImportError as e:
-            log_error(f"Kunde inte importera external config loader: {e}")
+            log_error(f"Kunde inte importera config loader: {e}")
         except Exception as e:
-            log_error(f"Fel vid laddning av extern config: {e}")
+            log_error(f"Fel vid hämtning av dashboard-config: {e}")
         print()
+    else:
+        if not dashboard_url:
+            log_info("DASHBOARD_URL ej satt - använder lokala config-filer")
+        if not jocke_api:
+            log_info("JOCKE_API ej satt - använder lokala config-filer")
 
     # Parse arguments - hantera både master_number och datumargument
     raw_args = sys.argv[1:]

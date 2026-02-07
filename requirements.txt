@@ -40,7 +40,7 @@ customtkinter>=5.2.0
 keyboard>=0.13.5
 reportlab>=4.0.0
 
-# Added from your import list
+# Additional (from master)
 selenium
 urllib3
 weasyprint
