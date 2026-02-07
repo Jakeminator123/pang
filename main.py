@@ -1786,6 +1786,37 @@ def main():
         log_error("Om detta är fel, ta bort: " + str(LOCK_FILE))
         return 1
 
+    # Sätt watchdog som stänger allt efter max-tid
+    schedule_pipeline_timeout(PIPELINE_MAX_RUNTIME_SEC)
+
+    # ==========================================================================
+    # DASHBOARD CONFIG: Hämta pipeline-konfiguration från dashboard-API:t
+    # ==========================================================================
+    dashboard_url = os.getenv("DASHBOARD_URL", "").rstrip("/")
+    jocke_api = os.getenv("JOCKE_API", "")
+
+    if dashboard_url and jocke_api:
+        log_info("=" * 60)
+        log_info("HÄMTAR KONFIGURATION FRÅN DASHBOARD")
+        log_info("=" * 60)
+        try:
+            from utils.load_external_config import fetch_and_apply_dashboard_config
+
+            if fetch_and_apply_dashboard_config(dashboard_url, jocke_api):
+                log_info("✅ Dashboard-konfiguration applicerad")
+            else:
+                log_warn("⚠️  Kunde inte hämta config från dashboard - använder lokala filer")
+        except ImportError as e:
+            log_error(f"Kunde inte importera config loader: {e}")
+        except Exception as e:
+            log_error(f"Fel vid hämtning av dashboard-config: {e}")
+        print()
+    else:
+        if not dashboard_url:
+            log_info("DASHBOARD_URL ej satt - använder lokala config-filer")
+        if not jocke_api:
+            log_info("JOCKE_API ej satt - använder lokala config-filer")
+
     # Parse arguments - hantera både master_number och datumargument
     raw_args = sys.argv[1:]
 
