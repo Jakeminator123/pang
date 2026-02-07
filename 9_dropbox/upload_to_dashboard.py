@@ -30,8 +30,17 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 JOCKE_DIR = PROJECT_ROOT / "10_jocke"
 DATA_BUNDLES_DIR = JOCKE_DIR / "data_bundles"
 
+# Load .env so the script works standalone (not just via main.py)
+try:
+    from dotenv import load_dotenv
+    env_path = PROJECT_ROOT / ".env"
+    if env_path.exists():
+        load_dotenv(env_path)
+except ImportError:
+    pass  # python-dotenv not installed - rely on environment variables
+
 # Dashboard config
-DEFAULT_DASHBOARD_URL = "https://jocke-dashboard.onrender.com"
+DEFAULT_DASHBOARD_URL = "https://jocke.onrender.com"
 UPLOAD_ENDPOINT = "/api/upload/bundle"
 DATES_ENDPOINT = "/api/data/dates"
 
