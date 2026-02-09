@@ -1468,102 +1468,130 @@ def type_text_via_clipboard(text: str, select_all_first: bool = True):
                 print(f"[DATE] Datum som skulle skrivas: '{text}'")
 
 
-def type_date_first_field(year: str, month: str, day: str):
+def type_date_field(year: str, month: str, day: str, field_label: str = ""):
     """
-    Skriver datum i FÖRSTA fältet (Från och med).
-    
-    Sekvens som funkar på Bolagsverket:
-    1. Skriv år (4 siffror)
-    2. Höger-pil
-    3. Skriv månad+dag (4 siffror i följd)
-    
+    Robust date input for any HTML5 date field.
+    Uses ONE consistent strategy for ALL date fields.
+
+    Strategy (in order of preference):
+      1. Clipboard paste of ISO date (YYYY-MM-DD) — atomic and fast
+      2. Keyboard: Home → 8 digits in sequence (relies on Chrome auto-advance)
+      3. Keyboard: Home → year → Tab → month → Tab → day (explicit segments)
+
     Args:
-        year: År (4 siffror, t.ex. "2026")
-        month: Månad (2 siffror, t.ex. "01")
-        day: Dag (2 siffror, t.ex. "09")
+        year:  "2026" (4 digits)
+        month: "02"   (2 digits)
+        day:   "09"   (2 digits)
+        field_label: For logging, e.g. "Från och med"
     """
-    print(f"[DATE] FÖRSTA FÄLTET: {year}-{month}-{day}")
-    
-    # Skriv år (4 siffror) med paus mellan varje
-    print(f"[DATE]   År: {year}")
+    date_iso = f"{year}-{month}-{day}"
+    label = f" ({field_label})" if field_label else ""
+    print(f"[DATE] Fyller i datumfält{label}: {date_iso}")
+
+    # ------------------------------------------------------------------
+    # Strategy 1: Clipboard paste (most reliable, ~0.5 s total)
+    # ------------------------------------------------------------------
+    try:
+        old_clipboard = get_clipboard_text()
+        if set_clipboard_text(date_iso):
+            safe_hotkey("ctrl", "a")
+            rsleep(0.2, 0.3)
+            safe_hotkey("ctrl", "v")
+            rsleep(0.4, 0.6)
+            # Restore previous clipboard content
+            if old_clipboard:
+                try:
+                    set_clipboard_text(old_clipboard)
+                except Exception:
+                    pass
+            print(f"[DATE]   Strategy 1 OK (clipboard paste): {date_iso}")
+            return
+        else:
+            print("[DATE]   set_clipboard_text returned False — trying keyboard")
+    except Exception as e:
+        print(f"[DATE]   Clipboard failed ({e}) — trying keyboard")
+
+    # ------------------------------------------------------------------
+    # Strategy 2: Home → type 8 digits (Chrome auto-advances segments)
+    # ------------------------------------------------------------------
+    print(f"[DATE]   Strategy 2: Home + 8 digits (auto-advance)...")
+    try:
+        pg.press("home")
+        rsleep(0.3, 0.5)
+
+        full_date = year + month + day  # "20260209"
+        for digit in full_date:
+            pg.press(digit)
+            rsleep(0.12, 0.20)
+
+        print(f"[DATE]   Strategy 2 OK (keyboard auto-advance): {full_date}")
+        return
+    except Exception as e:
+        print(f"[DATE]   Strategy 2 failed ({e}) — trying segment-by-segment")
+
+    # ------------------------------------------------------------------
+    # Strategy 3: Explicit segment navigation with Tab
+    # ------------------------------------------------------------------
+    print(f"[DATE]   Strategy 3: Home + segment-by-segment with Tab...")
+    pg.press("home")
+    rsleep(0.3, 0.5)
+
+    # Year (4 digits)
     for digit in year:
         pg.press(digit)
-        rsleep(0.7, 1.2)
-    
-    # Höger-pil för att komma till månad
-    print(f"[DATE]   -> Höger-pil")
-    pg.press("right")
-    rsleep(0.7, 1.2)
-    
-    # Skriv månad+dag (4 siffror i följd, utan pil mellan)
-    month_day = month + day  # "0109"
-    print(f"[DATE]   Månad+Dag: {month_day}")
-    for digit in month_day:
+        rsleep(0.15, 0.25)
+    pg.press("tab")
+    rsleep(0.3, 0.5)
+
+    # Month (2 digits)
+    for digit in month:
         pg.press(digit)
-        rsleep(0.7, 1.2)
-    
-    print(f"[DATE] Första fältet klart: {year}-{month}-{day}")
+        rsleep(0.15, 0.25)
+    pg.press("tab")
+    rsleep(0.3, 0.5)
 
-
-def type_date_second_field(year: str, month: str, day: str):
-    """
-    Skriver datum i ANDRA fältet (Till och med).
-    
-    Sekvens som funkar på Bolagsverket:
-    - Skriv år+månad+dag (8 siffror i följd, utan pil eller tab)
-    
-    Args:
-        year: År (4 siffror, t.ex. "2026")
-        month: Månad (2 siffror, t.ex. "01")
-        day: Dag (2 siffror, t.ex. "09")
-    """
-    print(f"[DATE] ANDRA FÄLTET: {year}-{month}-{day}")
-    
-    # Skriv alla 8 siffror i följd
-    full_date = year + month + day  # "20260109"
-    print(f"[DATE]   År+Månad+Dag: {full_date}")
-    for digit in full_date:
+    # Day (2 digits)
+    for digit in day:
         pg.press(digit)
-        rsleep(0.7, 1.2)
-    
-    print(f"[DATE] Andra fältet klart: {year}-{month}-{day}")
+        rsleep(0.15, 0.25)
+
+    print(f"[DATE]   Strategy 3 done (segment-by-segment): {date_iso}")
 
 
-def type_date_yyyymmdd():
+def _resolve_target_date():
     """
-    Skriver datum i ett HTML5 date-fält.
-    Dessa fält har separata delar för År/Månad/Dag.
+    Parse TARGET_DATE env var or fall back to last business day.
+    Returns (year, month, day) as strings.
     """
-    # Använd TARGET_DATE om den är satt, annars använd senaste arbetsdagen
     target_date_str = os.environ.get("TARGET_DATE")
-
-    # DEBUG: Skriv ut vad som läses
     if target_date_str:
         print(f"[DATE] TARGET_DATE från miljö: {target_date_str}")
     else:
         print("[DATE] Ingen TARGET_DATE satt, använder fallback")
 
     if target_date_str and len(target_date_str) == 8 and target_date_str.isdigit():
-        # TARGET_DATE är i formatet YYYYMMDD
-        try:
-            year = target_date_str[:4]
-            month = target_date_str[4:6]
-            day = target_date_str[6:8]
-            print(f"[DATE] Skriver datum i formulär: {year}-{month}-{day} (från {target_date_str})")
-            type_date_parts(year, month, day)
-            return
-        except (ValueError, IndexError) as e:
-            print(f"[DATE] TARGET_DATE konvertering misslyckades: {e}, använder fallback")
-            pass
+        year = target_date_str[:4]
+        month = target_date_str[4:6]
+        day = target_date_str[6:8]
+        print(f"[DATE] Använder TARGET_DATE: {year}-{month}-{day}")
+        return year, month, day
 
-    # Standard: använd senaste arbetsdagen
     today = datetime.now()
     biz = last_business_friday(today)
     year = biz.strftime("%Y")
     month = biz.strftime("%m")
     day = biz.strftime("%d")
     print(f"[DATE] Använder fallback (senaste arbetsdag): {year}-{month}-{day}")
-    type_date_parts(year, month, day)
+    return year, month, day
+
+
+def type_date_yyyymmdd():
+    """
+    Skriver datum i ett HTML5 date-fält (fristående anrop).
+    Delegates to the robust type_date_field.
+    """
+    year, month, day = _resolve_target_date()
+    type_date_field(year, month, day)
 
 
 def take_date_debug_screenshot(label: str):
@@ -1582,68 +1610,49 @@ def take_date_debug_screenshot(label: str):
 
 def special_after_3_bol():
     """
-    Fyller i datumfälten för "Från och med" och "Till och med".
-    
-    Sekvens som funkar på Bolagsverket:
-    
-    FÖRSTA FÄLTET:
-    1. Skriv år (4 siffror)
-    2. Höger-pil
-    3. Skriv månad+dag (4 siffror i följd)
-    
-    TAB två gånger
-    
-    ANDRA FÄLTET:
-    1. Skriv år+månad+dag (8 siffror i följd)
-    
-    Med 0.7-1.2 sek mellan varje knapptryck.
+    Fyller i datumfälten "Från och med" och "Till och med" på Bolagsverket.
+
+    Both fields are standard HTML5 <input type="date"> and are handled
+    identically via the robust type_date_field() function.
+
+    Flow:
+      1. Click to focus first date field
+      2. type_date_field → "Från och med"
+      3. Tab out of day-segment → Tab to next field → lands on "Till och med"
+      4. type_date_field → "Till och med"
     """
-    # Hämta datum att använda
-    target_date_str = os.environ.get("TARGET_DATE")
-    
-    if target_date_str and len(target_date_str) == 8 and target_date_str.isdigit():
-        year = target_date_str[:4]
-        month = target_date_str[4:6]
-        day = target_date_str[6:8]
-        print(f"[DATE] Använder TARGET_DATE: {year}-{month}-{day}")
-    else:
-        today = datetime.now()
-        biz = last_business_friday(today)
-        year = biz.strftime("%Y")
-        month = biz.strftime("%m")
-        day = biz.strftime("%d")
-        print(f"[DATE] Använder fallback (senaste arbetsdag): {year}-{month}-{day}")
-    
-    # Ta screenshot INNAN vi börjar
+    year, month, day = _resolve_target_date()
+
+    # Screenshot before we start
     take_date_debug_screenshot("1_before")
-    
-    # Klicka för att fokusera första datumfältet
+
+    # Focus the first date field
     pg.click()
-    rsleep(0.7, 1.2)
-    pg.click()  # Extra klick för att säkerställa fokus
-    rsleep(0.7, 1.2)
-    
-    # === FÖRSTA FÄLTET (Från och med) ===
+    rsleep(0.5, 0.8)
+    pg.click()  # Extra click to make sure we have focus
+    rsleep(0.5, 0.8)
+
+    # === FIRST FIELD (Från och med) ===
     print("[DATE] === FYLLER I 'FRÅN OCH MED' ===")
-    type_date_first_field(year, month, day)
-    
-    # Ta screenshot efter första fältet
+    type_date_field(year, month, day, field_label="Från och med")
+
     take_date_debug_screenshot("2_after_first")
-    
-    # TAB två gånger för att komma till andra datumfältet
-    print("[DATE] Tab -> Tab för att komma till 'Till och med'...")
+
+    # Navigate from first date field to second date field.
+    # After filling the day-segment, Tab leaves the date input,
+    # then one more Tab reaches "Till och med".
+    print("[DATE] Tab → Tab för att nå 'Till och med'...")
     pg.press("tab")
-    rsleep(0.7, 1.2)
+    rsleep(0.5, 0.8)
     pg.press("tab")
-    rsleep(0.7, 1.2)
-    
-    # === ANDRA FÄLTET (Till och med) ===
+    rsleep(0.5, 0.8)
+
+    # === SECOND FIELD (Till och med) ===
     print("[DATE] === FYLLER I 'TILL OCH MED' ===")
-    type_date_second_field(year, month, day)
-    
-    # Ta screenshot efter andra fältet
+    type_date_field(year, month, day, field_label="Till och med")
+
     take_date_debug_screenshot("3_after_second")
-    
+
     print("[DATE] === DATUMFÄLT KLARA ===")
 
 
