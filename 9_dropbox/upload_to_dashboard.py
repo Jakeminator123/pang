@@ -10,7 +10,7 @@ Usage:
 
 Environment variables:
     UPLOAD_SECRET     - API key for dashboard authentication (required)
-    DASHBOARD_URL     - Dashboard base URL (default: https://jocke-dashboard.onrender.com)
+    DASHBOARD_URL     - Dashboard base URL (default: https://jocke.onrender.com)
     
 The script reads ZIP files from 10_jocke/data_bundles/ and uploads them to
 the dashboard's API endpoint, which extracts them to persistent storage.
