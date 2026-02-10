@@ -973,14 +973,17 @@ async def generate_sites_for_worthy_companies(
             )
 
             try:
-                result = await generate_site_for_company(
-                    company_folder.name,
-                    date_folder,
-                    v0_api_key=None,
-                    openai_key=None,
-                    use_openai_enhancement=True,
-                    use_images=True,
-                    fetch_actual_costs=True,
+                result = await asyncio.wait_for(
+                    generate_site_for_company(
+                        company_folder.name,
+                        date_folder,
+                        v0_api_key=None,
+                        openai_key=None,
+                        use_openai_enhancement=True,
+                        use_images=True,
+                        fetch_actual_costs=True,
+                    ),
+                    timeout=SITE_GEN_TIMEOUT_SECONDS,
                 )
 
                 preview_url = result.get("preview_url", "N/A")
@@ -991,6 +994,11 @@ async def generate_sites_for_worthy_companies(
                 if idx < len(selected_companies):
                     await asyncio.sleep(2)
 
+            except asyncio.TimeoutError:
+                log_warn(
+                    f"    ⏱️ Site generation timeout efter {SITE_GEN_TIMEOUT_SECONDS}s - hoppar över {company_name}"
+                )
+                continue
             except Exception as e:
                 log_error(f"    ❌ Fel vid generering: {e}")
                 continue
@@ -1056,6 +1064,10 @@ def load_sajt_config() -> Dict[str, Any]:
         log_warn(f"Kunde inte läsa sajt-config: {e}")
     
     return config
+
+
+SITE_GEN_TIMEOUT_SECONDS = 300  # Max 5 minutes per site generation
+AUDIT_TIMEOUT_SECONDS = 180  # Max 3 minutes per audit to prevent pipeline hangs
 
 
 async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
@@ -1139,6 +1151,7 @@ async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
         log_info(f"Kör audits för {len(to_audit)} av {len(qualified_companies)} kvalificerade företag")
         
         audited_count = 0
+        timed_out_count = 0
         for idx, company in enumerate(to_audit, 1):
             company_dir = company["dir"]
             domain_url = company["domain"]
@@ -1152,7 +1165,12 @@ async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
             log_info(f"  [{idx}/{len(to_audit)}] Audit: {company_name} ({domain_url}, {confidence:.0%})")
             
             try:
-                result = run_audit_to_folder(domain_url, company_dir)
+                # Run audit with timeout to prevent single audits from hanging
+                # the entire pipeline (e.g. slow sites, bot protection, etc.)
+                result = await asyncio.wait_for(
+                    asyncio.to_thread(run_audit_to_folder, domain_url, company_dir),
+                    timeout=AUDIT_TIMEOUT_SECONDS,
+                )
                 
                 if result.get("audit_pdf"):
                     log_info(f"    ✅ PDF skapad: audit_report.pdf")
@@ -1164,11 +1182,19 @@ async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
                 # Kort paus mellan audits
                 if idx < len(to_audit):
                     await asyncio.sleep(1)
-                    
+
+            except asyncio.TimeoutError:
+                timed_out_count += 1
+                log_warn(
+                    f"    ⏱️ Audit timeout efter {AUDIT_TIMEOUT_SECONDS}s - hoppar över {company_name} ({domain_url})"
+                )
+                continue
             except Exception as e:
                 log_error(f"    ❌ Audit misslyckades: {e}")
                 continue
         
+        if timed_out_count:
+            log_warn(f"Audits: {timed_out_count} st fick timeout (>{AUDIT_TIMEOUT_SECONDS}s)")
         log_info(f"Audits klara: {audited_count} av {len(to_audit)} lyckades")
         return len(qualified_companies), audited_count
         
