@@ -1,36 +1,16 @@
-# =============================================================================
-# CONFIG FÖR 3_SAJT - Site Generation & Audit
-# =============================================================================
-# Används av: evaluate_companies.py, interactive_batch.py, standalone_audit.py
-# Anropas även från main.py och main_from_segment.py
-# =============================================================================
+# Updated: 2026-02-10 11:20:20
 
-# --- EVALUATION (bedömning av företag) ---
-# evaluate: y/n - Ska filtrering på evaluation göras?
+# --- EVALUATION ---
 evaluate = y
-
-# threshold: 0.0-1.0 - Minsta confidence för att anses "värd" hemsida
-threshold = 0.80
-
-# max_total_judgement_approvals: Max antal företag som kan godkännas (0 = obegränsat)
+threshold = 0.8
 max_total_judgement_approvals = 4
 
-# --- SITE GENERATION (preview-hemsidor) ---
-# re_input_website_link: y/n - Lägg in preview-länk i mail.txt efter generering
+# --- SITE GENERATION ---
 re_input_website_link = y
+max_sites = 4
 
-# max_sites: Max antal sajter per körning (0 = obegränsat)
-max_sites = 2
-
-# --- AUDIT (analys av befintlig hemsida) ---
-# audit_enabled: y/n - Ska audit köras?
+# --- AUDIT ---
 audit_enabled = y
-
-# audit_threshold: 0.0-1.0 - Minsta domän-confidence för att köra audit
 audit_threshold = 0.85
-
-# re_input_audit: y/n - Lägg in audit-länk i mail.txt efter generering
 re_input_audit = y
-
-# max_audits: Max antal audits per körning (0 = obegränsat)
-max_audits = 4
+max_audits = 10

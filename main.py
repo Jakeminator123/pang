@@ -34,6 +34,7 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
 import time
 from datetime import datetime
 from pathlib import Path
@@ -111,6 +112,10 @@ def _is_pid_alive(pid: int) -> bool:
 
 # Max age for lock file before it is considered stale (minutes)
 LOCK_MAX_AGE_MINUTES = 30
+
+# Pipeline watchdog runtime (seconds). Override via env if needed.
+PIPELINE_MAX_RUNTIME_SEC = int(os.environ.get("PIPELINE_MAX_RUNTIME_SEC", "21600"))
+_pipeline_timeout_timer: Optional[threading.Timer] = None
 
 
 def acquire_pipeline_lock() -> bool:
@@ -236,6 +241,56 @@ def log_warn(msg: str):
     line = f"[WARN {ts()}] {msg}"
     print(line)
     append_run_log(line)
+
+
+def purge_pycache_dirs(root: Path):
+    """Remove all __pycache__ folders under root."""
+    removed = 0
+    try:
+        for dirpath, dirnames, _ in os.walk(root):
+            if "__pycache__" in dirnames:
+                pycache_path = Path(dirpath) / "__pycache__"
+                try:
+                    shutil.rmtree(pycache_path, ignore_errors=True)
+                    removed += 1
+                except Exception:
+                    pass
+                # Prevent os.walk from descending into it
+                dirnames.remove("__pycache__")
+    except Exception as e:
+        log_warn(f"Kunde inte rensa __pycache__: {e}")
+        return
+
+    if removed:
+        log_info(f"Rensade {removed} st __pycache__ mappar")
+    else:
+        log_info("Inga __pycache__ mappar att rensa")
+
+
+def schedule_pipeline_timeout(max_runtime_sec: int):
+    """Start a watchdog that aborts the pipeline after max runtime."""
+    if not max_runtime_sec or max_runtime_sec <= 0:
+        log_warn("PIPELINE_MAX_RUNTIME_SEC <= 0 - watchdog disabled")
+        return
+
+    def _on_timeout():
+        log_error(f"Pipeline timeout efter {max_runtime_sec} sekunder - avbryter")
+        try:
+            stop_server(None)
+        except Exception:
+            pass
+        try:
+            release_pipeline_lock()
+        except Exception:
+            pass
+        # Force exit to stop hung steps
+        os._exit(1)
+
+    global _pipeline_timeout_timer
+    _pipeline_timeout_timer = threading.Timer(max_runtime_sec, _on_timeout)
+    _pipeline_timeout_timer.daemon = True
+    _pipeline_timeout_timer.start()
+    log_info(f"Pipeline watchdog aktiverad ({max_runtime_sec} s)")
 
 
 def check_server_running() -> bool:
@@ -938,14 +993,17 @@ async def generate_sites_for_worthy_companies(
             )
 
             try:
-                result = await generate_site_for_company(
-                    company_folder.name,
-                    date_folder,
-                    v0_api_key=None,
-                    openai_key=None,
-                    use_openai_enhancement=True,
-                    use_images=True,
-                    fetch_actual_costs=True,
+                result = await asyncio.wait_for(
+                    generate_site_for_company(
+                        company_folder.name,
+                        date_folder,
+                        v0_api_key=None,
+                        openai_key=None,
+                        use_openai_enhancement=True,
+                        use_images=True,
+                        fetch_actual_costs=True,
+                    ),
+                    timeout=SITE_GEN_TIMEOUT_SECONDS,
                 )
 
                 preview_url = result.get("preview_url", "N/A")
@@ -956,6 +1014,11 @@ async def generate_sites_for_worthy_companies(
                 if idx < len(selected_companies):
                     await asyncio.sleep(2)
 
+            except asyncio.TimeoutError:
+                log_warn(
+                    f"    ⏱️ Site generation timeout efter {SITE_GEN_TIMEOUT_SECONDS}s - hoppar över {company_name}"
+                )
+                continue
             except Exception as e:
                 log_error(f"    ❌ Fel vid generering: {e}")
                 continue
@@ -1021,6 +1084,10 @@ def load_sajt_config() -> Dict[str, Any]:
         log_warn(f"Kunde inte läsa sajt-config: {e}")
     
     return config
+
+
+SITE_GEN_TIMEOUT_SECONDS = 300  # Max 5 minutes per site generation
+AUDIT_TIMEOUT_SECONDS = 180  # Max 3 minutes per audit to prevent pipeline hangs
 
 
 async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
@@ -1104,6 +1171,7 @@ async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
         log_info(f"Kör audits för {len(to_audit)} av {len(qualified_companies)} kvalificerade företag")
         
         audited_count = 0
+        timed_out_count = 0
         for idx, company in enumerate(to_audit, 1):
             company_dir = company["dir"]
             domain_url = company["domain"]
@@ -1117,7 +1185,12 @@ async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
             log_info(f"  [{idx}/{len(to_audit)}] Audit: {company_name} ({domain_url}, {confidence:.0%})")
             
             try:
-                result = run_audit_to_folder(domain_url, company_dir)
+                # Run audit with timeout to prevent single audits from hanging
+                # the entire pipeline (e.g. slow sites, bot protection, etc.)
+                result = await asyncio.wait_for(
+                    asyncio.to_thread(run_audit_to_folder, domain_url, company_dir),
+                    timeout=AUDIT_TIMEOUT_SECONDS,
+                )
                 
                 if result.get("audit_pdf"):
                     log_info(f"    ✅ PDF skapad: audit_report.pdf")
@@ -1129,11 +1202,19 @@ async def run_audits_for_companies(date_folder: Path) -> Tuple[int, int]:
                 # Kort paus mellan audits
                 if idx < len(to_audit):
                     await asyncio.sleep(1)
-                    
+
+            except asyncio.TimeoutError:
+                timed_out_count += 1
+                log_warn(
+                    f"    ⏱️ Audit timeout efter {AUDIT_TIMEOUT_SECONDS}s - hoppar över {company_name} ({domain_url})"
+                )
+                continue
             except Exception as e:
                 log_error(f"    ❌ Audit misslyckades: {e}")
                 continue
         
+        if timed_out_count:
+            log_warn(f"Audits: {timed_out_count} st fick timeout (>{AUDIT_TIMEOUT_SECONDS}s)")
         log_info(f"Audits klara: {audited_count} av {len(to_audit)} lyckades")
         return len(qualified_companies), audited_count
         
@@ -1779,6 +1860,9 @@ def main():
     # Initiera loggfil direkt
     setup_run_logging()
     log_info(f"Run-logg: {RUN_LOG_FILE}")
+
+    # Rensa __pycache__ för att undvika gamla bytecode-problem
+    purge_pycache_dirs(PROJECT_ROOT)
     
     # Kontrollera att ingen annan pipeline-instans körs
     if not acquire_pipeline_lock():

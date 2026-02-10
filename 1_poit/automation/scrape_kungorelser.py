@@ -64,6 +64,9 @@ _screenshot_stop_event = threading.Event()
 _automation_paused = threading.Event()  # Satt = pausad
 _automation_paused.clear()  # Startar opausad
 
+# Loggfil för steg 1 (rullgardin → tabbar)
+STEP1_LOG_FILE = Path(DEBUG_DIR) / "step1_trace.log"
+
 """
 scrape_kungorelser.py
 
@@ -198,6 +201,7 @@ POPUP_TIMEOUT_SEC = 15.0  # 15 sekunder för cookie-banner (som användaren öns
 STEP_TIMEOUT = 15.0       # Timeout för meny-steg
 POST_CLICK_WAIT = (1.2, 1.4)  # Halverat från (1.0, 2.0)
 STRICT_SEQUENCE = True
+
 
 # ===========================
 # Väntetider (sekunder) - halverade för snabbare körning
@@ -340,57 +344,60 @@ def is_window_foreground(win):
 
 
 def set_clipboard_text(text):
-    """Sätt text i Windows clipboard med ctypes (inga extra dependencies)"""
+    """Sätt text i Windows clipboard med ctypes (64-bit safe)"""
     try:
         if sys.platform != "win32":
             return False
-        
-        # Windows API för clipboard
+
+        import ctypes
+        from ctypes import wintypes
+
         user32 = ctypes.windll.user32
         kernel32 = ctypes.windll.kernel32
-        
-        # Öppna clipboard
+
+        # Set correct return/arg types for 64-bit safety
+        kernel32.GlobalAlloc.restype = ctypes.c_void_p
+        kernel32.GlobalLock.restype = ctypes.c_void_p
+        kernel32.GlobalUnlock.argtypes = [ctypes.c_void_p]
+        kernel32.GlobalFree.argtypes = [ctypes.c_void_p]
+        user32.SetClipboardData.restype = ctypes.c_void_p
+        user32.SetClipboardData.argtypes = [wintypes.UINT, ctypes.c_void_p]
+
         if not user32.OpenClipboard(None):
             return False
-        
+
         user32.EmptyClipboard()
-        
-        # Allokera minne för texten (UTF-16LE med null terminator)
-        text_utf16 = text.encode('utf-16le')
-        size = len(text_utf16) + 2  # +2 för null terminator
+
+        # UTF-16LE encoded text with null terminator
+        text_bytes = text.encode('utf-16le') + b'\x00\x00'
         GMEM_MOVEABLE = 0x0002
-        mem_handle = kernel32.GlobalAlloc(GMEM_MOVEABLE, size)
-        if not mem_handle:
+        h_mem = kernel32.GlobalAlloc(GMEM_MOVEABLE, len(text_bytes))
+        if not h_mem:
             user32.CloseClipboard()
             return False
-        
-        mem_ptr = kernel32.GlobalLock(mem_handle)
-        if not mem_ptr:
-            kernel32.GlobalFree(mem_handle)
+
+        p_mem = kernel32.GlobalLock(h_mem)
+        if not p_mem:
+            kernel32.GlobalFree(h_mem)
             user32.CloseClipboard()
             return False
-        
-        # Kopiera text till minnet
-        ctypes.memmove(ctypes.c_void_p(mem_ptr), text_utf16, len(text_utf16))
-        # Lägg till null terminator
-        null_term = ctypes.c_char_p(mem_ptr + len(text_utf16))
-        ctypes.memmove(null_term, b'\x00\x00', 2)
-        
-        kernel32.GlobalUnlock(mem_handle)
-        
-        # Sätt clipboard-data
+
+        ctypes.memmove(p_mem, text_bytes, len(text_bytes))
+        kernel32.GlobalUnlock(h_mem)
+
         CF_UNICODETEXT = 13
-        if user32.SetClipboardData(CF_UNICODETEXT, mem_handle):
-            user32.CloseClipboard()
+        result = user32.SetClipboardData(CF_UNICODETEXT, h_mem)
+        user32.CloseClipboard()
+
+        if result:
             return True
         else:
-            kernel32.GlobalFree(mem_handle)
-            user32.CloseClipboard()
+            kernel32.GlobalFree(h_mem)
             return False
     except Exception as e:
         try:
-            user32.CloseClipboard()
-        except:
+            ctypes.windll.user32.CloseClipboard()
+        except Exception:
             pass
         print(f"[CLIPBOARD] Kunde inte sätta clipboard: {e}")
         return False
@@ -1468,15 +1475,63 @@ def type_text_via_clipboard(text: str, select_all_first: bool = True):
                 print(f"[DATE] Datum som skulle skrivas: '{text}'")
 
 
+def _type_date_segments_keyboard(year: str, month: str, day: str):
+    """
+    Type date into HTML5 date field segment by segment via keyboard.
+    Chrome date fields have 3 segments: year | month | day.
+    
+    Right Arrow moves to next segment WITHIN the date input.
+    Left Arrow moves to previous segment.
+    
+    After typing year, Chrome MAY auto-advance to month or MAY NOT.
+    To handle both cases: type year → Left (back to year) → Right (to month).
+    This guarantees we land in month regardless of auto-advance.
+    Same pattern after month: Left → Right → day.
+    """
+    pg.press("home")
+    rsleep(0.25, 0.35)
+
+    # Year (4 digits)
+    for d in year:
+        pg.press(d)
+        time.sleep(0.12)
+    print(f"[DATE]   Year typed: {year}")
+
+    # Guarantee we're in month: Left (→ year) then Right (→ month)
+    pg.press("left")
+    rsleep(0.15, 0.2)
+    pg.press("right")
+    rsleep(0.2, 0.3)
+    print(f"[DATE]   Navigated to month segment")
+
+    # Month (2 digits)
+    for d in month:
+        pg.press(d)
+        time.sleep(0.12)
+    print(f"[DATE]   Month typed: {month}")
+
+    # Guarantee we're in day: Left (→ month) then Right (→ day)
+    pg.press("left")
+    rsleep(0.15, 0.2)
+    pg.press("right")
+    rsleep(0.2, 0.3)
+    print(f"[DATE]   Navigated to day segment")
+
+    # Day (2 digits)
+    for d in day:
+        pg.press(d)
+        time.sleep(0.12)
+    print(f"[DATE]   Day typed: {day}")
+
+
 def type_date_field(year: str, month: str, day: str, field_label: str = ""):
     """
     Robust date input for any HTML5 date field.
     Uses ONE consistent strategy for ALL date fields.
 
     Strategy (in order of preference):
-      1. Clipboard paste of ISO date (YYYY-MM-DD) — atomic and fast
-      2. Keyboard: Home → 8 digits in sequence (relies on Chrome auto-advance)
-      3. Keyboard: Home → year → Tab → month → Tab → day (explicit segments)
+      1. Clipboard paste of ISO date (YYYY-MM-DD)
+      2. Keyboard segment-by-segment (Home → year → Tab → month → Tab → day)
 
     Args:
         year:  "2026" (4 digits)
@@ -1489,17 +1544,14 @@ def type_date_field(year: str, month: str, day: str, field_label: str = ""):
     print(f"[DATE] Fyller i datumfält{label}: {date_iso}")
 
     # ------------------------------------------------------------------
-    # Strategy 1: Clipboard paste (most reliable, ~0.5 s total)
+    # Strategy 1: Clipboard paste (most reliable if clipboard works)
     # ------------------------------------------------------------------
     try:
         old_clipboard = get_clipboard_text()
         if set_clipboard_text(date_iso):
-            safe_hotkey("ctrl", "a")
-            rsleep(0.2, 0.3)
             safe_hotkey("ctrl", "v")
             rsleep(0.4, 0.6)
-            # Restore previous clipboard content
-            if old_clipboard:
+            if old_clipboard is not None:
                 try:
                     set_clipboard_text(old_clipboard)
                 except Exception:
@@ -1510,52 +1562,42 @@ def type_date_field(year: str, month: str, day: str, field_label: str = ""):
             print("[DATE]   set_clipboard_text returned False — trying keyboard")
     except Exception as e:
         print(f"[DATE]   Clipboard failed ({e}) — trying keyboard")
+    finally:
+        if "old_clipboard" in locals() and old_clipboard is not None:
+            try:
+                set_clipboard_text(old_clipboard)
+            except Exception:
+                pass
 
     # ------------------------------------------------------------------
-    # Strategy 2: Home → type 8 digits (Chrome auto-advances segments)
+    # Strategy 2: Keyboard segment-by-segment (Home → digits → Tab → ...)
+    # No dashes, only digits. Works regardless of clipboard.
     # ------------------------------------------------------------------
-    print(f"[DATE]   Strategy 2: Home + 8 digits (auto-advance)...")
+    print(f"[DATE]   Strategy 2: keyboard segment-by-segment...")
     try:
-        pg.press("home")
-        rsleep(0.3, 0.5)
-
-        full_date = year + month + day  # "20260209"
-        for digit in full_date:
-            pg.press(digit)
-            rsleep(0.12, 0.20)
-
-        print(f"[DATE]   Strategy 2 OK (keyboard auto-advance): {full_date}")
+        _type_date_segments_keyboard(year, month, day)
+        print(f"[DATE]   Strategy 2 OK (keyboard): {year}-{month}-{day}")
         return
     except Exception as e:
-        print(f"[DATE]   Strategy 2 failed ({e}) — trying segment-by-segment")
+        print(f"[DATE]   Strategy 2 failed ({e})")
 
     # ------------------------------------------------------------------
-    # Strategy 3: Explicit segment navigation with Tab
+    # Strategy 3: Retry keyboard
     # ------------------------------------------------------------------
-    print(f"[DATE]   Strategy 3: Home + segment-by-segment with Tab...")
-    pg.press("home")
-    rsleep(0.3, 0.5)
+    print(f"[DATE]   Strategy 3: retry keyboard...")
+    for attempt in range(1, 3):
+        try:
+            _type_date_segments_keyboard(year, month, day)
+            print(f"[DATE]   Strategy 3 OK on attempt {attempt}: {year}-{month}-{day}")
+            return
+        except Exception:
+            pass
+        rsleep(0.3, 0.5)
 
-    # Year (4 digits)
-    for digit in year:
-        pg.press(digit)
-        rsleep(0.15, 0.25)
-    pg.press("tab")
-    rsleep(0.3, 0.5)
+    print("[DATE]   KRITISKT: Kunde inte skriva datumfältet efter flera försök")
 
-    # Month (2 digits)
-    for digit in month:
-        pg.press(digit)
-        rsleep(0.15, 0.25)
-    pg.press("tab")
-    rsleep(0.3, 0.5)
 
-    # Day (2 digits)
-    for digit in day:
-        pg.press(digit)
-        rsleep(0.15, 0.25)
-
-    print(f"[DATE]   Strategy 3 done (segment-by-segment): {date_iso}")
+    
 
 
 def _resolve_target_date():
@@ -1608,7 +1650,7 @@ def take_date_debug_screenshot(label: str):
         print(f"[DATE-DEBUG] Kunde inte ta screenshot: {e}")
 
 
-def special_after_3_bol():
+def special_after_3_bol(win):
     """
     Fyller i datumfälten "Från och med" och "Till och med" på Bolagsverket.
 
@@ -1616,9 +1658,9 @@ def special_after_3_bol():
     identically via the robust type_date_field() function.
 
     Flow:
-      1. Click to focus first date field
+      1. Assumes focus already on first date field
       2. type_date_field → "Från och med"
-      3. Tab out of day-segment → Tab to next field → lands on "Till och med"
+      3. Tab once to next date field
       4. type_date_field → "Till och med"
     """
     year, month, day = _resolve_target_date()
@@ -1626,26 +1668,18 @@ def special_after_3_bol():
     # Screenshot before we start
     take_date_debug_screenshot("1_before")
 
-    # Focus the first date field
-    pg.click()
-    rsleep(0.5, 0.8)
-    pg.click()  # Extra click to make sure we have focus
-    rsleep(0.5, 0.8)
-
     # === FIRST FIELD (Från och med) ===
     print("[DATE] === FYLLER I 'FRÅN OCH MED' ===")
     type_date_field(year, month, day, field_label="Från och med")
 
     take_date_debug_screenshot("2_after_first")
 
-    # Navigate from first date field to second date field.
-    # After filling the day-segment, Tab leaves the date input,
-    # then one more Tab reaches "Till och med".
+    # Tab out of day segment → out of date input → into next date input
     print("[DATE] Tab → Tab för att nå 'Till och med'...")
     pg.press("tab")
-    rsleep(0.5, 0.8)
+    rsleep(0.2, 0.3)
     pg.press("tab")
-    rsleep(0.5, 0.8)
+    rsleep(0.3, 0.5)
 
     # === SECOND FIELD (Till och med) ===
     print("[DATE] === FYLLER I 'TILL OCH MED' ===")
@@ -1657,13 +1691,39 @@ def special_after_3_bol():
 
 
 def after_step_1_down_enter():
-    """Efter steg 1: 5× pil ned, sedan Enter."""
+    """Efter steg 1: n× pil ned, Enter, sedan 4× Tab till datumfält."""
     try:
-        time.sleep(0.25)
-        for _ in range(5):
+        down_count = 5
+        ts_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        line = f"[{ts_now}] STEP1 start: down={down_count}, enter=1, tab=4"
+        print(f"[STEP1] Ned: {down_count}×, Enter, Tab: 4×")
+        try:
+            STEP1_LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+            with STEP1_LOG_FILE.open("a", encoding="utf-8") as f:
+                f.write(line + "\n")
+        except Exception:
+            pass
+        time.sleep(0.4)
+        for i in range(1, down_count + 1):
             pg.press("down")
-            time.sleep(0.10)
+            print(f"[STEP1]   Ned tryck {i}/{down_count}")
+            try:
+                with STEP1_LOG_FILE.open("a", encoding="utf-8") as f:
+                    f.write(f"[{ts_now}] DOWN {i}/{down_count}\n")
+            except Exception:
+                pass
+            time.sleep(0.18)
         pg.press("enter")
+        time.sleep(0.35)
+        for i in range(1, 5):
+            pg.press("tab")
+            print(f"[STEP1]   Tab tryck {i}/4")
+            try:
+                with STEP1_LOG_FILE.open("a", encoding="utf-8") as f:
+                    f.write(f"[{ts_now}] TAB {i}/4\n")
+            except Exception:
+                pass
+            time.sleep(0.18)
     except Exception:
         pass
 
@@ -1947,11 +2007,14 @@ def run_menu_sequence(win):
 
         # Särfall 3_bol (datum)
         if num == 3 and "bol" in path.stem.lower():
-            special_after_3_bol()
+            special_after_3_bol(win)
 
         # lite mänskliga rörelser + paus
-        small_moves_balanced()
-        rsleep(*POST_CLICK_WAIT)
+        if not (num == 3 and "bol" in path.stem.lower()):
+            small_moves_balanced()
+            rsleep(*POST_CLICK_WAIT)
+        else:
+            rsleep(*POST_CLICK_WAIT)
 
 
 def open_missing_kungorelser(win, max_count=None):

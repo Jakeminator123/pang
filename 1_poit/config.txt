@@ -1,2 +1,3 @@
-#Använd MAX_KUN_DAG=ALL
+# Updated: 2026-02-10 11:20:20
+# Använd MAX_KUN_DAG=ALL för obegränsat
 MAX_KUN_DAG=150
