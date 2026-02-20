@@ -376,6 +376,30 @@ def find_chrome_path() -> str:
     return shutil.which("chrome") or "chrome.exe"
 
 
+def kill_existing_chrome():
+    """Kill any running Chrome processes to prevent new instance from delegating and exiting."""
+    try:
+        result = subprocess.run(
+            ["taskkill", "/IM", "chrome.exe", "/F"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if result.returncode == 0:
+            print("[CHROME] Killed existing Chrome processes")
+            time.sleep(2)
+        else:
+            print("[CHROME] No existing Chrome processes found")
+    except Exception as e:
+        print(f"[CHROME] Could not check/kill Chrome: {e}")
+
+    for lock_file in ["SingletonLock", "SingletonSocket", "SingletonCookie", "Lockfile"]:
+        lock_path = Path(PROFILE_DIR) / lock_file
+        try:
+            if lock_path.exists():
+                lock_path.unlink()
+        except OSError:
+            pass
+
+
 def launch_chrome_with_profile(start_url: str) -> subprocess.Popen:
     """Startar Chrome med persistent profil och extension laddad"""
     os.makedirs(PROFILE_DIR, exist_ok=True)
@@ -2386,6 +2410,8 @@ def main():
 
     # Starta screenshot-logger för debugging
     start_screenshot_logger()
+
+    kill_existing_chrome()
 
     proc = None
     proc = launch_chrome_with_profile(URL_FIRST)

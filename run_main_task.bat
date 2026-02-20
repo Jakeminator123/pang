@@ -29,7 +29,11 @@ powercfg -change -standby-timeout-dc 0 >nul 2>&1
 powercfg -change -hibernate-timeout-ac 0 >nul 2>&1
 powercfg -change -hibernate-timeout-dc 0 >nul 2>&1
 
-REM Minimal Chrome-lock cleanup (bara rätt profil, inga stora rensningar)
+REM Kill any running Chrome before starting (prevents exit=0 delegation to existing instance)
+taskkill /IM chrome.exe /F >nul 2>&1
+timeout /t 2 /nobreak >nul 2>&1
+
+REM Chrome-lock cleanup
 del /f /q "%ROOT%1_poit\chrome_profile\Singleton*" >nul 2>&1
 del /f /q "%ROOT%1_poit\chrome_profile\Lockfile" >nul 2>&1
 
