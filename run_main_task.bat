@@ -1,8 +1,12 @@
 @echo off
+chcp 65001 >nul 2>&1
 setlocal EnableExtensions EnableDelayedExpansion
 
 set "ROOT=%~dp0"
 cd /d "%ROOT%"
+
+set "PYTHONIOENCODING=utf-8"
+set "PYTHONUNBUFFERED=1"
 
 set "MAX_SECS=12600"
 set /a "MAX_MS=MAX_SECS * 1000"
