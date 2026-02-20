@@ -8,6 +8,7 @@ import shutil
 import signal
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 from datetime import datetime, timedelta
@@ -277,28 +278,83 @@ def find_chrome_path() -> str:
     return shutil.which("chrome") or "chrome.exe"
 
 
-def launch_chrome_with_profile(start_url: str) -> subprocess.Popen:
-    """Startar Chrome med persistent profil och extension laddad"""
+def read_last_lines(path: str, max_lines: int = 20) -> str:
+    try:
+        with open(path, "r", encoding="utf-8", errors="replace") as f:
+            lines = f.readlines()
+        return "".join(lines[-max_lines:]).strip()
+    except Exception:
+        return ""
+
+
+def kill_existing_chrome():
+    """Kill any running Chrome processes to prevent new instance from delegating and exiting."""
+    try:
+        result = subprocess.run(
+            ["taskkill", "/IM", "chrome.exe", "/F"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if result.returncode == 0:
+            print("[CHROME] Killed existing Chrome processes")
+            time.sleep(2)
+        else:
+            print("[CHROME] No existing Chrome processes found")
+    except Exception as e:
+        print(f"[CHROME] Could not check/kill Chrome: {e}")
+
+    for lock_file in ["SingletonLock", "SingletonSocket", "SingletonCookie", "Lockfile"]:
+        lock_path = Path(PROFILE_DIR) / lock_file
+        try:
+            if lock_path.exists():
+                lock_path.unlink()
+        except OSError:
+            pass
+
+
+def launch_chrome_with_profile(
+    start_url: str, use_temp_profile: bool = False
+) -> tuple[subprocess.Popen, str | None, str]:
+    """Startar Chrome med extension. Kan fallbacka till temporär profil."""
     os.makedirs(PROFILE_DIR, exist_ok=True)
     ext_path = str(BASE_DIR / "ext_bolag")
+    chrome_exe = find_chrome_path()
+    temp_profile_dir = None
+    profile_dir = PROFILE_DIR
+    chrome_log_path = str(Path(DEBUG_DIR) / "chrome_startup.log")
 
-    print(f"[CHROME] Startar Chrome med profil: {PROFILE_DIR}")
+    if use_temp_profile:
+        temp_profile_dir = tempfile.mkdtemp(prefix="pang_chrome_profile_")
+        profile_dir = temp_profile_dir
+        chrome_log_path = str(Path(DEBUG_DIR) / "chrome_startup_retry.log")
+
+    print(f"[CHROME] Chrome executable: {chrome_exe}")
+    print(f"[CHROME] Startar Chrome med profil: {profile_dir}")
     print(f"[CHROME] Extension: {ext_path}")
+    print(f"[CHROME] Startup log: {chrome_log_path}")
 
-    return subprocess.Popen(
-        [
-            find_chrome_path(),
-            f"--user-data-dir={PROFILE_DIR}",
+    cmd = [
+            chrome_exe,
+            f"--user-data-dir={profile_dir}",
             "--profile-directory=Default",
             f"--load-extension={ext_path}",
+            f"--log-file={chrome_log_path}",
+            "--enable-logging=stderr",
+            "--v=1",
             # Förhindra att Chrome throttlar bakgrundstabbar
             "--disable-background-timer-throttling",      # Timers (setTimeout) körs normalt i bakgrund
             "--disable-backgrounding-occluded-windows",   # Rendera även dolda fönster
             "--disable-renderer-backgrounding",           # Renderer-processer throttlas inte
             "--disable-features=IntensiveWakeUpThrottling",  # Ingen intensiv throttling
             start_url,
-        ],
-        shell=False,
+        ]
+
+    return (
+        subprocess.Popen(
+            cmd,
+            shell=False,
+        ),
+        temp_profile_dir,
+        chrome_log_path,
     )
 
 
@@ -2252,11 +2308,44 @@ def main():
     # Starta screenshot-logger för debugging
     start_screenshot_logger()
 
-    proc = launch_chrome_with_profile(URL_FIRST)
+    kill_existing_chrome()
 
-    # Vänta kort så Chrome hinner starta
-    print("[*] Väntar på att Chrome startar...")
-    time.sleep(WAIT_CHROME_START)
+    proc = None
+    temp_profile_dir = None
+    chrome_log_path = ""
+
+    # Try normal profile first, then retry with a clean temporary profile.
+    for attempt_name, use_temp_profile in [
+        ("normal profile", False),
+        ("temporary profile (retry)", True),
+    ]:
+        print(f"[*] Chrome startup attempt: {attempt_name}")
+        proc, temp_profile_dir, chrome_log_path = launch_chrome_with_profile(
+            URL_FIRST, use_temp_profile=use_temp_profile
+        )
+        print("[*] Väntar på att Chrome startar...")
+        time.sleep(WAIT_CHROME_START)
+
+        if proc.poll() is None:
+            print(f"[CHROME] Startup OK via {attempt_name}")
+            break
+
+        print(
+            f"[ERROR] Chrome exited during startup via {attempt_name} (exit={proc.returncode})"
+        )
+        startup_log_tail = read_last_lines(chrome_log_path, max_lines=30)
+        if startup_log_tail:
+            print("[CHROME LOG] Last lines:")
+            print(startup_log_tail)
+        else:
+            print("[CHROME LOG] No startup log output available.")
+
+        if temp_profile_dir:
+            try:
+                shutil.rmtree(temp_profile_dir, ignore_errors=True)
+            except Exception:
+                pass
+            temp_profile_dir = None
 
     # Setup cleanup handlers för att stänga Chrome om programmet avbryts
     def cleanup_all():
@@ -2273,6 +2362,11 @@ def main():
                     proc.kill()
         except:
             pass
+        try:
+            if temp_profile_dir:
+                shutil.rmtree(temp_profile_dir, ignore_errors=True)
+        except:
+            pass
 
     # Registrera cleanup för olika avbrott
     atexit.register(cleanup_all)
@@ -2282,8 +2376,9 @@ def main():
     success = False
     try:
         # Kontrollera att Chrome-processen fortfarande körs
-        if proc.poll() is not None:
+        if not proc or proc.poll() is not None:
             print("[KRITISKT FEL] Chrome-processen avslutades innan scraping började!")
+            print("[KRITISKT FEL] Both startup attempts failed (normal + temporary profile).")
             return 1
 
         time.sleep(1.0)  # Halverad väntetid

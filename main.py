@@ -1727,9 +1727,9 @@ def update_config_with_master_number(master_number: int):
                 f.writelines(lines)
             log_info(f"  - Uppdaterade {config_poit.name}")
 
-        # Uppdatera 2_segment_info/config_ny.txt
+        # Uppdatera 2_segment_info/config_simple.txt
         # VIKTIGT: Bara uppdatera max_companies-värden, behåll alla thresholds och andra inställningar
-        config_segment = SEGMENT_DIR / "config_ny.txt"
+        config_segment = SEGMENT_DIR / "config_simple.txt"
         if config_segment.exists():
             parser = configparser.ConfigParser()
             # Använd preserve_case för att behålla originalformatering
@@ -1964,8 +1964,8 @@ Argument:
     for cfg_path in [
         PROJECT_ROOT / ".env",
         POIT_DIR / "config.txt",
-        SEGMENT_DIR / "config_ny.txt",
-        SAJT_DIR / "config.txt",
+        SEGMENT_DIR / "config_simple.txt",
+        SAJT_DIR / "config_ny.txt",
     ]:
         exists = "OK" if cfg_path.exists() else "SAKNAS"
         log_info(f"  - {cfg_path.relative_to(PROJECT_ROOT)}: {exists}")
