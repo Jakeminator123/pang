@@ -46,18 +46,29 @@ REM ================================================================
 set "PYTHON_EXE="
 set "PYTHON_METHOD="
 
-REM --- Method 1: py launcher (Python Launcher for Windows) ---
+REM --- Method 1: py launcher -> resolve to real python.exe path ---
+REM IMPORTANT: We must resolve to the actual python.exe because Start-Process
+REM tracks the py.exe launcher process which exits immediately after spawning
+REM the real python.exe, causing WaitForExit to return too early.
 where py >nul 2>&1
 if !errorlevel! EQU 0 (
   echo %date% %time% [FIND_PYTHON] Method 1: py launcher found in PATH>> "%LOG%"
   py -3 --version >nul 2>&1
   if !errorlevel! EQU 0 (
     for /f "delims=" %%V in ('py -3 --version 2^>^&1') do (
-      echo %date% %time% [FIND_PYTHON] Method 1 OK: %%V>> "%LOG%"
+      echo %date% %time% [FIND_PYTHON] Method 1: %%V>> "%LOG%"
     )
-    set "PYTHON_EXE=py"
-    set "PYTHON_ARGS=-3 -u"
-    set "PYTHON_METHOD=py_launcher"
+    REM Resolve py launcher to actual python.exe path
+    for /f "delims=" %%P in ('py -3 -c "import sys; print(sys.executable)" 2^>nul') do (
+      set "PYTHON_EXE=%%P"
+    )
+    if defined PYTHON_EXE (
+      echo %date% %time% [FIND_PYTHON] Method 1 OK: Resolved to !PYTHON_EXE!>> "%LOG%"
+      set "PYTHON_ARGS=-u"
+      set "PYTHON_METHOD=py_launcher_resolved"
+    ) else (
+      echo %date% %time% [FIND_PYTHON] Method 1 FAIL: Could not resolve py to python.exe>> "%LOG%"
+    )
   ) else (
     echo %date% %time% [FIND_PYTHON] Method 1 FAIL: py found but version check failed>> "%LOG%"
   )
@@ -230,13 +241,8 @@ echo %date% %time% [RUN] Method B: Direct CMD execution (no timeout)...>> "%LOG%
 set "PYLOG=%ROOT%python_stdout_%RUN_ID%_methodB.log"
 echo %PYLOG%> "%ROOT%last_python_log.txt"
 
-if "%PYTHON_METHOD%"=="py_launcher" (
-  echo %date% %time% [RUN] Method B: Running py -3 -u main.py directly>> "%LOG%"
-  py -3 -u "%ROOT%main.py" > "%PYLOG%" 2>&1
-) else (
-  echo %date% %time% [RUN] Method B: Running %PYTHON_EXE% -u main.py directly>> "%LOG%"
-  "%PYTHON_EXE%" -u "%ROOT%main.py" > "%PYLOG%" 2>&1
-)
+echo %date% %time% [RUN] Method B: Running %PYTHON_EXE% -u main.py directly>> "%LOG%"
+"%PYTHON_EXE%" %PYTHON_ARGS% "%ROOT%main.py" > "%PYLOG%" 2>&1
 
 set "EC=!errorlevel!"
 echo %date% %time% [RUN] Method B completed with EC=!EC!>> "%LOG%"
