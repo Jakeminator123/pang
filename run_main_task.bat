@@ -1,5 +1,4 @@
 @echo off
-chcp 65001 >nul 2>&1
 setlocal EnableExtensions EnableDelayedExpansion
 
 set "ROOT=%~dp0"
@@ -10,7 +9,6 @@ set "PYTHONUNBUFFERED=1"
 
 set "MAX_SECS=12600"
 set /a "MAX_MS=MAX_SECS * 1000"
-REM 3.5 timmar = 12600 s = 12600000 ms
 
 set "LOG=%ROOT%task_stdout.log"
 
@@ -20,12 +18,12 @@ echo Working dir: %CD%>> "%LOG%"
 
 net session >nul 2>&1
 if !errorlevel! EQU 0 (
-  echo %date% %time% CONTEXT: ELEVATED(ADMIN)>> "%LOG%"
+  echo %date% %time% CONTEXT: ELEVATED>> "%LOG%"
 ) else (
-  echo %date% %time% CONTEXT: NORMAL(USER)>> "%LOG%"
+  echo %date% %time% CONTEXT: NORMAL>> "%LOG%"
 )
 
-REM Håll datorn vaken + håll skärmen PÅ under körning (AC + DC)
+REM Keep computer awake and screen ON during run (AC + DC)
 powercfg -change -monitor-timeout-ac 0 >nul 2>&1
 powercfg -change -monitor-timeout-dc 0 >nul 2>&1
 powercfg -change -standby-timeout-ac 0 >nul 2>&1
@@ -33,7 +31,7 @@ powercfg -change -standby-timeout-dc 0 >nul 2>&1
 powercfg -change -hibernate-timeout-ac 0 >nul 2>&1
 powercfg -change -hibernate-timeout-dc 0 >nul 2>&1
 
-REM Kill any running Chrome before starting (prevents exit=0 delegation to existing instance)
+REM Kill any running Chrome before starting (prevents exit=0 delegation)
 echo %date% %time% Killing existing Chrome processes before startup>> "%LOG%"
 taskkill /IM chrome.exe /F >nul 2>&1
 timeout /t 2 /nobreak >nul 2>&1
@@ -52,7 +50,6 @@ REM --- Method 1: py launcher (Python Launcher for Windows) ---
 where py >nul 2>&1
 if !errorlevel! EQU 0 (
   echo %date% %time% [FIND_PYTHON] Method 1: py launcher found in PATH>> "%LOG%"
-  REM Verify it actually runs
   py -3 --version >nul 2>&1
   if !errorlevel! EQU 0 (
     for /f "delims=" %%V in ('py -3 --version 2^>^&1') do (
@@ -62,7 +59,7 @@ if !errorlevel! EQU 0 (
     set "PYTHON_ARGS=-3 -u"
     set "PYTHON_METHOD=py_launcher"
   ) else (
-    echo %date% %time% [FIND_PYTHON] Method 1 FAIL: py found but 'py -3 --version' failed>> "%LOG%"
+    echo %date% %time% [FIND_PYTHON] Method 1 FAIL: py found but version check failed>> "%LOG%"
   )
 ) else (
   echo %date% %time% [FIND_PYTHON] Method 1 FAIL: py not found in PATH>> "%LOG%"
@@ -82,7 +79,7 @@ if not defined PYTHON_EXE (
       set "PYTHON_ARGS=-u"
       set "PYTHON_METHOD=python_path"
     ) else (
-      echo %date% %time% [FIND_PYTHON] Method 2 FAIL: python found but '--version' failed>> "%LOG%"
+      echo %date% %time% [FIND_PYTHON] Method 2 FAIL: python found but version check failed>> "%LOG%"
     )
   ) else (
     echo %date% %time% [FIND_PYTHON] Method 2 FAIL: python not found in PATH>> "%LOG%"
@@ -103,7 +100,7 @@ if not defined PYTHON_EXE (
       set "PYTHON_ARGS=-u"
       set "PYTHON_METHOD=python3_path"
     ) else (
-      echo %date% %time% [FIND_PYTHON] Method 3 FAIL: python3 found but '--version' failed>> "%LOG%"
+      echo %date% %time% [FIND_PYTHON] Method 3 FAIL: python3 found but version check failed>> "%LOG%"
     )
   ) else (
     echo %date% %time% [FIND_PYTHON] Method 3 FAIL: python3 not found in PATH>> "%LOG%"
@@ -203,19 +200,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
 
 set "EC=!errorlevel!"
 
-REM Check if Method A actually worked (not 9999 = crash, and log file exists with content)
+REM Check if Method A actually worked
 if "!EC!"=="9999" (
   echo %date% %time% [RUN] Method A FAILED - trying fallback Method B>> "%LOG%"
   goto :method_b
 )
 
-REM Check if the python log was actually created (Method A might "succeed" but not really run)
 if not exist "%PYLOG%" (
   echo %date% %time% [RUN] Method A returned EC=!EC! but NO python log file created - trying Method B>> "%LOG%"
   goto :method_b
 )
 
-REM Check if log file has content (more than 0 bytes)
 for %%F in ("%PYLOG%") do (
   if %%~zF EQU 0 (
     if "!EC!" NEQ "0" (
@@ -275,7 +270,6 @@ if "!EC!"=="1460" (
 
 :cleanup
 REM Cleanup: Kill Flask server (port 51234) and related windows.
-REM This is a safety net in case main.py was killed before stop_server() ran.
 echo %date% %time% Cleanup: killing server and orphan processes>> "%LOG%"
 for /f "tokens=5" %%a in ('netstat -aon ^| findstr ":51234" ^| findstr "LISTENING"') do (
   echo %date% %time% Killing server PID %%a>> "%LOG%"
@@ -284,10 +278,8 @@ for /f "tokens=5" %%a in ('netstat -aon ^| findstr ":51234" ^| findstr "LISTENIN
 taskkill /FI "WINDOWTITLE eq Flask Server*" /F >nul 2>&1
 taskkill /FI "WINDOWTITLE eq Flask Server - *" /F >nul 2>&1
 
-REM Återställ energitider (AC + DC)
-REM VIKTIGT: hibernate-timeout sätts till 0 (aldrig) så datorn stannar i S3-sleep.
-REM Om hibernate aktiveras (45 min) övergår datorn till viloläge och
-REM Task Scheduler kan INTE väcka den kl 07:02 (kräver BIOS RTC-stöd).
+REM Restore power timeouts (AC + DC)
+REM hibernate-timeout=0 keeps machine in S3-sleep so Task Scheduler can wake it
 powercfg -change -monitor-timeout-ac 30 >nul 2>&1
 powercfg -change -monitor-timeout-dc 30 >nul 2>&1
 powercfg -change -standby-timeout-ac 30 >nul 2>&1
@@ -296,13 +288,12 @@ powercfg -change -hibernate-timeout-ac 0 >nul 2>&1
 powercfg -change -hibernate-timeout-dc 0 >nul 2>&1
 
 if not "!EC!"=="0" (
-  echo %date% %time% NOT sleeping because main failed ^(EC=!EC!^).>> "%LOG%"
+  echo %date% %time% NOT sleeping because main failed (EC=!EC!).>> "%LOG%"
   endlocal
-  exit /b 1
+  exit /b !EC!
 )
 
-echo %date% %time% SLEEP now>> "%LOG%"
-rundll32.exe powrprof.dll,SetSuspendState 0,1,0
+echo %date% %time% DONE OK - sleeping now>> "%LOG%"
 
 endlocal
 exit /b 0
