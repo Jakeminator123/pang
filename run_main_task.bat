@@ -40,8 +40,13 @@ REM Chrome-lock cleanup
 del /f /q "%ROOT%1_poit\chrome_profile\Singleton*" >nul 2>&1
 del /f /q "%ROOT%1_poit\chrome_profile\Lockfile" >nul 2>&1
 
-echo %date% %time% Running: py -3 -u "%ROOT%main.py">> "%ROOT%task_stdout.log"
-py -3 -u "%ROOT%main.py" >> "%ROOT%python_stdout.log" 2>&1
+REM Resolve py launcher to actual python.exe (avoids process tracking issues)
+set "PYTHON_EXE="
+for /f "delims=" %%P in ('py -3 -c "import sys; print(sys.executable)" 2^>nul') do set "PYTHON_EXE=%%P"
+if not defined PYTHON_EXE set "PYTHON_EXE=py"
+
+echo %date% %time% Running: !PYTHON_EXE! -u "%ROOT%main.py">> "%ROOT%task_stdout.log"
+"!PYTHON_EXE!" -u "%ROOT%main.py" >> "%ROOT%python_stdout.log" 2>&1
 set "EC=!ERRORLEVEL!"
 
 echo %date% %time% main.py EXITCODE=!EC!>> "%ROOT%task_stdout.log"
